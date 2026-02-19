@@ -1,0 +1,24 @@
+agents:
+  default:
+    max_steps: 40
+    require_plan: true
+    require_diff: true
+    require_tests_for_merge: true
+    session_rules:
+      - "Read project context docs and open task queue before coding"
+      - "Work on exactly one scoped task per session unless explicitly requested otherwise"
+      - "Update docs/tasks when behavior, scope, or status changes"
+    stop_on:
+      - "policy_violation"
+      - "no_progress_3_steps"
+      - "tests_failing_2_cycles"
+      - "scope_creep_detected"
+  roles:
+    dev:
+      focus: "implementation + tests"
+    reviewer:
+      focus: "risk + correctness + regressions"
+    doc:
+      focus: "docs + examples + acceptance criteria"
+    ops:
+      focus: "release readiness + rollback safety"

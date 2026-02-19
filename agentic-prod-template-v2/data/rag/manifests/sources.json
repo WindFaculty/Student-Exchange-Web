@@ -1,0 +1,908 @@
+[
+  {
+    "path": "README.md",
+    "bytes": 2039,
+    "sha256": "d54d14cbae2daa0f9fe7bf52aa9d53647960563864fbde382f7598930e197a41",
+    "mtime_utc": "2026-02-16T17:03:19Z"
+  },
+  {
+    "path": "SETUP.md",
+    "bytes": 2127,
+    "sha256": "8a2d2527bdc661cea533271631e30ebf540454aa232c5e853678c7e2549a0766",
+    "mtime_utc": "2026-02-09T17:42:11Z"
+  },
+  {
+    "path": "agentic-prod-template-v2/.ai/prompts/bugfix_template.md",
+    "bytes": 307,
+    "sha256": "3defdb29e52a5099a70eacedea942de419a32fc6a0d2ebaf9eaaf061e3ee3961",
+    "mtime_utc": "2026-02-19T05:45:38Z"
+  },
+  {
+    "path": "agentic-prod-template-v2/.ai/prompts/mission_template.md",
+    "bytes": 531,
+    "sha256": "5c63f1cf8144ae2fb9f985e309a68d9c30162e226ba89988476a498b0aad30a9",
+    "mtime_utc": "2026-02-19T05:45:38Z"
+  },
+  {
+    "path": "agentic-prod-template-v2/.ai/prompts/refactor_guardrails.md",
+    "bytes": 357,
+    "sha256": "46e3af3e07d124ebc3302aeaf552c68651ed44cc3493faf3b7cee95b60b03b45",
+    "mtime_utc": "2026-02-19T05:45:38Z"
+  },
+  {
+    "path": "agentic-prod-template-v2/configs/agents.yaml",
+    "bytes": 739,
+    "sha256": "158dc7e2e42b578b492829862d97013f4b732a61009eed70f8f7da4887291986",
+    "mtime_utc": "2026-02-19T05:41:51Z"
+  },
+  {
+    "path": "agentic-prod-template-v2/configs/project.yaml",
+    "bytes": 1657,
+    "sha256": "5012508101f157bb78f125770a9d18957039400cafd06ecd072707f3dea44137",
+    "mtime_utc": "2026-02-19T05:49:53Z"
+  },
+  {
+    "path": "agentic-prod-template-v2/configs/schemas/agents.schema.json",
+    "bytes": 1621,
+    "sha256": "bd9533c06adf64455a5f3cb951962b36ea6c7fc021af53d8e766221e029690c3",
+    "mtime_utc": "2026-02-19T05:42:24Z"
+  },
+  {
+    "path": "agentic-prod-template-v2/configs/schemas/project.schema.json",
+    "bytes": 3038,
+    "sha256": "268959c5941c698aa41bee1619bfe1fd5591f22ace7f138f5010d9e1fd2cf858",
+    "mtime_utc": "2026-02-19T05:42:23Z"
+  },
+  {
+    "path": "agentic-prod-template-v2/configs/schemas/tools_allowlist.schema.json",
+    "bytes": 1639,
+    "sha256": "8374c49f746be6538da5727f918d82fe2a23826c9cd6ee227c7a0a202e520a33",
+    "mtime_utc": "2026-02-19T05:42:24Z"
+  },
+  {
+    "path": "agentic-prod-template-v2/configs/tools_allowlist.yaml",
+    "bytes": 553,
+    "sha256": "10512deca242382f92840cc6a718b72dcc9a521206aa5c67101c1d8f887c51c0",
+    "mtime_utc": "2026-02-19T05:41:51Z"
+  },
+  {
+    "path": "agentic-prod-template-v2/docs/architecture/api.md",
+    "bytes": 439,
+    "sha256": "b4231827a7f0072c20483abe25649bac19028f926e57f4b8edf7c56703eda88c",
+    "mtime_utc": "2026-02-19T05:45:04Z"
+  },
+  {
+    "path": "agentic-prod-template-v2/docs/architecture/boundaries.md",
+    "bytes": 685,
+    "sha256": "4934be0bcb307edd062756742e62509e2acd8df748c8e54f0fdfffe75d1a8196",
+    "mtime_utc": "2026-02-19T05:45:05Z"
+  },
+  {
+    "path": "agentic-prod-template-v2/docs/architecture/conventions.md",
+    "bytes": 536,
+    "sha256": "e30bf9d5a1011ebc41e0284d3a97cc4a92d43925e9f7a4716fa120ddaf6e677e",
+    "mtime_utc": "2026-02-19T05:45:18Z"
+  },
+  {
+    "path": "agentic-prod-template-v2/docs/architecture/data-model.md",
+    "bytes": 378,
+    "sha256": "73c82f3b6faaa7ab6e8639fcee940aac0b07630fd6008dca5d54a57a68e3b5b5",
+    "mtime_utc": "2026-02-19T05:45:04Z"
+  },
+  {
+    "path": "agentic-prod-template-v2/docs/architecture/overview.md",
+    "bytes": 564,
+    "sha256": "b9bada325f0efa8b04e0326f0a1d84a281f41023e8c40f2e5e9acd3b0eb974db",
+    "mtime_utc": "2026-02-19T05:44:50Z"
+  },
+  {
+    "path": "agentic-prod-template-v2/docs/runbooks/local_dev.md",
+    "bytes": 989,
+    "sha256": "2bd75bc189d06f7c8f991d0d28dc3b3f8a294aa3df245ac36682fffc8df83248",
+    "mtime_utc": "2026-02-19T05:51:48Z"
+  },
+  {
+    "path": "agentic-prod-template-v2/docs/specs/feature_template.md",
+    "bytes": 393,
+    "sha256": "5a8b9c82ea843dab3064cd9d4678cec5033833a139a79d7aef66ac0a13674be0",
+    "mtime_utc": "2026-02-19T05:45:18Z"
+  },
+  {
+    "path": "agentic-prod-template-v2/pyproject.toml",
+    "bytes": 314,
+    "sha256": "7794281ccbb8baf2f421025b92c8b5dce3aa4698e6e41ded0f504f3bae467849",
+    "mtime_utc": "2026-02-19T05:46:44Z"
+  },
+  {
+    "path": "agentic-prod-template-v2/tools/__init__.py",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "mtime_utc": "2026-02-09T15:50:16Z"
+  },
+  {
+    "path": "agentic-prod-template-v2/tools/doctor.py",
+    "bytes": 3458,
+    "sha256": "0e4db0e27f7e33776dd7b63b6d281fe21a478736b0b540f47046114e07b73bbc",
+    "mtime_utc": "2026-02-19T05:43:45Z"
+  },
+  {
+    "path": "agentic-prod-template-v2/tools/index.py",
+    "bytes": 8669,
+    "sha256": "be4489272c030137c627d03d7fcf0efd7732ccaf231f0eb051dc775fe592f588",
+    "mtime_utc": "2026-02-19T05:50:35Z"
+  },
+  {
+    "path": "agentic-prod-template-v2/tools/validate_configs.py",
+    "bytes": 2690,
+    "sha256": "4c4726cce7da60436a68124ea5e844ef1dd688f0fe1ff2e66161c46ed3ca9bdc",
+    "mtime_utc": "2026-02-19T05:43:45Z"
+  },
+  {
+    "path": "apps/backend/pom.xml",
+    "bytes": 3414,
+    "sha256": "f356b90d4fc02c97bc773be5269118f74239e0f765c1e88998c82040029bd6d0",
+    "mtime_utc": "2026-02-16T16:34:55Z"
+  },
+  {
+    "path": "apps/backend/src/main/java/com/ssg/iot/IotApplication.java",
+    "bytes": 323,
+    "sha256": "f94a52448c0ef27a633c8c993133be16dfc88f0adf263fe7f11b1890f6f44155",
+    "mtime_utc": "2026-02-11T17:39:55Z"
+  },
+  {
+    "path": "apps/backend/src/main/java/com/ssg/iot/common/ApiException.java",
+    "bytes": 355,
+    "sha256": "19ed2ecf0f47ebc68017d239cc63db1f75fed98d6ef6cdcd0baf59f49154fa58",
+    "mtime_utc": "2026-02-16T16:23:17Z"
+  },
+  {
+    "path": "apps/backend/src/main/java/com/ssg/iot/common/BadRequestException.java",
+    "bytes": 236,
+    "sha256": "ef0402e456da8549e3ff54c83b6bb4f74117372426d3e570010e0bc241f2c42d",
+    "mtime_utc": "2026-02-16T16:23:17Z"
+  },
+  {
+    "path": "apps/backend/src/main/java/com/ssg/iot/common/ForbiddenException.java",
+    "bytes": 232,
+    "sha256": "6c31a4f37028ff65a9601ca23ada21d4c7de028cfcc81275cad64a2cd26fb9dd",
+    "mtime_utc": "2026-02-16T16:23:17Z"
+  },
+  {
+    "path": "apps/backend/src/main/java/com/ssg/iot/common/NotFoundException.java",
+    "bytes": 230,
+    "sha256": "1f997dc0fee108ae5ea309cea654a8419c1f34bea454f44b82331abadefba871",
+    "mtime_utc": "2026-02-16T16:23:17Z"
+  },
+  {
+    "path": "apps/backend/src/main/java/com/ssg/iot/common/PageResponse.java",
+    "bytes": 648,
+    "sha256": "650b1f5fc8b279e3b73e997c88739ab412c50f3e19c3e62e64e5d4f5ea0b03dc",
+    "mtime_utc": "2026-02-16T16:23:17Z"
+  },
+  {
+    "path": "apps/backend/src/main/java/com/ssg/iot/common/UnauthorizedException.java",
+    "bytes": 241,
+    "sha256": "636903a355bf8915568348da6be37b10cac0b997e339865f8f6a19b5baeeecd1",
+    "mtime_utc": "2026-02-16T16:23:17Z"
+  },
+  {
+    "path": "apps/backend/src/main/java/com/ssg/iot/config/GlobalExceptionHandler.java",
+    "bytes": 2142,
+    "sha256": "51486c4aceac558bd3715acdb289e98769a8e5ca7c56c016176d754b69b296bc",
+    "mtime_utc": "2026-02-16T16:32:02Z"
+  },
+  {
+    "path": "apps/backend/src/main/java/com/ssg/iot/config/WebConfig.java",
+    "bytes": 607,
+    "sha256": "3c6fd26a52df39d3b94da76006f99f6731da99768ce5aabaf1cd4cb3359bcf15",
+    "mtime_utc": "2026-02-16T16:32:02Z"
+  },
+  {
+    "path": "apps/backend/src/main/java/com/ssg/iot/controller/AdminController.java",
+    "bytes": 6110,
+    "sha256": "8c73010876a326ea23121de46df287354a493909ba93544b19de0fcc81e5d83d",
+    "mtime_utc": "2026-02-16T16:37:19Z"
+  },
+  {
+    "path": "apps/backend/src/main/java/com/ssg/iot/controller/AuthController.java",
+    "bytes": 1595,
+    "sha256": "735e92e70f85e18709758842fc62bde6ce90841b37203ac121e2a2e377dad869",
+    "mtime_utc": "2026-02-16T16:30:49Z"
+  },
+  {
+    "path": "apps/backend/src/main/java/com/ssg/iot/controller/CartController.java",
+    "bytes": 1414,
+    "sha256": "56a1cd249b28c8853a4c02351e07bd41a08c316aae0e714f9fce8bf30b023cdf",
+    "mtime_utc": "2026-02-16T16:30:49Z"
+  },
+  {
+    "path": "apps/backend/src/main/java/com/ssg/iot/controller/EventController.java",
+    "bytes": 1570,
+    "sha256": "d95f221efc98c4173cb3e39fa356cadf61e75c934267a9c2a07fa81b993ef161",
+    "mtime_utc": "2026-02-16T16:31:12Z"
+  },
+  {
+    "path": "apps/backend/src/main/java/com/ssg/iot/controller/HealthController.java",
+    "bytes": 432,
+    "sha256": "49849fffafaa6090c9c808bf2cbe81474d305701de2155f93a79e8904af62978",
+    "mtime_utc": "2026-02-16T16:30:18Z"
+  },
+  {
+    "path": "apps/backend/src/main/java/com/ssg/iot/controller/ListingController.java",
+    "bytes": 1989,
+    "sha256": "65af66bd598d018e0658f5696b9d900ced8ecd271a33d7b182e93330037bc6a2",
+    "mtime_utc": "2026-02-16T16:30:49Z"
+  },
+  {
+    "path": "apps/backend/src/main/java/com/ssg/iot/controller/MeController.java",
+    "bytes": 1367,
+    "sha256": "e2fa58dc0b75f12958931910c25878b574c35f3626f546c433f1286fedcf09d0",
+    "mtime_utc": "2026-02-16T16:31:43Z"
+  },
+  {
+    "path": "apps/backend/src/main/java/com/ssg/iot/controller/OrderController.java",
+    "bytes": 1264,
+    "sha256": "053d795003d6f22abe5e4bd88bc18d20cfa8876bdb7f65fb08dda6cf215bcd14",
+    "mtime_utc": "2026-02-16T16:31:12Z"
+  },
+  {
+    "path": "apps/backend/src/main/java/com/ssg/iot/controller/SupportController.java",
+    "bytes": 1193,
+    "sha256": "3cc174007ef5156ce0f4a4af0639b293e14949e5fc2ddde1e554d7d320b45ca4",
+    "mtime_utc": "2026-02-16T16:31:12Z"
+  },
+  {
+    "path": "apps/backend/src/main/java/com/ssg/iot/domain/Event.java",
+    "bytes": 1313,
+    "sha256": "474450bedfc988ed784a0df8da4c34a2d38092981d35fa31879c30eb3eb73dcb",
+    "mtime_utc": "2026-02-16T16:24:06Z"
+  },
+  {
+    "path": "apps/backend/src/main/java/com/ssg/iot/domain/EventRegistration.java",
+    "bytes": 1085,
+    "sha256": "9498991bf33ae607a5efc85b8152696224f39074a34119d20925c809bc9b8b76",
+    "mtime_utc": "2026-02-16T16:24:06Z"
+  },
+  {
+    "path": "apps/backend/src/main/java/com/ssg/iot/domain/EventRegistrationStatus.java",
+    "bytes": 115,
+    "sha256": "90f24120da8fd936ed6c195f255dc6b103ee59a22e52aa451dfbead90bb513f4",
+    "mtime_utc": "2026-02-16T16:24:06Z"
+  },
+  {
+    "path": "apps/backend/src/main/java/com/ssg/iot/domain/Faq.java",
+    "bytes": 626,
+    "sha256": "96d347d733565c56c13f896ebc2c12bc1d4513d2fe0493c3065165368f4ce814",
+    "mtime_utc": "2026-02-16T16:24:06Z"
+  },
+  {
+    "path": "apps/backend/src/main/java/com/ssg/iot/domain/Listing.java",
+    "bytes": 1235,
+    "sha256": "6bbaa238b48bc2c13f516e28b7d0c302fe34fffe85e0d63925344baf296ba0cf",
+    "mtime_utc": "2026-02-16T16:24:06Z"
+  },
+  {
+    "path": "apps/backend/src/main/java/com/ssg/iot/domain/Order.java",
+    "bytes": 1588,
+    "sha256": "99d70c6575e8c35eae07fefc9ccb764fb0970c5648c72ef244d2acb7f942ed7b",
+    "mtime_utc": "2026-02-16T16:24:06Z"
+  },
+  {
+    "path": "apps/backend/src/main/java/com/ssg/iot/domain/OrderItem.java",
+    "bytes": 882,
+    "sha256": "f26b8f287e2fd83cb972cf49d02b018988225fd9599239ba1d8f12411eb60ee2",
+    "mtime_utc": "2026-02-16T16:24:06Z"
+  },
+  {
+    "path": "apps/backend/src/main/java/com/ssg/iot/domain/OrderStatus.java",
+    "bytes": 145,
+    "sha256": "4b80ef5377159d12c479a8f7a8e77ce28ae6abe94e8c22e0675d03272d7704c6",
+    "mtime_utc": "2026-02-16T16:24:06Z"
+  },
+  {
+    "path": "apps/backend/src/main/java/com/ssg/iot/domain/SupportTicket.java",
+    "bytes": 1299,
+    "sha256": "b73e8f25e3533eeccabb25f5c33e826b915f1a83498ba43d5389ddb15c402b0b",
+    "mtime_utc": "2026-02-16T16:24:06Z"
+  },
+  {
+    "path": "apps/backend/src/main/java/com/ssg/iot/domain/SupportTicketStatus.java",
+    "bytes": 121,
+    "sha256": "3c6750f5fcff2625c274520508343511bab241c3b2eeacf56682b8df7fb0ef23",
+    "mtime_utc": "2026-02-16T16:24:06Z"
+  },
+  {
+    "path": "apps/backend/src/main/java/com/ssg/iot/domain/User.java",
+    "bytes": 1107,
+    "sha256": "23f31cdf08361dd0068902382648805a7afe7031f356b572de0e65d3c1c89e7c",
+    "mtime_utc": "2026-02-16T16:24:06Z"
+  },
+  {
+    "path": "apps/backend/src/main/java/com/ssg/iot/domain/UserRole.java",
+    "bytes": 75,
+    "sha256": "19fdbbb4efdf2131c5753ae83b2445454161d3f8f9b76a676056be72380be2b9",
+    "mtime_utc": "2026-02-16T16:24:06Z"
+  },
+  {
+    "path": "apps/backend/src/main/java/com/ssg/iot/dto/auth/LoginRequest.java",
+    "bytes": 224,
+    "sha256": "8c8c1fb1a8e51a434c6303742d5f1ce14ec8851988f1247e2cc6d8ba338ef850",
+    "mtime_utc": "2026-02-16T16:25:10Z"
+  },
+  {
+    "path": "apps/backend/src/main/java/com/ssg/iot/dto/auth/LoginResponse.java",
+    "bytes": 217,
+    "sha256": "a4e8ce4626f6dce2eedc834c2cc4e54c1ff817a23a8c00e784f673a777da585e",
+    "mtime_utc": "2026-02-16T16:25:10Z"
+  },
+  {
+    "path": "apps/backend/src/main/java/com/ssg/iot/dto/auth/UserSessionResponse.java",
+    "bytes": 296,
+    "sha256": "82f9b3385703eb4ee649fddcf4200136cc96b447755b6fc802ca5b0c62c83f23",
+    "mtime_utc": "2026-02-16T16:25:10Z"
+  },
+  {
+    "path": "apps/backend/src/main/java/com/ssg/iot/dto/cart/AddCartItemRequest.java",
+    "bytes": 265,
+    "sha256": "855849eb89dffddf30fe25d16a39fa9bdf338fd2a88beb03ff26e0b0f121df00",
+    "mtime_utc": "2026-02-16T16:25:10Z"
+  },
+  {
+    "path": "apps/backend/src/main/java/com/ssg/iot/dto/cart/CartItemResponse.java",
+    "bytes": 327,
+    "sha256": "c2569a5bc1cddfbfbedfc2d3a356dc01fc652bdddfa807a9cda8749f7171aeab",
+    "mtime_utc": "2026-02-16T16:25:10Z"
+  },
+  {
+    "path": "apps/backend/src/main/java/com/ssg/iot/dto/cart/CartResponse.java",
+    "bytes": 252,
+    "sha256": "c282d50a10525df7e650bd995449fcc1ac0ff3ec8b2f7e662a014f3a090e2b17",
+    "mtime_utc": "2026-02-16T16:25:10Z"
+  },
+  {
+    "path": "apps/backend/src/main/java/com/ssg/iot/dto/cart/UpdateCartItemRequest.java",
+    "bytes": 179,
+    "sha256": "6db030b5fbdb7aeba29b13253d0f80e6d1135448fb5888025982af19040cf026",
+    "mtime_utc": "2026-02-16T16:25:10Z"
+  },
+  {
+    "path": "apps/backend/src/main/java/com/ssg/iot/dto/event/EventRegistrationRequest.java",
+    "bytes": 338,
+    "sha256": "5df82707ae5d88292c509d8b285259fe04971279e6838adf3eb6554e8b32ebce",
+    "mtime_utc": "2026-02-16T16:25:10Z"
+  },
+  {
+    "path": "apps/backend/src/main/java/com/ssg/iot/dto/event/EventRegistrationResponse.java",
+    "bytes": 480,
+    "sha256": "d4b995fcd8827f5b712eb70a87a8dd0ed9270236f05a876939343b5f774928ca",
+    "mtime_utc": "2026-02-16T16:25:10Z"
+  },
+  {
+    "path": "apps/backend/src/main/java/com/ssg/iot/dto/event/EventRequest.java",
+    "bytes": 710,
+    "sha256": "fa496cff205055cb59caee7e184cd564160ea1a065411e3994bbc3c76ffd91df",
+    "mtime_utc": "2026-02-16T16:25:10Z"
+  },
+  {
+    "path": "apps/backend/src/main/java/com/ssg/iot/dto/event/EventResponse.java",
+    "bytes": 536,
+    "sha256": "1c254b0d78d6a0ac1b95a5f7cf69fd11ddb3e1c3840d2479e5d73b90aec1c3f4",
+    "mtime_utc": "2026-02-16T16:25:10Z"
+  },
+  {
+    "path": "apps/backend/src/main/java/com/ssg/iot/dto/listing/ListingRequest.java",
+    "bytes": 589,
+    "sha256": "904ef5ca59c1d861685a09d402423a77e3fbd6ff1ae5b8310e64fc3c08ad5599",
+    "mtime_utc": "2026-02-16T16:25:10Z"
+  },
+  {
+    "path": "apps/backend/src/main/java/com/ssg/iot/dto/listing/ListingResponse.java",
+    "bytes": 537,
+    "sha256": "0cfb6e37f9da57efea96e43ef4936988eafb57b33b08a092a635a67317d1a19e",
+    "mtime_utc": "2026-02-16T16:25:10Z"
+  },
+  {
+    "path": "apps/backend/src/main/java/com/ssg/iot/dto/order/CreateOrderRequest.java",
+    "bytes": 347,
+    "sha256": "2a517745acf832dd476e2c6da1c7262b1f87b215401cf19a67de3e55c49e4cf9",
+    "mtime_utc": "2026-02-16T16:25:10Z"
+  },
+  {
+    "path": "apps/backend/src/main/java/com/ssg/iot/dto/order/OrderItemResponse.java",
+    "bytes": 311,
+    "sha256": "1a4917bb75ea0f51c63634646ce14740c4864d11110779a76b80bd44144f4bc7",
+    "mtime_utc": "2026-02-16T16:25:10Z"
+  },
+  {
+    "path": "apps/backend/src/main/java/com/ssg/iot/dto/order/OrderResponse.java",
+    "bytes": 549,
+    "sha256": "163fabe763edeb0ad328d1887bf0d4bbba5d662aa8fe3b4b9d2861de9a5a5116",
+    "mtime_utc": "2026-02-16T16:25:10Z"
+  },
+  {
+    "path": "apps/backend/src/main/java/com/ssg/iot/dto/order/UpdateOrderStatusRequest.java",
+    "bytes": 191,
+    "sha256": "e83de4555119c463d3b5cbb495a4445271cdc15f1a4f57b76e24429cfea96db3",
+    "mtime_utc": "2026-02-16T16:25:10Z"
+  },
+  {
+    "path": "apps/backend/src/main/java/com/ssg/iot/dto/support/FaqResponse.java",
+    "bytes": 259,
+    "sha256": "fe64cdc86cb3fb8a81950bd17f3af756086386cce38ed89ddb0a2d2b1b2ab8e0",
+    "mtime_utc": "2026-02-16T16:25:10Z"
+  },
+  {
+    "path": "apps/backend/src/main/java/com/ssg/iot/dto/support/ReplyTicketRequest.java",
+    "bytes": 186,
+    "sha256": "2e5eb237aefa8c145ba1d6ccd3e7d40944a982947220f989c2cafa50162e9ac5",
+    "mtime_utc": "2026-02-16T16:25:10Z"
+  },
+  {
+    "path": "apps/backend/src/main/java/com/ssg/iot/dto/support/SupportTicketRequest.java",
+    "bytes": 414,
+    "sha256": "db8f369ad3b50eddadbc1ef612a4e82d7e3abc03a8da8d1258e432e9fe05d906",
+    "mtime_utc": "2026-02-16T16:25:10Z"
+  },
+  {
+    "path": "apps/backend/src/main/java/com/ssg/iot/dto/support/SupportTicketResponse.java",
+    "bytes": 583,
+    "sha256": "a3e74eb0ca14a7b06a7e11dd09beee6442f905ec20f4b64b60daa745865faeab",
+    "mtime_utc": "2026-02-16T16:25:10Z"
+  },
+  {
+    "path": "apps/backend/src/main/java/com/ssg/iot/dto/support/UpdateTicketStatusRequest.java",
+    "bytes": 194,
+    "sha256": "227c1a97dc63bbecc42eaa8fb1cd30c7594a298af0ddb9a918dad1b25f67dc02",
+    "mtime_utc": "2026-02-16T16:25:10Z"
+  },
+  {
+    "path": "apps/backend/src/main/java/com/ssg/iot/repository/EventRegistrationRepository.java",
+    "bytes": 489,
+    "sha256": "1d92360bdb68dc31e22e76d23db847c177061e05e73d4fba983f4b656ad6da0f",
+    "mtime_utc": "2026-02-16T16:24:26Z"
+  },
+  {
+    "path": "apps/backend/src/main/java/com/ssg/iot/repository/EventRepository.java",
+    "bytes": 388,
+    "sha256": "1ad4aeef5b27d2cda00cf6a5f464519b53e5e4cf9688c5c08f35c92ce76aafad",
+    "mtime_utc": "2026-02-16T16:24:26Z"
+  },
+  {
+    "path": "apps/backend/src/main/java/com/ssg/iot/repository/FaqRepository.java",
+    "bytes": 300,
+    "sha256": "38345cccc058a79d284aa7c07e74a1cb299287f35da7366b371b63676e059311",
+    "mtime_utc": "2026-02-16T16:24:26Z"
+  },
+  {
+    "path": "apps/backend/src/main/java/com/ssg/iot/repository/ListingRepository.java",
+    "bytes": 648,
+    "sha256": "63e7558eb2cfa5a8af4f5aaf88d44a1267fa63d47551930312270fc2c8405655",
+    "mtime_utc": "2026-02-16T16:24:26Z"
+  },
+  {
+    "path": "apps/backend/src/main/java/com/ssg/iot/repository/OrderRepository.java",
+    "bytes": 590,
+    "sha256": "5be300a8ac21e30103739fe16516f77a772da20b41aeb66d867866639d5808f8",
+    "mtime_utc": "2026-02-16T16:24:26Z"
+  },
+  {
+    "path": "apps/backend/src/main/java/com/ssg/iot/repository/SupportTicketRepository.java",
+    "bytes": 577,
+    "sha256": "78480c3ab0319e4dbbecd391be73d8dea6df65514e4d5f642701d08827ab11d7",
+    "mtime_utc": "2026-02-16T16:24:26Z"
+  },
+  {
+    "path": "apps/backend/src/main/java/com/ssg/iot/repository/UserRepository.java",
+    "bytes": 292,
+    "sha256": "008f8a48efd5aea40f48b1a888849bd8e10e0adc81cd8355d9effdf8b7965804",
+    "mtime_utc": "2026-02-16T16:24:26Z"
+  },
+  {
+    "path": "apps/backend/src/main/java/com/ssg/iot/service/AuthService.java",
+    "bytes": 1135,
+    "sha256": "507c0386ed71992111e34e16133a50ea10e51df2787a9d25eb28e0689e554562",
+    "mtime_utc": "2026-02-16T16:30:02Z"
+  },
+  {
+    "path": "apps/backend/src/main/java/com/ssg/iot/service/CartService.java",
+    "bytes": 5001,
+    "sha256": "47c5e07d79e73d5b36f5cfbc6f3fb8ddc5783520cf6c07cc1d1871a0bf6147ea",
+    "mtime_utc": "2026-02-16T16:28:56Z"
+  },
+  {
+    "path": "apps/backend/src/main/java/com/ssg/iot/service/EventService.java",
+    "bytes": 8629,
+    "sha256": "e3d2da34191c8cf8e30735a1ab7fb761aa92ad453247ab317066d68006ff63ef",
+    "mtime_utc": "2026-02-16T16:29:51Z"
+  },
+  {
+    "path": "apps/backend/src/main/java/com/ssg/iot/service/ListingService.java",
+    "bytes": 6884,
+    "sha256": "e7401e19b34aa85ccca974cb9ddc75bf25f4a46808f1e8bf2acf9082fe320e3c",
+    "mtime_utc": "2026-02-16T16:37:11Z"
+  },
+  {
+    "path": "apps/backend/src/main/java/com/ssg/iot/service/OrderService.java",
+    "bytes": 7332,
+    "sha256": "52cba822d1c80508df582d27fa284568340351a551cafdcb1d15a8752f827dba",
+    "mtime_utc": "2026-02-16T16:28:56Z"
+  },
+  {
+    "path": "apps/backend/src/main/java/com/ssg/iot/service/SessionAuthService.java",
+    "bytes": 1710,
+    "sha256": "1ddb610a40f2b3f54db86ac262050d4d26b96280d2e726eb098f11e32bb8e32d",
+    "mtime_utc": "2026-02-16T16:28:07Z"
+  },
+  {
+    "path": "apps/backend/src/main/java/com/ssg/iot/service/SupportService.java",
+    "bytes": 6505,
+    "sha256": "8c3b71e3a2c3a38ebca4f05dcddb7392e95265f0e07c53716d7785ee5e6285f1",
+    "mtime_utc": "2026-02-16T16:29:51Z"
+  },
+  {
+    "path": "apps/backend/src/main/resources/application.properties",
+    "bytes": 757,
+    "sha256": "1a987861bce2c22cb6c5f6958de888097c05260b296db07b0c2becef462d9324",
+    "mtime_utc": "2026-02-16T16:22:16Z"
+  },
+  {
+    "path": "apps/backend/src/main/resources/db/migration/V1__init_schema.sql",
+    "bytes": 6389,
+    "sha256": "39f72c38e7fd2d16be9bd20947389d0b61c3de93f4b87cde05a8bf353b9a2e67",
+    "mtime_utc": "2026-02-16T16:23:00Z"
+  },
+  {
+    "path": "apps/backend/src/test/java/com/ssg/iot/IotApplicationTests.java",
+    "bytes": 289,
+    "sha256": "6909548aaf6a2dd77e21abf4e5631a6348b7c457b6ff9d8edf87e6d886360a1d",
+    "mtime_utc": "2026-02-16T16:22:24Z"
+  },
+  {
+    "path": "apps/backend/src/test/resources/application-test.properties",
+    "bytes": 418,
+    "sha256": "113fa6c161d22520b4c4d31afde791624e0e7f893f6fc82da0e5be43242b5c00",
+    "mtime_utc": "2026-02-16T16:35:54Z"
+  },
+  {
+    "path": "apps/frontend/package.json",
+    "bytes": 971,
+    "sha256": "18bc63b8a087c05847fda9977ac60c2dbf67f39a93f0a78a5f3819baa1160bb9",
+    "mtime_utc": "2026-02-05T16:29:38Z"
+  },
+  {
+    "path": "apps/frontend/src/api/adminApi.ts",
+    "bytes": 4006,
+    "sha256": "9d52bd9d4bc46f8ff39546a693d9412031b1bb0d4f11a18989efbfe4bb18d47a",
+    "mtime_utc": "2026-02-16T16:38:46Z"
+  },
+  {
+    "path": "apps/frontend/src/api/authApi.ts",
+    "bytes": 756,
+    "sha256": "58b2ca52ea2a3f1080f9811fdf70b946fa0dcf6094ec8acc9ed1b1e2ea83fddc",
+    "mtime_utc": "2026-02-16T16:37:55Z"
+  },
+  {
+    "path": "apps/frontend/src/api/cartApi.ts",
+    "bytes": 670,
+    "sha256": "9327dcecd3312fa39c177347bef6886251fbf6ce53f8958f9ea4c48fba519bb2",
+    "mtime_utc": "2026-02-16T16:38:22Z"
+  },
+  {
+    "path": "apps/frontend/src/api/eventApi.ts",
+    "bytes": 1107,
+    "sha256": "637e86c5313044cf92e3a4dfccd92bd83bbfa0fa55ab1a519995ee1e371485ff",
+    "mtime_utc": "2026-02-16T16:38:22Z"
+  },
+  {
+    "path": "apps/frontend/src/api/http.ts",
+    "bytes": 591,
+    "sha256": "655cbd72ba46657cd5bb8ab0782476b7c7e238cef0ecf8ebb22118c361d0c5ec",
+    "mtime_utc": "2026-02-16T16:37:55Z"
+  },
+  {
+    "path": "apps/frontend/src/api/listingApi.ts",
+    "bytes": 1515,
+    "sha256": "2ec234970f14b3304feb0b1d46a4f1f8a09d3fe742d612c2399be636e48fd33b",
+    "mtime_utc": "2026-02-16T16:37:55Z"
+  },
+  {
+    "path": "apps/frontend/src/api/orderApi.ts",
+    "bytes": 658,
+    "sha256": "b27acce2173d94951136ab05985ba0eaa5b4523a84855d7590dbe96d92807de7",
+    "mtime_utc": "2026-02-16T16:38:22Z"
+  },
+  {
+    "path": "apps/frontend/src/api/productApi.ts",
+    "bytes": 112,
+    "sha256": "a00ab419302faee2c541af447bafc80dfd8aa9dce45a32245b2e2035b40f4f60",
+    "mtime_utc": "2026-02-16T16:38:53Z"
+  },
+  {
+    "path": "apps/frontend/src/api/supportApi.ts",
+    "bytes": 1850,
+    "sha256": "10aa6bd91677f321d76f790630d381fcde8aafa552ed520e3617b29167c0f7f7",
+    "mtime_utc": "2026-02-16T16:38:22Z"
+  },
+  {
+    "path": "apps/frontend/src/components/Header.tsx",
+    "bytes": 2428,
+    "sha256": "8e64332c8c4c8c6db48830afdfa0e150a9b72e76039d9722729b5d739fe5be1e",
+    "mtime_utc": "2026-02-16T16:39:51Z"
+  },
+  {
+    "path": "apps/frontend/src/components/Layout/Footer.tsx",
+    "bytes": 1469,
+    "sha256": "e9cdf3f5e5fe04e144c458581341ed2a3ea960403d2c802dc03aab0eddf2af49",
+    "mtime_utc": "2026-02-05T16:29:39Z"
+  },
+  {
+    "path": "apps/frontend/src/components/Layout/Header.tsx",
+    "bytes": 3075,
+    "sha256": "465068e3bb0e87ac66fc71b5dfedc351ff730b621f7eb51a6dc18401c9a7ef87",
+    "mtime_utc": "2026-02-05T16:29:39Z"
+  },
+  {
+    "path": "apps/frontend/src/components/Layout/PageLayout.tsx",
+    "bytes": 418,
+    "sha256": "bbd391db690da913dcb3cbd85be59852f8df9cc1b3b783ecde1fb24c3716945a",
+    "mtime_utc": "2026-02-05T16:29:39Z"
+  },
+  {
+    "path": "apps/frontend/src/components/ProtectedRoute.tsx",
+    "bytes": 909,
+    "sha256": "5dcfd4ac95cbfbf45fa29513cff51e48d317b27785595002c1c9b16aed31a51b",
+    "mtime_utc": "2026-02-16T16:39:33Z"
+  },
+  {
+    "path": "apps/frontend/src/components/products/AddNewProductCard.tsx",
+    "bytes": 1705,
+    "sha256": "579aed04f6a1240283c4f82b8e0cbb34d2e728294901dbc66a6d7c746b7e09a9",
+    "mtime_utc": "2026-02-05T16:29:39Z"
+  },
+  {
+    "path": "apps/frontend/src/components/products/MyListingCard.tsx",
+    "bytes": 2965,
+    "sha256": "8466f99df1338578fe9bec97e722a24ae3c4b96463f3bac5bf7ffd60eab0c190",
+    "mtime_utc": "2026-02-05T16:29:39Z"
+  },
+  {
+    "path": "apps/frontend/src/components/ui/Badge.tsx",
+    "bytes": 1255,
+    "sha256": "9fd15ded2f7e3f5ea79274b2c34f7fd94ad04bc1259f22e87af1ff01fbddfc05",
+    "mtime_utc": "2026-02-12T13:12:13Z"
+  },
+  {
+    "path": "apps/frontend/src/components/ui/Button.tsx",
+    "bytes": 1904,
+    "sha256": "5013d5a47c9846e26a87591a88c8698e778646c7337224399b0d7c850fb8f00f",
+    "mtime_utc": "2026-02-12T13:11:30Z"
+  },
+  {
+    "path": "apps/frontend/src/components/ui/Card.tsx",
+    "bytes": 1978,
+    "sha256": "772a6638808275f9020781e4d8a26081ca25c27fe75f0281ae4eb7311fd28ebc",
+    "mtime_utc": "2026-02-12T13:11:32Z"
+  },
+  {
+    "path": "apps/frontend/src/components/ui/Dialog.tsx",
+    "bytes": 1464,
+    "sha256": "61e4e806f333a976b93c650642796450d3d0e19dc4d18ad912489ab724735327",
+    "mtime_utc": "2026-02-05T16:29:39Z"
+  },
+  {
+    "path": "apps/frontend/src/components/ui/Input.tsx",
+    "bytes": 806,
+    "sha256": "853ebf2d0dc1dabad78703c3d7caa8147e52ad51cf481fd3d1de9d02e2aee987",
+    "mtime_utc": "2026-02-12T13:11:50Z"
+  },
+  {
+    "path": "apps/frontend/src/components/ui/Modal.tsx",
+    "bytes": 3357,
+    "sha256": "4a48b03455b921525a43089526a674c6b41e6a48805039afd9f37d147c357c66",
+    "mtime_utc": "2026-02-12T13:12:01Z"
+  },
+  {
+    "path": "apps/frontend/src/components/ui/Select.tsx",
+    "bytes": 1347,
+    "sha256": "3e18e6c92bd11e6aae3dde6b1542a987bb5df895391c36aa3545cfb96903bcfe",
+    "mtime_utc": "2026-02-05T16:29:39Z"
+  },
+  {
+    "path": "apps/frontend/src/components/ui/Skeleton.tsx",
+    "bytes": 319,
+    "sha256": "a766effb37e0fa3654d039aad071eeac206803395e953837c6af00fb6f437d03",
+    "mtime_utc": "2026-02-05T16:29:39Z"
+  },
+  {
+    "path": "apps/frontend/src/context/AuthContext.tsx",
+    "bytes": 1787,
+    "sha256": "b676627263d38c2118ce2b8f905464d0926e847529417ed2f539878af5a9ba6f",
+    "mtime_utc": "2026-02-16T16:41:14Z"
+  },
+  {
+    "path": "apps/frontend/src/context/CartContext.tsx",
+    "bytes": 2639,
+    "sha256": "155f63f3fb288516b8fb14a2b967fb75d6e408dee18410c84c6cb29832acc24a",
+    "mtime_utc": "2026-02-16T16:39:20Z"
+  },
+  {
+    "path": "apps/frontend/src/data/mockData.ts",
+    "bytes": 8822,
+    "sha256": "ec3efb82845c60c73e68bf2a7b71cacdbc9b429e9ccfed3a04a832239b0fac55",
+    "mtime_utc": "2026-02-12T13:21:10Z"
+  },
+  {
+    "path": "apps/frontend/src/layouts/AdminLayout.tsx",
+    "bytes": 2339,
+    "sha256": "4aa7d3daa8a3a1a89a403c81d71e1922686dbe06a7fd79826a780f2618ebf4d3",
+    "mtime_utc": "2026-02-16T16:40:14Z"
+  },
+  {
+    "path": "apps/frontend/src/layouts/MainLayout.tsx",
+    "bytes": 467,
+    "sha256": "5aae17487b3f9e1d07bba129d6be4551218fd2a7f8685a909fc0a7dc505009c7",
+    "mtime_utc": "2026-02-16T16:40:14Z"
+  },
+  {
+    "path": "apps/frontend/src/lib/utils.ts",
+    "bytes": 171,
+    "sha256": "3075aa77cadcd019a1ec91c7edaf1364ecf6ecebf315b68e417dc56f24dd9d71",
+    "mtime_utc": "2026-02-05T16:29:39Z"
+  },
+  {
+    "path": "apps/frontend/src/pages/AdminLoginPage.tsx",
+    "bytes": 2142,
+    "sha256": "dbb383894b76abedb04f4abe49c545f537fb395e0dfeb3b1cde9d395fdd1db2a",
+    "mtime_utc": "2026-02-16T16:41:23Z"
+  },
+  {
+    "path": "apps/frontend/src/pages/AdminOrderListPage.tsx",
+    "bytes": 6473,
+    "sha256": "561d6cf4aa47a204b8ac6f9ef9aa423da32cd83acaa7520fac507a017963815b",
+    "mtime_utc": "2026-02-16T16:52:11Z"
+  },
+  {
+    "path": "apps/frontend/src/pages/AdminProductFormPage.tsx",
+    "bytes": 5763,
+    "sha256": "385debdd83753d1e14de4db17beb1fc1961eaa79d9dc4e3379291f205a3490ca",
+    "mtime_utc": "2026-02-16T16:51:38Z"
+  },
+  {
+    "path": "apps/frontend/src/pages/AdminProductListPage.tsx",
+    "bytes": 6641,
+    "sha256": "6d84770368c42989d90ba093633bf6e653e78c03224d4d4ce9608f16531410ad",
+    "mtime_utc": "2026-02-16T16:57:38Z"
+  },
+  {
+    "path": "apps/frontend/src/pages/LoginPage.tsx",
+    "bytes": 2028,
+    "sha256": "3769fe39576be388663f681a80ab67be759a389b14771a5255fe55268603b7da",
+    "mtime_utc": "2026-02-16T16:41:07Z"
+  },
+  {
+    "path": "apps/frontend/src/pages/admin/AdminDashboardPage.tsx",
+    "bytes": 5110,
+    "sha256": "65bad03a197ebe931af34799c94025be2fffb3555f67267fb944a8723f8840aa",
+    "mtime_utc": "2026-02-16T16:52:49Z"
+  },
+  {
+    "path": "apps/frontend/src/pages/admin/AdminEventListPage.tsx",
+    "bytes": 14561,
+    "sha256": "a908b76e7860d7dd836796fb86a37788e2b3c985a3da5b7a4c1cb30ab1aeb833",
+    "mtime_utc": "2026-02-16T16:53:50Z"
+  },
+  {
+    "path": "apps/frontend/src/pages/admin/AdminSupportTicketPage.tsx",
+    "bytes": 8326,
+    "sha256": "e1508f29683bdfd57940d375bc5ba5d370e6afbaaee00c2685ca8e08707da706",
+    "mtime_utc": "2026-02-16T16:54:30Z"
+  },
+  {
+    "path": "apps/frontend/src/pages/cart/Cart.tsx",
+    "bytes": 2561,
+    "sha256": "304e8fc6c6b3cfcdb993b0f9aaf963d759dda749ab4409ae21bd41defc000dd2",
+    "mtime_utc": "2026-02-16T16:42:41Z"
+  },
+  {
+    "path": "apps/frontend/src/pages/checkout/Checkout.tsx",
+    "bytes": 3409,
+    "sha256": "a6c9c4e374c7cf13f75f352c9bf511b13c95e5121255fca7d3cd39cff7b93377",
+    "mtime_utc": "2026-02-16T16:42:41Z"
+  },
+  {
+    "path": "apps/frontend/src/pages/checkout/OrderSuccess.tsx",
+    "bytes": 2131,
+    "sha256": "93dbc06c066c4c7e1f77ee4c6ea1a9f0c91e8207cecfee29b88c8ef646df8e2e",
+    "mtime_utc": "2026-02-16T16:42:41Z"
+  },
+  {
+    "path": "apps/frontend/src/pages/events/EventDetail.tsx",
+    "bytes": 3320,
+    "sha256": "6bdd96318e6b9b1605b4a44a425b2e0790e45585f640bb9e5e8adcdd628a2143",
+    "mtime_utc": "2026-02-16T16:43:13Z"
+  },
+  {
+    "path": "apps/frontend/src/pages/events/EventList.tsx",
+    "bytes": 2270,
+    "sha256": "ff726df3813268e213f0babeeed135feb7eecf5f647f7bb3150de48be0b5e3cb",
+    "mtime_utc": "2026-02-16T16:43:13Z"
+  },
+  {
+    "path": "apps/frontend/src/pages/listings/CreateListing.tsx",
+    "bytes": 5092,
+    "sha256": "5f4cb4c44bca87ee70215010c851bf389e797c818a321958e39d26684deec416",
+    "mtime_utc": "2026-02-16T16:43:43Z"
+  },
+  {
+    "path": "apps/frontend/src/pages/products/ProductDetail.tsx",
+    "bytes": 3045,
+    "sha256": "043b1a0781d7070217379903228d74c96511a34e45135e17eb7560b08d33a5e6",
+    "mtime_utc": "2026-02-16T16:42:41Z"
+  },
+  {
+    "path": "apps/frontend/src/pages/products/ProductList.tsx",
+    "bytes": 4851,
+    "sha256": "29638659dae9165a36fcdcda5374035106590b3d90e0cbe6f1e85f5b097a5660",
+    "mtime_utc": "2026-02-16T16:42:41Z"
+  },
+  {
+    "path": "apps/frontend/src/pages/support/Contact.tsx",
+    "bytes": 4653,
+    "sha256": "658fec2715b86a91130a8bd0997a22a2b2cebe8354476ee8e8b1f2b70088b598",
+    "mtime_utc": "2026-02-16T16:55:33Z"
+  },
+  {
+    "path": "apps/frontend/src/pages/support/FAQ.tsx",
+    "bytes": 3492,
+    "sha256": "7ca0afdd6b5ab55ee64b9b04b981403b4414caf88fcefd498132d9eaaeecf2f6",
+    "mtime_utc": "2026-02-16T16:55:06Z"
+  },
+  {
+    "path": "apps/frontend/src/pages/support/SupportHub.tsx",
+    "bytes": 1750,
+    "sha256": "e845c5c8ed1ef7431f72cda78bed9c31c30268e3a422e852ad5b424d9eeb664b",
+    "mtime_utc": "2026-02-16T16:54:45Z"
+  },
+  {
+    "path": "apps/frontend/src/pages/support/TrackOrder.tsx",
+    "bytes": 5925,
+    "sha256": "12b06f278b3040dfd6d0d2645857e7e32f6db6460e6eb7d566ef14aca86fc6fe",
+    "mtime_utc": "2026-02-16T16:56:02Z"
+  },
+  {
+    "path": "apps/frontend/src/pages/support/policies/PoliciesHub.tsx",
+    "bytes": 1435,
+    "sha256": "90905b5d0985deccba0e8013cc35138340b1c481c57e33ec9afcf3ac154a0afb",
+    "mtime_utc": "2026-02-16T16:56:23Z"
+  },
+  {
+    "path": "apps/frontend/src/pages/support/policies/PurchasePolicy.tsx",
+    "bytes": 1851,
+    "sha256": "d1bcfa41457475c81e1f1dd2d6d542fca85d2f34bdef68f5d8fa1c7d7bf8cd7f",
+    "mtime_utc": "2026-02-16T16:56:36Z"
+  },
+  {
+    "path": "apps/frontend/src/pages/support/policies/RefundPolicy.tsx",
+    "bytes": 1789,
+    "sha256": "2a8bb44adda355d0b1df9f362d7f835dcee6e393ea0b536a7d0e4b26adecf15f",
+    "mtime_utc": "2026-02-16T16:56:53Z"
+  },
+  {
+    "path": "apps/frontend/src/types/cart.ts",
+    "bytes": 473,
+    "sha256": "ffd27833c3c98511ee6038ad5f141b2914724337998c9d1564deb67ac06fd231",
+    "mtime_utc": "2026-02-05T16:29:39Z"
+  },
+  {
+    "path": "apps/frontend/src/types/models.ts",
+    "bytes": 2579,
+    "sha256": "2f0ea8f37d4147feec14d2f32a0f724af577bdf57485cf114dba4aa250894681",
+    "mtime_utc": "2026-02-16T16:37:55Z"
+  },
+  {
+    "path": "apps/frontend/src/types/support.ts",
+    "bytes": 1171,
+    "sha256": "67212bd1cbe321c8a2b1ea671ed9e285a073ce57e9ed73c0f118264e68dffcd1",
+    "mtime_utc": "2026-02-05T16:29:39Z"
+  }
+]

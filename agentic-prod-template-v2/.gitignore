@@ -1,0 +1,16 @@
+.env
+__pycache__/
+*.pyc
+.vscode/
+.idea/
+dist/
+build/
+node_modules/
+
+# Manifest snapshots are committed and validated in CI.
+data/*
+!data/.gitkeep
+!data/rag/
+!data/rag/manifests/
+!data/rag/manifests/sources.json
+!data/rag/manifests/last_ingest.json

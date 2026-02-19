@@ -1,0 +1,26 @@
+name: ci
+
+on:
+  pull_request:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install minimal deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyyaml
+      - name: Doctor
+        run: python -m tools.doctor
+      - name: Validate configs
+        run: |
+          python -c "import yaml; yaml.safe_load(open('configs/project.yaml','r',encoding='utf-8'))"
+          python -c "import yaml; yaml.safe_load(open('configs/tools_allowlist.yaml','r',encoding='utf-8'))"

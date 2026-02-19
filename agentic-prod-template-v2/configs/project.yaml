@@ -1,0 +1,56 @@
+project:
+  name: Example Product Repository
+  description: >
+    Generic agentic production template for polyglot repositories.
+    Replace this metadata with your project-specific context.
+  primary_languages:
+    - java
+    - typescript
+    - python
+  stack:
+    backend: service-framework
+    frontend: web-framework
+    database: sql-or-nosql
+  conventions:
+    branching: "feature/*"
+    commit_style: "task-id prefix + short imperative summary"
+    code_style:
+      backend: "layered architecture with explicit API contracts"
+      frontend: "linted typed UI modules"
+      infra: "small reviewable changes"
+  definition_of_done:
+    - "Build/test checks pass for the changed scope"
+    - "No secrets are introduced"
+    - "Docs and task tracking are updated when behavior or scope changes"
+    - "Diff remains scoped to the requested task"
+
+rag:
+  include_globs:
+    - "README.md"
+    - "SETUP.md"
+    - "docs/**/*.md"
+    - "tasks/**/*.md"
+    - "apps/**/src/**/*.*"
+    - "apps/**/package.json"
+    - "apps/**/pom.xml"
+    - "apps/**/pyproject.toml"
+    - "agentic-prod-template-v2/pyproject.toml"
+    - "agentic-prod-template-v2/tools/*.py"
+    - "agentic-prod-template-v2/.ai/**/*.md"
+    - "agentic-prod-template-v2/docs/**/*.md"
+    - "agentic-prod-template-v2/configs/*.yaml"
+    - "agentic-prod-template-v2/configs/schemas/*.json"
+  exclude_globs:
+    - "**/node_modules/**"
+    - "**/dist/**"
+    - "**/build/**"
+    - "**/target/**"
+    - "**/.git/**"
+    - "**/.venv/**"
+    - "agentic-prod-template-v2/data/**"
+  chunking:
+    code:
+      strategy: "by_symbol"   # by_symbol | fixed
+      max_chars: 6000
+    text:
+      max_chars: 4000

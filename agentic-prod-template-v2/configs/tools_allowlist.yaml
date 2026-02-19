@@ -1,0 +1,32 @@
+sandbox:
+  mode_default: "read-only"
+  timeouts:
+    cmd_seconds: 180
+    test_seconds: 1200
+  allowlist_commands:
+    - "git"
+    - "rg"
+    - "python"
+    - "java"
+    - "node"
+    - "npm"
+    - "pnpm"
+    - "mvn"
+    - "mvnw"
+    - "mvnw.cmd"
+    - "gradle"
+    - "docker"
+    - "powershell"
+  denylist_patterns:
+    - "rm -rf"
+    - "del /s /q"
+    - "shutdown"
+    - "format "
+    - "mkfs"
+    - "git reset --hard"
+    - "git checkout --"
+network:
+  default: "deny"  # deny | allowlist | allow
+  allowlist_hosts:
+    - "localhost"
+    - "127.0.0.1"

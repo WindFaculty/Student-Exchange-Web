@@ -1,0 +1,10 @@
+version: "3.9"
+services:
+  runner:
+    build:
+      context: ../..
+      dockerfile: agentic-prod-template-v2/docker/Dockerfile.runner
+    volumes:
+      - ../..:/workspace
+    working_dir: /workspace/agentic-prod-template-v2
+    command: ["bash", "-lc", "python -m tools.doctor --strict"]
