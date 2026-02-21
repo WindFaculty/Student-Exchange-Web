@@ -4,6 +4,8 @@ import com.ssg.iot.common.PageResponse;
 import com.ssg.iot.dto.event.EventRegistrationResponse;
 import com.ssg.iot.dto.event.EventRequest;
 import com.ssg.iot.dto.event.EventResponse;
+import com.ssg.iot.dto.iot.IotContentResponse;
+import com.ssg.iot.dto.iot.IotContentUpdateRequest;
 import com.ssg.iot.dto.listing.ListingRequest;
 import com.ssg.iot.dto.listing.ListingResponse;
 import com.ssg.iot.dto.order.OrderResponse;
@@ -29,6 +31,7 @@ public class AdminController {
     private final OrderService orderService;
     private final EventService eventService;
     private final SupportService supportService;
+    private final IotService iotService;
 
     @GetMapping("/listings")
     public PageResponse<ListingResponse> getListings(
@@ -153,5 +156,20 @@ public class AdminController {
     ) {
         sessionAuthService.requireAdmin(session);
         return supportService.reply(id, request.getReply());
+    }
+
+    @GetMapping("/iot/content")
+    public IotContentResponse getIotContent(HttpSession session) {
+        sessionAuthService.requireAdmin(session);
+        return iotService.getAdminContent();
+    }
+
+    @PutMapping("/iot/content")
+    public IotContentResponse updateIotContent(
+            @Valid @RequestBody IotContentUpdateRequest request,
+            HttpSession session
+    ) {
+        sessionAuthService.requireAdmin(session);
+        return iotService.updateAdminContent(request);
     }
 }

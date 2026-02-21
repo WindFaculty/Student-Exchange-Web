@@ -1,7 +1,7 @@
 $server = "localhost"
 $database = "student_exchange"
-$user = "sa"
-$password = "YourStrong!Passw0rd"
+$user = "student_exchange_web"
+$password = "wind_faculty"
 
 $connectionString = "Server=$server;Database=$database;User Id=$user;Password=$password;TrustServerCertificate=True;"
 

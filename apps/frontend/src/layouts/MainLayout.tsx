@@ -2,6 +2,7 @@ import React from 'react'
 import { Outlet } from 'react-router-dom'
 import { Toaster } from 'react-hot-toast'
 import Header from '../components/Header'
+import FloatingChat from '../components/FloatingChat'
 
 const MainLayout: React.FC = () => {
   return (
@@ -11,6 +12,7 @@ const MainLayout: React.FC = () => {
       <main className="mx-auto w-full max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
         <Outlet />
       </main>
+      <FloatingChat />
     </div>
   )
 }

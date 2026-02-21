@@ -3,12 +3,13 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { adminApi } from '../api/adminApi'
 import { ListingRequest } from '../types/models'
 import { mapApiError } from '../lib/format'
+import { LISTING_FORM_CATEGORIES } from '../lib/listingCategories'
 import { Button } from '../components/ui/Button'
 import { Input } from '../components/ui/Input'
 import PageHeader from '../components/ui/PageHeader'
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/Card'
 
-const categories = ['WORKSHOP_SLOT', 'MENTORING', 'KIT', 'CONSULTATION']
+const categories = LISTING_FORM_CATEGORIES
 
 const emptyForm: ListingRequest = {
   title: '',

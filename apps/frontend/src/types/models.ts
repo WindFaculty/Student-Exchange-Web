@@ -40,6 +40,53 @@ export interface ListingRequest {
   imageUrl?: string
 }
 
+export interface IotHighlight {
+  id: number
+  title: string
+  description: string
+  icon: string
+  displayOrder: number
+}
+
+export interface IotHighlightUpdateRequest {
+  title: string
+  description: string
+  icon: string
+  displayOrder: number
+}
+
+export interface IotContent {
+  id: number
+  heroTitle: string
+  heroSubtitle: string
+  heroImageUrl?: string
+  primaryCtaLabel: string
+  primaryCtaHref: string
+  highlights: IotHighlight[]
+}
+
+export interface IotContentUpdateRequest {
+  heroTitle: string
+  heroSubtitle: string
+  heroImageUrl?: string
+  primaryCtaLabel: string
+  primaryCtaHref: string
+  highlights: IotHighlightUpdateRequest[]
+}
+
+export type IotSegment = 'COMPONENTS' | 'SAMPLE_PRODUCTS' | 'SERVICES'
+
+export interface IotOverviewResponse {
+  heroTitle: string
+  heroSubtitle: string
+  heroImageUrl?: string
+  primaryCtaLabel: string
+  primaryCtaHref: string
+  highlights: IotHighlight[]
+  categoryOptions: string[]
+  listings: PageResponse<Listing>
+}
+
 export interface CartItem {
   listingId: number
   title: string

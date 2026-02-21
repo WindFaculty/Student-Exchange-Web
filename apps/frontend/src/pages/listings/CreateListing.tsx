@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { listingApi } from '../../api/listingApi'
 import { Listing, ListingRequest } from '../../types/models'
 import { formatCurrency, mapApiError } from '../../lib/format'
+import { LISTING_FORM_CATEGORIES } from '../../lib/listingCategories'
 import { Button } from '../../components/ui/Button'
 import { Input } from '../../components/ui/Input'
 import PageHeader from '../../components/ui/PageHeader'
@@ -10,7 +11,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/Ca
 const defaultForm: ListingRequest = {
   title: '',
   description: '',
-  category: 'WORKSHOP_SLOT',
+  category: LISTING_FORM_CATEGORIES[0],
   price: 0,
   stock: 1,
   imageUrl: '',
@@ -102,10 +103,9 @@ const CreateListing: React.FC = () => {
                 value={form.category}
                 onChange={(e) => setForm({ ...form, category: e.target.value })}
               >
-                <option value="WORKSHOP_SLOT">WORKSHOP_SLOT</option>
-                <option value="MENTORING">MENTORING</option>
-                <option value="KIT">KIT</option>
-                <option value="CONSULTATION">CONSULTATION</option>
+                {LISTING_FORM_CATEGORIES.map((item) => (
+                  <option key={item} value={item}>{item}</option>
+                ))}
               </select>
               <Input type="number" min={0} value={form.price} onChange={(e) => setForm({ ...form, price: Number(e.target.value) || 0 })} />
               <Input type="number" min={0} value={form.stock} onChange={(e) => setForm({ ...form, stock: Number(e.target.value) || 0 })} />

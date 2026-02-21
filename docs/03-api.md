@@ -35,6 +35,22 @@ Base URL: `/api`
 `Listing` fields:
 - `id`, `title`, `description`, `category`, `price`, `stock`, `imageUrl`, `active`, `ownerId`, `ownerName`, `createdAt`, `updatedAt`
 
+## IoT Hub
+- `GET /api/iot/overview?search=&category=&segment=&page=&size=`
+
+Query behavior:
+- `segment` is optional and supports: `COMPONENTS`, `SAMPLE_PRODUCTS`, `SERVICES`
+- `category` is optional and kept for backward compatibility
+- `category` and `segment` cannot be sent together
+
+Segment mapping:
+- `COMPONENTS` -> `COMPONENT`, `ELECTRONICS`
+- `SAMPLE_PRODUCTS` -> `SAMPLE_KIT`, `KIT`
+- `SERVICES` -> `IOT_SERVICE`, `MENTORING`, `CONSULTATION`, `SERVICE`
+
+Legacy alias categories still accepted in `category` filter:
+- `ELECTRONICS`, `KIT`, `MENTORING`, `CONSULTATION`, `SERVICE`
+
 ## Cart
 - `GET /api/cart`
 - `POST /api/cart/items`

@@ -1,9 +1,10 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { listingApi } from '../../api/listingApi'
 import { Listing } from '../../types/models'
 import { useCart } from '../../context/CartContext'
 import { formatCurrency, mapApiError } from '../../lib/format'
+import { LISTING_CATEGORIES } from '../../lib/listingCategories'
 import { Button } from '../../components/ui/Button'
 import { Input } from '../../components/ui/Input'
 import { Card, CardContent } from '../../components/ui/Card'
@@ -41,8 +42,6 @@ const ProductList: React.FC = () => {
     load()
   }, [search, category, page])
 
-  const categories = useMemo(() => ['WORKSHOP_SLOT', 'MENTORING', 'KIT', 'CONSULTATION'], [])
-
   const updateQuery = (updates: Record<string, string>) => {
     const next = new URLSearchParams(searchParams)
     Object.entries(updates).forEach(([key, value]) => {
@@ -57,7 +56,7 @@ const ProductList: React.FC = () => {
     <div className="space-y-6">
       <PageHeader
         title="Chợ trao đổi sinh viên"
-        description="Khám phá workshop, mentoring, bộ kit học tập và dịch vụ tư vấn."
+        description="Khám phá đồ học tập, đồ công nghệ, dịch vụ và nhiều tin rao từ sinh viên."
       />
 
       <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-card dark:border-slate-800 dark:bg-slate-900">
@@ -74,7 +73,7 @@ const ProductList: React.FC = () => {
             onChange={(e) => updateQuery({ category: e.target.value, page: '0' })}
           >
             <option value="">Tất cả danh mục</option>
-            {categories.map((item) => (
+            {LISTING_CATEGORIES.map((item) => (
               <option key={item} value={item}>{item}</option>
             ))}
           </select>

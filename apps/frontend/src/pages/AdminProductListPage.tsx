@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { adminApi } from '../api/adminApi'
 import { Listing } from '../types/models'
 import { formatCurrency, mapApiError } from '../lib/format'
+import { ADMIN_LISTING_CATEGORIES } from '../lib/listingCategories'
 import { Button } from '../components/ui/Button'
 import { Input } from '../components/ui/Input'
 import { Badge } from '../components/ui/Badge'
@@ -14,7 +15,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow } fro
 const PAGE_SIZE = 10
 type ActiveFilter = 'ALL' | 'ACTIVE' | 'INACTIVE'
 
-const categoryOptions = ['ALL', 'WORKSHOP_SLOT', 'MENTORING', 'KIT', 'CONSULTATION']
+const categoryOptions = ['ALL', ...ADMIN_LISTING_CATEGORIES]
 
 const AdminProductListPage = () => {
   const navigate = useNavigate()

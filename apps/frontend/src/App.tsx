@@ -16,6 +16,7 @@ import OrderSuccessPage from './pages/checkout/OrderSuccess'
 import EventList from './pages/events/EventList'
 import EventDetail from './pages/events/EventDetail'
 import CreateListing from './pages/listings/CreateListing'
+import IotHubPage from './pages/iot/IotHubPage'
 import SupportHub from './pages/support/SupportHub'
 import FAQ from './pages/support/FAQ'
 import Contact from './pages/support/Contact'
@@ -30,6 +31,7 @@ import AdminProductFormPage from './pages/AdminProductFormPage'
 import AdminOrderListPage from './pages/AdminOrderListPage'
 import AdminEventListPage from './pages/admin/AdminEventListPage'
 import AdminSupportTicketPage from './pages/admin/AdminSupportTicketPage'
+import AdminIotContentPage from './pages/admin/AdminIotContentPage'
 
 function App() {
   return (
@@ -55,6 +57,8 @@ function App() {
                 <Route element={<ProtectedRoute />}>
                   <Route path="/listings" element={<CreateListing />} />
                 </Route>
+
+                <Route path="/iot" element={<IotHubPage />} />
 
                 <Route path="/support" element={<SupportHub />} />
                 <Route path="/support/faq" element={<FAQ />} />
@@ -82,6 +86,7 @@ function App() {
                 <Route path="orders" element={<AdminOrderListPage />} />
                 <Route path="events" element={<AdminEventListPage />} />
                 <Route path="tickets" element={<AdminSupportTicketPage />} />
+                <Route path="iot-content" element={<AdminIotContentPage />} />
               </Route>
 
               <Route path="*" element={<Navigate to="/" replace />} />

@@ -2,6 +2,8 @@ import {
   Event,
   EventRegistration,
   EventRequest,
+  IotContent,
+  IotContentUpdateRequest,
   Listing,
   ListingRequest,
   Order,
@@ -110,6 +112,17 @@ export const adminApi = {
     return fetchJson<SupportTicket>(`/api/admin/support/tickets/${id}/reply`, {
       method: 'POST',
       body: JSON.stringify({ reply }),
+    })
+  },
+
+  getIotContent() {
+    return fetchJson<IotContent>('/api/admin/iot/content')
+  },
+
+  updateIotContent(payload: IotContentUpdateRequest) {
+    return fetchJson<IotContent>('/api/admin/iot/content', {
+      method: 'PUT',
+      body: JSON.stringify(payload),
     })
   },
 }

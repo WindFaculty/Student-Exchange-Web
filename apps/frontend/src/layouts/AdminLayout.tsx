@@ -9,6 +9,7 @@ import { cn } from '../lib/utils'
 const adminNav = [
   { to: '/admin', label: 'Bảng điều khiển', icon: 'dashboard' },
   { to: '/admin/listings', label: 'Sản phẩm', icon: 'list_alt' },
+  { to: '/admin/iot-content', label: 'Noi dung IoT', icon: 'memory' },
   { to: '/admin/orders', label: 'Đơn hàng', icon: 'shopping_cart' },
   { to: '/admin/events', label: 'Sự kiện', icon: 'calendar_month' },
   { to: '/admin/tickets', label: 'Hỗ trợ', icon: 'confirmation_number' },
