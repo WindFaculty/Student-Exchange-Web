@@ -8,6 +8,8 @@ interface AuthContextValue {
   isAuthenticated: boolean
   loading: boolean
   login: (username: string, password: string) => Promise<UserSession>
+  register: (username: string, email: string, password: string) => Promise<UserSession>
+  googleLogin: (idToken: string) => Promise<UserSession>
   logout: () => Promise<void>
   refreshSession: () => Promise<void>
 }
@@ -39,6 +41,18 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return loggedInUser
   }, [])
 
+  const register = useCallback(async (username: string, email: string, password: string) => {
+    const registeredUser = await authApi.register(username, email, password)
+    setUser(registeredUser)
+    return registeredUser
+  }, [])
+
+  const googleLogin = useCallback(async (idToken: string) => {
+    const loggedInUser = await authApi.googleLogin(idToken)
+    setUser(loggedInUser)
+    return loggedInUser
+  }, [])
+
   const logout = useCallback(async () => {
     try {
       await authApi.logout()
@@ -52,9 +66,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     isAuthenticated: !!user,
     loading,
     login,
+    register,
+    googleLogin,
     logout,
     refreshSession,
-  }), [user, loading, login, logout, refreshSession])
+  }), [user, loading, login, register, googleLogin, logout, refreshSession])
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }

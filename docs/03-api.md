@@ -1,6 +1,6 @@
 # API Spec - Student Exchange
 
-Updated: 2026-02-16
+Updated: 2026-02-21
 Base URL: `/api`
 
 ## Conventions
@@ -18,8 +18,33 @@ Base URL: `/api`
 
 ## Auth
 - `POST /api/auth/login`
+- `POST /api/auth/register`
 - `POST /api/auth/logout`
 - `GET /api/auth/me`
+
+Register request:
+```json
+{
+  "username": "newuser",
+  "email": "newuser@example.com",
+  "password": "secret123"
+}
+```
+
+Register response:
+```json
+{
+  "success": true,
+  "message": "Registration successful",
+  "user": {
+    "id": 3,
+    "username": "newuser",
+    "fullName": "newuser",
+    "email": "newuser@example.com",
+    "role": "USER"
+  }
+}
+```
 
 ## Health
 - `GET /api/health`
@@ -44,12 +69,12 @@ Query behavior:
 - `category` and `segment` cannot be sent together
 
 Segment mapping:
-- `COMPONENTS` -> `COMPONENT`, `ELECTRONICS`
-- `SAMPLE_PRODUCTS` -> `SAMPLE_KIT`, `KIT`
-- `SERVICES` -> `IOT_SERVICE`, `MENTORING`, `CONSULTATION`, `SERVICE`
+- `COMPONENTS` -> `Board vi dieu khien / Module phat trien`, `Cam bien`, `Thiet bi thuc thi / Output`, `Module giao tiep / Ket noi`, `Linh kien ho tro co ban`
+- `SAMPLE_PRODUCTS` -> `San pham mau / Bo KIT`
+- `SERVICES` -> `Dich vu IoT`
 
 Legacy alias categories still accepted in `category` filter:
-- `ELECTRONICS`, `KIT`, `MENTORING`, `CONSULTATION`, `SERVICE`
+- `COMPONENT`, `ELECTRONICS`, `SAMPLE_KIT`, `KIT`, `IOT_SERVICE`, `MENTORING`, `CONSULTATION`, `SERVICE`
 
 ## Cart
 - `GET /api/cart`

@@ -34,6 +34,82 @@ class IotApplicationTests {
     }
 
     @Test
+    void registerCreatesUserAndReturnsUserSession() throws Exception {
+        String username = "newstudent";
+        String email = "newstudent@example.com";
+
+        MvcResult result = mockMvc.perform(post("/api/auth/register")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                  "username": "newstudent",
+                                  "email": "newstudent@example.com",
+                                  "password": "secret123"
+                                }
+                                """))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.success", is(true)))
+                .andExpect(jsonPath("$.message", is("Registration successful")))
+                .andExpect(jsonPath("$.user.username", is(username)))
+                .andExpect(jsonPath("$.user.email", is(email)))
+                .andExpect(jsonPath("$.user.fullName", is(username)))
+                .andExpect(jsonPath("$.user.role", is("USER")))
+                .andReturn();
+
+        MockHttpSession userSession = (MockHttpSession) result.getRequest().getSession(false);
+        mockMvc.perform(get("/api/auth/me").session(userSession))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.username", is(username)))
+                .andExpect(jsonPath("$.email", is(email)))
+                .andExpect(jsonPath("$.role", is("USER")));
+    }
+
+    @Test
+    void registerRejectsDuplicateUsername() throws Exception {
+        mockMvc.perform(post("/api/auth/register")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                  "username": "student1",
+                                  "email": "new-student@example.com",
+                                  "password": "secret123"
+                                }
+                                """))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.message", containsString("Username is already taken")));
+    }
+
+    @Test
+    void registerRejectsDuplicateEmail() throws Exception {
+        mockMvc.perform(post("/api/auth/register")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                  "username": "new-user-2",
+                                  "email": "student1@example.com",
+                                  "password": "secret123"
+                                }
+                                """))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.message", containsString("Email is already registered")));
+    }
+
+    @Test
+    void registerRejectsInvalidPayload() throws Exception {
+        mockMvc.perform(post("/api/auth/register")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                  "username": "",
+                                  "email": "not-an-email",
+                                  "password": "123"
+                                }
+                                """))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.message", containsString("email")));
+    }
+
+    @Test
     void trackOrderWithoutParamsReturnsBadRequest() throws Exception {
         mockMvc.perform(get("/api/orders/track"))
                 .andExpect(status().isBadRequest())
@@ -53,14 +129,13 @@ class IotApplicationTests {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.heroTitle", not(isEmptyOrNullString())))
                 .andExpect(jsonPath("$.categoryOptions", containsInAnyOrder(
-                        "COMPONENT",
-                        "ELECTRONICS",
-                        "SAMPLE_KIT",
-                        "KIT",
-                        "IOT_SERVICE",
-                        "MENTORING",
-                        "CONSULTATION",
-                        "SERVICE"
+                        "Board vi dieu khien / Module phat trien",
+                        "Cam bien",
+                        "Thiet bi thuc thi / Output",
+                        "Module giao tiep / Ket noi",
+                        "Linh kien ho tro co ban",
+                        "San pham mau / Bo KIT",
+                        "Dich vu IoT"
                 )))
                 .andExpect(jsonPath("$.listings.content").isArray());
     }
@@ -70,6 +145,13 @@ class IotApplicationTests {
         mockMvc.perform(get("/api/iot/overview").param("category", "KIT"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.listings.content[*].category", everyItem(is("KIT"))));
+    }
+
+    @Test
+    void getIotOverviewAcceptsNewComponentCategory() throws Exception {
+        mockMvc.perform(get("/api/iot/overview").param("category", "Cam bien"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.listings.content").isArray());
     }
 
     @Test
@@ -84,6 +166,7 @@ class IotApplicationTests {
         mockMvc.perform(get("/api/iot/overview").param("segment", "SERVICES"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.listings.content[*].category", everyItem(anyOf(
+                        is("Dich vu IoT"),
                         is("IOT_SERVICE"),
                         is("MENTORING"),
                         is("CONSULTATION"),

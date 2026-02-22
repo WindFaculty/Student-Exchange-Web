@@ -29,7 +29,25 @@ public class IotService {
     private static final String SEGMENT_SAMPLE_PRODUCTS = "SAMPLE_PRODUCTS";
     private static final String SEGMENT_SERVICES = "SERVICES";
 
+    private static final String CATEGORY_CONTROLLER_BOARDS = "Board vi dieu khien / Module phat trien";
+    private static final String CATEGORY_SENSORS = "Cam bien";
+    private static final String CATEGORY_ACTUATORS = "Thiet bi thuc thi / Output";
+    private static final String CATEGORY_CONNECTIVITY = "Module giao tiep / Ket noi";
+    private static final String CATEGORY_BASIC_PARTS = "Linh kien ho tro co ban";
+    private static final String CATEGORY_SAMPLE_KIT = "San pham mau / Bo KIT";
+    private static final String CATEGORY_IOT_SERVICE = "Dich vu IoT";
+
     private static final List<String> CATEGORY_OPTIONS = List.of(
+            CATEGORY_CONTROLLER_BOARDS,
+            CATEGORY_SENSORS,
+            CATEGORY_ACTUATORS,
+            CATEGORY_CONNECTIVITY,
+            CATEGORY_BASIC_PARTS,
+            CATEGORY_SAMPLE_KIT,
+            CATEGORY_IOT_SERVICE
+    );
+
+    private static final List<String> LEGACY_ALIAS_CATEGORIES = List.of(
             "COMPONENT",
             "ELECTRONICS",
             "SAMPLE_KIT",
@@ -40,13 +58,32 @@ public class IotService {
             "SERVICE"
     );
 
+    private static final List<String> DEFAULT_CATEGORY_FILTERS = new ArrayList<>();
     private static final Map<String, List<String>> SEGMENT_TO_CATEGORIES = Map.of(
-            SEGMENT_COMPONENTS, List.of("COMPONENT", "ELECTRONICS"),
-            SEGMENT_SAMPLE_PRODUCTS, List.of("SAMPLE_KIT", "KIT"),
-            SEGMENT_SERVICES, List.of("IOT_SERVICE", "MENTORING", "CONSULTATION", "SERVICE")
+            SEGMENT_COMPONENTS, List.of(
+                    CATEGORY_CONTROLLER_BOARDS,
+                    CATEGORY_SENSORS,
+                    CATEGORY_ACTUATORS,
+                    CATEGORY_CONNECTIVITY,
+                    CATEGORY_BASIC_PARTS,
+                    "COMPONENT",
+                    "ELECTRONICS"
+            ),
+            SEGMENT_SAMPLE_PRODUCTS, List.of(CATEGORY_SAMPLE_KIT, "SAMPLE_KIT", "KIT"),
+            SEGMENT_SERVICES, List.of(CATEGORY_IOT_SERVICE, "IOT_SERVICE", "MENTORING", "CONSULTATION", "SERVICE")
     );
 
-    private static final Set<String> ALLOWED_CATEGORIES = new HashSet<>(CATEGORY_OPTIONS);
+    private static final Set<String> ALLOWED_CATEGORIES = new HashSet<>();
+    static {
+        DEFAULT_CATEGORY_FILTERS.addAll(CATEGORY_OPTIONS);
+        DEFAULT_CATEGORY_FILTERS.addAll(LEGACY_ALIAS_CATEGORIES);
+        CATEGORY_OPTIONS.stream()
+                .map(item -> item.toUpperCase(Locale.ROOT))
+                .forEach(ALLOWED_CATEGORIES::add);
+        LEGACY_ALIAS_CATEGORIES.stream()
+                .map(item -> item.toUpperCase(Locale.ROOT))
+                .forEach(ALLOWED_CATEGORIES::add);
+    }
     private static final Set<String> ALLOWED_SEGMENTS = SEGMENT_TO_CATEGORIES.keySet();
 
     private final IotPageContentRepository pageContentRepository;
@@ -179,7 +216,7 @@ public class IotService {
         if (segment != null) {
             return SEGMENT_TO_CATEGORIES.get(segment);
         }
-        return CATEGORY_OPTIONS;
+        return DEFAULT_CATEGORY_FILTERS;
     }
 
     private IotPageContent getActiveContent() {

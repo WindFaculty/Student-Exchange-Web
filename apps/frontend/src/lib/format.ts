@@ -30,6 +30,8 @@ export const formatDate = (input: string | Date) => {
 const knownErrorMap: Record<string, string> = {
   'Login failed': 'Đăng nhập thất bại',
   'Admin login failed': 'Đăng nhập quản trị thất bại',
+  'Username is already taken': 'Tên đăng nhập đã tồn tại',
+  'Email is already registered': 'Email đã được đăng ký',
   'Failed to load listings': 'Không thể tải danh sách bài đăng',
   'Failed to load listing': 'Không thể tải chi tiết bài đăng',
   'Failed to load orders': 'Không thể tải đơn hàng',

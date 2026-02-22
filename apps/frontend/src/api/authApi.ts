@@ -21,11 +21,37 @@ export const authApi = {
     return data.user
   },
 
+  async register(username: string, email: string, password: string): Promise<UserSession> {
+    const data = await fetchJson<LoginResponse>('/api/auth/register', {
+      method: 'POST',
+      body: JSON.stringify({ username, email, password }),
+    })
+
+    if (!data.success || !data.user) {
+      throw new Error(data.message || 'Registration failed')
+    }
+
+    return data.user
+  },
+
   async logout(): Promise<void> {
     await fetchJson<LoginResponse>('/api/auth/logout', { method: 'POST' })
   },
 
   async me(): Promise<UserSession> {
     return fetchJson<UserSession>('/api/auth/me')
+  },
+
+  async googleLogin(idToken: string): Promise<UserSession> {
+    const data = await fetchJson<LoginResponse>('/api/auth/google', {
+      method: 'POST',
+      body: JSON.stringify({ idToken }),
+    })
+
+    if (!data.success || !data.user) {
+      throw new Error(data.message || 'Google Login failed')
+    }
+
+    return data.user
   },
 }

@@ -4,6 +4,7 @@ import { iotApi } from '../../api/iotApi'
 import { useAuth } from '../../context/AuthContext'
 import { useCart } from '../../context/CartContext'
 import { formatCurrency, mapApiError } from '../../lib/format'
+import { IOT_COMPONENT_CLASSIFICATION } from '../../lib/listingCategories'
 import { Button } from '../../components/ui/Button'
 import { Input } from '../../components/ui/Input'
 import { Card, CardContent } from '../../components/ui/Card'
@@ -44,6 +45,7 @@ const IotHubPage: React.FC = () => {
   const pageRaw = Number(searchParams.get('page') ?? 0)
   const page = Number.isFinite(pageRaw) && pageRaw >= 0 ? pageRaw : 0
   const search = searchParams.get('search') ?? ''
+  const selectedComponentCategory = tab === 'components' ? searchParams.get('category') ?? '' : ''
 
   useEffect(() => {
     if (rawTab === null || rawTab === tab) {
@@ -60,12 +62,21 @@ const IotHubPage: React.FC = () => {
       setLoading(true)
       setError('')
       try {
-        const data = await iotApi.getOverview({
-          search,
-          segment: TAB_CONFIG[tab].segment,
-          page,
-          size: 12,
-        })
+        const data = await iotApi.getOverview(
+          selectedComponentCategory
+            ? {
+                search,
+                category: selectedComponentCategory,
+                page,
+                size: 12,
+              }
+            : {
+                search,
+                segment: TAB_CONFIG[tab].segment,
+                page,
+                size: 12,
+              },
+        )
         setOverview(data)
       } catch (err: unknown) {
         setError(mapApiError(err, 'Khong the tai du lieu IoT'))
@@ -75,7 +86,7 @@ const IotHubPage: React.FC = () => {
     }
 
     load()
-  }, [search, tab, page])
+  }, [search, selectedComponentCategory, tab, page])
 
   const listings: Listing[] = overview?.listings.content ?? []
   const totalPages = overview?.listings.totalPages ?? 0
@@ -163,7 +174,7 @@ const IotHubPage: React.FC = () => {
                     type="button"
                     size="sm"
                     variant={active ? 'default' : 'outline'}
-                    onClick={() => updateQuery({ tab: item, page: '0' })}
+                    onClick={() => updateQuery({ tab: item, page: '0', category: item === 'components' ? selectedComponentCategory : '' })}
                   >
                     {TAB_CONFIG[item].label}
                   </Button>
@@ -176,6 +187,22 @@ const IotHubPage: React.FC = () => {
               placeholder="Tim theo tieu de hoac mo ta"
               iconLeft={<Icon name="search" className="text-[18px]" />}
             />
+            {tab === 'components' ? (
+              <div className="space-y-3 rounded-lg border border-slate-200 bg-slate-50 p-3 dark:border-slate-700 dark:bg-slate-800/60">
+                <div>
+                  <select
+                    className="h-10 rounded-lg border border-slate-200 bg-white px-3 text-sm dark:border-slate-700 dark:bg-slate-900"
+                    value={selectedComponentCategory}
+                    onChange={(event) => updateQuery({ category: event.target.value, page: '0' })}
+                  >
+                    <option value="">Tat ca nhom linh kien</option>
+                    {IOT_COMPONENT_CLASSIFICATION.map((group) => (
+                      <option key={group.category} value={group.category}>{group.category}</option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+            ) : null}
           </div>
         </div>
 

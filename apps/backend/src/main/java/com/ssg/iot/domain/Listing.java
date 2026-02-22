@@ -36,7 +36,7 @@ public class Listing {
     @Column(nullable = false)
     private int stock;
 
-    @Column(length = 500)
+    @Column(columnDefinition = "VARCHAR(MAX)")
     private String imageUrl;
 
     @Column(nullable = false)

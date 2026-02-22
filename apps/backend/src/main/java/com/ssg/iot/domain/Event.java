@@ -45,7 +45,7 @@ public class Event {
     @Column(nullable = false, precision = 19, scale = 2)
     private BigDecimal fee;
 
-    @Column(length = 500)
+    @Column(columnDefinition = "VARCHAR(MAX)")
     private String imageUrl;
 
     @Column(nullable = false)

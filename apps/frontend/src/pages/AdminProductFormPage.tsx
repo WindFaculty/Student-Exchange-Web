@@ -146,20 +146,22 @@ const AdminProductFormPage = () => {
               </div>
 
               <div className="space-y-1">
-                <label className="text-sm font-medium">Giá (VND)</label>
+                <label className="text-sm font-medium">Giá</label>
                 <Input
                   required
-                  type="number"
-                  min={1}
-                  value={form.price}
-                  onChange={(event) => setForm((current) => ({ ...current, price: Number(event.target.value) || 0 }))}
+                  type="text"
+                  placeholder="0"
+                  value={form.price ? new Intl.NumberFormat('en-US').format(form.price) : ''}
+                  onChange={(event) => {
+                    const rawValue = event.target.value.replace(/[^0-9]/g, '')
+                    setForm((current) => ({ ...current, price: rawValue ? parseInt(rawValue, 10) : 0 }))
+                  }}
                 />
               </div>
 
               <div className="space-y-1">
                 <label className="text-sm font-medium">Tồn kho</label>
                 <Input
-                  required
                   type="number"
                   min={0}
                   value={form.stock}
