@@ -7,12 +7,13 @@ import Icon from '../components/ui/Icon'
 import { cn } from '../lib/utils'
 
 const adminNav = [
-  { to: '/admin', label: 'Bảng điều khiển', icon: 'dashboard' },
-  { to: '/admin/listings', label: 'Sản phẩm', icon: 'list_alt' },
+  { to: '/admin', label: 'Dashboard', icon: 'dashboard' },
+  { to: '/admin/listings', label: 'San pham', icon: 'list_alt' },
+  { to: '/admin/iot-sample-projects', label: 'IoT sample projects', icon: 'inventory_2' },
   { to: '/admin/iot-content', label: 'Noi dung IoT', icon: 'memory' },
-  { to: '/admin/orders', label: 'Đơn hàng', icon: 'shopping_cart' },
-  { to: '/admin/events', label: 'Sự kiện', icon: 'calendar_month' },
-  { to: '/admin/tickets', label: 'Hỗ trợ', icon: 'confirmation_number' },
+  { to: '/admin/orders', label: 'Don hang', icon: 'shopping_cart' },
+  { to: '/admin/events', label: 'Su kien', icon: 'calendar_month' },
+  { to: '/admin/tickets', label: 'Ho tro', icon: 'confirmation_number' },
 ]
 
 const AdminLayout: React.FC = () => {
@@ -35,7 +36,7 @@ const AdminLayout: React.FC = () => {
             </div>
             <div>
               <p className="text-sm font-semibold text-slate-900 dark:text-white">Admin Portal</p>
-              <p className="text-xs text-slate-500 dark:text-slate-400">Quản trị hệ thống</p>
+              <p className="text-xs text-slate-500 dark:text-slate-400">Quan tri he thong</p>
             </div>
           </div>
         </div>
@@ -58,7 +59,7 @@ const AdminLayout: React.FC = () => {
         <div className="border-t border-slate-100 p-3 dark:border-slate-800">
           <Button variant="ghost" className="w-full justify-start" onClick={handleLogout}>
             <Icon name="logout" />
-            Đăng xuất
+            Dang xuat
           </Button>
         </div>
       </aside>
@@ -69,7 +70,7 @@ const AdminLayout: React.FC = () => {
             <Button size="icon" variant="ghost" className="lg:hidden" onClick={() => navigate('/admin')}>
               <Icon name="menu" />
             </Button>
-            <h1 className="text-lg font-bold text-slate-900 dark:text-white">Khu vực quản trị</h1>
+            <h1 className="text-lg font-bold text-slate-900 dark:text-white">Khu vuc quan tri</h1>
           </div>
           <div className="flex items-center gap-3">
             <Button size="icon" variant="ghost" onClick={toggleTheme}>
@@ -77,7 +78,7 @@ const AdminLayout: React.FC = () => {
             </Button>
             <span className="hidden text-sm text-slate-500 sm:inline">{user?.fullName}</span>
             <Button size="sm" variant="outline" className="lg:hidden" onClick={handleLogout}>
-              Đăng xuất
+              Dang xuat
             </Button>
           </div>
         </header>

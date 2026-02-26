@@ -1,0 +1,80 @@
+{
+  "projects": [
+    {
+      "slug": "01_smart_plant_watering",
+      "name": "Smart Plant Watering System",
+      "path": "projects/01_smart_plant_watering",
+      "main_components": [
+        "Capacitive Soil Moisture Sensor",
+        "Relay Module",
+        "Water Pump"
+      ]
+    },
+    {
+      "slug": "02_home_env_monitor",
+      "name": "Home Environment Monitor",
+      "path": "projects/02_home_env_monitor",
+      "main_components": [
+        "BME280",
+        "OLED Display"
+      ]
+    },
+    {
+      "slug": "03_smart_door_lock",
+      "name": "Smart Door Lock with RFID",
+      "path": "projects/03_smart_door_lock",
+      "main_components": [
+        "RC522 RFID Reader",
+        "SG90 Servo"
+      ]
+    },
+    {
+      "slug": "04_energy_monitoring_plug",
+      "name": "Energy Monitoring Smart Plug",
+      "path": "projects/04_energy_monitoring_plug",
+      "main_components": [
+        "INA219 Current Sensor",
+        "Relay Module"
+      ]
+    },
+    {
+      "slug": "05_garage_parking_assistant",
+      "name": "Garage Parking Assistant",
+      "path": "projects/05_garage_parking_assistant",
+      "main_components": [
+        "HC-SR04 Ultrasonic Sensor",
+        "Buzzer / LEDs"
+      ]
+    },
+    {
+      "slug": "06_lora_weather_station",
+      "name": "LoRa Weather Station",
+      "path": "projects/06_lora_weather_station",
+      "main_components": [
+        "BME280",
+        "OLED Display (gateway)"
+      ]
+    },
+    {
+      "slug": "07_rpi_surveillance_cam",
+      "name": "Raspberry Pi Surveillance Camera",
+      "path": "projects/07_rpi_surveillance_cam",
+      "main_components": [
+        "PIR Motion Sensor",
+        "Camera Module",
+        "Buzzer"
+      ]
+    },
+    {
+      "slug": "08_rpi_smart_garden",
+      "name": "Raspberry Pi Smart Garden Monitor",
+      "path": "projects/08_rpi_smart_garden",
+      "main_components": [
+        "Capacitive Soil Moisture Sensor",
+        "DHT22 Temperature/Humidity Sensor",
+        "Relay Module",
+        "Water Pump"
+      ]
+    }
+  ]
+}

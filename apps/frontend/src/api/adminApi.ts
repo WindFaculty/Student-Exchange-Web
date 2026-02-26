@@ -4,6 +4,8 @@ import {
   EventRequest,
   IotContent,
   IotContentUpdateRequest,
+  IotSampleProject,
+  IotSampleProjectRequest,
   Listing,
   ListingRequest,
   Order,
@@ -124,5 +126,36 @@ export const adminApi = {
       method: 'PUT',
       body: JSON.stringify(payload),
     })
+  },
+
+  getIotSampleProjects(params?: { search?: string; active?: boolean; page?: number; size?: number }) {
+    const query = new URLSearchParams()
+    if (params?.search) query.set('search', params.search)
+    if (params?.active !== undefined) query.set('active', String(params.active))
+    if (params?.page !== undefined) query.set('page', String(params.page))
+    if (params?.size !== undefined) query.set('size', String(params.size))
+    return fetchJson<PageResponse<IotSampleProject>>(`/api/admin/iot/sample-projects?${query.toString()}`)
+  },
+
+  getIotSampleProject(id: number) {
+    return fetchJson<IotSampleProject>(`/api/admin/iot/sample-projects/${id}`)
+  },
+
+  createIotSampleProject(payload: IotSampleProjectRequest) {
+    return fetchJson<IotSampleProject>('/api/admin/iot/sample-projects', {
+      method: 'POST',
+      body: JSON.stringify(payload),
+    })
+  },
+
+  updateIotSampleProject(id: number, payload: IotSampleProjectRequest) {
+    return fetchJson<IotSampleProject>(`/api/admin/iot/sample-projects/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify(payload),
+    })
+  },
+
+  deleteIotSampleProject(id: number) {
+    return fetchJson<void>(`/api/admin/iot/sample-projects/${id}`, { method: 'DELETE' })
   },
 }

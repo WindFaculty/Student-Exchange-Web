@@ -6,6 +6,8 @@ import com.ssg.iot.dto.event.EventRequest;
 import com.ssg.iot.dto.event.EventResponse;
 import com.ssg.iot.dto.iot.IotContentResponse;
 import com.ssg.iot.dto.iot.IotContentUpdateRequest;
+import com.ssg.iot.dto.iot.IotSampleProjectRequest;
+import com.ssg.iot.dto.iot.IotSampleProjectResponse;
 import com.ssg.iot.dto.listing.ListingRequest;
 import com.ssg.iot.dto.listing.ListingResponse;
 import com.ssg.iot.dto.order.OrderResponse;
@@ -171,5 +173,54 @@ public class AdminController {
     ) {
         sessionAuthService.requireAdmin(session);
         return iotService.updateAdminContent(request);
+    }
+
+    @GetMapping("/iot/sample-projects")
+    public PageResponse<IotSampleProjectResponse> getIotSampleProjects(
+            @RequestParam(required = false) String search,
+            @RequestParam(required = false) Boolean active,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "20") int size,
+            HttpSession session
+    ) {
+        sessionAuthService.requireAdmin(session);
+        return iotService.getAdminSampleProjects(search, active, page, size);
+    }
+
+    @GetMapping("/iot/sample-projects/{id}")
+    public IotSampleProjectResponse getIotSampleProject(
+            @PathVariable Long id,
+            HttpSession session
+    ) {
+        sessionAuthService.requireAdmin(session);
+        return iotService.getAdminSampleProject(id);
+    }
+
+    @PostMapping("/iot/sample-projects")
+    public IotSampleProjectResponse createIotSampleProject(
+            @Valid @RequestBody IotSampleProjectRequest request,
+            HttpSession session
+    ) {
+        sessionAuthService.requireAdmin(session);
+        return iotService.createAdminSampleProject(request);
+    }
+
+    @PutMapping("/iot/sample-projects/{id}")
+    public IotSampleProjectResponse updateIotSampleProject(
+            @PathVariable Long id,
+            @Valid @RequestBody IotSampleProjectRequest request,
+            HttpSession session
+    ) {
+        sessionAuthService.requireAdmin(session);
+        return iotService.updateAdminSampleProject(id, request);
+    }
+
+    @DeleteMapping("/iot/sample-projects/{id}")
+    public void deleteIotSampleProject(
+            @PathVariable Long id,
+            HttpSession session
+    ) {
+        sessionAuthService.requireAdmin(session);
+        iotService.deleteAdminSampleProject(id);
     }
 }

@@ -17,6 +17,7 @@ import EventList from './pages/events/EventList'
 import EventDetail from './pages/events/EventDetail'
 import CreateListing from './pages/listings/CreateListing'
 import IotHubPage from './pages/iot/IotHubPage'
+import IotProjectDetailPage from './pages/iot/IotProjectDetailPage'
 import SupportHub from './pages/support/SupportHub'
 import FAQ from './pages/support/FAQ'
 import Contact from './pages/support/Contact'
@@ -32,6 +33,8 @@ import AdminOrderListPage from './pages/AdminOrderListPage'
 import AdminEventListPage from './pages/admin/AdminEventListPage'
 import AdminSupportTicketPage from './pages/admin/AdminSupportTicketPage'
 import AdminIotContentPage from './pages/admin/AdminIotContentPage'
+import AdminIotSampleProjectListPage from './pages/admin/AdminIotSampleProjectListPage'
+import AdminIotSampleProjectFormPage from './pages/admin/AdminIotSampleProjectFormPage'
 
 function App() {
   return (
@@ -59,6 +62,7 @@ function App() {
                 </Route>
 
                 <Route path="/iot" element={<IotHubPage />} />
+                <Route path="/iot/projects/:slug" element={<IotProjectDetailPage />} />
 
                 <Route path="/support" element={<SupportHub />} />
                 <Route path="/support/faq" element={<FAQ />} />
@@ -87,6 +91,9 @@ function App() {
                 <Route path="events" element={<AdminEventListPage />} />
                 <Route path="tickets" element={<AdminSupportTicketPage />} />
                 <Route path="iot-content" element={<AdminIotContentPage />} />
+                <Route path="iot-sample-projects" element={<AdminIotSampleProjectListPage />} />
+                <Route path="iot-sample-projects/new" element={<AdminIotSampleProjectFormPage />} />
+                <Route path="iot-sample-projects/:id/edit" element={<AdminIotSampleProjectFormPage />} />
               </Route>
 
               <Route path="*" element={<Navigate to="/" replace />} />

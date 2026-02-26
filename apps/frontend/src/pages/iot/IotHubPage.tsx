@@ -1,26 +1,67 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { iotApi } from '../../api/iotApi'
-import { useAuth } from '../../context/AuthContext'
 import { useCart } from '../../context/CartContext'
 import { formatCurrency, mapApiError } from '../../lib/format'
 import { IOT_COMPONENT_CLASSIFICATION } from '../../lib/listingCategories'
-import { Button } from '../../components/ui/Button'
-import { Input } from '../../components/ui/Input'
-import { Card, CardContent } from '../../components/ui/Card'
 import Icon from '../../components/ui/Icon'
-import { IotOverviewResponse, IotSegment, Listing } from '../../types/models'
+import { IotItemResponse, IotSampleProject, PageResponse } from '../../types/models'
 
 type IotTabKey = 'components' | 'sample' | 'services'
+
+type IotCardItem = {
+  id: number
+  title: string
+  description?: string
+  price: number
+  stock: number
+  imageUrl?: string
+  listingId?: number
+  listingActive?: boolean
+  slug?: string
+}
 
 const DEFAULT_TAB: IotTabKey = 'components'
 const TAB_ORDER: IotTabKey[] = ['components', 'sample', 'services']
 
-const TAB_CONFIG: Record<IotTabKey, { label: string; segment: IotSegment }> = {
-  components: { label: 'Linh kien', segment: 'COMPONENTS' },
-  sample: { label: 'San pham mau', segment: 'SAMPLE_PRODUCTS' },
-  services: { label: 'Dich vu', segment: 'SERVICES' },
+const TAB_CONFIG: Record<IotTabKey, { label: string; subtitle: string; icon: string }> = {
+  components: {
+    label: 'Linh kien',
+    subtitle: 'Danh muc linh kien IoT cho hoc tap va du an.',
+    icon: 'memory',
+  },
+  sample: {
+    label: 'San pham mau',
+    subtitle: '8 du an mau de tham khao va trien khai nhanh.',
+    icon: 'groups',
+  },
+  services: {
+    label: 'Dich vu',
+    subtitle: 'Cac dich vu ho tro tu van, lap dat va bao tri.',
+    icon: 'rocket_launch',
+  },
 }
+
+const SERVICE_CATEGORIES = [
+  {
+    key: 'pcb',
+    label: 'Dat in mach',
+    icon: 'developer_board',
+    description: 'Dich vu thiet ke va in mach PCB theo yeu cau.',
+  },
+  {
+    key: 'rental',
+    label: 'Thue linh kien',
+    icon: 'handshake',
+    description: 'Thue linh kien dien tu theo ngay/tuan cho du an.',
+  },
+  {
+    key: 'consult',
+    label: 'Tu van',
+    icon: 'support_agent',
+    description: 'Tu van ky thuat, lap dat va trien khai he thong IoT.',
+  },
+] as const
 
 const normalizeTab = (rawTab: string | null): IotTabKey => {
   if (rawTab === 'sample' || rawTab === 'services' || rawTab === 'components') {
@@ -29,13 +70,35 @@ const normalizeTab = (rawTab: string | null): IotTabKey => {
   return DEFAULT_TAB
 }
 
+const toCardFromComponent = (item: IotItemResponse): IotCardItem => ({
+  id: item.id,
+  title: item.title,
+  description: item.description,
+  price: item.price,
+  stock: item.stock,
+  imageUrl: item.imageUrl,
+  listingId: item.listingId ?? item.id,
+  listingActive: item.listingActive ?? true,
+})
+
+const toCardFromSample = (item: IotSampleProject): IotCardItem => ({
+  id: item.id,
+  title: item.title,
+  description: item.summary || item.description,
+  price: item.price,
+  stock: item.stock,
+  imageUrl: item.imageUrl,
+  listingId: item.listingId,
+  listingActive: item.listingActive,
+  slug: item.slug,
+})
+
 const IotHubPage: React.FC = () => {
   const navigate = useNavigate()
   const [searchParams, setSearchParams] = useSearchParams()
-  const { user } = useAuth()
   const { addToCart } = useCart()
 
-  const [overview, setOverview] = useState<IotOverviewResponse | null>(null)
+  const [data, setData] = useState<PageResponse<IotCardItem> | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [addingId, setAddingId] = useState<number | null>(null)
@@ -48,9 +111,7 @@ const IotHubPage: React.FC = () => {
   const selectedComponentCategory = tab === 'components' ? searchParams.get('category') ?? '' : ''
 
   useEffect(() => {
-    if (rawTab === null || rawTab === tab) {
-      return
-    }
+    if (rawTab === null || rawTab === tab) return
     const next = new URLSearchParams(searchParams)
     next.set('tab', tab)
     next.set('page', '0')
@@ -58,26 +119,39 @@ const IotHubPage: React.FC = () => {
   }, [rawTab, searchParams, setSearchParams, tab])
 
   useEffect(() => {
+    if (tab === 'services') {
+      setData(null)
+      setLoading(false)
+      setError('')
+      return
+    }
+
     const load = async () => {
       setLoading(true)
       setError('')
       try {
-        const data = await iotApi.getOverview(
-          selectedComponentCategory
-            ? {
-                search,
-                category: selectedComponentCategory,
-                page,
-                size: 12,
-              }
-            : {
-                search,
-                segment: TAB_CONFIG[tab].segment,
-                page,
-                size: 12,
-              },
-        )
-        setOverview(data)
+        if (tab === 'components') {
+          const result = await iotApi.getComponents({
+            search: search || undefined,
+            category: selectedComponentCategory || undefined,
+            page,
+            size: 12,
+          })
+          setData({
+            ...result,
+            content: result.content.map(toCardFromComponent),
+          })
+        } else {
+          const result = await iotApi.getSampleProjects({
+            search: search || undefined,
+            page,
+            size: 12,
+          })
+          setData({
+            ...result,
+            content: result.content.map(toCardFromSample),
+          })
+        }
       } catch (err: unknown) {
         setError(mapApiError(err, 'Khong the tai du lieu IoT'))
       } finally {
@@ -88,9 +162,8 @@ const IotHubPage: React.FC = () => {
     load()
   }, [search, selectedComponentCategory, tab, page])
 
-  const listings: Listing[] = overview?.listings.content ?? []
-  const totalPages = overview?.listings.totalPages ?? 0
-  const isAdmin = user?.role === 'ADMIN'
+  const listings = data?.content ?? []
+  const totalPages = data?.totalPages ?? 0
 
   const updateQuery = (updates: Record<string, string>) => {
     const next = new URLSearchParams(searchParams)
@@ -98,18 +171,16 @@ const IotHubPage: React.FC = () => {
       if (!value) next.delete(key)
       else next.set(key, value)
     })
-
-    if (!next.get('tab')) {
-      next.set('tab', DEFAULT_TAB)
-    }
-    if (!('page' in updates)) {
-      next.set('page', '0')
-    }
-
+    if (!next.get('tab')) next.set('tab', DEFAULT_TAB)
+    if (!('page' in updates)) next.set('page', '0')
     setSearchParams(next)
   }
 
-  const handleAddToCart = async (listingId: number) => {
+  const handleAddToCart = async (listingId?: number) => {
+    if (!listingId) {
+      setError('Du an nay chua map voi san pham de mua hang')
+      return
+    }
     setAddingId(listingId)
     try {
       await addToCart(listingId, 1)
@@ -120,148 +191,209 @@ const IotHubPage: React.FC = () => {
     }
   }
 
-  return (
-    <div className="space-y-8">
-      {isAdmin ? (
-        <section className="grid gap-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-card dark:border-slate-800 dark:bg-slate-900 lg:grid-cols-[1.3fr_1fr]">
-          <div className="space-y-3">
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">IoT Hub</p>
-            <h1 className="text-2xl font-bold text-slate-900 dark:text-white sm:text-3xl">
-              {overview?.heroTitle ?? 'IoT Hub cho sinh vien'}
-            </h1>
-            <p className="text-sm text-slate-600 dark:text-slate-300">
-              {overview?.heroSubtitle ?? 'Kham pha linh kien, bo KIT mau va dich vu IoT cho du an thuc te.'}
-            </p>
-            <Button onClick={() => navigate(overview?.primaryCtaHref ?? '/listings')}>
-              {overview?.primaryCtaLabel ?? 'Dang san pham IoT'}
-            </Button>
-          </div>
-          <div className="overflow-hidden rounded-xl bg-slate-100 dark:bg-slate-800">
-            {overview?.heroImageUrl ? (
-              <img src={overview.heroImageUrl} alt="IoT hero" className="h-full min-h-52 w-full object-cover" />
-            ) : (
-              <div className="flex h-full min-h-52 items-center justify-center text-slate-400">
-                <Icon name="devices_other" className="text-5xl" />
-              </div>
-            )}
-          </div>
-        </section>
-      ) : null}
+  const openDetail = (item: IotCardItem) => {
+    if (tab === 'sample' && item.slug) {
+      navigate(`/iot/projects/${item.slug}`)
+      return
+    }
 
-      <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-        {(overview?.highlights ?? []).map((item) => (
-          <Card key={item.id}>
-            <CardContent className="space-y-2 pt-5">
-              <div className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-primary">
-                <Icon name={item.icon} />
+    const listingId = item.listingId ?? item.id
+    navigate(`/products/${listingId}`)
+  }
+
+  return (
+    <div className="min-h-screen bg-[#0b1a2e] px-4 py-8 text-white">
+      <section className="mb-8 grid gap-4 sm:grid-cols-3">
+        {TAB_ORDER.map((item) => {
+          const cfg = TAB_CONFIG[item]
+          const active = item === tab
+          return (
+            <button
+              key={item}
+              type="button"
+              onClick={() => updateQuery({ tab: item, page: '0', category: '', search: '' })}
+              className={[
+                'group relative flex flex-col items-center gap-3 rounded-2xl border p-6 text-center transition-all duration-200',
+                active
+                  ? 'border-blue-500/60 bg-[#0d2e5a]/80 shadow-[0_0_24px_4px_rgba(59,130,246,0.25)]'
+                  : 'border-blue-900/40 bg-[#0d1f3c]/60 hover:border-blue-600/50 hover:bg-[#0d2a52]/70',
+              ].join(' ')}
+            >
+              <div
+                className={[
+                  'flex h-16 w-16 items-center justify-center rounded-full transition-all duration-300',
+                  active
+                    ? 'bg-blue-500/20 ring-2 ring-blue-400/50 shadow-[0_0_16px_4px_rgba(59,130,246,0.4)]'
+                    : 'bg-blue-900/30 group-hover:bg-blue-800/40',
+                ].join(' ')}
+              >
+                <span
+                  className={[
+                    'material-symbols-outlined text-4xl transition-colors',
+                    active ? 'text-blue-300' : 'text-blue-500 group-hover:text-blue-400',
+                  ].join(' ')}
+                >
+                  {cfg.icon}
+                </span>
               </div>
-              <h2 className="text-base font-semibold">{item.title}</h2>
-              <p className="text-sm text-slate-500">{item.description}</p>
-            </CardContent>
-          </Card>
-        ))}
+              <h2 className="text-lg font-bold text-white">{cfg.label}</h2>
+              <p className="text-sm leading-snug text-slate-400">{cfg.subtitle}</p>
+            </button>
+          )
+        })}
       </section>
 
-      <section className="space-y-4">
-        <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-card dark:border-slate-800 dark:bg-slate-900">
-          <div className="space-y-3">
-            <div className="flex flex-wrap gap-2">
-              {TAB_ORDER.map((item) => {
-                const active = item === tab
+      {tab === 'services' && (
+        <section className="grid gap-6 sm:grid-cols-3">
+          {SERVICE_CATEGORIES.map((svc) => (
+            <div
+              key={svc.key}
+              className="flex flex-col items-center gap-4 rounded-2xl border border-cyan-900/40 bg-[#0a2535]/70 p-8 text-center"
+            >
+              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-cyan-500/15 ring-2 ring-cyan-400/40 shadow-[0_0_16px_4px_rgba(6,182,212,0.3)]">
+                <span className="material-symbols-outlined text-4xl text-cyan-300">{svc.icon}</span>
+              </div>
+              <h3 className="text-lg font-bold text-white">{svc.label}</h3>
+              <p className="text-sm leading-relaxed text-slate-400">{svc.description}</p>
+            </div>
+          ))}
+        </section>
+      )}
+
+      {tab !== 'services' && (
+        <>
+          <section className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center">
+            <div className="relative flex-1">
+              <span className="material-symbols-outlined pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[20px] text-slate-400">
+                search
+              </span>
+              <input
+                type="text"
+                value={search}
+                onChange={(e) => updateQuery({ search: e.target.value, page: '0' })}
+                placeholder="Tim theo tieu de hoac mo ta"
+                className="h-11 w-full rounded-xl border border-blue-900/50 bg-[#0d1f3c]/80 pl-10 pr-4 text-sm text-white placeholder-slate-500 outline-none transition focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+              />
+            </div>
+
+            {tab === 'components' && (
+              <div className="relative shrink-0">
+                <select
+                  value={selectedComponentCategory}
+                  onChange={(e) => updateQuery({ category: e.target.value, page: '0' })}
+                  className="h-11 cursor-pointer appearance-none rounded-xl border border-blue-900/50 bg-[#0d1f3c]/80 px-4 pr-10 text-sm text-white outline-none transition focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                >
+                  <option value="" className="bg-[#0d1f3c]">Tat ca nhom linh kien</option>
+                  {IOT_COMPONENT_CLASSIFICATION.map((group) => (
+                    <option key={group.category} value={group.category} className="bg-[#0d1f3c]">
+                      {group.category}
+                    </option>
+                  ))}
+                </select>
+                <span className="material-symbols-outlined pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[18px] text-slate-400">
+                  expand_more
+                </span>
+              </div>
+            )}
+          </section>
+
+          {error ? (
+            <p className="mb-4 rounded-xl border border-red-700/40 bg-red-900/20 px-4 py-3 text-sm text-red-400">{error}</p>
+          ) : null}
+
+          {loading ? (
+            <div className="flex items-center justify-center py-16">
+              <span className="h-8 w-8 animate-spin rounded-full border-4 border-blue-600 border-t-transparent" />
+            </div>
+          ) : !error && listings.length === 0 ? (
+            <p className="rounded-xl border border-dashed border-blue-900/50 bg-[#0d1f3c]/40 px-4 py-8 text-center text-sm text-slate-400">
+              Chua co san pham IoT phu hop voi bo loc.
+            </p>
+          ) : (
+            <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+              {listings.map((item) => {
+                const listingId = item.listingId ?? item.id
+                const canBuy = (tab !== 'sample' || item.listingActive) && !!listingId && item.stock > 0
                 return (
-                  <Button
-                    key={item}
-                    type="button"
-                    size="sm"
-                    variant={active ? 'default' : 'outline'}
-                    onClick={() => updateQuery({ tab: item, page: '0', category: item === 'components' ? selectedComponentCategory : '' })}
+                  <div
+                    key={`${tab}-${item.id}`}
+                    className="group overflow-hidden rounded-2xl border border-blue-900/40 bg-[#0d1f3c]/70 transition-all duration-200 hover:border-blue-600/50 hover:shadow-[0_0_16px_4px_rgba(59,130,246,0.15)]"
                   >
-                    {TAB_CONFIG[item].label}
-                  </Button>
+                    <div className="aspect-[16/9] overflow-hidden bg-[#091528]">
+                      {item.imageUrl ? (
+                        <img
+                          src={item.imageUrl}
+                          alt={item.title}
+                          className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                        />
+                      ) : (
+                        <div className="flex h-full items-center justify-center">
+                          <Icon name="devices_other" className="text-4xl text-blue-900" />
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="space-y-2 p-4">
+                      <h3 className="line-clamp-2 text-base font-semibold text-white">{item.title}</h3>
+                      <p className="line-clamp-2 text-sm text-slate-400">{item.description}</p>
+                      <div className="flex items-center justify-between pt-1">
+                        <span className="text-lg font-bold text-white">{formatCurrency(item.price)}</span>
+                        <span className="text-xs text-slate-400">Ton kho: {item.stock}</span>
+                      </div>
+
+                      {tab === 'sample' && !item.listingActive ? (
+                        <p className="text-xs text-amber-300">Du an nay chi de tham khao (tam thoi khong ban)</p>
+                      ) : null}
+
+                      <div className="flex gap-2 pt-2">
+                        <button
+                          type="button"
+                          onClick={() => openDetail(item)}
+                          className="flex-1 rounded-lg border border-blue-800/60 bg-transparent py-2 text-sm font-medium text-white transition hover:bg-blue-900/40"
+                        >
+                          Chi tiet
+                        </button>
+                        <button
+                          type="button"
+                          disabled={!canBuy || addingId === listingId}
+                          onClick={() => handleAddToCart(listingId)}
+                          className="rounded-lg bg-blue-600 px-5 py-2 text-sm font-medium text-white transition hover:bg-blue-500 disabled:cursor-not-allowed disabled:opacity-50"
+                        >
+                          {addingId === listingId ? '...' : 'Them'}
+                        </button>
+                      </div>
+                    </div>
+                  </div>
                 )
               })}
             </div>
-            <Input
-              value={search}
-              onChange={(event) => updateQuery({ search: event.target.value, page: '0' })}
-              placeholder="Tim theo tieu de hoac mo ta"
-              iconLeft={<Icon name="search" className="text-[18px]" />}
-            />
-            {tab === 'components' ? (
-              <div className="space-y-3 rounded-lg border border-slate-200 bg-slate-50 p-3 dark:border-slate-700 dark:bg-slate-800/60">
-                <div>
-                  <select
-                    className="h-10 rounded-lg border border-slate-200 bg-white px-3 text-sm dark:border-slate-700 dark:bg-slate-900"
-                    value={selectedComponentCategory}
-                    onChange={(event) => updateQuery({ category: event.target.value, page: '0' })}
-                  >
-                    <option value="">Tat ca nhom linh kien</option>
-                    {IOT_COMPONENT_CLASSIFICATION.map((group) => (
-                      <option key={group.category} value={group.category}>{group.category}</option>
-                    ))}
-                  </select>
-                </div>
-              </div>
-            ) : null}
-          </div>
-        </div>
+          )}
 
-        {loading ? <p className="text-sm text-slate-500">Dang tai du lieu IoT...</p> : null}
-        {error ? <p className="text-sm text-red-600">{error}</p> : null}
-
-        {!loading && !error && (
-          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-            {listings.map((item) => (
-              <Card key={item.id} className="overflow-hidden">
-                <div className="aspect-[16/9] bg-slate-100 dark:bg-slate-800">
-                  {item.imageUrl ? <img src={item.imageUrl} alt={item.title} className="h-full w-full object-cover" /> : null}
-                </div>
-                <CardContent className="space-y-2 pt-4">
-                  <h3 className="line-clamp-2 text-base font-semibold">{item.title}</h3>
-                  <p className="line-clamp-2 text-sm text-slate-500">{item.description}</p>
-                  <p className="text-lg font-bold">{formatCurrency(item.price)}</p>
-                  <p className="text-xs text-slate-500">Ton kho: {item.stock}</p>
-
-                  <div className="flex gap-2 pt-2">
-                    <Button size="sm" className="flex-1" onClick={() => navigate(`/products/${item.id}`)}>
-                      Chi tiet
-                    </Button>
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      loading={addingId === item.id}
-                      disabled={item.stock <= 0}
-                      onClick={() => handleAddToCart(item.id)}
-                    >
-                      Them
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        )}
-
-        {!loading && !error && listings.length === 0 ? (
-          <p className="rounded-xl border border-dashed border-slate-300 bg-slate-50 px-4 py-6 text-sm text-slate-500 dark:border-slate-700 dark:bg-slate-900">
-            Chua co san pham IoT phu hop voi bo loc.
-          </p>
-        ) : null}
-
-        <div className="flex items-center justify-between">
-          <Button variant="outline" disabled={page <= 0} onClick={() => updateQuery({ page: String(page - 1) })}>
-            Trang truoc
-          </Button>
-          <span className="text-sm text-slate-500">Trang {page + 1} / {Math.max(totalPages, 1)}</span>
-          <Button
-            variant="outline"
-            disabled={page + 1 >= Math.max(totalPages, 1)}
-            onClick={() => updateQuery({ page: String(page + 1) })}
-          >
-            Trang sau
-          </Button>
-        </div>
-      </section>
+          {!loading && totalPages > 1 && (
+            <div className="mt-8 flex items-center justify-between">
+              <button
+                type="button"
+                disabled={page <= 0}
+                onClick={() => updateQuery({ page: String(page - 1) })}
+                className="rounded-xl border border-blue-900/50 bg-[#0d1f3c]/70 px-5 py-2 text-sm text-white transition hover:bg-blue-900/40 disabled:cursor-not-allowed disabled:opacity-40"
+              >
+                Trang truoc
+              </button>
+              <span className="text-sm text-slate-400">
+                Trang {page + 1} / {Math.max(totalPages, 1)}
+              </span>
+              <button
+                type="button"
+                disabled={page + 1 >= Math.max(totalPages, 1)}
+                onClick={() => updateQuery({ page: String(page + 1) })}
+                className="rounded-xl border border-blue-900/50 bg-[#0d1f3c]/70 px-5 py-2 text-sm text-white transition hover:bg-blue-900/40 disabled:cursor-not-allowed disabled:opacity-40"
+              >
+                Trang sau
+              </button>
+            </div>
+          )}
+        </>
+      )}
     </div>
   )
 }

@@ -87,6 +87,67 @@ export interface IotOverviewResponse {
   listings: PageResponse<Listing>
 }
 
+export interface IotItemResponse {
+  id: number
+  slug?: string
+  listingId?: number
+  title: string
+  description?: string
+  category?: string
+  price: number
+  stock: number
+  imageUrl?: string
+  listingActive?: boolean
+  createdAt: string
+}
+
+export interface IotSampleProject {
+  id: number
+  slug: string
+  title: string
+  summary?: string
+  description?: string
+  mainComponents: string[]
+  difficulty?: string
+  buildTime?: string
+  mcuSoc?: string
+  connectivity?: string
+  projectPath: string
+  readmePath: string
+  pinoutPath: string
+  principlePath: string
+  sourcesPath: string
+  listingId?: number
+  price: number
+  stock: number
+  imageUrl?: string
+  active: boolean
+  listingActive: boolean
+  createdAt: string
+  updatedAt: string
+}
+
+export interface IotSampleProjectRequest {
+  slug: string
+  title: string
+  summary?: string
+  description?: string
+  mainComponents: string[]
+  difficulty?: string
+  buildTime?: string
+  mcuSoc?: string
+  connectivity?: string
+  projectPath: string
+  readmePath: string
+  pinoutPath: string
+  principlePath: string
+  sourcesPath: string
+  price: number
+  stock: number
+  imageUrl?: string
+  active: boolean
+}
+
 export interface CartItem {
   listingId: number
   title: string

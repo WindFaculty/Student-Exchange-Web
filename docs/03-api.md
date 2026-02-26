@@ -62,6 +62,10 @@ Register response:
 
 ## IoT Hub
 - `GET /api/iot/overview?search=&category=&segment=&page=&size=`
+- `GET /api/iot/components?search=&category=&page=&size=`
+- `GET /api/iot/sample-products?search=&page=&size=` (legacy compatibility)
+- `GET /api/iot/sample-projects?search=&page=&size=` (new primary endpoint)
+- `GET /api/iot/sample-projects/{slug}`
 
 Query behavior:
 - `segment` is optional and supports: `COMPONENTS`, `SAMPLE_PRODUCTS`, `SERVICES`
@@ -160,3 +164,12 @@ Requires admin session.
 ```json
 { "reply": "We have updated your ticket." }
 ```
+
+### IoT Admin
+- `GET /api/admin/iot/content`
+- `PUT /api/admin/iot/content`
+- `GET /api/admin/iot/sample-projects?search=&active=&page=&size=`
+- `GET /api/admin/iot/sample-projects/{id}`
+- `POST /api/admin/iot/sample-projects`
+- `PUT /api/admin/iot/sample-projects/{id}`
+- `DELETE /api/admin/iot/sample-projects/{id}`
