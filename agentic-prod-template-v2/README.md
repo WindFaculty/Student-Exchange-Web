@@ -3,9 +3,8 @@
 This template provides a production-ready baseline for agentic workflows in polyglot repositories.
 It is designed for both internal teams and OSS adopters.
 
-Versioning in this repository:
-- `agentic-prod-template/` -> v1 (legacy, compatibility path)
-- `agentic-prod-template-v2/` -> v2 (recommended default)
+Template path in this repository:
+- `agentic-prod-template-v2/` (single active template)
 
 ## What v2 adds
 - Schema-validated configs (`configs/*.yaml` + `configs/schemas/*.json`)

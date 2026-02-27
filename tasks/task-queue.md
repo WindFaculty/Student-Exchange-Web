@@ -61,8 +61,7 @@ Status values: TODO | DOING | DONE | BLOCKED
 ## M7 - Agentic template v2 rollout
 - Status: TODO
 - Scope:
-  - Keep `agentic-prod-template/` as v1 legacy fallback (hotfix only).
-  - Adopt `agentic-prod-template-v2/` as default template for new workflows.
+  - Keep `agentic-prod-template-v2/` as the single template for new workflows.
   - Enforce schema validation + deterministic manifest checks in template v2.
   - Harden template v2 CI/security baseline.
   - Complete migration checklist in `tasks/template-v2-adoption.md`.
