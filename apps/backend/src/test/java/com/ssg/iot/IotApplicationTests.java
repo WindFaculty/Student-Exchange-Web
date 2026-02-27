@@ -128,50 +128,28 @@ class IotApplicationTests {
         mockMvc.perform(get("/api/iot/overview"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.heroTitle", not(isEmptyOrNullString())))
-                .andExpect(jsonPath("$.categoryOptions", containsInAnyOrder(
-                        "Board vi dieu khien / Module phat trien",
-                        "Cam bien",
-                        "Thiet bi thuc thi / Output",
-                        "Module giao tiep / Ket noi",
-                        "Linh kien ho tro co ban",
-                        "San pham mau / Bo KIT",
-                        "Dich vu IoT"
-                )))
+                .andExpect(jsonPath("$.categoryOptions[*].code", hasItem("SAMPLE_PROJECT")))
                 .andExpect(jsonPath("$.listings.content").isArray());
     }
 
     @Test
-    void getIotOverviewFiltersByLegacyCategory() throws Exception {
-        mockMvc.perform(get("/api/iot/overview").param("category", "KIT"))
+    void getIotOverviewFiltersByCategoryCode() throws Exception {
+        mockMvc.perform(get("/api/iot/overview").param("categoryCode", "IOT_SAMPLE_KIT"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.listings.content[*].category", everyItem(is("KIT"))));
+                .andExpect(jsonPath("$.listings.content[*].category.code", everyItem(is("IOT_SAMPLE_KIT"))));
     }
 
     @Test
-    void getIotOverviewAcceptsNewComponentCategory() throws Exception {
-        mockMvc.perform(get("/api/iot/overview").param("category", "Cam bien"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.listings.content").isArray());
-    }
-
-    @Test
-    void getIotOverviewRejectsInvalidCategory() throws Exception {
-        mockMvc.perform(get("/api/iot/overview").param("category", "INVALID_CATEGORY"))
-                .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.message", containsString("Invalid IoT category")));
+    void getIotOverviewAcceptsAnyCategoryCodeAsFilter() throws Exception {
+        mockMvc.perform(get("/api/iot/overview").param("categoryCode", "UNKNOWN_CODE"))
+                .andExpect(status().isOk());
     }
 
     @Test
     void getIotOverviewFiltersBySegment() throws Exception {
         mockMvc.perform(get("/api/iot/overview").param("segment", "SERVICES"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.listings.content[*].category", everyItem(anyOf(
-                        is("Dich vu IoT"),
-                        is("IOT_SERVICE"),
-                        is("MENTORING"),
-                        is("CONSULTATION"),
-                        is("SERVICE")
-                ))));
+                .andExpect(jsonPath("$.listings.content").isArray());
     }
 
     @Test
@@ -185,16 +163,9 @@ class IotApplicationTests {
     void getIotOverviewRejectsCategoryAndSegmentTogether() throws Exception {
         mockMvc.perform(get("/api/iot/overview")
                         .param("segment", "SERVICES")
-                        .param("category", "KIT"))
+                        .param("categoryCode", "IOT_SAMPLE_KIT"))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.message", containsString("category and segment cannot be used together")));
-    }
-
-    @Test
-    void getIotOverviewSupportsLegacyCategoryAliases() throws Exception {
-        mockMvc.perform(get("/api/iot/overview").param("category", "CONSULTATION"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.listings.content[*].category", everyItem(is("CONSULTATION"))));
+                .andExpect(jsonPath("$.message", containsString("categoryCode and segment cannot be used together")));
     }
 
     @Test

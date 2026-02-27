@@ -3,27 +3,15 @@ package com.ssg.iot.service;
 import com.ssg.iot.common.BadRequestException;
 import com.ssg.iot.common.NotFoundException;
 import com.ssg.iot.common.PageResponse;
-import com.ssg.iot.domain.IotComponent;
-import com.ssg.iot.domain.IotHighlight;
-import com.ssg.iot.domain.IotPageContent;
-import com.ssg.iot.domain.IotSampleProduct;
-import com.ssg.iot.domain.Listing;
-import com.ssg.iot.domain.User;
-import com.ssg.iot.domain.UserRole;
-import com.ssg.iot.dto.iot.IotContentResponse;
-import com.ssg.iot.dto.iot.IotContentUpdateRequest;
-import com.ssg.iot.dto.iot.IotHighlightResponse;
-import com.ssg.iot.dto.iot.IotHighlightUpdateRequest;
-import com.ssg.iot.dto.iot.IotItemResponse;
-import com.ssg.iot.dto.iot.IotOverviewResponse;
-import com.ssg.iot.dto.iot.IotSampleProjectRequest;
-import com.ssg.iot.dto.iot.IotSampleProjectResponse;
+import com.ssg.iot.domain.*;
+import com.ssg.iot.dto.common.CategoryOptionResponse;
+import com.ssg.iot.dto.iot.*;
 import com.ssg.iot.dto.listing.ListingResponse;
 import com.ssg.iot.repository.IotComponentRepository;
 import com.ssg.iot.repository.IotPageContentRepository;
 import com.ssg.iot.repository.IotSampleProductRepository;
-import com.ssg.iot.repository.ListingRepository;
-import com.ssg.iot.repository.UserRepository;
+import com.ssg.iot.repository.RefIotComponentCategoryRepository;
+import com.ssg.iot.repository.RefIotSampleCategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -33,16 +21,8 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
+import java.time.LocalDateTime;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -52,108 +32,40 @@ public class IotService {
     private static final String SEGMENT_COMPONENTS = "COMPONENTS";
     private static final String SEGMENT_SAMPLE_PRODUCTS = "SAMPLE_PRODUCTS";
     private static final String SEGMENT_SERVICES = "SERVICES";
-
-    private static final String CATEGORY_CONTROLLER_BOARDS = "Board vi dieu khien / Module phat trien";
-    private static final String CATEGORY_SENSORS = "Cam bien";
-    private static final String CATEGORY_ACTUATORS = "Thiet bi thuc thi / Output";
-    private static final String CATEGORY_CONNECTIVITY = "Module giao tiep / Ket noi";
-    private static final String CATEGORY_BASIC_PARTS = "Linh kien ho tro co ban";
-    private static final String CATEGORY_SAMPLE_KIT = "San pham mau / Bo KIT";
-    private static final String CATEGORY_IOT_SERVICE = "Dich vu IoT";
     private static final String COMPONENT_SEPARATOR = "|";
 
-    private static final List<String> CATEGORY_OPTIONS = List.of(
-            CATEGORY_CONTROLLER_BOARDS,
-            CATEGORY_SENSORS,
-            CATEGORY_ACTUATORS,
-            CATEGORY_CONNECTIVITY,
-            CATEGORY_BASIC_PARTS,
-            CATEGORY_SAMPLE_KIT,
-            CATEGORY_IOT_SERVICE
-    );
-
-    private static final List<String> LEGACY_ALIAS_CATEGORIES = List.of(
-            "COMPONENT",
-            "ELECTRONICS",
-            "SAMPLE_KIT",
-            "KIT",
-            "IOT_SERVICE",
-            "MENTORING",
-            "CONSULTATION",
-            "SERVICE"
-    );
-
-    private static final List<String> DEFAULT_CATEGORY_FILTERS = new ArrayList<>();
-    private static final Map<String, List<String>> SEGMENT_TO_CATEGORIES = Map.of(
-            SEGMENT_COMPONENTS, List.of(
-                    CATEGORY_CONTROLLER_BOARDS,
-                    CATEGORY_SENSORS,
-                    CATEGORY_ACTUATORS,
-                    CATEGORY_CONNECTIVITY,
-                    CATEGORY_BASIC_PARTS,
-                    "COMPONENT",
-                    "ELECTRONICS"
-            ),
-            SEGMENT_SAMPLE_PRODUCTS, List.of(CATEGORY_SAMPLE_KIT, "SAMPLE_KIT", "KIT"),
-            SEGMENT_SERVICES, List.of(CATEGORY_IOT_SERVICE, "IOT_SERVICE", "MENTORING", "CONSULTATION", "SERVICE")
-    );
-
-    private static final Set<String> ALLOWED_CATEGORIES = new HashSet<>();
-
-    static {
-        DEFAULT_CATEGORY_FILTERS.addAll(CATEGORY_OPTIONS);
-        DEFAULT_CATEGORY_FILTERS.addAll(LEGACY_ALIAS_CATEGORIES);
-        CATEGORY_OPTIONS.stream()
-                .map(item -> item.toUpperCase(Locale.ROOT))
-                .forEach(ALLOWED_CATEGORIES::add);
-        LEGACY_ALIAS_CATEGORIES.stream()
-                .map(item -> item.toUpperCase(Locale.ROOT))
-                .forEach(ALLOWED_CATEGORIES::add);
-    }
-
-    private static final Set<String> ALLOWED_SEGMENTS = SEGMENT_TO_CATEGORIES.keySet();
-
     private final IotPageContentRepository pageContentRepository;
-    private final ListingRepository listingRepository;
-    private final ListingService listingService;
     private final IotComponentRepository iotComponentRepository;
     private final IotSampleProductRepository iotSampleProductRepository;
-    private final UserRepository userRepository;
+    private final RefIotComponentCategoryRepository iotComponentCategoryRepository;
+    private final RefIotSampleCategoryRepository iotSampleCategoryRepository;
+    private final ListingService listingService;
+    private final CatalogItemService catalogItemService;
 
     @Transactional(readOnly = true)
-    public IotOverviewResponse getOverview(String search, String category, String segment, int page, int size) {
+    public IotOverviewResponse getOverview(String search, String categoryCode, String segment, int page, int size) {
         if (page < 0) {
             throw new BadRequestException("page must be greater than or equal to 0");
         }
         if (size <= 0) {
             throw new BadRequestException("size must be greater than 0");
         }
-        if (category != null && !category.isBlank() && segment != null && !segment.isBlank()) {
-            throw new BadRequestException("category and segment cannot be used together");
+
+        if (categoryCode != null && !categoryCode.isBlank() && segment != null && !segment.isBlank()) {
+            throw new BadRequestException("categoryCode and segment cannot be used together");
         }
 
-        String normalizedCategory = normalizeCategory(category);
-        String normalizedSegment = normalizeSegment(segment);
-        List<String> categoryFilters = resolveCategoryFilters(normalizedCategory, normalizedSegment);
-        List<String> categoryFiltersLowerCase = categoryFilters.stream()
-                .map(item -> item.toLowerCase(Locale.ROOT))
-                .toList();
-
-        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdAt"));
-
-        Specification<Listing> spec = Specification.where((root, query, cb) -> cb.isTrue(root.get("active")));
-        spec = spec.and((root, query, cb) -> cb.lower(root.get("category")).in(categoryFiltersLowerCase));
-
-        if (search != null && !search.isBlank()) {
-            String keyword = "%" + search.trim().toLowerCase(Locale.ROOT) + "%";
-            spec = spec.and((root, query, cb) -> cb.or(
-                    cb.like(cb.lower(root.get("title")), keyword),
-                    cb.like(cb.lower(root.get("description")), keyword)
-            ));
-        }
-
-        Page<ListingResponse> listingPage = listingRepository.findAll(spec, pageable).map(listingService::toResponse);
+        String resolvedCategory = resolveOverviewCategoryCode(categoryCode, segment);
         IotPageContent content = getActiveContent();
+        PageResponse<ListingResponse> listingPage = listingService.getPublicListings(search, resolvedCategory, page, size);
+
+        List<CategoryOptionResponse> options = new ArrayList<>();
+        options.addAll(iotComponentCategoryRepository.findByActiveTrueOrderBySortOrderAscCodeAsc().stream()
+                .map(item -> CategoryOptionResponse.builder().code(item.getCode()).label(item.getLabelVi()).build())
+                .toList());
+        options.addAll(iotSampleCategoryRepository.findByActiveTrueOrderBySortOrderAscCodeAsc().stream()
+                .map(item -> CategoryOptionResponse.builder().code(item.getCode()).label(item.getLabelVi()).build())
+                .toList());
 
         return IotOverviewResponse.builder()
                 .heroTitle(content.getHeroTitle())
@@ -162,24 +74,24 @@ public class IotService {
                 .primaryCtaLabel(content.getPrimaryCtaLabel())
                 .primaryCtaHref(content.getPrimaryCtaHref())
                 .highlights(toHighlightResponses(content.getHighlights()))
-                .categoryOptions(CATEGORY_OPTIONS)
-                .listings(PageResponse.from(listingPage))
+                .categoryOptions(options)
+                .listings(listingPage)
                 .build();
     }
 
     @Transactional(readOnly = true)
-    public PageResponse<IotItemResponse> getComponents(String search, String category, int page, int size) {
+    public PageResponse<IotItemResponse> getComponents(String search, String categoryCode, int page, int size) {
         if (page < 0) throw new BadRequestException("page must be >= 0");
         if (size <= 0) throw new BadRequestException("size must be > 0");
 
         Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdAt"));
 
-        Specification<IotComponent> spec = Specification.where(
-                (root, query, cb) -> cb.isTrue(root.get("active")));
+        Specification<IotComponent> spec = Specification.where((root, query, cb) -> cb.isTrue(root.get("active")));
+        spec = spec.and((root, query, cb) -> cb.isNull(root.get("archivedAt")));
 
-        if (category != null && !category.isBlank()) {
-            String cat = category.trim().toLowerCase(Locale.ROOT);
-            spec = spec.and((root, query, cb) -> cb.like(cb.lower(root.get("category")), "%" + cat + "%"));
+        if (categoryCode != null && !categoryCode.isBlank()) {
+            String code = categoryCode.trim().toLowerCase(Locale.ROOT);
+            spec = spec.and((root, query, cb) -> cb.equal(cb.lower(root.get("category").get("code")), code));
         }
 
         if (search != null && !search.isBlank()) {
@@ -190,19 +102,30 @@ public class IotService {
             ));
         }
 
-        return PageResponse.from(iotComponentRepository.findAll(spec, pageable)
-                .map(c -> IotItemResponse.builder()
-                        .id(c.getId())
-                        .listingId(c.getId())
-                        .title(c.getTitle())
-                        .description(c.getDescription())
-                        .category(c.getCategory())
-                        .price(c.getPrice())
-                        .stock(c.getStock())
-                        .imageUrl(c.getImageUrl())
-                        .listingActive(true)
-                        .createdAt(c.getCreatedAt())
-                        .build()));
+        Page<IotComponent> pageResult = iotComponentRepository.findAll(spec, pageable);
+        Map<Long, CatalogItem> catalogMap = catalogItemService.getBySourceIds(
+                CatalogSourceType.IOT_COMPONENT,
+                pageResult.getContent().stream().map(IotComponent::getId).toList()
+        );
+
+        return PageResponse.from(pageResult.map(component -> {
+            CatalogItem catalog = catalogMap.get(component.getId());
+            return IotItemResponse.builder()
+                    .id(component.getId())
+                    .catalogItemId(catalog != null ? catalog.getId() : null)
+                    .title(component.getTitle())
+                    .description(component.getDescription())
+                    .category(CategoryOptionResponse.builder()
+                            .code(component.getCategory().getCode())
+                            .label(component.getCategory().getLabelVi())
+                            .build())
+                    .price(catalog != null ? catalog.getPrice() : component.getPrice())
+                    .stock(catalog != null ? catalog.getStock() : component.getStock())
+                    .imageUrl(catalog != null && catalog.getImageUrl() != null ? catalog.getImageUrl() : component.getImageUrl())
+                    .purchasable(catalog != null && catalog.isActive() && catalog.getStock() > 0)
+                    .createdAt(component.getCreatedAt())
+                    .build();
+        }));
     }
 
     @Transactional(readOnly = true)
@@ -210,15 +133,16 @@ public class IotService {
         PageResponse<IotSampleProjectResponse> sampleProjects = getSampleProjects(search, page, size);
         List<IotItemResponse> content = sampleProjects.getContent().stream()
                 .map(item -> IotItemResponse.builder()
-                        .id(item.getListingId() != null ? item.getListingId() : item.getId())
+                        .id(item.getId())
                         .slug(item.getSlug())
-                        .listingId(item.getListingId())
+                        .catalogItemId(item.getCatalogItemId())
                         .title(item.getTitle())
                         .description(item.getSummary() != null ? item.getSummary() : item.getDescription())
+                        .category(item.getCategory())
                         .price(item.getPrice())
                         .stock(item.getStock())
                         .imageUrl(item.getImageUrl())
-                        .listingActive(item.isListingActive())
+                        .purchasable(item.isPurchasable())
                         .createdAt(item.getCreatedAt())
                         .build())
                 .toList();
@@ -239,6 +163,7 @@ public class IotService {
 
         Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdAt"));
         Specification<IotSampleProduct> spec = Specification.where((root, query, cb) -> cb.isTrue(root.get("active")));
+        spec = spec.and((root, query, cb) -> cb.isNull(root.get("archivedAt")));
 
         if (search != null && !search.isBlank()) {
             String kw = "%" + search.trim().toLowerCase(Locale.ROOT) + "%";
@@ -251,8 +176,12 @@ public class IotService {
         }
 
         Page<IotSampleProduct> samplePage = iotSampleProductRepository.findAll(spec, pageable);
-        Map<Long, Listing> listingMap = getListingMap(samplePage.getContent());
-        return PageResponse.from(samplePage.map(item -> toSampleProjectResponse(item, listingMap.get(item.getListingId()))));
+        Map<Long, CatalogItem> catalogMap = catalogItemService.getBySourceIds(
+                CatalogSourceType.IOT_SAMPLE,
+                samplePage.getContent().stream().map(IotSampleProduct::getId).toList()
+        );
+
+        return PageResponse.from(samplePage.map(sample -> toSampleProjectResponse(sample, catalogMap.get(sample.getId()))));
     }
 
     @Transactional(readOnly = true)
@@ -260,8 +189,8 @@ public class IotService {
         String normalizedSlug = normalizeSlug(slug);
         IotSampleProduct sample = iotSampleProductRepository.findBySlugIgnoreCaseAndActiveTrue(normalizedSlug)
                 .orElseThrow(() -> new NotFoundException("IoT sample project not found"));
-        Listing listing = getListingById(sample.getListingId());
-        return toSampleProjectResponse(sample, listing);
+        CatalogItem catalog = catalogItemService.findBySource(CatalogSourceType.IOT_SAMPLE, sample.getId()).orElse(null);
+        return toSampleProjectResponse(sample, catalog);
     }
 
     @Transactional(readOnly = true)
@@ -287,16 +216,20 @@ public class IotService {
         }
 
         Page<IotSampleProduct> pageResult = iotSampleProductRepository.findAll(spec, pageable);
-        Map<Long, Listing> listingMap = getListingMap(pageResult.getContent());
-        return PageResponse.from(pageResult.map(item -> toSampleProjectResponse(item, listingMap.get(item.getListingId()))));
+        Map<Long, CatalogItem> catalogMap = catalogItemService.getBySourceIds(
+                CatalogSourceType.IOT_SAMPLE,
+                pageResult.getContent().stream().map(IotSampleProduct::getId).toList()
+        );
+
+        return PageResponse.from(pageResult.map(sample -> toSampleProjectResponse(sample, catalogMap.get(sample.getId()))));
     }
 
     @Transactional(readOnly = true)
     public IotSampleProjectResponse getAdminSampleProject(Long id) {
         IotSampleProduct sample = iotSampleProductRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("IoT sample project not found"));
-        Listing listing = getListingById(sample.getListingId());
-        return toSampleProjectResponse(sample, listing);
+        CatalogItem catalog = catalogItemService.findBySource(CatalogSourceType.IOT_SAMPLE, sample.getId()).orElse(null);
+        return toSampleProjectResponse(sample, catalog);
     }
 
     @Transactional
@@ -306,18 +239,8 @@ public class IotService {
             throw new BadRequestException("Slug already exists");
         }
 
+        RefIotSampleCategory category = getSampleCategoryOrThrow(request.getCategoryCode());
         boolean active = Boolean.TRUE.equals(request.getActive());
-        Listing listing = Listing.builder()
-                .title(request.getTitle().trim())
-                .description(trimToNull(request.getDescription()))
-                .category(CATEGORY_SAMPLE_KIT)
-                .price(request.getPrice())
-                .stock(request.getStock())
-                .imageUrl(trimToNull(request.getImageUrl()))
-                .active(active)
-                .owner(getAdminOwner())
-                .build();
-        Listing savedListing = listingRepository.save(listing);
 
         IotSampleProduct sample = IotSampleProduct.builder()
                 .title(request.getTitle().trim())
@@ -334,14 +257,17 @@ public class IotService {
                 .pinoutPath(request.getPinoutPath().trim())
                 .principlePath(request.getPrinciplePath().trim())
                 .sourcesPath(request.getSourcesPath().trim())
-                .listingId(savedListing.getId())
+                .category(category)
                 .price(request.getPrice())
                 .stock(request.getStock())
                 .imageUrl(trimToNull(request.getImageUrl()))
                 .active(active)
+                .archivedAt(active ? null : LocalDateTime.now())
                 .build();
+
         IotSampleProduct savedSample = iotSampleProductRepository.save(sample);
-        return toSampleProjectResponse(savedSample, savedListing);
+        CatalogItem catalog = catalogItemService.syncFromIotSample(savedSample);
+        return toSampleProjectResponse(savedSample, catalog);
     }
 
     @Transactional
@@ -355,23 +281,6 @@ public class IotService {
         }
 
         boolean active = Boolean.TRUE.equals(request.getActive());
-
-        Listing listing = getListingById(sample.getListingId());
-        if (listing == null) {
-            listing = Listing.builder()
-                    .owner(getAdminOwner())
-                    .category(CATEGORY_SAMPLE_KIT)
-                    .build();
-        }
-
-        listing.setTitle(request.getTitle().trim());
-        listing.setDescription(trimToNull(request.getDescription()));
-        listing.setCategory(CATEGORY_SAMPLE_KIT);
-        listing.setPrice(request.getPrice());
-        listing.setStock(request.getStock());
-        listing.setImageUrl(trimToNull(request.getImageUrl()));
-        listing.setActive(active);
-        Listing savedListing = listingRepository.save(listing);
 
         sample.setTitle(request.getTitle().trim());
         sample.setSlug(normalizedSlug);
@@ -387,14 +296,16 @@ public class IotService {
         sample.setPinoutPath(request.getPinoutPath().trim());
         sample.setPrinciplePath(request.getPrinciplePath().trim());
         sample.setSourcesPath(request.getSourcesPath().trim());
-        sample.setListingId(savedListing.getId());
+        sample.setCategory(getSampleCategoryOrThrow(request.getCategoryCode()));
         sample.setPrice(request.getPrice());
         sample.setStock(request.getStock());
         sample.setImageUrl(trimToNull(request.getImageUrl()));
         sample.setActive(active);
+        sample.setArchivedAt(active ? null : LocalDateTime.now());
 
         IotSampleProduct savedSample = iotSampleProductRepository.save(sample);
-        return toSampleProjectResponse(savedSample, savedListing);
+        CatalogItem catalog = catalogItemService.syncFromIotSample(savedSample);
+        return toSampleProjectResponse(savedSample, catalog);
     }
 
     @Transactional
@@ -403,13 +314,9 @@ public class IotService {
                 .orElseThrow(() -> new NotFoundException("IoT sample project not found"));
 
         sample.setActive(false);
+        sample.setArchivedAt(LocalDateTime.now());
         iotSampleProductRepository.save(sample);
-
-        Listing listing = getListingById(sample.getListingId());
-        if (listing != null) {
-            listing.setActive(false);
-            listingRepository.save(listing);
-        }
+        catalogItemService.syncFromIotSample(sample);
     }
 
     @Transactional(readOnly = true)
@@ -462,36 +369,36 @@ public class IotService {
         }
     }
 
-    private String normalizeCategory(String category) {
-        if (category == null || category.isBlank()) {
-            return null;
+    private String resolveOverviewCategoryCode(String categoryCode, String segment) {
+        if (categoryCode != null && !categoryCode.isBlank()) {
+            return categoryCode.trim().toUpperCase(Locale.ROOT);
         }
-        String normalized = category.trim().toUpperCase(Locale.ROOT);
-        if (!ALLOWED_CATEGORIES.contains(normalized)) {
-            throw new BadRequestException("Invalid IoT category");
-        }
-        return normalized;
-    }
 
-    private String normalizeSegment(String segment) {
         if (segment == null || segment.isBlank()) {
             return null;
         }
-        String normalized = segment.trim().toUpperCase(Locale.ROOT);
-        if (!ALLOWED_SEGMENTS.contains(normalized)) {
-            throw new BadRequestException("Invalid IoT segment");
+
+        String normalizedSegment = segment.trim().toUpperCase(Locale.ROOT);
+        if (normalizedSegment.equals(SEGMENT_COMPONENTS)) {
+            return "IOT_COMPONENT";
         }
-        return normalized;
+        if (normalizedSegment.equals(SEGMENT_SAMPLE_PRODUCTS)) {
+            return "IOT_SAMPLE_KIT";
+        }
+        if (normalizedSegment.equals(SEGMENT_SERVICES)) {
+            return "IOT_SERVICE";
+        }
+
+        throw new BadRequestException("Invalid IoT segment");
     }
 
-    private List<String> resolveCategoryFilters(String category, String segment) {
-        if (category != null) {
-            return List.of(category);
+    private RefIotSampleCategory getSampleCategoryOrThrow(String code) {
+        if (code == null || code.isBlank()) {
+            throw new BadRequestException("categoryCode is required");
         }
-        if (segment != null) {
-            return SEGMENT_TO_CATEGORIES.get(segment);
-        }
-        return DEFAULT_CATEGORY_FILTERS;
+
+        return iotSampleCategoryRepository.findByCodeIgnoreCaseAndActiveTrue(code.trim())
+                .orElseThrow(() -> new NotFoundException("IoT sample category not found"));
     }
 
     private IotPageContent getActiveContent() {
@@ -525,7 +432,7 @@ public class IotService {
                 .toList();
     }
 
-    private IotSampleProjectResponse toSampleProjectResponse(IotSampleProduct sample, Listing listing) {
+    private IotSampleProjectResponse toSampleProjectResponse(IotSampleProduct sample, CatalogItem catalog) {
         return IotSampleProjectResponse.builder()
                 .id(sample.getId())
                 .slug(sample.getSlug())
@@ -542,44 +449,19 @@ public class IotService {
                 .pinoutPath(sample.getPinoutPath())
                 .principlePath(sample.getPrinciplePath())
                 .sourcesPath(sample.getSourcesPath())
-                .listingId(sample.getListingId())
-                .price(listing != null ? listing.getPrice() : sample.getPrice())
-                .stock(listing != null ? listing.getStock() : sample.getStock())
-                .imageUrl(listing != null && listing.getImageUrl() != null ? listing.getImageUrl() : sample.getImageUrl())
+                .category(CategoryOptionResponse.builder()
+                        .code(sample.getCategory().getCode())
+                        .label(sample.getCategory().getLabelVi())
+                        .build())
+                .catalogItemId(catalog != null ? catalog.getId() : null)
+                .price(catalog != null ? catalog.getPrice() : sample.getPrice())
+                .stock(catalog != null ? catalog.getStock() : sample.getStock())
+                .imageUrl(catalog != null && catalog.getImageUrl() != null ? catalog.getImageUrl() : sample.getImageUrl())
                 .active(sample.isActive())
-                .listingActive(listing != null && listing.isActive())
+                .purchasable(catalog != null && catalog.isActive() && catalog.getStock() > 0)
                 .createdAt(sample.getCreatedAt())
                 .updatedAt(sample.getUpdatedAt())
                 .build();
-    }
-
-    private Map<Long, Listing> getListingMap(List<IotSampleProduct> samples) {
-        Set<Long> listingIds = samples.stream()
-                .map(IotSampleProduct::getListingId)
-                .filter(Objects::nonNull)
-                .collect(Collectors.toSet());
-
-        if (listingIds.isEmpty()) {
-            return Map.of();
-        }
-
-        Map<Long, Listing> map = new HashMap<>();
-        for (Listing listing : listingRepository.findAllById(listingIds)) {
-            map.put(listing.getId(), listing);
-        }
-        return map;
-    }
-
-    private Listing getListingById(Long listingId) {
-        if (listingId == null) {
-            return null;
-        }
-        return listingRepository.findById(listingId).orElse(null);
-    }
-
-    private User getAdminOwner() {
-        return userRepository.findFirstByRoleAndActiveTrueOrderByIdAsc(UserRole.ADMIN)
-                .orElseThrow(() -> new NotFoundException("Admin account not found"));
     }
 
     private String normalizeSlug(String slug) {

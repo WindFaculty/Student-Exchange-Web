@@ -22,11 +22,11 @@ public class ListingController {
     @GetMapping
     public PageResponse<ListingResponse> getListings(
             @RequestParam(required = false) String search,
-            @RequestParam(required = false) String category,
+            @RequestParam(required = false, name = "categoryCode") String categoryCode,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size
     ) {
-        return listingService.getPublicListings(search, category, page, size);
+        return listingService.getPublicListings(search, categoryCode, page, size);
     }
 
     @GetMapping("/{id}")

@@ -4,10 +4,11 @@ import com.ssg.iot.common.BadRequestException;
 import com.ssg.iot.common.NotFoundException;
 import com.ssg.iot.common.PageResponse;
 import com.ssg.iot.domain.Faq;
+import com.ssg.iot.domain.RefSupportTicketStatus;
 import com.ssg.iot.domain.SupportTicket;
-import com.ssg.iot.domain.SupportTicketStatus;
 import com.ssg.iot.dto.support.*;
 import com.ssg.iot.repository.FaqRepository;
+import com.ssg.iot.repository.RefSupportTicketStatusRepository;
 import com.ssg.iot.repository.SupportTicketRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -32,6 +33,7 @@ public class SupportService {
 
     private final FaqRepository faqRepository;
     private final SupportTicketRepository supportTicketRepository;
+    private final RefSupportTicketStatusRepository ticketStatusRepository;
 
     @Transactional(readOnly = true)
     public List<FaqResponse> getFaqs(String category, String search) {
@@ -65,7 +67,7 @@ public class SupportService {
                 .subject(request.getSubject().trim())
                 .category(request.getCategory().trim())
                 .message(request.getMessage().trim())
-                .status(SupportTicketStatus.PENDING)
+                .status(getStatusOrThrow("PENDING"))
                 .build();
         return toTicketResponse(supportTicketRepository.save(ticket));
     }
@@ -83,8 +85,8 @@ public class SupportService {
         Page<SupportTicket> ticketPage;
 
         if (status != null && !status.isBlank()) {
-            SupportTicketStatus parsedStatus = parseStatus(status);
-            ticketPage = supportTicketRepository.findByStatus(parsedStatus, pageable);
+            String parsedStatus = parseStatus(status);
+            ticketPage = supportTicketRepository.findByStatus_CodeIgnoreCase(parsedStatus, pageable);
         } else {
             ticketPage = supportTicketRepository.findAll(pageable);
         }
@@ -97,7 +99,7 @@ public class SupportService {
     public SupportTicketResponse updateStatus(Long ticketId, String status) {
         SupportTicket ticket = supportTicketRepository.findById(ticketId)
                 .orElseThrow(() -> new NotFoundException("Ticket not found"));
-        ticket.setStatus(parseStatus(status));
+        ticket.setStatus(getStatusOrThrow(parseStatus(status)));
         return toTicketResponse(supportTicketRepository.save(ticket));
     }
 
@@ -113,8 +115,8 @@ public class SupportService {
         ticket.setAdminReply(reply.trim());
         ticket.setRepliedAt(LocalDateTime.now());
 
-        if (ticket.getStatus() == SupportTicketStatus.PENDING) {
-            ticket.setStatus(SupportTicketStatus.IN_PROGRESS);
+        if ("PENDING".equals(ticket.getStatus().getCode())) {
+            ticket.setStatus(getStatusOrThrow("IN_PROGRESS"));
         }
 
         return toTicketResponse(supportTicketRepository.save(ticket));
@@ -124,12 +126,21 @@ public class SupportService {
         return "TCK" + LocalDateTime.now().format(TICKET_TIME_FORMAT);
     }
 
-    private SupportTicketStatus parseStatus(String value) {
-        try {
-            return SupportTicketStatus.valueOf(value.trim().toUpperCase(Locale.ROOT));
-        } catch (Exception ex) {
+    private String parseStatus(String value) {
+        if (value == null || value.isBlank()) {
+            throw new BadRequestException("status is required");
+        }
+
+        String code = value.trim().toUpperCase(Locale.ROOT);
+        if (ticketStatusRepository.findByCodeIgnoreCaseAndActiveTrue(code).isEmpty()) {
             throw new BadRequestException("Invalid support ticket status: " + value);
         }
+        return code;
+    }
+
+    private RefSupportTicketStatus getStatusOrThrow(String code) {
+        return ticketStatusRepository.findByCodeIgnoreCaseAndActiveTrue(code)
+                .orElseThrow(() -> new NotFoundException("Support status not found: " + code));
     }
 
     private FaqResponse toFaqResponse(Faq faq) {
@@ -151,7 +162,7 @@ public class SupportService {
                 .subject(ticket.getSubject())
                 .category(ticket.getCategory())
                 .message(ticket.getMessage())
-                .status(ticket.getStatus())
+                .status(ticket.getStatus().getCode())
                 .adminReply(ticket.getAdminReply())
                 .createdAt(ticket.getCreatedAt())
                 .updatedAt(ticket.getUpdatedAt())

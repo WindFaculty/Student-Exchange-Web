@@ -1,5 +1,6 @@
 package com.ssg.iot.dto.iot;
 
+import com.ssg.iot.dto.common.CategoryOptionResponse;
 import lombok.Builder;
 import lombok.Data;
 
@@ -14,13 +15,13 @@ import java.time.LocalDateTime;
 public class IotItemResponse {
     private Long id;
     private String slug;
-    private Long listingId;
+    private Long catalogItemId;
     private String title;
     private String description;
-    private String category;   // null for sample products
+    private CategoryOptionResponse category;
     private BigDecimal price;
     private int stock;
     private String imageUrl;
-    private boolean listingActive;
+    private boolean purchasable;
     private LocalDateTime createdAt;
 }

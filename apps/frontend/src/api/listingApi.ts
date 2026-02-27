@@ -2,10 +2,10 @@ import { fetchJson } from './http'
 import { Listing, ListingRequest, PageResponse } from '../types/models'
 
 export const listingApi = {
-  getListings(params?: { search?: string; category?: string; page?: number; size?: number }) {
+  getListings(params?: { search?: string; categoryCode?: string; page?: number; size?: number }) {
     const query = new URLSearchParams()
     if (params?.search) query.set('search', params.search)
-    if (params?.category) query.set('category', params.category)
+    if (params?.categoryCode) query.set('categoryCode', params.categoryCode)
     if (params?.page !== undefined) query.set('page', String(params.page))
     if (params?.size !== undefined) query.set('size', String(params.size))
 

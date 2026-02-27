@@ -38,9 +38,9 @@ public class SupportTicket {
     @Column(nullable = false, length = 4000)
     private String message;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 30)
-    private SupportTicketStatus status;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "status_id", nullable = false)
+    private RefSupportTicketStatus status;
 
     @Column(length = 4000)
     private String adminReply;

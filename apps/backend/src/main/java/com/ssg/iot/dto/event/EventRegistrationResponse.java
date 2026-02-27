@@ -1,6 +1,5 @@
 package com.ssg.iot.dto.event;
 
-import com.ssg.iot.domain.EventRegistrationStatus;
 import lombok.Builder;
 import lombok.Data;
 
@@ -16,6 +15,6 @@ public class EventRegistrationResponse {
     private String email;
     private String phone;
     private String note;
-    private EventRegistrationStatus status;
+    private String status;
     private LocalDateTime createdAt;
 }

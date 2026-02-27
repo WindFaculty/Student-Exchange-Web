@@ -41,13 +41,13 @@ const IotProjectDetailPage: React.FC = () => {
   }, [slug])
 
   const handleAdd = async () => {
-    if (!project?.listingId) {
+    if (!project?.catalogItemId) {
       setError('Du an nay chua map voi san pham de mua')
       return
     }
     setAdding(true)
     try {
-      await addToCart(project.listingId, 1)
+      await addToCart(project.catalogItemId, 1)
     } catch (err: unknown) {
       setError(mapApiError(err, 'Khong the them vao gio hang'))
     } finally {
@@ -63,7 +63,7 @@ const IotProjectDetailPage: React.FC = () => {
     return <p className="text-sm text-red-600">{error || 'Khong tim thay du an IoT'}</p>
   }
 
-  const canBuy = Boolean(project.listingId && project.listingActive && project.stock > 0)
+  const canBuy = Boolean(project.catalogItemId && project.purchasable && project.stock > 0)
 
   return (
     <div className="flex flex-col">
@@ -93,8 +93,7 @@ const IotProjectDetailPage: React.FC = () => {
             <Button
               variant="outline"
               className="rounded-full border-slate-400 bg-transparent px-8 py-2.5 text-sm font-medium text-white hover:bg-white/10"
-              disabled={!project.listingId}
-              onClick={() => navigate(`/products/${project.listingId}`)}
+              onClick={() => navigate('/products')}
             >
               Open Project
             </Button>
@@ -183,7 +182,7 @@ const IotProjectDetailPage: React.FC = () => {
               </div>
             </section>
 
-            {!project.listingActive ? (
+            {!project.purchasable ? (
               <p className="text-sm text-amber-500">Du an dang o che do tham khao, tam thoi khong ban.</p>
             ) : null}
 
@@ -223,3 +222,4 @@ const IotProjectDetailPage: React.FC = () => {
 }
 
 export default IotProjectDetailPage
+

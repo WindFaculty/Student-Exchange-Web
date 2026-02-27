@@ -75,7 +75,7 @@ const CheckoutPage: React.FC = () => {
         <h2 className="text-xl font-semibold">Tóm tắt đơn hàng</h2>
         <div className="mt-3 space-y-2 text-sm">
           {items.map((item) => (
-            <div key={item.listingId} className="flex items-center justify-between gap-2">
+            <div key={item.catalogItemId} className="flex items-center justify-between gap-2">
               <span className="line-clamp-1">{item.title} x {item.quantity}</span>
               <span>{formatCurrency(item.subtotal)}</span>
             </div>
@@ -90,3 +90,4 @@ const CheckoutPage: React.FC = () => {
 }
 
 export default CheckoutPage
+

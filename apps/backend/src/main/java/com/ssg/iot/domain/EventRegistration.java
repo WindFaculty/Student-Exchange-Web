@@ -39,9 +39,9 @@ public class EventRegistration {
     @Column(length = 1000)
     private String note;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 30)
-    private EventRegistrationStatus status;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "status_id", nullable = false)
+    private RefEventRegistrationStatus status;
 
     @CreationTimestamp
     @Column(nullable = false, updatable = false)

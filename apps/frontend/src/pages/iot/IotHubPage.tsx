@@ -16,8 +16,8 @@ type IotCardItem = {
   price: number
   stock: number
   imageUrl?: string
-  listingId?: number
-  listingActive?: boolean
+  catalogItemId?: number
+  purchasable?: boolean
   slug?: string
 }
 
@@ -77,8 +77,8 @@ const toCardFromComponent = (item: IotItemResponse): IotCardItem => ({
   price: item.price,
   stock: item.stock,
   imageUrl: item.imageUrl,
-  listingId: item.listingId ?? item.id,
-  listingActive: item.listingActive ?? true,
+  catalogItemId: item.catalogItemId,
+  purchasable: item.purchasable ?? true,
 })
 
 const toCardFromSample = (item: IotSampleProject): IotCardItem => ({
@@ -88,8 +88,8 @@ const toCardFromSample = (item: IotSampleProject): IotCardItem => ({
   price: item.price,
   stock: item.stock,
   imageUrl: item.imageUrl,
-  listingId: item.listingId,
-  listingActive: item.listingActive,
+  catalogItemId: item.catalogItemId,
+  purchasable: item.purchasable,
   slug: item.slug,
 })
 
@@ -108,7 +108,7 @@ const IotHubPage: React.FC = () => {
   const pageRaw = Number(searchParams.get('page') ?? 0)
   const page = Number.isFinite(pageRaw) && pageRaw >= 0 ? pageRaw : 0
   const search = searchParams.get('search') ?? ''
-  const selectedComponentCategory = tab === 'components' ? searchParams.get('category') ?? '' : ''
+  const selectedComponentCategory = tab === 'components' ? searchParams.get('categoryCode') ?? '' : ''
 
   useEffect(() => {
     if (rawTab === null || rawTab === tab) return
@@ -133,7 +133,7 @@ const IotHubPage: React.FC = () => {
         if (tab === 'components') {
           const result = await iotApi.getComponents({
             search: search || undefined,
-            category: selectedComponentCategory || undefined,
+            categoryCode: selectedComponentCategory || undefined,
             page,
             size: 12,
           })
@@ -176,14 +176,14 @@ const IotHubPage: React.FC = () => {
     setSearchParams(next)
   }
 
-  const handleAddToCart = async (listingId?: number) => {
-    if (!listingId) {
+  const handleAddToCart = async (catalogItemId?: number) => {
+    if (!catalogItemId) {
       setError('Du an nay chua map voi san pham de mua hang')
       return
     }
-    setAddingId(listingId)
+    setAddingId(catalogItemId)
     try {
-      await addToCart(listingId, 1)
+      await addToCart(catalogItemId, 1)
     } catch (err: unknown) {
       setError(mapApiError(err, 'Khong the them vao gio hang'))
     } finally {
@@ -197,8 +197,7 @@ const IotHubPage: React.FC = () => {
       return
     }
 
-    const listingId = item.listingId ?? item.id
-    navigate(`/products/${listingId}`)
+    setError('Chi tiet cho linh kien se duoc bo sung trong cap nhat sau')
   }
 
   return (
@@ -211,7 +210,7 @@ const IotHubPage: React.FC = () => {
             <button
               key={item}
               type="button"
-              onClick={() => updateQuery({ tab: item, page: '0', category: '', search: '' })}
+              onClick={() => updateQuery({ tab: item, page: '0', categoryCode: '', search: '' })}
               className={[
                 'group relative flex flex-col items-center gap-3 rounded-2xl border p-6 text-center transition-all duration-200',
                 active
@@ -280,12 +279,12 @@ const IotHubPage: React.FC = () => {
               <div className="relative shrink-0">
                 <select
                   value={selectedComponentCategory}
-                  onChange={(e) => updateQuery({ category: e.target.value, page: '0' })}
+                  onChange={(e) => updateQuery({ categoryCode: e.target.value, page: '0' })}
                   className="h-11 cursor-pointer appearance-none rounded-xl border border-blue-900/50 bg-[#0d1f3c]/80 px-4 pr-10 text-sm text-white outline-none transition focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
                 >
                   <option value="" className="bg-[#0d1f3c]">Tat ca nhom linh kien</option>
                   {IOT_COMPONENT_CLASSIFICATION.map((group) => (
-                    <option key={group.category} value={group.category} className="bg-[#0d1f3c]">
+                    <option key={group.code} value={group.code} className="bg-[#0d1f3c]">
                       {group.category}
                     </option>
                   ))}
@@ -312,8 +311,8 @@ const IotHubPage: React.FC = () => {
           ) : (
             <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
               {listings.map((item) => {
-                const listingId = item.listingId ?? item.id
-                const canBuy = (tab !== 'sample' || item.listingActive) && !!listingId && item.stock > 0
+                const catalogItemId = item.catalogItemId
+                const canBuy = (tab !== 'sample' || item.purchasable) && !!catalogItemId && item.stock > 0
                 return (
                   <div
                     key={`${tab}-${item.id}`}
@@ -341,7 +340,7 @@ const IotHubPage: React.FC = () => {
                         <span className="text-xs text-slate-400">Ton kho: {item.stock}</span>
                       </div>
 
-                      {tab === 'sample' && !item.listingActive ? (
+                      {tab === 'sample' && !item.purchasable ? (
                         <p className="text-xs text-amber-300">Du an nay chi de tham khao (tam thoi khong ban)</p>
                       ) : null}
 
@@ -355,11 +354,11 @@ const IotHubPage: React.FC = () => {
                         </button>
                         <button
                           type="button"
-                          disabled={!canBuy || addingId === listingId}
-                          onClick={() => handleAddToCart(listingId)}
+                          disabled={!canBuy || addingId === catalogItemId}
+                          onClick={() => handleAddToCart(catalogItemId)}
                           className="rounded-lg bg-blue-600 px-5 py-2 text-sm font-medium text-white transition hover:bg-blue-500 disabled:cursor-not-allowed disabled:opacity-50"
                         >
-                          {addingId === listingId ? '...' : 'Them'}
+                          {addingId === catalogItemId ? '...' : 'Them'}
                         </button>
                       </div>
                     </div>
@@ -399,3 +398,4 @@ const IotHubPage: React.FC = () => {
 }
 
 export default IotHubPage
+

@@ -1,5 +1,6 @@
 package com.ssg.iot.dto.iot;
 
+import com.ssg.iot.dto.common.CategoryOptionResponse;
 import lombok.Builder;
 import lombok.Data;
 
@@ -25,12 +26,13 @@ public class IotSampleProjectResponse {
     private String pinoutPath;
     private String principlePath;
     private String sourcesPath;
-    private Long listingId;
+    private CategoryOptionResponse category;
+    private Long catalogItemId;
     private BigDecimal price;
     private int stock;
     private String imageUrl;
     private boolean active;
-    private boolean listingActive;
+    private boolean purchasable;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }

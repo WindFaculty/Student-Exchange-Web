@@ -1,7 +1,7 @@
 package com.ssg.iot.service;
 
 import com.ssg.iot.common.BadRequestException;
-import com.ssg.iot.domain.Listing;
+import com.ssg.iot.domain.CatalogItem;
 import com.ssg.iot.dto.cart.CartItemResponse;
 import com.ssg.iot.dto.cart.CartResponse;
 import jakarta.servlet.http.HttpSession;
@@ -17,56 +17,56 @@ import java.util.stream.Collectors;
 public class CartService {
     private static final String CART_SESSION_KEY = "CART";
 
-    private final ListingService listingService;
+    private final CatalogItemService catalogItemService;
 
-    public record CartLine(Listing listing, int quantity) {
+    public record CartLine(CatalogItem catalogItem, int quantity) {
     }
 
     public CartResponse getCart(HttpSession session) {
         return buildCartResponse(getOrCreateCartMap(session));
     }
 
-    public CartResponse addItem(HttpSession session, Long listingId, int quantity) {
+    public CartResponse addItem(HttpSession session, Long catalogItemId, int quantity) {
         if (quantity <= 0) {
             throw new BadRequestException("Quantity must be greater than 0");
         }
 
         Map<Long, Integer> cart = getOrCreateCartMap(session);
-        Listing listing = listingService.getActiveListingEntity(listingId);
+        CatalogItem catalogItem = catalogItemService.getActiveCatalogItem(catalogItemId);
 
-        int nextQuantity = cart.getOrDefault(listingId, 0) + quantity;
-        if (nextQuantity > listing.getStock()) {
+        int nextQuantity = cart.getOrDefault(catalogItemId, 0) + quantity;
+        if (nextQuantity > catalogItem.getStock()) {
             throw new BadRequestException("Requested quantity exceeds stock");
         }
 
-        cart.put(listingId, nextQuantity);
+        cart.put(catalogItemId, nextQuantity);
         session.setAttribute(CART_SESSION_KEY, cart);
         return buildCartResponse(cart);
     }
 
-    public CartResponse updateItem(HttpSession session, Long listingId, int quantity) {
+    public CartResponse updateItem(HttpSession session, Long catalogItemId, int quantity) {
         if (quantity <= 0) {
             throw new BadRequestException("Quantity must be greater than 0");
         }
 
         Map<Long, Integer> cart = getOrCreateCartMap(session);
-        if (!cart.containsKey(listingId)) {
+        if (!cart.containsKey(catalogItemId)) {
             throw new BadRequestException("Item not found in cart");
         }
 
-        Listing listing = listingService.getActiveListingEntity(listingId);
-        if (quantity > listing.getStock()) {
+        CatalogItem catalogItem = catalogItemService.getActiveCatalogItem(catalogItemId);
+        if (quantity > catalogItem.getStock()) {
             throw new BadRequestException("Requested quantity exceeds stock");
         }
 
-        cart.put(listingId, quantity);
+        cart.put(catalogItemId, quantity);
         session.setAttribute(CART_SESSION_KEY, cart);
         return buildCartResponse(cart);
     }
 
-    public CartResponse removeItem(HttpSession session, Long listingId) {
+    public CartResponse removeItem(HttpSession session, Long catalogItemId) {
         Map<Long, Integer> cart = getOrCreateCartMap(session);
-        cart.remove(listingId);
+        cart.remove(catalogItemId);
         session.setAttribute(CART_SESSION_KEY, cart);
         return buildCartResponse(cart);
     }
@@ -82,11 +82,11 @@ public class CartService {
         }
 
         return cart.entrySet().stream().map(entry -> {
-            Listing listing = listingService.getActiveListingEntity(entry.getKey());
-            if (entry.getValue() > listing.getStock()) {
-                throw new BadRequestException("Stock changed for listing: " + listing.getTitle());
+            CatalogItem catalogItem = catalogItemService.getActiveCatalogItem(entry.getKey());
+            if (entry.getValue() > catalogItem.getStock()) {
+                throw new BadRequestException("Stock changed for item: " + catalogItem.getTitle());
             }
-            return new CartLine(listing, entry.getValue());
+            return new CartLine(catalogItem, entry.getValue());
         }).collect(Collectors.toList());
     }
 
@@ -114,17 +114,19 @@ public class CartService {
         BigDecimal total = BigDecimal.ZERO;
 
         for (Map.Entry<Long, Integer> entry : cart.entrySet()) {
-            Listing listing = listingService.getActiveListingEntity(entry.getKey());
+            CatalogItem catalogItem = catalogItemService.getActiveCatalogItem(entry.getKey());
             int quantity = entry.getValue();
-            BigDecimal subtotal = listing.getPrice().multiply(BigDecimal.valueOf(quantity));
+            BigDecimal subtotal = catalogItem.getPrice().multiply(BigDecimal.valueOf(quantity));
             total = total.add(subtotal);
 
             items.add(CartItemResponse.builder()
-                    .listingId(listing.getId())
-                    .title(listing.getTitle())
-                    .price(listing.getPrice())
+                    .catalogItemId(catalogItem.getId())
+                    .sourceType(catalogItem.getSourceType())
+                    .sourceRefId(catalogItem.getSourceRefId())
+                    .title(catalogItem.getTitle())
+                    .price(catalogItem.getPrice())
                     .quantity(quantity)
-                    .imageUrl(listing.getImageUrl())
+                    .imageUrl(catalogItem.getImageUrl())
                     .subtotal(subtotal)
                     .build());
         }

@@ -27,8 +27,9 @@ public class Listing {
     @Column(length = 2000)
     private String description;
 
-    @Column(nullable = false, length = 80)
-    private String category;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id", nullable = false)
+    private RefListingCategory category;
 
     @Column(nullable = false, precision = 19, scale = 2)
     private BigDecimal price;
@@ -41,6 +42,9 @@ public class Listing {
 
     @Column(nullable = false)
     private boolean active = true;
+
+    @Column(name = "archived_at")
+    private LocalDateTime archivedAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "owner_id", nullable = false)

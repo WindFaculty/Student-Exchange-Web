@@ -23,23 +23,23 @@ public class IotController {
     @GetMapping("/overview")
     public IotOverviewResponse getOverview(
             @RequestParam(required = false) String search,
-            @RequestParam(required = false) String category,
+            @RequestParam(required = false, name = "categoryCode") String categoryCode,
             @RequestParam(required = false) String segment,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "12") int size
     ) {
-        return iotService.getOverview(search, category, segment, page, size);
+        return iotService.getOverview(search, categoryCode, segment, page, size);
     }
 
     /** Linh kiện — dedicated iot_components table */
     @GetMapping("/components")
     public PageResponse<IotItemResponse> getComponents(
             @RequestParam(required = false) String search,
-            @RequestParam(required = false) String category,
+            @RequestParam(required = false, name = "categoryCode") String categoryCode,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "12") int size
     ) {
-        return iotService.getComponents(search, category, page, size);
+        return iotService.getComponents(search, categoryCode, page, size);
     }
 
     /** Sản phẩm mẫu — dedicated iot_sample_products table */

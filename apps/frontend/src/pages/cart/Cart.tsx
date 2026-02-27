@@ -29,7 +29,7 @@ const CartPage: React.FC = () => {
         <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Giỏ hàng</h1>
 
         {items.map((item) => (
-          <Card key={item.listingId}>
+          <Card key={item.catalogItemId}>
             <CardContent className="flex flex-wrap items-center gap-4 pt-5">
               <div className="h-16 w-16 overflow-hidden rounded-lg bg-slate-100 dark:bg-slate-800">
                 {item.imageUrl ? <img src={item.imageUrl} alt={item.title} className="h-full w-full object-cover" /> : null}
@@ -44,12 +44,12 @@ const CartPage: React.FC = () => {
                 type="number"
                 min={1}
                 value={item.quantity}
-                onChange={(e) => updateQuantity(item.listingId, Math.max(1, Number(e.target.value) || 1))}
+                onChange={(e) => updateQuantity(item.catalogItemId, Math.max(1, Number(e.target.value) || 1))}
                 className="h-10 w-20 rounded-lg border border-slate-200 bg-slate-50 px-2 text-sm dark:border-slate-700 dark:bg-slate-800"
               />
 
               <p className="w-32 text-right text-sm font-semibold">{formatCurrency(item.subtotal)}</p>
-              <Button variant="ghost" size="sm" onClick={() => removeFromCart(item.listingId)}>Xóa</Button>
+              <Button variant="ghost" size="sm" onClick={() => removeFromCart(item.catalogItemId)}>Xóa</Button>
             </CardContent>
           </Card>
         ))}
@@ -69,3 +69,4 @@ const CartPage: React.FC = () => {
 }
 
 export default CartPage
+

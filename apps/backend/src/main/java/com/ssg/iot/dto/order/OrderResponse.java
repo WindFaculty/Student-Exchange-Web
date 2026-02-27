@@ -1,6 +1,5 @@
 package com.ssg.iot.dto.order;
 
-import com.ssg.iot.domain.OrderStatus;
 import lombok.Builder;
 import lombok.Data;
 
@@ -16,7 +15,7 @@ public class OrderResponse {
     private String customerName;
     private String customerEmail;
     private String customerAddress;
-    private OrderStatus status;
+    private String status;
     private BigDecimal totalAmount;
     private List<OrderItemResponse> items;
     private LocalDateTime createdAt;

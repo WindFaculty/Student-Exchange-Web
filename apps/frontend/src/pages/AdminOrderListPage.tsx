@@ -190,8 +190,8 @@ const AdminOrderListPage = () => {
               <div className="space-y-2">
                 <h4 className="text-sm font-semibold uppercase tracking-wide text-slate-500">Sản phẩm</h4>
                 {selectedOrder.items.map((item) => (
-                  <div key={`${item.listingId}-${item.listingTitle}`} className="rounded-lg border border-slate-200 p-3 text-sm dark:border-slate-700">
-                    <p className="font-medium">{item.listingTitle}</p>
+                  <div key={`${item.catalogItemId}-${item.title}`} className="rounded-lg border border-slate-200 p-3 text-sm dark:border-slate-700">
+                    <p className="font-medium">{item.title}</p>
                     <p className="text-slate-500">SL: {item.quantity} x {formatCurrency(item.unitPrice)}</p>
                     <p className="font-semibold">{formatCurrency(item.subtotal)}</p>
                   </div>
@@ -222,3 +222,4 @@ const AdminOrderListPage = () => {
 }
 
 export default AdminOrderListPage
+

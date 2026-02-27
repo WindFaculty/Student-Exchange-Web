@@ -24,20 +24,20 @@ public class CartController {
 
     @PostMapping("/items")
     public CartResponse addItem(@Valid @RequestBody AddCartItemRequest request, HttpSession session) {
-        return cartService.addItem(session, request.getListingId(), request.getQuantity());
+        return cartService.addItem(session, request.getCatalogItemId(), request.getQuantity());
     }
 
-    @PatchMapping("/items/{listingId}")
+    @PatchMapping("/items/{catalogItemId}")
     public CartResponse updateItem(
-            @PathVariable Long listingId,
+            @PathVariable Long catalogItemId,
             @Valid @RequestBody UpdateCartItemRequest request,
             HttpSession session
     ) {
-        return cartService.updateItem(session, listingId, request.getQuantity());
+        return cartService.updateItem(session, catalogItemId, request.getQuantity());
     }
 
-    @DeleteMapping("/items/{listingId}")
-    public CartResponse removeItem(@PathVariable Long listingId, HttpSession session) {
-        return cartService.removeItem(session, listingId);
+    @DeleteMapping("/items/{catalogItemId}")
+    public CartResponse removeItem(@PathVariable Long catalogItemId, HttpSession session) {
+        return cartService.removeItem(session, catalogItemId);
     }
 }

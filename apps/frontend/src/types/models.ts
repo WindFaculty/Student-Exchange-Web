@@ -16,11 +16,17 @@ export interface PageResponse<T> {
   pageSize: number
 }
 
+export interface CategoryRef {
+  code: string
+  label: string
+}
+
 export interface Listing {
   id: number
   title: string
   description: string
-  category: string
+  category: CategoryRef
+  catalogItemId?: number
   price: number
   stock: number
   imageUrl?: string
@@ -34,7 +40,7 @@ export interface Listing {
 export interface ListingRequest {
   title: string
   description: string
-  category: string
+  categoryCode: string
   price: number
   stock: number
   imageUrl?: string
@@ -83,21 +89,21 @@ export interface IotOverviewResponse {
   primaryCtaLabel: string
   primaryCtaHref: string
   highlights: IotHighlight[]
-  categoryOptions: string[]
+  categoryOptions: CategoryRef[]
   listings: PageResponse<Listing>
 }
 
 export interface IotItemResponse {
   id: number
   slug?: string
-  listingId?: number
+  catalogItemId?: number
   title: string
   description?: string
-  category?: string
+  category?: CategoryRef
   price: number
   stock: number
   imageUrl?: string
-  listingActive?: boolean
+  purchasable?: boolean
   createdAt: string
 }
 
@@ -117,12 +123,13 @@ export interface IotSampleProject {
   pinoutPath: string
   principlePath: string
   sourcesPath: string
-  listingId?: number
+  category: CategoryRef
+  catalogItemId?: number
   price: number
   stock: number
   imageUrl?: string
   active: boolean
-  listingActive: boolean
+  purchasable: boolean
   createdAt: string
   updatedAt: string
 }
@@ -130,6 +137,7 @@ export interface IotSampleProject {
 export interface IotSampleProjectRequest {
   slug: string
   title: string
+  categoryCode: string
   summary?: string
   description?: string
   mainComponents: string[]
@@ -149,7 +157,9 @@ export interface IotSampleProjectRequest {
 }
 
 export interface CartItem {
-  listingId: number
+  catalogItemId: number
+  sourceType: 'LISTING' | 'IOT_COMPONENT' | 'IOT_SAMPLE'
+  sourceRefId: number
   title: string
   price: number
   quantity: number
@@ -165,8 +175,10 @@ export interface Cart {
 export type OrderStatus = 'PENDING' | 'CONFIRMED' | 'PROCESSING' | 'SHIPPING' | 'DELIVERED' | 'CANCELLED'
 
 export interface OrderItem {
-  listingId: number
-  listingTitle: string
+  catalogItemId: number
+  sourceType: 'LISTING' | 'IOT_COMPONENT' | 'IOT_SAMPLE'
+  sourceRefId: number
+  title: string
   quantity: number
   unitPrice: number
   subtotal: number

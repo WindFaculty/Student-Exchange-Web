@@ -1,6 +1,7 @@
 package com.ssg.iot.dto.iot;
 
 import com.ssg.iot.common.PageResponse;
+import com.ssg.iot.dto.common.CategoryOptionResponse;
 import com.ssg.iot.dto.listing.ListingResponse;
 import lombok.Builder;
 import lombok.Data;
@@ -16,6 +17,6 @@ public class IotOverviewResponse {
     private String primaryCtaLabel;
     private String primaryCtaHref;
     private List<IotHighlightResponse> highlights;
-    private List<String> categoryOptions;
+    private List<CategoryOptionResponse> categoryOptions;
     private PageResponse<ListingResponse> listings;
 }

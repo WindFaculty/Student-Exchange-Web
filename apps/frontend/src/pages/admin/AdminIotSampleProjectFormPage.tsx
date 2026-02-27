@@ -53,6 +53,7 @@ const emptyForm: FormState = {
 const toPayload = (form: FormState): IotSampleProjectRequest => ({
   slug: form.slug.trim(),
   title: form.title.trim(),
+  categoryCode: 'SAMPLE_PROJECT',
   summary: form.summary.trim() || undefined,
   description: form.description.trim() || undefined,
   mainComponents: form.componentsText

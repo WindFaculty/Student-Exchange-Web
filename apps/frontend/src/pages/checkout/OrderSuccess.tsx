@@ -48,8 +48,8 @@ const OrderSuccessPage: React.FC = () => {
 
       <div className="space-y-2">
         {order.items.map((item) => (
-          <div key={`${item.listingId}-${item.listingTitle}`} className="flex items-center justify-between text-sm">
-            <span>{item.listingTitle} x {item.quantity}</span>
+          <div key={`${item.catalogItemId}-${item.title}`} className="flex items-center justify-between text-sm">
+            <span>{item.title} x {item.quantity}</span>
             <span>{formatCurrency(item.subtotal)}</span>
           </div>
         ))}
@@ -66,3 +66,4 @@ const OrderSuccessPage: React.FC = () => {
 }
 
 export default OrderSuccessPage
+

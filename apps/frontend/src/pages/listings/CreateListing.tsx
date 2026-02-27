@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { listingApi } from '../../api/listingApi'
 import { Listing, ListingRequest } from '../../types/models'
-import { formatCurrency, mapApiError } from '../../lib/format'
+import { formatCategoryLabel, formatCurrency, mapApiError } from '../../lib/format'
 import { LISTING_FORM_CATEGORIES } from '../../lib/listingCategories'
 import { Button } from '../../components/ui/Button'
 import { Input } from '../../components/ui/Input'
@@ -24,7 +24,7 @@ const parseImages = (url: string | undefined): string[] => {
 const defaultForm: ListingRequest = {
   title: '',
   description: '',
-  category: LISTING_FORM_CATEGORIES[0],
+  categoryCode: LISTING_FORM_CATEGORIES[0].code,
   price: 0,
   stock: 1,
   imageUrl: '',
@@ -85,7 +85,7 @@ const CreateListing: React.FC = () => {
     setForm({
       title: item.title,
       description: item.description || '',
-      category: item.category,
+      categoryCode: item.category.code,
       price: item.price,
       stock: item.stock,
       imageUrl: item.imageUrl || '',
@@ -129,11 +129,11 @@ const CreateListing: React.FC = () => {
                 <label className="text-sm font-medium text-slate-700 dark:text-slate-300">Danh mục</label>
                 <select
                   className="h-10 w-full rounded-lg border border-slate-200 bg-slate-50 px-3 text-sm dark:border-slate-700 dark:bg-slate-800"
-                  value={form.category}
-                  onChange={(e) => setForm({ ...form, category: e.target.value })}
+                  value={form.categoryCode}
+                  onChange={(e) => setForm({ ...form, categoryCode: e.target.value })}
                 >
                   {LISTING_FORM_CATEGORIES.map((item) => (
-                    <option key={item} value={item}>{item}</option>
+                    <option key={item.code} value={item.code}>{item.label}</option>
                   ))}
                 </select>
               </div>
@@ -236,7 +236,7 @@ const CreateListing: React.FC = () => {
                 <div>
                   <p className="font-medium">{item.title}</p>
                   <p className="text-sm text-slate-500">
-                    {item.category} • {formatCurrency(item.price)} • tồn kho {item.stock}
+                    {formatCategoryLabel(item.category)} • {formatCurrency(item.price)} • tồn kho {item.stock}
                   </p>
                 </div>
               </div>

@@ -131,7 +131,7 @@ const AdminIotSampleProjectListPage = () => {
                 <TableRow key={row.id}>
                   <TableCell className="font-medium">{row.title}</TableCell>
                   <TableCell>{row.slug}</TableCell>
-                  <TableCell>{row.listingId ?? '-'}</TableCell>
+                  <TableCell>{row.catalogItemId ?? '-'}</TableCell>
                   <TableCell>{formatCurrency(row.price)}</TableCell>
                   <TableCell>{row.stock}</TableCell>
                   <TableCell>
@@ -139,8 +139,8 @@ const AdminIotSampleProjectListPage = () => {
                       <Badge variant={row.active ? 'success' : 'secondary'}>
                         {row.active ? 'Project ON' : 'Project OFF'}
                       </Badge>
-                      <Badge variant={row.listingActive ? 'success' : 'secondary'}>
-                        {row.listingActive ? 'Listing ON' : 'Listing OFF'}
+                      <Badge variant={row.purchasable ? 'success' : 'secondary'}>
+                        {row.purchasable ? 'Listing ON' : 'Listing OFF'}
                       </Badge>
                     </div>
                   </TableCell>
@@ -179,3 +179,4 @@ const AdminIotSampleProjectListPage = () => {
 }
 
 export default AdminIotSampleProjectListPage
+

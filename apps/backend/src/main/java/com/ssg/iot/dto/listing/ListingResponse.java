@@ -1,5 +1,6 @@
 package com.ssg.iot.dto.listing;
 
+import com.ssg.iot.dto.common.CategoryOptionResponse;
 import lombok.Builder;
 import lombok.Data;
 
@@ -12,7 +13,8 @@ public class ListingResponse {
     private Long id;
     private String title;
     private String description;
-    private String category;
+    private CategoryOptionResponse category;
+    private Long catalogItemId;
     private BigDecimal price;
     private int stock;
     private String imageUrl;

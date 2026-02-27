@@ -18,6 +18,9 @@ public class IotSampleProjectRequest {
     @NotBlank
     private String title;
 
+    @NotBlank
+    private String categoryCode;
+
     private String summary;
 
     private String description;

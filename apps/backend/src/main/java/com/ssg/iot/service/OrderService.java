@@ -7,8 +7,11 @@ import com.ssg.iot.domain.*;
 import com.ssg.iot.dto.order.CreateOrderRequest;
 import com.ssg.iot.dto.order.OrderItemResponse;
 import com.ssg.iot.dto.order.OrderResponse;
+import com.ssg.iot.repository.IotComponentRepository;
+import com.ssg.iot.repository.IotSampleProductRepository;
 import com.ssg.iot.repository.ListingRepository;
 import com.ssg.iot.repository.OrderRepository;
+import com.ssg.iot.repository.RefOrderStatusRepository;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -35,7 +38,11 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
     private final ListingRepository listingRepository;
+    private final IotComponentRepository iotComponentRepository;
+    private final IotSampleProductRepository iotSampleProductRepository;
+    private final RefOrderStatusRepository orderStatusRepository;
     private final CartService cartService;
+    private final CatalogItemService catalogItemService;
 
     @Transactional
     public OrderResponse createOrder(CreateOrderRequest request, HttpSession session, User currentUser) {
@@ -49,28 +56,32 @@ public class OrderService {
         order.setCustomerName(request.getCustomerName().trim());
         order.setCustomerEmail(request.getCustomerEmail().trim().toLowerCase(Locale.ROOT));
         order.setCustomerAddress(request.getCustomerAddress().trim());
-        order.setStatus(OrderStatus.PENDING);
+        order.setStatus(getStatusOrThrow("PENDING"));
         order.setUser(currentUser);
 
         BigDecimal total = BigDecimal.ZERO;
 
         for (CartService.CartLine line : lines) {
-            Listing listing = line.listing();
+            CatalogItem catalogItem = line.catalogItem();
             int quantity = line.quantity();
 
-            if (listing.getStock() < quantity) {
-                throw new BadRequestException("Insufficient stock for listing: " + listing.getTitle());
+            if (catalogItem.getStock() < quantity) {
+                throw new BadRequestException("Insufficient stock for item: " + catalogItem.getTitle());
             }
 
-            listing.setStock(listing.getStock() - quantity);
+            int nextStock = catalogItem.getStock() - quantity;
+            applySourceStock(catalogItem, nextStock);
+            catalogItemService.updateStock(catalogItem, nextStock);
 
-            BigDecimal subtotal = listing.getPrice().multiply(BigDecimal.valueOf(quantity));
+            BigDecimal subtotal = catalogItem.getPrice().multiply(BigDecimal.valueOf(quantity));
             total = total.add(subtotal);
 
             OrderItem item = OrderItem.builder()
-                    .listing(listing)
-                    .listingTitle(listing.getTitle())
-                    .unitPrice(listing.getPrice())
+                    .catalogItem(catalogItem)
+                    .sourceType(catalogItem.getSourceType())
+                    .sourceRefId(catalogItem.getSourceRefId())
+                    .itemTitle(catalogItem.getTitle())
+                    .unitPrice(catalogItem.getPrice())
                     .quantity(quantity)
                     .subtotal(subtotal)
                     .build();
@@ -78,8 +89,6 @@ public class OrderService {
         }
 
         order.setTotalAmount(total);
-        listingRepository.saveAll(lines.stream().map(CartService.CartLine::listing).collect(Collectors.toList()));
-
         Order saved = orderRepository.save(order);
         cartService.clearCart(session);
         return toResponse(saved);
@@ -105,8 +114,8 @@ public class OrderService {
         Page<Order> orderPage;
 
         if (status != null && !status.isBlank()) {
-            OrderStatus parsedStatus = parseStatus(status);
-            orderPage = orderRepository.findByStatus(parsedStatus, pageable);
+            String parsedStatus = parseStatusCode(status);
+            orderPage = orderRepository.findByStatus_CodeIgnoreCase(parsedStatus, pageable);
         } else {
             orderPage = orderRepository.findAll(pageable);
         }
@@ -120,39 +129,76 @@ public class OrderService {
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new NotFoundException("Order not found"));
 
-        OrderStatus nextStatus = parseStatus(status);
-        if (!isValidTransition(order.getStatus(), nextStatus)) {
+        String nextStatus = parseStatusCode(status);
+        if (!isValidTransition(order.getStatus().getCode(), nextStatus)) {
             throw new BadRequestException("Invalid order status transition");
         }
 
-        order.setStatus(nextStatus);
+        order.setStatus(getStatusOrThrow(nextStatus));
         return toResponse(orderRepository.save(order));
     }
 
-    private OrderStatus parseStatus(String value) {
-        try {
-            return OrderStatus.valueOf(value.trim().toUpperCase(Locale.ROOT));
-        } catch (Exception ex) {
+    private String parseStatusCode(String value) {
+        if (value == null || value.isBlank()) {
+            throw new BadRequestException("status is required");
+        }
+
+        String code = value.trim().toUpperCase(Locale.ROOT);
+        if (orderStatusRepository.findByCodeIgnoreCaseAndActiveTrue(code).isEmpty()) {
             throw new BadRequestException("Invalid order status: " + value);
         }
+        return code;
     }
 
-    private boolean isValidTransition(OrderStatus current, OrderStatus next) {
-        if (current == next) {
+    private boolean isValidTransition(String current, String next) {
+        if (current.equals(next)) {
             return true;
         }
 
-        if (current == OrderStatus.CANCELLED || current == OrderStatus.DELIVERED) {
+        if (current.equals("CANCELLED") || current.equals("DELIVERED")) {
             return false;
         }
 
         return switch (current) {
-            case PENDING -> next == OrderStatus.CONFIRMED || next == OrderStatus.CANCELLED;
-            case CONFIRMED -> next == OrderStatus.PROCESSING || next == OrderStatus.CANCELLED;
-            case PROCESSING -> next == OrderStatus.SHIPPING || next == OrderStatus.CANCELLED;
-            case SHIPPING -> next == OrderStatus.DELIVERED;
+            case "PENDING" -> next.equals("CONFIRMED") || next.equals("CANCELLED");
+            case "CONFIRMED" -> next.equals("PROCESSING") || next.equals("CANCELLED");
+            case "PROCESSING" -> next.equals("SHIPPING") || next.equals("CANCELLED");
+            case "SHIPPING" -> next.equals("DELIVERED");
             default -> false;
         };
+    }
+
+    private RefOrderStatus getStatusOrThrow(String code) {
+        return orderStatusRepository.findByCodeIgnoreCaseAndActiveTrue(code)
+                .orElseThrow(() -> new NotFoundException("Order status not found: " + code));
+    }
+
+    private void applySourceStock(CatalogItem catalogItem, int nextStock) {
+        if (catalogItem.getSourceType() == CatalogSourceType.LISTING) {
+            Listing listing = listingRepository.findById(catalogItem.getSourceRefId())
+                    .orElseThrow(() -> new NotFoundException("Listing not found"));
+            listing.setStock(nextStock);
+            listingRepository.save(listing);
+            return;
+        }
+
+        if (catalogItem.getSourceType() == CatalogSourceType.IOT_COMPONENT) {
+            IotComponent component = iotComponentRepository.findById(catalogItem.getSourceRefId())
+                    .orElseThrow(() -> new NotFoundException("IoT component not found"));
+            component.setStock(nextStock);
+            iotComponentRepository.save(component);
+            return;
+        }
+
+        if (catalogItem.getSourceType() == CatalogSourceType.IOT_SAMPLE) {
+            IotSampleProduct sample = iotSampleProductRepository.findById(catalogItem.getSourceRefId())
+                    .orElseThrow(() -> new NotFoundException("IoT sample not found"));
+            sample.setStock(nextStock);
+            iotSampleProductRepository.save(sample);
+            return;
+        }
+
+        throw new BadRequestException("Unsupported source type");
     }
 
     private String generateOrderCode() {
@@ -164,8 +210,10 @@ public class OrderService {
     public OrderResponse toResponse(Order order) {
         List<OrderItemResponse> items = order.getItems().stream()
                 .map(item -> OrderItemResponse.builder()
-                        .listingId(item.getListing().getId())
-                        .listingTitle(item.getListingTitle())
+                        .catalogItemId(item.getCatalogItem().getId())
+                        .sourceType(item.getSourceType())
+                        .sourceRefId(item.getSourceRefId())
+                        .title(item.getItemTitle())
                         .quantity(item.getQuantity())
                         .unitPrice(item.getUnitPrice())
                         .subtotal(item.getSubtotal())
@@ -178,7 +226,7 @@ public class OrderService {
                 .customerName(order.getCustomerName())
                 .customerEmail(order.getCustomerEmail())
                 .customerAddress(order.getCustomerAddress())
-                .status(order.getStatus())
+                .status(order.getStatus().getCode())
                 .totalAmount(order.getTotalAmount())
                 .items(items)
                 .createdAt(order.getCreatedAt())

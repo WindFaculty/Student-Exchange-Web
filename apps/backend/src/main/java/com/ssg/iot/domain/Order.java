@@ -35,9 +35,9 @@ public class Order {
     @Column(nullable = false, length = 500)
     private String customerAddress;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 30)
-    private OrderStatus status;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "status_id", nullable = false)
+    private RefOrderStatus status;
 
     @Column(nullable = false, precision = 19, scale = 2)
     private BigDecimal totalAmount;

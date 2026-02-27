@@ -14,7 +14,7 @@ const categories = LISTING_FORM_CATEGORIES
 const emptyForm: ListingRequest = {
   title: '',
   description: '',
-  category: categories[0],
+  categoryCode: categories[0].code,
   price: 0,
   stock: 1,
   imageUrl: '',
@@ -48,7 +48,7 @@ const AdminProductFormPage = () => {
         setForm({
           title: listing.title,
           description: listing.description || '',
-          category: listing.category,
+          categoryCode: listing.category.code,
           price: listing.price,
           stock: listing.stock,
           imageUrl: listing.imageUrl || '',
@@ -135,12 +135,12 @@ const AdminProductFormPage = () => {
               <div className="space-y-1">
                 <label className="text-sm font-medium">Danh mục</label>
                 <select
-                  value={form.category}
-                  onChange={(event) => setForm((current) => ({ ...current, category: event.target.value }))}
+                  value={form.categoryCode}
+                  onChange={(event) => setForm((current) => ({ ...current, categoryCode: event.target.value }))}
                   className="h-10 w-full rounded-lg border border-slate-200 bg-slate-50 px-3 text-sm dark:border-slate-700 dark:bg-slate-800"
                 >
                   {categories.map((item) => (
-                    <option key={item} value={item}>{item}</option>
+                    <option key={item.code} value={item.code}>{item.label}</option>
                   ))}
                 </select>
               </div>

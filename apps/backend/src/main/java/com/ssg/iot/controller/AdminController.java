@@ -38,14 +38,14 @@ public class AdminController {
     @GetMapping("/listings")
     public PageResponse<ListingResponse> getListings(
             @RequestParam(required = false) String search,
-            @RequestParam(required = false) String category,
+            @RequestParam(required = false, name = "categoryCode") String categoryCode,
             @RequestParam(required = false) Boolean active,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size,
             HttpSession session
     ) {
         sessionAuthService.requireAdmin(session);
-        return listingService.getAdminListings(search, category, active, page, size);
+        return listingService.getAdminListings(search, categoryCode, active, page, size);
     }
 
     @PostMapping("/listings")

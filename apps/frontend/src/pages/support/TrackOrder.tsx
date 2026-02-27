@@ -112,8 +112,8 @@ const TrackOrder = () => {
                 </thead>
                 <tbody>
                   {order.items.map((item) => (
-                    <tr key={`${item.listingId}-${item.listingTitle}`} className="border-t border-slate-200 dark:border-slate-700">
-                      <td className="px-3 py-2">{item.listingTitle}</td>
+                    <tr key={`${item.catalogItemId}-${item.title}`} className="border-t border-slate-200 dark:border-slate-700">
+                      <td className="px-3 py-2">{item.title}</td>
                       <td className="px-3 py-2">{item.quantity}</td>
                       <td className="px-3 py-2">{formatCurrency(item.unitPrice)}</td>
                       <td className="px-3 py-2">{formatCurrency(item.subtotal)}</td>
@@ -146,3 +146,4 @@ const TrackOrder = () => {
 }
 
 export default TrackOrder
+

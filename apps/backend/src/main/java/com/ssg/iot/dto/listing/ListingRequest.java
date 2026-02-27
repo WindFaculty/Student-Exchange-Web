@@ -16,7 +16,7 @@ public class ListingRequest {
     private String description;
 
     @NotBlank
-    private String category;
+    private String categoryCode;
 
     @NotNull
     @DecimalMin(value = "0.0", inclusive = false)

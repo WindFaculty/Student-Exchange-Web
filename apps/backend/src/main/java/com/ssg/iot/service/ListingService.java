@@ -3,11 +3,15 @@ package com.ssg.iot.service;
 import com.ssg.iot.common.ForbiddenException;
 import com.ssg.iot.common.NotFoundException;
 import com.ssg.iot.common.PageResponse;
+import com.ssg.iot.domain.CatalogSourceType;
 import com.ssg.iot.domain.Listing;
+import com.ssg.iot.domain.RefListingCategory;
 import com.ssg.iot.domain.User;
+import com.ssg.iot.dto.common.CategoryOptionResponse;
 import com.ssg.iot.dto.listing.ListingRequest;
 import com.ssg.iot.dto.listing.ListingResponse;
 import com.ssg.iot.repository.ListingRepository;
+import com.ssg.iot.repository.RefListingCategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -17,24 +21,30 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.util.Locale;
+
 @Service
 @RequiredArgsConstructor
 public class ListingService {
 
     private final ListingRepository listingRepository;
+    private final RefListingCategoryRepository listingCategoryRepository;
+    private final CatalogItemService catalogItemService;
 
     @Transactional(readOnly = true)
-    public PageResponse<ListingResponse> getPublicListings(String search, String category, int page, int size) {
+    public PageResponse<ListingResponse> getPublicListings(String search, String categoryCode, int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdAt"));
         Specification<Listing> spec = Specification.where((root, query, cb) -> cb.isTrue(root.get("active")));
+        spec = spec.and((root, query, cb) -> cb.isNull(root.get("archivedAt")));
 
-        if (category != null && !category.isBlank()) {
-            String categoryValue = category.trim().toLowerCase();
-            spec = spec.and((root, query, cb) -> cb.equal(cb.lower(root.get("category")), categoryValue));
+        if (categoryCode != null && !categoryCode.isBlank()) {
+            String code = categoryCode.trim().toLowerCase(Locale.ROOT);
+            spec = spec.and((root, query, cb) -> cb.equal(cb.lower(root.get("category").get("code")), code));
         }
 
         if (search != null && !search.isBlank()) {
-            String keyword = "%" + search.trim().toLowerCase() + "%";
+            String keyword = "%" + search.trim().toLowerCase(Locale.ROOT) + "%";
             spec = spec.and((root, query, cb) -> cb.or(
                     cb.like(cb.lower(root.get("title")), keyword),
                     cb.like(cb.lower(root.get("description")), keyword)
@@ -53,22 +63,29 @@ public class ListingService {
     @Transactional(readOnly = true)
     public Listing getActiveListingEntity(Long id) {
         return listingRepository.findByIdAndActiveTrue(id)
+                .filter(item -> item.getArchivedAt() == null)
                 .orElseThrow(() -> new NotFoundException("Listing not found"));
     }
 
     @Transactional
     public ListingResponse createListing(User owner, ListingRequest request) {
+        RefListingCategory category = getCategoryOrThrow(request.getCategoryCode());
+
         Listing listing = Listing.builder()
                 .title(request.getTitle().trim())
-                .description(request.getDescription())
-                .category(request.getCategory().trim())
+                .description(trimToNull(request.getDescription()))
+                .category(category)
                 .price(request.getPrice())
                 .stock(request.getStock())
-                .imageUrl(request.getImageUrl())
+                .imageUrl(trimToNull(request.getImageUrl()))
                 .active(true)
+                .archivedAt(null)
                 .owner(owner)
                 .build();
-        return toResponse(listingRepository.save(listing));
+
+        Listing saved = listingRepository.save(listing);
+        catalogItemService.syncFromListing(saved);
+        return toResponse(saved);
     }
 
     @Transactional
@@ -81,13 +98,15 @@ public class ListingService {
         }
 
         listing.setTitle(request.getTitle().trim());
-        listing.setDescription(request.getDescription());
-        listing.setCategory(request.getCategory().trim());
+        listing.setDescription(trimToNull(request.getDescription()));
+        listing.setCategory(getCategoryOrThrow(request.getCategoryCode()));
         listing.setPrice(request.getPrice());
         listing.setStock(request.getStock());
-        listing.setImageUrl(request.getImageUrl());
+        listing.setImageUrl(trimToNull(request.getImageUrl()));
 
-        return toResponse(listingRepository.save(listing));
+        Listing saved = listingRepository.save(listing);
+        catalogItemService.syncFromListing(saved);
+        return toResponse(saved);
     }
 
     @Transactional
@@ -100,7 +119,9 @@ public class ListingService {
         }
 
         listing.setActive(false);
+        listing.setArchivedAt(LocalDateTime.now());
         listingRepository.save(listing);
+        catalogItemService.syncFromListing(listing);
     }
 
     @Transactional(readOnly = true)
@@ -111,7 +132,7 @@ public class ListingService {
     }
 
     @Transactional(readOnly = true)
-    public PageResponse<ListingResponse> getAdminListings(String search, String category, Boolean active, int page, int size) {
+    public PageResponse<ListingResponse> getAdminListings(String search, String categoryCode, Boolean active, int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdAt"));
         Specification<Listing> spec = Specification.where(null);
 
@@ -119,13 +140,13 @@ public class ListingService {
             spec = spec.and((root, query, cb) -> cb.equal(root.get("active"), active));
         }
 
-        if (category != null && !category.isBlank()) {
-            String categoryValue = category.trim().toLowerCase();
-            spec = spec.and((root, query, cb) -> cb.equal(cb.lower(root.get("category")), categoryValue));
+        if (categoryCode != null && !categoryCode.isBlank()) {
+            String code = categoryCode.trim().toLowerCase(Locale.ROOT);
+            spec = spec.and((root, query, cb) -> cb.equal(cb.lower(root.get("category").get("code")), code));
         }
 
         if (search != null && !search.isBlank()) {
-            String keyword = "%" + search.trim().toLowerCase() + "%";
+            String keyword = "%" + search.trim().toLowerCase(Locale.ROOT) + "%";
             spec = spec.and((root, query, cb) -> cb.or(
                     cb.like(cb.lower(root.get("title")), keyword),
                     cb.like(cb.lower(root.get("description")), keyword)
@@ -144,11 +165,19 @@ public class ListingService {
     }
 
     public ListingResponse toResponse(Listing listing) {
+        Long catalogItemId = catalogItemService.findBySource(CatalogSourceType.LISTING, listing.getId())
+                .map(item -> item.getId())
+                .orElse(null);
+
         return ListingResponse.builder()
                 .id(listing.getId())
                 .title(listing.getTitle())
                 .description(listing.getDescription())
-                .category(listing.getCategory())
+                .category(CategoryOptionResponse.builder()
+                        .code(listing.getCategory().getCode())
+                        .label(listing.getCategory().getLabelVi())
+                        .build())
+                .catalogItemId(catalogItemId)
                 .price(listing.getPrice())
                 .stock(listing.getStock())
                 .imageUrl(listing.getImageUrl())
@@ -158,5 +187,21 @@ public class ListingService {
                 .createdAt(listing.getCreatedAt())
                 .updatedAt(listing.getUpdatedAt())
                 .build();
+    }
+
+    private RefListingCategory getCategoryOrThrow(String code) {
+        if (code == null || code.isBlank()) {
+            throw new NotFoundException("Listing category is required");
+        }
+        return listingCategoryRepository.findByCodeIgnoreCaseAndActiveTrue(code.trim())
+                .orElseThrow(() -> new NotFoundException("Listing category not found"));
+    }
+
+    private String trimToNull(String value) {
+        if (value == null) {
+            return null;
+        }
+        String trimmed = value.trim();
+        return trimmed.isEmpty() ? null : trimmed;
     }
 }

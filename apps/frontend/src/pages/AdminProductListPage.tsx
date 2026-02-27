@@ -2,7 +2,7 @@ import { FormEvent, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { adminApi } from '../api/adminApi'
 import { Listing } from '../types/models'
-import { formatCurrency, mapApiError } from '../lib/format'
+import { formatCategoryLabel, formatCurrency, mapApiError } from '../lib/format'
 import { ADMIN_LISTING_CATEGORIES } from '../lib/listingCategories'
 import { Button } from '../components/ui/Button'
 import { Input } from '../components/ui/Input'
@@ -15,7 +15,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow } fro
 const PAGE_SIZE = 10
 type ActiveFilter = 'ALL' | 'ACTIVE' | 'INACTIVE'
 
-const categoryOptions = ['ALL', ...ADMIN_LISTING_CATEGORIES]
+const categoryOptions = ADMIN_LISTING_CATEGORIES
 
 const AdminProductListPage = () => {
   const navigate = useNavigate()
@@ -34,7 +34,7 @@ const AdminProductListPage = () => {
     try {
       const response = await adminApi.getListings({
         search: search || undefined,
-        category: category === 'ALL' ? undefined : category,
+        categoryCode: category === 'ALL' ? undefined : category,
         active: activeFilter === 'ALL' ? undefined : activeFilter === 'ACTIVE',
         page,
         size: PAGE_SIZE,
@@ -98,8 +98,9 @@ const AdminProductListPage = () => {
               setPage(0)
             }}
           >
+            <option value="ALL">Tất cả danh mục</option>
             {categoryOptions.map((item) => (
-              <option key={item} value={item}>{item}</option>
+              <option key={item.code} value={item.code}>{item.label}</option>
             ))}
           </select>
 
@@ -148,7 +149,7 @@ const AdminProductListPage = () => {
               rows.map((row) => (
                 <TableRow key={row.id}>
                   <TableCell className="font-medium">{row.title}</TableCell>
-                  <TableCell>{row.category}</TableCell>
+                  <TableCell>{formatCategoryLabel(row.category)}</TableCell>
                   <TableCell>{row.ownerName}</TableCell>
                   <TableCell>{formatCurrency(row.price)}</TableCell>
                   <TableCell>{row.stock}</TableCell>

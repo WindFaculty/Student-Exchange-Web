@@ -8,9 +8,9 @@ interface CartContextValue {
   items: CartItem[]
   loading: boolean
   refreshCart: () => Promise<void>
-  addToCart: (listingId: number, quantity?: number) => Promise<void>
-  updateQuantity: (listingId: number, quantity: number) => Promise<void>
-  removeFromCart: (listingId: number) => Promise<void>
+  addToCart: (catalogItemId: number, quantity?: number) => Promise<void>
+  updateQuantity: (catalogItemId: number, quantity: number) => Promise<void>
+  removeFromCart: (catalogItemId: number) => Promise<void>
   clearCart: () => Promise<void>
   getCartTotal: () => number
   getCartItemCount: () => number
@@ -39,25 +39,25 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     refreshCart()
   }, [refreshCart])
 
-  const addToCart = useCallback(async (listingId: number, quantity = 1) => {
-    const data = await cartApi.addItem(listingId, quantity)
+  const addToCart = useCallback(async (catalogItemId: number, quantity = 1) => {
+    const data = await cartApi.addItem(catalogItemId, quantity)
     setCart(data)
   }, [])
 
-  const updateQuantity = useCallback(async (listingId: number, quantity: number) => {
-    const data = await cartApi.updateItem(listingId, quantity)
+  const updateQuantity = useCallback(async (catalogItemId: number, quantity: number) => {
+    const data = await cartApi.updateItem(catalogItemId, quantity)
     setCart(data)
   }, [])
 
-  const removeFromCart = useCallback(async (listingId: number) => {
-    const data = await cartApi.removeItem(listingId)
+  const removeFromCart = useCallback(async (catalogItemId: number) => {
+    const data = await cartApi.removeItem(catalogItemId)
     setCart(data)
   }, [])
 
   const clearCart = useCallback(async () => {
     for (const item of cart.items) {
       // Sequential remove keeps server session consistent.
-      await cartApi.removeItem(item.listingId)
+      await cartApi.removeItem(item.catalogItemId)
     }
     setCart(emptyCart)
   }, [cart.items])

@@ -9,10 +9,10 @@ import { fetchJson } from './http'
 
 export const iotApi = {
   // Legacy endpoint, still used for hero content compatibility.
-  getOverview(params?: { search?: string; category?: string; segment?: IotSegment; page?: number; size?: number }) {
+  getOverview(params?: { search?: string; categoryCode?: string; segment?: IotSegment; page?: number; size?: number }) {
     const query = new URLSearchParams()
     if (params?.search) query.set('search', params.search)
-    if (params?.category) query.set('category', params.category)
+    if (params?.categoryCode) query.set('categoryCode', params.categoryCode)
     if (params?.segment) query.set('segment', params.segment)
     if (params?.page !== undefined) query.set('page', String(params.page))
     if (params?.size !== undefined) query.set('size', String(params.size))
@@ -20,10 +20,10 @@ export const iotApi = {
   },
 
   // Components from iot_components table.
-  getComponents(params?: { search?: string; category?: string; page?: number; size?: number }) {
+  getComponents(params?: { search?: string; categoryCode?: string; page?: number; size?: number }) {
     const query = new URLSearchParams()
     if (params?.search) query.set('search', params.search)
-    if (params?.category) query.set('category', params.category)
+    if (params?.categoryCode) query.set('categoryCode', params.categoryCode)
     if (params?.page !== undefined) query.set('page', String(params.page))
     if (params?.size !== undefined) query.set('size', String(params.size))
     return fetchJson<PageResponse<IotItemResponse>>(`/api/iot/components?${query.toString()}`)

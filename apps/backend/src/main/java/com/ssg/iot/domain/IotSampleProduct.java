@@ -63,8 +63,9 @@ public class IotSampleProduct {
     @Column(length = 255)
     private String sourcesPath;
 
-    @Column
-    private Long listingId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id", nullable = false)
+    private RefIotSampleCategory category;
 
     @Column(nullable = false, precision = 19, scale = 2)
     private BigDecimal price;
@@ -77,6 +78,9 @@ public class IotSampleProduct {
 
     @Column(nullable = false)
     private boolean active = true;
+
+    @Column(name = "archived_at")
+    private LocalDateTime archivedAt;
 
     @CreationTimestamp
     @Column(nullable = false, updatable = false)

@@ -5,7 +5,7 @@ import com.ssg.iot.common.NotFoundException;
 import com.ssg.iot.common.PageResponse;
 import com.ssg.iot.domain.Event;
 import com.ssg.iot.domain.EventRegistration;
-import com.ssg.iot.domain.EventRegistrationStatus;
+import com.ssg.iot.domain.RefEventRegistrationStatus;
 import com.ssg.iot.domain.User;
 import com.ssg.iot.dto.event.EventRegistrationRequest;
 import com.ssg.iot.dto.event.EventRegistrationResponse;
@@ -13,6 +13,7 @@ import com.ssg.iot.dto.event.EventRequest;
 import com.ssg.iot.dto.event.EventResponse;
 import com.ssg.iot.repository.EventRegistrationRepository;
 import com.ssg.iot.repository.EventRepository;
+import com.ssg.iot.repository.RefEventRegistrationStatusRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -23,6 +24,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 @Service
@@ -31,6 +33,7 @@ public class EventService {
 
     private final EventRepository eventRepository;
     private final EventRegistrationRepository registrationRepository;
+    private final RefEventRegistrationStatusRepository registrationStatusRepository;
 
     @Transactional(readOnly = true)
     public PageResponse<EventResponse> getPublicEvents(String search, int page, int size) {
@@ -38,7 +41,7 @@ public class EventService {
         Specification<Event> spec = Specification.where((root, query, cb) -> cb.isTrue(root.get("active")));
 
         if (search != null && !search.isBlank()) {
-            String keyword = "%" + search.trim().toLowerCase() + "%";
+            String keyword = "%" + search.trim().toLowerCase(Locale.ROOT) + "%";
             spec = spec.and((root, query, cb) -> cb.or(
                     cb.like(cb.lower(root.get("title")), keyword),
                     cb.like(cb.lower(root.get("summary")), keyword),
@@ -123,7 +126,7 @@ public class EventService {
                 .email(request.getEmail().trim())
                 .phone(request.getPhone())
                 .note(request.getNote())
-                .status(EventRegistrationStatus.REGISTERED)
+                .status(getStatusOrThrow("REGISTERED"))
                 .build();
 
         return toRegistrationResponse(registrationRepository.save(registration));
@@ -158,7 +161,7 @@ public class EventService {
         }
 
         if (search != null && !search.isBlank()) {
-            String keyword = "%" + search.trim().toLowerCase() + "%";
+            String keyword = "%" + search.trim().toLowerCase(Locale.ROOT) + "%";
             spec = spec.and((root, query, cb) -> cb.or(
                     cb.like(cb.lower(root.get("title")), keyword),
                     cb.like(cb.lower(root.get("summary")), keyword),
@@ -174,6 +177,11 @@ public class EventService {
         if (request.getEndAt().isBefore(request.getStartAt())) {
             throw new BadRequestException("Event end time must be after start time");
         }
+    }
+
+    private RefEventRegistrationStatus getStatusOrThrow(String code) {
+        return registrationStatusRepository.findByCodeIgnoreCaseAndActiveTrue(code)
+                .orElseThrow(() -> new NotFoundException("Event registration status not found: " + code));
     }
 
     public EventResponse toResponse(Event event) {
@@ -202,7 +210,7 @@ public class EventService {
                 .email(registration.getEmail())
                 .phone(registration.getPhone())
                 .note(registration.getNote())
-                .status(registration.getStatus())
+                .status(registration.getStatus().getCode())
                 .createdAt(registration.getCreatedAt())
                 .build();
     }

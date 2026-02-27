@@ -23,11 +23,18 @@ public class OrderItem {
     private Order order;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "listing_id", nullable = false)
-    private Listing listing;
+    @JoinColumn(name = "catalog_item_id", nullable = false)
+    private CatalogItem catalogItem;
 
-    @Column(nullable = false, length = 200)
-    private String listingTitle;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "source_type", nullable = false, length = 30)
+    private CatalogSourceType sourceType;
+
+    @Column(name = "source_ref_id", nullable = false)
+    private Long sourceRefId;
+
+    @Column(name = "item_title", nullable = false, length = 200)
+    private String itemTitle;
 
     @Column(nullable = false, precision = 19, scale = 2)
     private BigDecimal unitPrice;

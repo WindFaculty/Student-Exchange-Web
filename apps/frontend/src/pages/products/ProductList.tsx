@@ -4,7 +4,7 @@ import { listingApi } from '../../api/listingApi'
 import { Listing } from '../../types/models'
 import { useCart } from '../../context/CartContext'
 import { formatCurrency, mapApiError } from '../../lib/format'
-import { LISTING_CATEGORIES } from '../../lib/listingCategories'
+import { LISTING_CATEGORY_OPTIONS } from '../../lib/listingCategories'
 import { Button } from '../../components/ui/Button'
 import { Input } from '../../components/ui/Input'
 import { Card, CardContent } from '../../components/ui/Card'
@@ -23,18 +23,18 @@ const ProductList: React.FC = () => {
 
   const page = Number(searchParams.get('page') ?? 0)
   const search = searchParams.get('search') ?? ''
-  const category = searchParams.get('category') ?? ''
+  const category = searchParams.get('categoryCode') ?? ''
 
   useEffect(() => {
     const load = async () => {
       setLoading(true)
       setError('')
       try {
-        const data = await listingApi.getListings({ search, category, page, size: 12 })
+        const data = await listingApi.getListings({ search, categoryCode: category, page, size: 12 })
         setItems(data.content)
         setTotalPages(data.totalPages)
       } catch (err: unknown) {
-        setError(mapApiError(err, 'Không thể tải danh sách bài đăng'))
+        setError(mapApiError(err, 'KhÃ´ng thá»ƒ táº£i danh sÃ¡ch bÃ i Ä‘Äƒng'))
       } finally {
         setLoading(false)
       }
@@ -55,8 +55,8 @@ const ProductList: React.FC = () => {
   return (
     <div className="space-y-6">
       <PageHeader
-        title="Chợ trao đổi sinh viên"
-        description="Khám phá đồ học tập, đồ công nghệ, dịch vụ và nhiều tin rao từ sinh viên."
+        title="Chá»£ trao Ä‘á»•i sinh viÃªn"
+        description="KhÃ¡m phÃ¡ Ä‘á»“ há»c táº­p, Ä‘á»“ cÃ´ng nghá»‡, dá»‹ch vá»¥ vÃ  nhiá»u tin rao tá»« sinh viÃªn."
       />
 
       <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-card dark:border-slate-800 dark:bg-slate-900">
@@ -64,23 +64,23 @@ const ProductList: React.FC = () => {
           <Input
             value={search}
             onChange={(e) => updateQuery({ search: e.target.value, page: '0' })}
-            placeholder="Tìm theo tiêu đề hoặc mô tả"
+            placeholder="TÃ¬m theo tiÃªu Ä‘á» hoáº·c mÃ´ táº£"
             iconLeft={<Icon name="search" className="text-[18px]" />}
           />
           <select
             className="h-10 rounded-lg border border-slate-200 bg-slate-50 px-3 text-sm dark:border-slate-700 dark:bg-slate-800"
             value={category}
-            onChange={(e) => updateQuery({ category: e.target.value, page: '0' })}
+            onChange={(e) => updateQuery({ categoryCode: e.target.value, page: '0' })}
           >
-            <option value="">Tất cả danh mục</option>
-            {LISTING_CATEGORIES.map((item) => (
-              <option key={item} value={item}>{item}</option>
+            <option value="">Táº¥t cáº£ danh má»¥c</option>
+            {LISTING_CATEGORY_OPTIONS.map((item) => (
+              <option key={item.code} value={item.code}>{item.label}</option>
             ))}
           </select>
         </div>
       </div>
 
-      {loading ? <p className="text-sm text-slate-500">Đang tải bài đăng...</p> : null}
+      {loading ? <p className="text-sm text-slate-500">Äang táº£i bÃ i Ä‘Äƒng...</p> : null}
       {error ? <p className="text-sm text-red-600">{error}</p> : null}
 
       {!loading && !error && (
@@ -94,19 +94,25 @@ const ProductList: React.FC = () => {
                 <h2 className="line-clamp-2 text-base font-semibold text-slate-900 dark:text-slate-100">{item.title}</h2>
                 <p className="line-clamp-2 text-sm text-slate-500 dark:text-slate-400">{item.description}</p>
                 <p className="text-lg font-bold text-slate-900 dark:text-white">{formatCurrency(item.price)}</p>
-                <p className="text-xs text-slate-500 dark:text-slate-400">Tồn kho: {item.stock}</p>
+                <p className="text-xs text-slate-500 dark:text-slate-400">Tá»“n kho: {item.stock}</p>
 
                 <div className="flex gap-2 pt-2">
                   <Button size="sm" className="flex-1" onClick={() => navigate(`/products/${item.id}`)}>
-                    Chi tiết
+                    Chi tiáº¿t
                   </Button>
                   <Button
                     size="sm"
                     variant="outline"
-                    disabled={item.stock <= 0}
-                    onClick={() => addToCart(item.id, 1)}
+                    disabled={item.stock <= 0 || !item.catalogItemId}
+                    onClick={() => {
+                      if (!item.catalogItemId) {
+                        setError('San pham chua duoc dong bo catalogItemId')
+                        return
+                      }
+                      addToCart(item.catalogItemId, 1)
+                    }}
                   >
-                    Thêm
+                    ThÃªm
                   </Button>
                 </div>
               </CardContent>
@@ -117,7 +123,7 @@ const ProductList: React.FC = () => {
 
       <div className="flex items-center justify-between">
         <Button variant="outline" disabled={page <= 0} onClick={() => updateQuery({ page: String(page - 1) })}>
-          Trang trước
+          Trang trÆ°á»›c
         </Button>
         <span className="text-sm text-slate-500">Trang {page + 1} / {Math.max(totalPages, 1)}</span>
         <Button
@@ -133,3 +139,5 @@ const ProductList: React.FC = () => {
 }
 
 export default ProductList
+
+

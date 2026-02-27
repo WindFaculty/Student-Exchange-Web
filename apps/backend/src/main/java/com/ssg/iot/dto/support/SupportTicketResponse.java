@@ -1,6 +1,5 @@
 package com.ssg.iot.dto.support;
 
-import com.ssg.iot.domain.SupportTicketStatus;
 import lombok.Builder;
 import lombok.Data;
 
@@ -16,7 +15,7 @@ public class SupportTicketResponse {
     private String subject;
     private String category;
     private String message;
-    private SupportTicketStatus status;
+    private String status;
     private String adminReply;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

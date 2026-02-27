@@ -17,10 +17,10 @@ import {
 import { fetchJson } from './http'
 
 export const adminApi = {
-  getListings(params?: { search?: string; category?: string; active?: boolean; page?: number; size?: number }) {
+  getListings(params?: { search?: string; categoryCode?: string; active?: boolean; page?: number; size?: number }) {
     const query = new URLSearchParams()
     if (params?.search) query.set('search', params.search)
-    if (params?.category) query.set('category', params.category)
+    if (params?.categoryCode) query.set('categoryCode', params.categoryCode)
     if (params?.active !== undefined) query.set('active', String(params.active))
     if (params?.page !== undefined) query.set('page', String(params.page))
     if (params?.size !== undefined) query.set('size', String(params.size))

@@ -6,22 +6,22 @@ export const cartApi = {
     return fetchJson<Cart>('/api/cart')
   },
 
-  addItem(listingId: number, quantity: number) {
+  addItem(catalogItemId: number, quantity: number) {
     return fetchJson<Cart>('/api/cart/items', {
       method: 'POST',
-      body: JSON.stringify({ listingId, quantity }),
+      body: JSON.stringify({ catalogItemId, quantity }),
     })
   },
 
-  updateItem(listingId: number, quantity: number) {
-    return fetchJson<Cart>(`/api/cart/items/${listingId}`, {
+  updateItem(catalogItemId: number, quantity: number) {
+    return fetchJson<Cart>(`/api/cart/items/${catalogItemId}`, {
       method: 'PATCH',
       body: JSON.stringify({ quantity }),
     })
   },
 
-  removeItem(listingId: number) {
-    return fetchJson<Cart>(`/api/cart/items/${listingId}`, {
+  removeItem(catalogItemId: number) {
+    return fetchJson<Cart>(`/api/cart/items/${catalogItemId}`, {
       method: 'DELETE',
     })
   },

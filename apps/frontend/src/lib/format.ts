@@ -27,6 +27,12 @@ export const formatDate = (input: string | Date) => {
   return dateFormatter.format(date)
 }
 
+export const formatCategoryLabel = (category: CategoryRef | string | undefined | null) => {
+  if (!category) return '--'
+  if (typeof category === 'string') return category
+  return category.label
+}
+
 const knownErrorMap: Record<string, string> = {
   'Login failed': 'Đăng nhập thất bại',
   'Admin login failed': 'Đăng nhập quản trị thất bại',
@@ -50,3 +56,4 @@ export const mapApiError = (error: unknown, fallback: string) => {
   }
   return message || fallback
 }
+import type { CategoryRef } from '../types/models'

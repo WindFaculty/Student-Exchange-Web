@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { listingApi } from '../../api/listingApi'
 import { Listing } from '../../types/models'
 import { useCart } from '../../context/CartContext'
-import { formatCurrency, mapApiError } from '../../lib/format'
+import { formatCategoryLabel, formatCurrency, mapApiError } from '../../lib/format'
 import { Button } from '../../components/ui/Button'
 import { Input } from '../../components/ui/Input'
 
@@ -27,7 +27,7 @@ const ProductDetail: React.FC = () => {
         const data = await listingApi.getListing(Number(id))
         setItem(data)
       } catch (err: unknown) {
-        setError(mapApiError(err, 'Không thể tải chi tiết bài đăng'))
+        setError(mapApiError(err, 'KhÃ´ng thá»ƒ táº£i chi tiáº¿t bÃ i Ä‘Äƒng'))
       } finally {
         setLoading(false)
       }
@@ -35,8 +35,8 @@ const ProductDetail: React.FC = () => {
     load()
   }, [id])
 
-  if (loading) return <p className="text-sm text-slate-500">Đang tải chi tiết...</p>
-  if (error || !item) return <p className="text-sm text-red-600">{error || 'Không tìm thấy bài đăng'}</p>
+  if (loading) return <p className="text-sm text-slate-500">Äang táº£i chi tiáº¿t...</p>
+  if (error || !item) return <p className="text-sm text-red-600">{error || 'KhÃ´ng tÃ¬m tháº¥y bÃ i Ä‘Äƒng'}</p>
 
   const maxQty = Math.max(item.stock, 1)
 
@@ -69,7 +69,7 @@ const ProductDetail: React.FC = () => {
             className="rounded-full border-blue-500/30 bg-slate-900/60 text-blue-400 backdrop-blur-md hover:bg-slate-800/80 hover:text-blue-300"
             onClick={() => navigate('/products')}
           >
-            ← Quay lại
+            â† Quay láº¡i
           </Button>
         </div>
       </div>
@@ -79,10 +79,10 @@ const ProductDetail: React.FC = () => {
           {/* Left Column: Details */}
           <div className="flex flex-col gap-10 text-white">
             <section>
-              <h2 className="text-2xl font-bold tracking-tight">Chi tiết sản phẩm</h2>
+              <h2 className="text-2xl font-bold tracking-tight">Chi tiáº¿t sáº£n pháº©m</h2>
               <div className="mt-4 flex items-center gap-2">
                 <span className="rounded-full border border-slate-700 bg-slate-800 px-3 py-1 text-xs font-medium text-slate-300">
-                  {item.category}
+                  {formatCategoryLabel(item.category)}
                 </span>
               </div>
               <p className="mt-6 whitespace-pre-line leading-relaxed text-slate-300">
@@ -96,12 +96,12 @@ const ProductDetail: React.FC = () => {
             <div className="rounded-2xl border border-blue-500/20 bg-slate-900/50 p-6 shadow-[0_0_15px_rgba(59,130,246,0.1)] transition-colors hover:border-blue-500/40">
               <h3 className="text-xl font-bold text-white">Mua ngay</h3>
               <div className="mt-6 flex items-center justify-between">
-                <span className="text-slate-400">Tồn kho</span>
+                <span className="text-slate-400">Tá»“n kho</span>
                 <span className="font-semibold text-slate-200">{item.stock}</span>
               </div>
 
               <div className="mt-6">
-                <label className="mb-2 block text-sm font-medium text-slate-300">Số lượng</label>
+                <label className="mb-2 block text-sm font-medium text-slate-300">Sá»‘ lÆ°á»£ng</label>
                 <Input
                   type="number"
                   min={1}
@@ -115,9 +115,13 @@ const ProductDetail: React.FC = () => {
               <div className="mt-8 flex flex-col gap-3">
                 <Button
                   className="w-full rounded-full bg-blue-600 py-6 text-base font-medium text-white shadow-[0_0_20px_rgba(37,99,235,0.4)] hover:bg-blue-500 hover:shadow-[0_0_25px_rgba(37,99,235,0.6)]"
-                  disabled={item.stock <= 0}
+                  disabled={item.stock <= 0 || !item.catalogItemId}
                   onClick={async () => {
-                    await addToCart(item.id, quantity)
+                    if (!item.catalogItemId) {
+                      setError('San pham chua duoc dong bo catalogItemId')
+                      return
+                    }
+                    await addToCart(item.catalogItemId, quantity)
                     navigate('/checkout')
                   }}
                 >
@@ -126,10 +130,16 @@ const ProductDetail: React.FC = () => {
                 <Button
                   variant="outline"
                   className="w-full rounded-full border-blue-500/50 bg-slate-800 py-6 text-base font-medium text-blue-400 hover:bg-slate-700 hover:text-blue-300"
-                  disabled={item.stock <= 0}
-                  onClick={() => addToCart(item.id, quantity)}
+                  disabled={item.stock <= 0 || !item.catalogItemId}
+                  onClick={() => {
+                    if (!item.catalogItemId) {
+                      setError('San pham chua duoc dong bo catalogItemId')
+                      return
+                    }
+                    addToCart(item.catalogItemId, quantity)
+                  }}
                 >
-                  Thêm vào giỏ
+                  ThÃªm vÃ o giá»
                 </Button>
               </div>
             </div>
@@ -141,3 +151,5 @@ const ProductDetail: React.FC = () => {
 }
 
 export default ProductDetail
+
+
