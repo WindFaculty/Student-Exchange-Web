@@ -43,6 +43,10 @@ Thumbs.db
 # Vercel
 .vercel/
 
+# Python
+__pycache__/
+*.pyc
+
 # Java/Spring Boot
 *.class
 .mtj.tmp/
