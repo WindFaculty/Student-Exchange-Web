@@ -1,0 +1,7 @@
+# Replace this file with generated values from:
+# deploy/scripts/update_github_webhook_allowlist.sh
+#
+# Example:
+# allow 192.30.252.0/22;
+# allow 185.199.108.0/22;
+# deny all;

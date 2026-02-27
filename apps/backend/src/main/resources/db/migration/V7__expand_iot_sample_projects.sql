@@ -19,6 +19,7 @@ ALTER TABLE iot_sample_products ADD principle_path NVARCHAR(255);
 ALTER TABLE iot_sample_products ADD sources_path NVARCHAR(255);
 ALTER TABLE iot_sample_products ADD listing_id BIGINT;
 
+
 -- Backfill existing rows so new NOT NULL constraints can be applied safely.
 UPDATE iot_sample_products
 SET
@@ -68,7 +69,7 @@ SELECT 'Smart Plant Watering System',
        'Automated plant watering using soil moisture sensor and relay-driven pump.',
        'San pham mau / Bo KIT',
        850000, 8, '/products/esp32.jpg', 1,
-       (SELECT TOP 1 id FROM users WHERE role = 'ADMIN' AND active = 1 ORDER BY id)
+       (SELECT MIN(id) FROM users WHERE role = 'ADMIN' AND active = 1)
 WHERE NOT EXISTS (
     SELECT 1 FROM listings
     WHERE LOWER(title) = LOWER('Smart Plant Watering System')
@@ -80,7 +81,7 @@ SELECT 'Home Environment Monitor',
        'Monitor temperature, humidity and pressure with OLED and MQTT output.',
        'San pham mau / Bo KIT',
        720000, 8, '/products/esp32.jpg', 1,
-       (SELECT TOP 1 id FROM users WHERE role = 'ADMIN' AND active = 1 ORDER BY id)
+       (SELECT MIN(id) FROM users WHERE role = 'ADMIN' AND active = 1)
 WHERE NOT EXISTS (
     SELECT 1 FROM listings
     WHERE LOWER(title) = LOWER('Home Environment Monitor')
@@ -92,7 +93,7 @@ SELECT 'Smart Door Lock with RFID',
        'RFID-based smart door lock controlled by servo motor.',
        'San pham mau / Bo KIT',
        980000, 6, '/products/esp32.jpg', 1,
-       (SELECT TOP 1 id FROM users WHERE role = 'ADMIN' AND active = 1 ORDER BY id)
+       (SELECT MIN(id) FROM users WHERE role = 'ADMIN' AND active = 1)
 WHERE NOT EXISTS (
     SELECT 1 FROM listings
     WHERE LOWER(title) = LOWER('Smart Door Lock with RFID')
@@ -104,7 +105,7 @@ SELECT 'Energy Monitoring Smart Plug',
        'Monitor current/voltage usage and control appliance by relay.',
        'San pham mau / Bo KIT',
        1050000, 5, '/products/esp32.jpg', 1,
-       (SELECT TOP 1 id FROM users WHERE role = 'ADMIN' AND active = 1 ORDER BY id)
+       (SELECT MIN(id) FROM users WHERE role = 'ADMIN' AND active = 1)
 WHERE NOT EXISTS (
     SELECT 1 FROM listings
     WHERE LOWER(title) = LOWER('Energy Monitoring Smart Plug')
@@ -116,7 +117,7 @@ SELECT 'Garage Parking Assistant',
        'Ultrasonic sensor measures distance and indicates safe parking position.',
        'San pham mau / Bo KIT',
        680000, 7, '/products/hc-sr04.png', 1,
-       (SELECT TOP 1 id FROM users WHERE role = 'ADMIN' AND active = 1 ORDER BY id)
+       (SELECT MIN(id) FROM users WHERE role = 'ADMIN' AND active = 1)
 WHERE NOT EXISTS (
     SELECT 1 FROM listings
     WHERE LOWER(title) = LOWER('Garage Parking Assistant')
@@ -128,7 +129,7 @@ SELECT 'LoRa Weather Station',
        'LoRa node/gateway setup for remote environmental monitoring.',
        'San pham mau / Bo KIT',
        1250000, 4, '/products/esp32.jpg', 1,
-       (SELECT TOP 1 id FROM users WHERE role = 'ADMIN' AND active = 1 ORDER BY id)
+       (SELECT MIN(id) FROM users WHERE role = 'ADMIN' AND active = 1)
 WHERE NOT EXISTS (
     SELECT 1 FROM listings
     WHERE LOWER(title) = LOWER('LoRa Weather Station')
@@ -140,7 +141,7 @@ SELECT 'Raspberry Pi Surveillance Camera',
        'Motion-triggered surveillance with PIR sensor and camera module.',
        'San pham mau / Bo KIT',
        1850000, 3, '/products/raspberry-pi-4.jpg', 1,
-       (SELECT TOP 1 id FROM users WHERE role = 'ADMIN' AND active = 1 ORDER BY id)
+       (SELECT MIN(id) FROM users WHERE role = 'ADMIN' AND active = 1)
 WHERE NOT EXISTS (
     SELECT 1 FROM listings
     WHERE LOWER(title) = LOWER('Raspberry Pi Surveillance Camera')
@@ -152,7 +153,7 @@ SELECT 'Raspberry Pi Smart Garden Monitor',
        'Monitor garden conditions and control watering pump with Raspberry Pi.',
        'San pham mau / Bo KIT',
        1650000, 3, '/products/raspberry-pi-4.jpg', 1,
-       (SELECT TOP 1 id FROM users WHERE role = 'ADMIN' AND active = 1 ORDER BY id)
+       (SELECT MIN(id) FROM users WHERE role = 'ADMIN' AND active = 1)
 WHERE NOT EXISTS (
     SELECT 1 FROM listings
     WHERE LOWER(title) = LOWER('Raspberry Pi Smart Garden Monitor')
@@ -162,6 +163,7 @@ WHERE NOT EXISTS (
 -- ------------------------------------------------------------
 -- Seed sample projects and map listing_id
 -- ------------------------------------------------------------
+
 INSERT INTO iot_sample_products (
     title, slug, summary, description, main_components,
     difficulty, build_time, mcu_soc, connectivity,
@@ -183,7 +185,7 @@ SELECT
     'projects/01_smart_plant_watering/pinout.md',
     'projects/01_smart_plant_watering/principle_of_operation.md',
     'projects/01_smart_plant_watering/sources.md',
-    (SELECT TOP 1 id FROM listings WHERE LOWER(title) = LOWER('Smart Plant Watering System') AND LOWER(category) = LOWER('San pham mau / Bo KIT')),
+    (SELECT MIN(id) FROM listings WHERE LOWER(title) = LOWER('Smart Plant Watering System') AND LOWER(category) = LOWER('San pham mau / Bo KIT')),
     850000, 8, '/products/esp32.jpg', 1
 WHERE NOT EXISTS (SELECT 1 FROM iot_sample_products WHERE slug = '01_smart_plant_watering');
 
@@ -208,7 +210,7 @@ SELECT
     'projects/02_home_env_monitor/pinout.md',
     'projects/02_home_env_monitor/principle_of_operation.md',
     'projects/02_home_env_monitor/sources.md',
-    (SELECT TOP 1 id FROM listings WHERE LOWER(title) = LOWER('Home Environment Monitor') AND LOWER(category) = LOWER('San pham mau / Bo KIT')),
+    (SELECT MIN(id) FROM listings WHERE LOWER(title) = LOWER('Home Environment Monitor') AND LOWER(category) = LOWER('San pham mau / Bo KIT')),
     720000, 8, '/products/esp32.jpg', 1
 WHERE NOT EXISTS (SELECT 1 FROM iot_sample_products WHERE slug = '02_home_env_monitor');
 
@@ -233,7 +235,7 @@ SELECT
     'projects/03_smart_door_lock/pinout.md',
     'projects/03_smart_door_lock/principle_of_operation.md',
     'projects/03_smart_door_lock/sources.md',
-    (SELECT TOP 1 id FROM listings WHERE LOWER(title) = LOWER('Smart Door Lock with RFID') AND LOWER(category) = LOWER('San pham mau / Bo KIT')),
+    (SELECT MIN(id) FROM listings WHERE LOWER(title) = LOWER('Smart Door Lock with RFID') AND LOWER(category) = LOWER('San pham mau / Bo KIT')),
     980000, 6, '/products/esp32.jpg', 1
 WHERE NOT EXISTS (SELECT 1 FROM iot_sample_products WHERE slug = '03_smart_door_lock');
 
@@ -258,7 +260,7 @@ SELECT
     'projects/04_energy_monitoring_plug/pinout.md',
     'projects/04_energy_monitoring_plug/principle_of_operation.md',
     'projects/04_energy_monitoring_plug/sources.md',
-    (SELECT TOP 1 id FROM listings WHERE LOWER(title) = LOWER('Energy Monitoring Smart Plug') AND LOWER(category) = LOWER('San pham mau / Bo KIT')),
+    (SELECT MIN(id) FROM listings WHERE LOWER(title) = LOWER('Energy Monitoring Smart Plug') AND LOWER(category) = LOWER('San pham mau / Bo KIT')),
     1050000, 5, '/products/esp32.jpg', 1
 WHERE NOT EXISTS (SELECT 1 FROM iot_sample_products WHERE slug = '04_energy_monitoring_plug');
 
@@ -283,7 +285,7 @@ SELECT
     'projects/05_garage_parking_assistant/pinout.md',
     'projects/05_garage_parking_assistant/principle_of_operation.md',
     'projects/05_garage_parking_assistant/sources.md',
-    (SELECT TOP 1 id FROM listings WHERE LOWER(title) = LOWER('Garage Parking Assistant') AND LOWER(category) = LOWER('San pham mau / Bo KIT')),
+    (SELECT MIN(id) FROM listings WHERE LOWER(title) = LOWER('Garage Parking Assistant') AND LOWER(category) = LOWER('San pham mau / Bo KIT')),
     680000, 7, '/products/hc-sr04.png', 1
 WHERE NOT EXISTS (SELECT 1 FROM iot_sample_products WHERE slug = '05_garage_parking_assistant');
 
@@ -308,7 +310,7 @@ SELECT
     'projects/06_lora_weather_station/pinout.md',
     'projects/06_lora_weather_station/principle_of_operation.md',
     'projects/06_lora_weather_station/sources.md',
-    (SELECT TOP 1 id FROM listings WHERE LOWER(title) = LOWER('LoRa Weather Station') AND LOWER(category) = LOWER('San pham mau / Bo KIT')),
+    (SELECT MIN(id) FROM listings WHERE LOWER(title) = LOWER('LoRa Weather Station') AND LOWER(category) = LOWER('San pham mau / Bo KIT')),
     1250000, 4, '/products/esp32.jpg', 1
 WHERE NOT EXISTS (SELECT 1 FROM iot_sample_products WHERE slug = '06_lora_weather_station');
 
@@ -333,7 +335,7 @@ SELECT
     'projects/07_rpi_surveillance_cam/pinout.md',
     'projects/07_rpi_surveillance_cam/principle_of_operation.md',
     'projects/07_rpi_surveillance_cam/sources.md',
-    (SELECT TOP 1 id FROM listings WHERE LOWER(title) = LOWER('Raspberry Pi Surveillance Camera') AND LOWER(category) = LOWER('San pham mau / Bo KIT')),
+    (SELECT MIN(id) FROM listings WHERE LOWER(title) = LOWER('Raspberry Pi Surveillance Camera') AND LOWER(category) = LOWER('San pham mau / Bo KIT')),
     1850000, 3, '/products/raspberry-pi-4.jpg', 1
 WHERE NOT EXISTS (SELECT 1 FROM iot_sample_products WHERE slug = '07_rpi_surveillance_cam');
 
@@ -358,6 +360,7 @@ SELECT
     'projects/08_rpi_smart_garden/pinout.md',
     'projects/08_rpi_smart_garden/principle_of_operation.md',
     'projects/08_rpi_smart_garden/sources.md',
-    (SELECT TOP 1 id FROM listings WHERE LOWER(title) = LOWER('Raspberry Pi Smart Garden Monitor') AND LOWER(category) = LOWER('San pham mau / Bo KIT')),
+    (SELECT MIN(id) FROM listings WHERE LOWER(title) = LOWER('Raspberry Pi Smart Garden Monitor') AND LOWER(category) = LOWER('San pham mau / Bo KIT')),
     1650000, 3, '/products/raspberry-pi-4.jpg', 1
 WHERE NOT EXISTS (SELECT 1 FROM iot_sample_products WHERE slug = '08_rpi_smart_garden');
+

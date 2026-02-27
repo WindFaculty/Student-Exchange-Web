@@ -83,3 +83,4 @@ cd ../backend
 - Architecture: `docs/02-architecture.md`
 - Scope: `docs/01-scope.md`
 - Task queue: `tasks/task-queue.md`
+- CI/CD VPS runbook: `docs/cicd-vps.md`

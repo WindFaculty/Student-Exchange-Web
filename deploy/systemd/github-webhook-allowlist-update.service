@@ -1,0 +1,11 @@
+[Unit]
+Description=Refresh GitHub webhook CIDR allowlist for Nginx and listener
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/bin/bash -lc '/opt/student-exchange/app/deploy/scripts/update_github_webhook_allowlist.sh /etc/student-exchange/github-webhook-cidrs.env /etc/nginx/snippets/github-webhook-allowlist.conf'
+ExecStartPost=/bin/bash -lc 'if [ -f /etc/student-exchange/webhook-listener.env ]; then grep -v "^GITHUB_WEBHOOK_ALLOWED_CIDRS=" /etc/student-exchange/webhook-listener.env > /etc/student-exchange/webhook-listener.env.tmp; cat /etc/student-exchange/github-webhook-cidrs.env >> /etc/student-exchange/webhook-listener.env.tmp; mv /etc/student-exchange/webhook-listener.env.tmp /etc/student-exchange/webhook-listener.env; fi'
+ExecStartPost=/bin/systemctl reload nginx
+ExecStartPost=/bin/systemctl restart student-exchange-webhook

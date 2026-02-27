@@ -86,15 +86,15 @@ const ProductList: React.FC = () => {
       {!loading && !error && (
         <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
           {items.map((item) => (
-            <Card key={item.id} className="overflow-hidden">
+            <Card key={item.id} className="overflow-hidden border-slate-200 transition-all hover:border-blue-500/50 hover:shadow-[0_0_15px_rgba(59,130,246,0.15)] dark:border-slate-800 dark:hover:border-blue-500/40 dark:bg-slate-900/50">
               <div className="aspect-[16/9] bg-slate-100 dark:bg-slate-800">
                 {item.imageUrl ? <img src={item.imageUrl} alt={item.title} className="h-full w-full object-cover" /> : null}
               </div>
               <CardContent className="space-y-2 pt-4">
-                <h2 className="line-clamp-2 text-base font-semibold">{item.title}</h2>
-                <p className="line-clamp-2 text-sm text-slate-500">{item.description}</p>
-                <p className="text-lg font-bold">{formatCurrency(item.price)}</p>
-                <p className="text-xs text-slate-500">Tồn kho: {item.stock}</p>
+                <h2 className="line-clamp-2 text-base font-semibold text-slate-900 dark:text-slate-100">{item.title}</h2>
+                <p className="line-clamp-2 text-sm text-slate-500 dark:text-slate-400">{item.description}</p>
+                <p className="text-lg font-bold text-slate-900 dark:text-white">{formatCurrency(item.price)}</p>
+                <p className="text-xs text-slate-500 dark:text-slate-400">Tồn kho: {item.stock}</p>
 
                 <div className="flex gap-2 pt-2">
                   <Button size="sm" className="flex-1" onClick={() => navigate(`/products/${item.id}`)}>
