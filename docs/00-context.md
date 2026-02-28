@@ -5,7 +5,7 @@ Last Updated: 2026-02-19
 ## Project
 - Name: Student Exchange Web Platform
 - One-liner: Full-stack Student Exchange platform with listings, events, support, and admin operations.
-- Stack: Spring Boot + React + Tailwind + SQL Server
+- Stack: Spring Boot + React + Tailwind + MySQL 8.0
 
 ## Current Phase
 - Phase: BASELINE READY

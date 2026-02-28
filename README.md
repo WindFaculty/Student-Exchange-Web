@@ -15,7 +15,7 @@ Student Exchange full-stack platform built with Spring Boot + React + Tailwind.
 ## Tech Stack
 - Backend: Spring Boot 3, Spring Data JPA, Flyway
 - Frontend: React + Vite + Tailwind
-- Database: Microsoft SQL Server
+- Database: MySQL 8.0
 - Auth: Server session auth (`USER`, `ADMIN`), no JWT in MVP
 
 ## Repo Structure
@@ -27,10 +27,10 @@ Student Exchange full-stack platform built with Spring Boot + React + Tailwind.
 ## Prerequisites
 - Java 17+ (Java 21 LTS recommended)
 - Node.js 18+
-- SQL Server (local or remote)
+- MySQL 8.0 (local or remote)
 
 ## Environment Variables (Backend)
-- `DB_URL` default: `jdbc:sqlserver://localhost:1433;databaseName=student_exchange;encrypt=true;trustServerCertificate=true`
+- `DB_URL` default: `jdbc:mysql://localhost:3306/student_exchange?useUnicode=true&characterEncoding=utf8&connectionCollation=utf8mb4_vi_0900_ai_ci&connectionTimeZone=UTC&useSSL=false&allowPublicKeyRetrieval=true`
 - `DB_USERNAME` default: `student_exchange_web`
 - `DB_PASSWORD` default: `wind_faculty`
 
@@ -84,3 +84,4 @@ cd ../backend
 - Scope: `docs/01-scope.md`
 - Task queue: `tasks/task-queue.md`
 - CI/CD VPS runbook: `docs/cicd-vps.md`
+- Data migration tools: `tools/db-migration/`

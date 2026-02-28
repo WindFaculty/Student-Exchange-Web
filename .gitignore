@@ -61,7 +61,11 @@ hs_err_pid*
 replay_pid*
 target/
 # Tools/Binaries
-tools/
+tools/*
+!tools/db-migration/
+!tools/db-migration/**
+tools/db-migration/__pycache__/
+tools/db-migration/*.pyc
 *.exe
 *.zip
 *.jar

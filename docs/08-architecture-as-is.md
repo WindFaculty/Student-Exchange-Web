@@ -1,6 +1,6 @@
 # Architecture As-Is
 
-Updated: 2026-02-16
+Updated: 2026-02-28
 
 This document describes current implementation state from the codebase.
 
@@ -10,7 +10,7 @@ This document describes current implementation state from the codebase.
 Frontend (React + Vite, :5173)
   -> /api (credentials include)
 Backend (Spring Boot, :8080)
-  -> Services -> Repositories -> SQL Server
+  -> Services -> Repositories -> MySQL 8.0
 
 Backend session:
 - USER (authenticated session user)

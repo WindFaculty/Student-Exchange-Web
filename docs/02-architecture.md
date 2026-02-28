@@ -1,6 +1,6 @@
 # Architecture - Student Exchange
 
-Updated: 2026-02-16
+Updated: 2026-02-28
 
 ## High-level
 
@@ -10,7 +10,7 @@ Browser (React/Vite :5173)
 Spring Boot API (:8080)
   -> Service layer
   -> JPA Repositories
-SQL Server
+MySQL 8.0
 
 Session (HttpSession): USER + CART
 Flyway: versioned schema migration
@@ -48,7 +48,7 @@ Flyway: versioned schema migration
 ## Data and Migration
 - Flyway migration: `apps/backend/src/main/resources/db/migration/V1__init_schema.sql`
 - JPA `ddl-auto=validate` in runtime profile
-- Test profile uses H2 + Flyway
+- Test profile uses MySQL + Flyway
 
 ## Error Contract
 - Unified JSON errors:

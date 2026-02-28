@@ -33,15 +33,14 @@ java -version  # Should show Java 25
 mvn -version   # Should show Maven version
 ```
 
-### 4. Prepare Microsoft SQL Server
-- Ensure SQL Server is running and reachable (default: `localhost:1433`)
-- Create database: `iotdb`
+### 4. Prepare MySQL 8.0
+- Ensure MySQL is running and reachable (default: `localhost:3306`)
+- Create database/user (or run `create_user.sql` with an admin account)
 - Set environment variables for backend:
 ```powershell
-$env:DB_URL="jdbc:sqlserver://localhost:1433;databaseName=iotdb;encrypt=true;trustServerCertificate=true"
-$env:DB_USERNAME="sa"
+$env:DB_URL="jdbc:mysql://localhost:3306/student_exchange?useUnicode=true&characterEncoding=utf8&connectionCollation=utf8mb4_vi_0900_ai_ci&connectionTimeZone=UTC&useSSL=false&allowPublicKeyRetrieval=true"
+$env:DB_USERNAME="student_exchange_web"
 $env:DB_PASSWORD="<your-password>"
-$env:DDL_AUTO="create-drop"
 ```
 
 ## Running the Project

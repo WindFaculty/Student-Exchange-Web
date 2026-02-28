@@ -35,15 +35,15 @@ jobs:
   backend-test:
     runs-on: ubuntu-latest
     services:
-      sqlserver:
-        image: mcr.microsoft.com/mssql/server:2022-latest
+      mysql:
+        image: mysql:8.0
         env:
-          ACCEPT_EULA: Y
-          MSSQL_SA_PASSWORD: YourStrong!Passw0rd
+          MYSQL_ROOT_PASSWORD: YourStrong!Passw0rd
+          MYSQL_DATABASE: student_exchange_test
         ports:
-          - 1433:1433
+          - 3306:3306
         options: >-
-          --health-cmd "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P 'YourStrong!Passw0rd' -Q 'SELECT 1' -C"
+          --health-cmd "mysqladmin ping -h 127.0.0.1 -uroot -pYourStrong!Passw0rd"
           --health-interval 10s
           --health-timeout 5s
           --health-retries 20
@@ -64,12 +64,9 @@ jobs:
       - name: Make Maven wrapper executable
         run: chmod +x mvnw
 
-      - name: Create test database
-        run: /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P "YourStrong!Passw0rd" -Q "IF DB_ID('student_exchange_test') IS NULL CREATE DATABASE student_exchange_test" -C
-
       - name: Run backend tests
         env:
-          TEST_DB_URL: jdbc:sqlserver://localhost:1433;databaseName=student_exchange_test;encrypt=false;trustServerCertificate=true
-          TEST_DB_USERNAME: sa
+          TEST_DB_URL: jdbc:mysql://127.0.0.1:3306/student_exchange_test?useUnicode=true&characterEncoding=utf8&connectionCollation=utf8mb4_vi_0900_ai_ci&connectionTimeZone=UTC&useSSL=false&allowPublicKeyRetrieval=true
+          TEST_DB_USERNAME: root
           TEST_DB_PASSWORD: YourStrong!Passw0rd
         run: ./mvnw -B test

@@ -1,4 +1,4 @@
-ALTER TABLE catalog_items
+﻿ALTER TABLE catalog_items
 ADD CONSTRAINT uq_catalog_items_source UNIQUE (source_type, source_ref_id);
 
 ALTER TABLE catalog_items
@@ -31,16 +31,16 @@ ADD CONSTRAINT fk_event_registrations_status FOREIGN KEY (status_id) REFERENCES 
 ALTER TABLE order_items
 ADD CONSTRAINT fk_order_items_catalog FOREIGN KEY (catalog_item_id) REFERENCES catalog_items(id);
 
-ALTER TABLE listings ALTER COLUMN category_id BIGINT NOT NULL;
-ALTER TABLE iot_components ALTER COLUMN category_id BIGINT NOT NULL;
-ALTER TABLE iot_sample_products ALTER COLUMN category_id BIGINT NOT NULL;
-ALTER TABLE orders ALTER COLUMN status_id BIGINT NOT NULL;
-ALTER TABLE support_tickets ALTER COLUMN status_id BIGINT NOT NULL;
-ALTER TABLE event_registrations ALTER COLUMN status_id BIGINT NOT NULL;
-ALTER TABLE order_items ALTER COLUMN catalog_item_id BIGINT NOT NULL;
-ALTER TABLE order_items ALTER COLUMN source_type NVARCHAR(30) NOT NULL;
-ALTER TABLE order_items ALTER COLUMN source_ref_id BIGINT NOT NULL;
-ALTER TABLE order_items ALTER COLUMN item_title NVARCHAR(200) NOT NULL;
+ALTER TABLE listings MODIFY COLUMN category_id BIGINT NOT NULL;
+ALTER TABLE iot_components MODIFY COLUMN category_id BIGINT NOT NULL;
+ALTER TABLE iot_sample_products MODIFY COLUMN category_id BIGINT NOT NULL;
+ALTER TABLE orders MODIFY COLUMN status_id BIGINT NOT NULL;
+ALTER TABLE support_tickets MODIFY COLUMN status_id BIGINT NOT NULL;
+ALTER TABLE event_registrations MODIFY COLUMN status_id BIGINT NOT NULL;
+ALTER TABLE order_items MODIFY COLUMN catalog_item_id BIGINT NOT NULL;
+ALTER TABLE order_items MODIFY COLUMN source_type VARCHAR(30) NOT NULL;
+ALTER TABLE order_items MODIFY COLUMN source_ref_id BIGINT NOT NULL;
+ALTER TABLE order_items MODIFY COLUMN item_title VARCHAR(200) NOT NULL;
 
 ALTER TABLE listings
 ADD CONSTRAINT ck_listings_price_non_negative CHECK (price >= 0);
@@ -92,3 +92,4 @@ ON iot_components(category_id, active, created_at DESC);
 
 CREATE INDEX idx_iot_sample_products_active_created
 ON iot_sample_products(active, created_at DESC);
+

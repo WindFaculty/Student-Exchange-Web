@@ -5,6 +5,11 @@
 - Why: Align with project deployment target and local team environment.
 - Tradeoff: Local setup heavier than in-memory-only development.
 
+## 2026-02-28
+- Decision: Migrate primary runtime database from SQL Server to MySQL 8.0.
+- Why: Simplify ops/CI pipeline and standardize local + production setup.
+- Tradeoff: Requires full Flyway migration rewrite and one-time cutover procedure.
+
 ## 2026-02-12
 - Decision: Pivot domain from IoT shop to Student Exchange.
 - Why: Product direction changed; old contract no longer matched target demo.

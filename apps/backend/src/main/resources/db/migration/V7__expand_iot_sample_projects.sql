@@ -1,36 +1,36 @@
--- ============================================================
+﻿-- ============================================================
 -- V7: Expand IoT sample products into project catalog
 --     - Add project metadata fields
 --     - Link each project to a listing for commerce flow
 --     - Seed 8 sample IoT projects from EXPORT_MANIFEST + README (2)
 -- ============================================================
 
-ALTER TABLE iot_sample_products ADD slug NVARCHAR(120);
-ALTER TABLE iot_sample_products ADD summary NVARCHAR(1200);
-ALTER TABLE iot_sample_products ADD main_components NVARCHAR(2000);
-ALTER TABLE iot_sample_products ADD difficulty NVARCHAR(40);
-ALTER TABLE iot_sample_products ADD build_time NVARCHAR(80);
-ALTER TABLE iot_sample_products ADD mcu_soc NVARCHAR(120);
-ALTER TABLE iot_sample_products ADD connectivity NVARCHAR(120);
-ALTER TABLE iot_sample_products ADD project_path NVARCHAR(255);
-ALTER TABLE iot_sample_products ADD readme_path NVARCHAR(255);
-ALTER TABLE iot_sample_products ADD pinout_path NVARCHAR(255);
-ALTER TABLE iot_sample_products ADD principle_path NVARCHAR(255);
-ALTER TABLE iot_sample_products ADD sources_path NVARCHAR(255);
+ALTER TABLE iot_sample_products ADD slug VARCHAR(120);
+ALTER TABLE iot_sample_products ADD summary VARCHAR(1200);
+ALTER TABLE iot_sample_products ADD main_components VARCHAR(2000);
+ALTER TABLE iot_sample_products ADD difficulty VARCHAR(40);
+ALTER TABLE iot_sample_products ADD build_time VARCHAR(80);
+ALTER TABLE iot_sample_products ADD mcu_soc VARCHAR(120);
+ALTER TABLE iot_sample_products ADD connectivity VARCHAR(120);
+ALTER TABLE iot_sample_products ADD project_path VARCHAR(255);
+ALTER TABLE iot_sample_products ADD readme_path VARCHAR(255);
+ALTER TABLE iot_sample_products ADD pinout_path VARCHAR(255);
+ALTER TABLE iot_sample_products ADD principle_path VARCHAR(255);
+ALTER TABLE iot_sample_products ADD sources_path VARCHAR(255);
 ALTER TABLE iot_sample_products ADD listing_id BIGINT;
 
 
 -- Backfill existing rows so new NOT NULL constraints can be applied safely.
 UPDATE iot_sample_products
 SET
-    slug = COALESCE(slug, CONCAT('legacy_sample_', CAST(id AS NVARCHAR(20)))),
+    slug = COALESCE(slug, CONCAT('legacy_sample_', CAST(id AS CHAR(20)))),
     summary = COALESCE(summary, title),
     main_components = COALESCE(main_components, 'IoT Component'),
     difficulty = COALESCE(difficulty, 'Intermediate'),
     build_time = COALESCE(build_time, 'N/A'),
     mcu_soc = COALESCE(mcu_soc, 'ESP32'),
     connectivity = COALESCE(connectivity, 'Wi-Fi'),
-    project_path = COALESCE(project_path, CONCAT('legacy/projects/', CAST(id AS NVARCHAR(20)))),
+    project_path = COALESCE(project_path, CONCAT('legacy/projects/', CAST(id AS CHAR(20)))),
     readme_path = COALESCE(readme_path, 'legacy/README.md'),
     pinout_path = COALESCE(pinout_path, 'legacy/pinout.md'),
     principle_path = COALESCE(principle_path, 'legacy/principle_of_operation.md'),
@@ -39,13 +39,13 @@ WHERE slug IS NULL
    OR main_components IS NULL
    OR project_path IS NULL;
 
-ALTER TABLE iot_sample_products ALTER COLUMN slug NVARCHAR(120) NOT NULL;
-ALTER TABLE iot_sample_products ALTER COLUMN main_components NVARCHAR(2000) NOT NULL;
-ALTER TABLE iot_sample_products ALTER COLUMN project_path NVARCHAR(255) NOT NULL;
-ALTER TABLE iot_sample_products ALTER COLUMN readme_path NVARCHAR(255) NOT NULL;
-ALTER TABLE iot_sample_products ALTER COLUMN pinout_path NVARCHAR(255) NOT NULL;
-ALTER TABLE iot_sample_products ALTER COLUMN principle_path NVARCHAR(255) NOT NULL;
-ALTER TABLE iot_sample_products ALTER COLUMN sources_path NVARCHAR(255) NOT NULL;
+ALTER TABLE iot_sample_products MODIFY COLUMN slug VARCHAR(120) NOT NULL;
+ALTER TABLE iot_sample_products MODIFY COLUMN main_components VARCHAR(2000) NOT NULL;
+ALTER TABLE iot_sample_products MODIFY COLUMN project_path VARCHAR(255) NOT NULL;
+ALTER TABLE iot_sample_products MODIFY COLUMN readme_path VARCHAR(255) NOT NULL;
+ALTER TABLE iot_sample_products MODIFY COLUMN pinout_path VARCHAR(255) NOT NULL;
+ALTER TABLE iot_sample_products MODIFY COLUMN principle_path VARCHAR(255) NOT NULL;
+ALTER TABLE iot_sample_products MODIFY COLUMN sources_path VARCHAR(255) NOT NULL;
 
 ALTER TABLE iot_sample_products
     ADD CONSTRAINT uq_iot_sample_products_slug UNIQUE (slug);
@@ -363,4 +363,5 @@ SELECT
     (SELECT MIN(id) FROM listings WHERE LOWER(title) = LOWER('Raspberry Pi Smart Garden Monitor') AND LOWER(category) = LOWER('San pham mau / Bo KIT')),
     1650000, 3, '/products/raspberry-pi-4.jpg', 1
 WHERE NOT EXISTS (SELECT 1 FROM iot_sample_products WHERE slug = '08_rpi_smart_garden');
+
 

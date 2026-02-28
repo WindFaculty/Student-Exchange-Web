@@ -43,7 +43,7 @@ Updated: 2026-02-16
 - Complex recommendation engine
 
 ## Constraints
-- Stack fixed: Spring Boot + React + Tailwind + SQL Server
+- Stack fixed: Spring Boot + React + Tailwind + MySQL 8.0
 - API base fixed: `/api`
 - Session auth only for MVP
 - Flyway migration for schema changes

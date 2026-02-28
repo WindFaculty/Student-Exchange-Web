@@ -1,49 +1,49 @@
-CREATE TABLE users (
-    id BIGINT IDENTITY(1,1) PRIMARY KEY,
-    username NVARCHAR(80) NOT NULL UNIQUE,
-    password NVARCHAR(255) NOT NULL,
-    full_name NVARCHAR(120) NOT NULL,
-    email NVARCHAR(160) NOT NULL UNIQUE,
-    role NVARCHAR(20) NOT NULL,
-    active BIT NOT NULL DEFAULT 1,
-    created_at DATETIME2 NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME2 NOT NULL DEFAULT CURRENT_TIMESTAMP
+﻿CREATE TABLE users (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(80) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    full_name VARCHAR(120) NOT NULL,
+    email VARCHAR(160) NOT NULL UNIQUE,
+    role VARCHAR(20) NOT NULL,
+    active BOOLEAN NOT NULL DEFAULT TRUE,
+    created_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE listings (
-    id BIGINT IDENTITY(1,1) PRIMARY KEY,
-    title NVARCHAR(200) NOT NULL,
-    description NVARCHAR(2000),
-    category NVARCHAR(80) NOT NULL,
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(200) NOT NULL,
+    description VARCHAR(2000),
+    category VARCHAR(80) NOT NULL,
     price DECIMAL(19,2) NOT NULL,
     stock INT NOT NULL,
-    image_url NVARCHAR(500),
-    active BIT NOT NULL DEFAULT 1,
+    image_url VARCHAR(500),
+    active BOOLEAN NOT NULL DEFAULT TRUE,
     owner_id BIGINT NOT NULL,
-    created_at DATETIME2 NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME2 NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    created_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT fk_listing_owner FOREIGN KEY (owner_id) REFERENCES users(id)
 );
 
 CREATE TABLE orders (
-    id BIGINT IDENTITY(1,1) PRIMARY KEY,
-    order_code NVARCHAR(40) NOT NULL UNIQUE,
-    customer_name NVARCHAR(120) NOT NULL,
-    customer_email NVARCHAR(160) NOT NULL,
-    customer_address NVARCHAR(500) NOT NULL,
-    status NVARCHAR(30) NOT NULL,
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    order_code VARCHAR(40) NOT NULL UNIQUE,
+    customer_name VARCHAR(120) NOT NULL,
+    customer_email VARCHAR(160) NOT NULL,
+    customer_address VARCHAR(500) NOT NULL,
+    status VARCHAR(30) NOT NULL,
     total_amount DECIMAL(19,2) NOT NULL,
     user_id BIGINT NULL,
-    created_at DATETIME2 NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME2 NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    created_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT fk_order_user FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
 CREATE TABLE order_items (
-    id BIGINT IDENTITY(1,1) PRIMARY KEY,
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
     order_id BIGINT NOT NULL,
     listing_id BIGINT NOT NULL,
-    listing_title NVARCHAR(200) NOT NULL,
+    listing_title VARCHAR(200) NOT NULL,
     unit_price DECIMAL(19,2) NOT NULL,
     quantity INT NOT NULL,
     subtotal DECIMAL(19,2) NOT NULL,
@@ -52,58 +52,58 @@ CREATE TABLE order_items (
 );
 
 CREATE TABLE events (
-    id BIGINT IDENTITY(1,1) PRIMARY KEY,
-    title NVARCHAR(200) NOT NULL,
-    summary NVARCHAR(600),
-    description NVARCHAR(4000),
-    start_at DATETIME2 NOT NULL,
-    end_at DATETIME2 NOT NULL,
-    location NVARCHAR(300) NOT NULL,
-    type NVARCHAR(60) NOT NULL,
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(200) NOT NULL,
+    summary VARCHAR(600),
+    description VARCHAR(4000),
+    start_at DATETIME(6) NOT NULL,
+    end_at DATETIME(6) NOT NULL,
+    location VARCHAR(300) NOT NULL,
+    type VARCHAR(60) NOT NULL,
     fee DECIMAL(19,2) NOT NULL DEFAULT 0,
-    image_url NVARCHAR(500),
-    active BIT NOT NULL DEFAULT 1,
-    created_at DATETIME2 NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME2 NOT NULL DEFAULT CURRENT_TIMESTAMP
+    image_url VARCHAR(500),
+    active BOOLEAN NOT NULL DEFAULT TRUE,
+    created_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE event_registrations (
-    id BIGINT IDENTITY(1,1) PRIMARY KEY,
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
     event_id BIGINT NOT NULL,
     user_id BIGINT NULL,
-    name NVARCHAR(120) NOT NULL,
-    email NVARCHAR(160) NOT NULL,
-    phone NVARCHAR(40),
-    note NVARCHAR(1000),
-    status NVARCHAR(30) NOT NULL,
-    created_at DATETIME2 NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    name VARCHAR(120) NOT NULL,
+    email VARCHAR(160) NOT NULL,
+    phone VARCHAR(40),
+    note VARCHAR(1000),
+    status VARCHAR(30) NOT NULL,
+    created_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT fk_registration_event FOREIGN KEY (event_id) REFERENCES events(id),
     CONSTRAINT fk_registration_user FOREIGN KEY (user_id) REFERENCES users(id),
     CONSTRAINT uq_registration_event_email UNIQUE (event_id, email)
 );
 
 CREATE TABLE faqs (
-    id BIGINT IDENTITY(1,1) PRIMARY KEY,
-    category NVARCHAR(80) NOT NULL,
-    question NVARCHAR(500) NOT NULL,
-    answer NVARCHAR(4000) NOT NULL,
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    category VARCHAR(80) NOT NULL,
+    question VARCHAR(500) NOT NULL,
+    answer VARCHAR(4000) NOT NULL,
     display_order INT NOT NULL DEFAULT 0,
-    active BIT NOT NULL DEFAULT 1
+    active BOOLEAN NOT NULL DEFAULT TRUE
 );
 
 CREATE TABLE support_tickets (
-    id BIGINT IDENTITY(1,1) PRIMARY KEY,
-    ticket_code NVARCHAR(40) NOT NULL UNIQUE,
-    name NVARCHAR(120) NOT NULL,
-    email NVARCHAR(160) NOT NULL,
-    subject NVARCHAR(250) NOT NULL,
-    category NVARCHAR(80) NOT NULL,
-    message NVARCHAR(4000) NOT NULL,
-    status NVARCHAR(30) NOT NULL,
-    admin_reply NVARCHAR(4000),
-    created_at DATETIME2 NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME2 NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    replied_at DATETIME2 NULL
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    ticket_code VARCHAR(40) NOT NULL UNIQUE,
+    name VARCHAR(120) NOT NULL,
+    email VARCHAR(160) NOT NULL,
+    subject VARCHAR(250) NOT NULL,
+    category VARCHAR(80) NOT NULL,
+    message VARCHAR(4000) NOT NULL,
+    status VARCHAR(30) NOT NULL,
+    admin_reply VARCHAR(4000),
+    created_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    replied_at DATETIME(6) NULL
 );
 
 CREATE INDEX idx_listing_category ON listings(category);
@@ -135,3 +135,4 @@ VALUES
     ('ORDER', 'How can I track my order?', 'Use Track Order with your order code and email address.', 2, 1),
     ('EVENT', 'How do I register for an event?', 'Open event detail and submit registration form.', 3, 1),
     ('SUPPORT', 'How long does support take?', 'Most tickets are handled within 24 business hours.', 4, 1);
+

@@ -157,7 +157,7 @@ sudo -u deploy docker compose -f /opt/student-exchange/app/docker-compose.prod.y
 
 ## 10) Known Note About Flyway Migration V5
 
-`V5__update_iot_highlights_categories.sql` was rewritten to support both SQL Server and H2 syntax in CI tests.
+`V5__update_iot_highlights_categories.sql` was rewritten during cross-database migration and now targets MySQL 8.0 syntax.
 If a deployed database already recorded the previous checksum for V5, run Flyway repair once before next migration:
 
 ```bash

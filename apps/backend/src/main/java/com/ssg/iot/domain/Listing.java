@@ -37,7 +37,7 @@ public class Listing {
     @Column(nullable = false)
     private int stock;
 
-    @Column(columnDefinition = "VARCHAR(MAX)")
+    @Lob
     private String imageUrl;
 
     @Column(nullable = false)

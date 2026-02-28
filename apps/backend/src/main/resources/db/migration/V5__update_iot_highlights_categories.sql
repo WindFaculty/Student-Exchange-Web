@@ -1,4 +1,4 @@
--- Update IoT highlights to match new category naming
+﻿-- Update IoT highlights to match new category naming
 UPDATE iot_highlights
 SET
     title = CASE display_order
@@ -21,3 +21,4 @@ WHERE active = 1
       FROM iot_page_contents
       WHERE active = 1
   );
+

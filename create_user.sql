@@ -1,33 +1,14 @@
-USE master;
-GO
+-- MySQL bootstrap script for Student Exchange backend
+-- Run with a privileged account (e.g. root):
+-- mysql -u root -p < create_user.sql
 
--- 1. Create Login (Server Level)
--- Check if login exists, if not create it
-IF NOT EXISTS (SELECT * FROM sys.server_principals WHERE name = 'student_exchange_web')
-BEGIN
-    CREATE LOGIN student_exchange_web WITH PASSWORD = 'wind_faculty', CHECK_POLICY = OFF;
-END
-GO
+CREATE DATABASE IF NOT EXISTS student_exchange
+  CHARACTER SET utf8mb4
+  COLLATE utf8mb4_vi_0900_ai_ci;
 
--- 2. Create Database (if not exists)
-IF NOT EXISTS (SELECT * FROM sys.databases WHERE name = 'student_exchange')
-BEGIN
-    CREATE DATABASE student_exchange;
-END
-GO
+CREATE USER IF NOT EXISTS 'student_exchange_web'@'%'
+  IDENTIFIED BY 'wind_faculty';
 
-USE student_exchange;
-GO
+GRANT ALL PRIVILEGES ON student_exchange.* TO 'student_exchange_web'@'%';
 
--- 3. Create User (Database Level)
--- Check if user exists in this database, if not create it
-IF NOT EXISTS (SELECT * FROM sys.database_principals WHERE name = 'student_exchange_web')
-BEGIN
-    CREATE USER student_exchange_web FOR LOGIN student_exchange_web;
-END
-GO
-
--- 4. Grant Permissions
--- Add user to db_owner role to ensure they can create tables and read/write data
-ALTER ROLE db_owner ADD MEMBER student_exchange_web;
-GO
+FLUSH PRIVILEGES;

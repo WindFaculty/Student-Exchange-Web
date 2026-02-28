@@ -37,7 +37,7 @@ public class IotComponent {
     @Column(nullable = false)
     private int stock;
 
-    @Column(columnDefinition = "NVARCHAR(MAX)")
+    @Lob
     private String imageUrl;
 
     @Column(nullable = false)

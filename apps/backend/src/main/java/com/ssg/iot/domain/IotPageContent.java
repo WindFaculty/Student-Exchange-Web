@@ -28,7 +28,8 @@ public class IotPageContent {
     @Column(name = "hero_subtitle", nullable = false, length = 1000)
     private String heroSubtitle;
 
-    @Column(name = "hero_image_url", columnDefinition = "VARCHAR(MAX)")
+    @Lob
+    @Column(name = "hero_image_url")
     private String heroImageUrl;
 
     @Column(name = "primary_cta_label", nullable = false, length = 120)

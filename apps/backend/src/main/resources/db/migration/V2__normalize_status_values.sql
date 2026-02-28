@@ -1,4 +1,4 @@
--- Normalize legacy status values to match enum values in backend domain.
+﻿-- Normalize legacy status values to match enum values in backend domain.
 UPDATE orders
 SET status = 'DELIVERED'
 WHERE UPPER(status) = 'COMPLETED';
@@ -34,3 +34,4 @@ CHECK (status IN ('PENDING', 'IN_PROGRESS', 'RESOLVED', 'CLOSED'));
 ALTER TABLE event_registrations
 ADD CONSTRAINT ck_event_registrations_status
 CHECK (status IN ('REGISTERED', 'CONFIRMED', 'CANCELLED'));
+

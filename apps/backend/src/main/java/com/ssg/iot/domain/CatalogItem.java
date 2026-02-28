@@ -40,7 +40,8 @@ public class CatalogItem {
     @Column(nullable = false)
     private int stock;
 
-    @Column(name = "image_url", columnDefinition = "NVARCHAR(MAX)")
+    @Lob
+    @Column(name = "image_url")
     private String imageUrl;
 
     @Column(name = "search_title_norm", length = 240)
