@@ -2,6 +2,8 @@ import {
   Event,
   EventRegistration,
   EventRequest,
+  ChatConversationSummary,
+  ChatMessage,
   IotContent,
   IotContentUpdateRequest,
   IotSampleProject,
@@ -157,5 +159,20 @@ export const adminApi = {
 
   deleteIotSampleProject(id: number) {
     return fetchJson<void>(`/api/admin/iot/sample-projects/${id}`, { method: 'DELETE' })
+  },
+
+  getChatConversations(params?: { search?: string; page?: number; size?: number }) {
+    const query = new URLSearchParams()
+    if (params?.search) query.set('search', params.search)
+    if (params?.page !== undefined) query.set('page', String(params.page))
+    if (params?.size !== undefined) query.set('size', String(params.size))
+    return fetchJson<PageResponse<ChatConversationSummary>>(`/api/admin/chats/conversations?${query.toString()}`)
+  },
+
+  getChatMessages(conversationId: number, params?: { page?: number; size?: number }) {
+    const query = new URLSearchParams()
+    if (params?.page !== undefined) query.set('page', String(params.page))
+    if (params?.size !== undefined) query.set('size', String(params.size))
+    return fetchJson<PageResponse<ChatMessage>>(`/api/admin/chats/conversations/${conversationId}/messages?${query.toString()}`)
   },
 }

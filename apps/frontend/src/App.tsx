@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Navigate, Route, Routes } from 'react-router-dom'
 import { AuthProvider } from './context/AuthContext'
 import { CartProvider } from './context/CartContext'
+import { ChatProvider } from './context/ChatContext'
 import { ThemeProvider } from './context/ThemeContext'
 import MainLayout from './layouts/MainLayout'
 import AdminLayout from './layouts/AdminLayout'
@@ -25,6 +26,7 @@ import TrackOrder from './pages/support/TrackOrder'
 import PoliciesHub from './pages/support/policies/PoliciesHub'
 import PurchasePolicy from './pages/support/policies/PurchasePolicy'
 import RefundPolicy from './pages/support/policies/RefundPolicy'
+import MessagesPage from './pages/messages/MessagesPage'
 
 import AdminDashboardPage from './pages/admin/AdminDashboardPage'
 import AdminProductListPage from './pages/AdminProductListPage'
@@ -35,71 +37,76 @@ import AdminSupportTicketPage from './pages/admin/AdminSupportTicketPage'
 import AdminIotContentPage from './pages/admin/AdminIotContentPage'
 import AdminIotSampleProjectListPage from './pages/admin/AdminIotSampleProjectListPage'
 import AdminIotSampleProjectFormPage from './pages/admin/AdminIotSampleProjectFormPage'
+import AdminChatPage from './pages/admin/AdminChatPage'
 
 function App() {
   return (
     <ThemeProvider>
       <AuthProvider>
-        <CartProvider>
-          <Router>
-            <Routes>
-              <Route element={<MainLayout />}>
-                <Route path="/" element={<Navigate to="/products" replace />} />
-                <Route path="/login" element={<LoginPage />} />
+        <ChatProvider>
+          <CartProvider>
+            <Router>
+              <Routes>
+                <Route element={<MainLayout />}>
+                  <Route path="/" element={<Navigate to="/products" replace />} />
+                  <Route path="/login" element={<LoginPage />} />
 
-                <Route path="/products" element={<ProductList />} />
-                <Route path="/products/:id" element={<ProductDetail />} />
+                  <Route path="/products" element={<ProductList />} />
+                  <Route path="/products/:id" element={<ProductDetail />} />
 
-                <Route path="/cart" element={<CartPage />} />
-                <Route path="/checkout" element={<CheckoutPage />} />
-                <Route path="/order-success/:orderCode" element={<OrderSuccessPage />} />
+                  <Route path="/cart" element={<CartPage />} />
+                  <Route path="/checkout" element={<CheckoutPage />} />
+                  <Route path="/order-success/:orderCode" element={<OrderSuccessPage />} />
 
-                <Route path="/events" element={<EventList />} />
-                <Route path="/events/:id" element={<EventDetail />} />
+                  <Route path="/events" element={<EventList />} />
+                  <Route path="/events/:id" element={<EventDetail />} />
 
-                <Route element={<ProtectedRoute />}>
-                  <Route path="/listings" element={<CreateListing />} />
+                  <Route element={<ProtectedRoute />}>
+                    <Route path="/listings" element={<CreateListing />} />
+                    <Route path="/messages" element={<MessagesPage />} />
+                  </Route>
+
+                  <Route path="/iot" element={<IotHubPage />} />
+                  <Route path="/iot/projects/:slug" element={<IotProjectDetailPage />} />
+
+                  <Route path="/support" element={<SupportHub />} />
+                  <Route path="/support/faq" element={<FAQ />} />
+                  <Route path="/support/contact" element={<Contact />} />
+                  <Route path="/support/track-order" element={<TrackOrder />} />
+                  <Route path="/support/policies" element={<PoliciesHub />} />
+                  <Route path="/support/policies/purchase" element={<PurchasePolicy />} />
+                  <Route path="/support/policies/refund" element={<RefundPolicy />} />
                 </Route>
 
-                <Route path="/iot" element={<IotHubPage />} />
-                <Route path="/iot/projects/:slug" element={<IotProjectDetailPage />} />
+                <Route path="/admin/login" element={<AdminLoginPage />} />
 
-                <Route path="/support" element={<SupportHub />} />
-                <Route path="/support/faq" element={<FAQ />} />
-                <Route path="/support/contact" element={<Contact />} />
-                <Route path="/support/track-order" element={<TrackOrder />} />
-                <Route path="/support/policies" element={<PoliciesHub />} />
-                <Route path="/support/policies/purchase" element={<PurchasePolicy />} />
-                <Route path="/support/policies/refund" element={<RefundPolicy />} />
-              </Route>
+                <Route
+                  path="/admin"
+                  element={(
+                    <ProtectedRoute roles={['ADMIN']}>
+                      <AdminLayout />
+                    </ProtectedRoute>
+                  )}
+                >
+                  <Route index element={<AdminDashboardPage />} />
+                  <Route path="listings" element={<AdminProductListPage />} />
+                  <Route path="listings/new" element={<AdminProductFormPage />} />
+                  <Route path="listings/:id/edit" element={<AdminProductFormPage />} />
+                  <Route path="orders" element={<AdminOrderListPage />} />
+                  <Route path="events" element={<AdminEventListPage />} />
+                  <Route path="tickets" element={<AdminSupportTicketPage />} />
+                  <Route path="chats" element={<AdminChatPage />} />
+                  <Route path="iot-content" element={<AdminIotContentPage />} />
+                  <Route path="iot-sample-projects" element={<AdminIotSampleProjectListPage />} />
+                  <Route path="iot-sample-projects/new" element={<AdminIotSampleProjectFormPage />} />
+                  <Route path="iot-sample-projects/:id/edit" element={<AdminIotSampleProjectFormPage />} />
+                </Route>
 
-              <Route path="/admin/login" element={<AdminLoginPage />} />
-
-              <Route
-                path="/admin"
-                element={(
-                  <ProtectedRoute roles={['ADMIN']}>
-                    <AdminLayout />
-                  </ProtectedRoute>
-                )}
-              >
-                <Route index element={<AdminDashboardPage />} />
-                <Route path="listings" element={<AdminProductListPage />} />
-                <Route path="listings/new" element={<AdminProductFormPage />} />
-                <Route path="listings/:id/edit" element={<AdminProductFormPage />} />
-                <Route path="orders" element={<AdminOrderListPage />} />
-                <Route path="events" element={<AdminEventListPage />} />
-                <Route path="tickets" element={<AdminSupportTicketPage />} />
-                <Route path="iot-content" element={<AdminIotContentPage />} />
-                <Route path="iot-sample-projects" element={<AdminIotSampleProjectListPage />} />
-                <Route path="iot-sample-projects/new" element={<AdminIotSampleProjectFormPage />} />
-                <Route path="iot-sample-projects/:id/edit" element={<AdminIotSampleProjectFormPage />} />
-              </Route>
-
-              <Route path="*" element={<Navigate to="/" replace />} />
-            </Routes>
-          </Router>
-        </CartProvider>
+                <Route path="*" element={<Navigate to="/" replace />} />
+              </Routes>
+            </Router>
+          </CartProvider>
+        </ChatProvider>
       </AuthProvider>
     </ThemeProvider>
   )

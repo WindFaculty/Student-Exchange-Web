@@ -3,7 +3,6 @@ package com.ssg.iot.service;
 import com.ssg.iot.common.ForbiddenException;
 import com.ssg.iot.common.NotFoundException;
 import com.ssg.iot.common.PageResponse;
-import com.ssg.iot.domain.CatalogSourceType;
 import com.ssg.iot.domain.Listing;
 import com.ssg.iot.domain.RefListingCategory;
 import com.ssg.iot.domain.User;
@@ -30,7 +29,6 @@ public class ListingService {
 
     private final ListingRepository listingRepository;
     private final RefListingCategoryRepository listingCategoryRepository;
-    private final CatalogItemService catalogItemService;
 
     @Transactional(readOnly = true)
     public PageResponse<ListingResponse> getPublicListings(String search, String categoryCode, int page, int size) {
@@ -84,7 +82,6 @@ public class ListingService {
                 .build();
 
         Listing saved = listingRepository.save(listing);
-        catalogItemService.syncFromListing(saved);
         return toResponse(saved);
     }
 
@@ -105,7 +102,6 @@ public class ListingService {
         listing.setImageUrl(trimToNull(request.getImageUrl()));
 
         Listing saved = listingRepository.save(listing);
-        catalogItemService.syncFromListing(saved);
         return toResponse(saved);
     }
 
@@ -121,7 +117,6 @@ public class ListingService {
         listing.setActive(false);
         listing.setArchivedAt(LocalDateTime.now());
         listingRepository.save(listing);
-        catalogItemService.syncFromListing(listing);
     }
 
     @Transactional(readOnly = true)
@@ -165,10 +160,6 @@ public class ListingService {
     }
 
     public ListingResponse toResponse(Listing listing) {
-        Long catalogItemId = catalogItemService.findBySource(CatalogSourceType.LISTING, listing.getId())
-                .map(item -> item.getId())
-                .orElse(null);
-
         return ListingResponse.builder()
                 .id(listing.getId())
                 .title(listing.getTitle())
@@ -177,7 +168,7 @@ public class ListingService {
                         .code(listing.getCategory().getCode())
                         .label(listing.getCategory().getLabelVi())
                         .build())
-                .catalogItemId(catalogItemId)
+                .catalogItemId(null)
                 .price(listing.getPrice())
                 .stock(listing.getStock())
                 .imageUrl(listing.getImageUrl())

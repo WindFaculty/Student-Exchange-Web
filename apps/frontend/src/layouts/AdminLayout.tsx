@@ -14,6 +14,7 @@ const adminNav = [
   { to: '/admin/orders', label: 'Don hang', icon: 'shopping_cart' },
   { to: '/admin/events', label: 'Su kien', icon: 'calendar_month' },
   { to: '/admin/tickets', label: 'Ho tro', icon: 'confirmation_number' },
+  { to: '/admin/chats', label: 'Chat P2P', icon: 'forum' },
 ]
 
 const AdminLayout: React.FC = () => {

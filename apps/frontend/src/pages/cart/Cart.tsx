@@ -1,4 +1,4 @@
-import React from 'react'
+﻿import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useCart } from '../../context/CartContext'
 import { formatCurrency } from '../../lib/format'
@@ -10,15 +10,15 @@ const CartPage: React.FC = () => {
   const navigate = useNavigate()
   const { items, loading, updateQuantity, removeFromCart, getCartTotal } = useCart()
 
-  if (loading) return <p className="text-sm text-slate-500">Đang tải giỏ hàng...</p>
+  if (loading) return <p className="text-sm text-slate-500">Dang tai gio hang...</p>
 
   if (items.length === 0) {
     return (
       <EmptyState
-        title="Giỏ hàng đang trống"
-        description="Hãy thêm một vài bài đăng trước khi thanh toán."
+        title="Gio hang dang trong"
+        description="Hay them mot vai san pham IoT truoc khi thanh toan."
         icon="shopping_cart"
-        action={<Button onClick={() => navigate('/products')}>Khám phá bài đăng</Button>}
+        action={<Button onClick={() => navigate('/iot')}>Kham pha IoT</Button>}
       />
     )
   }
@@ -26,7 +26,7 @@ const CartPage: React.FC = () => {
   return (
     <div className="grid gap-6 lg:grid-cols-[1fr_320px]">
       <div className="space-y-3">
-        <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Giỏ hàng</h1>
+        <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Gio hang</h1>
 
         {items.map((item) => (
           <Card key={item.catalogItemId}>
@@ -49,19 +49,19 @@ const CartPage: React.FC = () => {
               />
 
               <p className="w-32 text-right text-sm font-semibold">{formatCurrency(item.subtotal)}</p>
-              <Button variant="ghost" size="sm" onClick={() => removeFromCart(item.catalogItemId)}>Xóa</Button>
+              <Button variant="ghost" size="sm" onClick={() => removeFromCart(item.catalogItemId)}>Xoa</Button>
             </CardContent>
           </Card>
         ))}
       </div>
 
       <Card className="h-fit p-5">
-        <h2 className="text-lg font-semibold">Tóm tắt</h2>
-        <p className="mt-3 text-sm text-slate-500">Tổng cộng</p>
+        <h2 className="text-lg font-semibold">Tom tat</h2>
+        <p className="mt-3 text-sm text-slate-500">Tong cong</p>
         <p className="text-2xl font-bold">{formatCurrency(getCartTotal())}</p>
         <div className="mt-4 space-y-2">
-          <Button className="w-full" onClick={() => navigate('/checkout')}>Thanh toán</Button>
-          <Button className="w-full" variant="outline" onClick={() => navigate('/products')}>Tiếp tục mua</Button>
+          <Button className="w-full" onClick={() => navigate('/checkout')}>Thanh toan</Button>
+          <Button className="w-full" variant="outline" onClick={() => navigate('/iot')}>Tiep tuc mua</Button>
         </div>
       </Card>
     </div>
@@ -69,4 +69,3 @@ const CartPage: React.FC = () => {
 }
 
 export default CartPage
-

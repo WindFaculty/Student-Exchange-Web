@@ -1,24 +1,27 @@
-import React, { useState } from 'react'
+﻿import React, { useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { useCart } from '../context/CartContext'
+import { useChat } from '../context/ChatContext'
 import { useTheme } from '../context/ThemeContext'
 import { Button } from './ui/Button'
 import Icon from './ui/Icon'
 import { cn } from '../lib/utils'
 
 const navItems = [
-  { to: '/products', label: 'Sản phẩm' },
-  { to: '/events', label: 'Sự kiện' },
-  { to: '/listings', label: 'Sản phẩm của tôi' },
+  { to: '/products', label: 'Sáº£n pháº©m' },
+  { to: '/events', label: 'Sá»± kiá»‡n' },
+  { to: '/messages', label: 'Tin nhan' },
+  { to: '/listings', label: 'Sáº£n pháº©m cá»§a tÃ´i' },
   { to: '/iot', label: 'IoT' },
-  { to: '/support', label: 'Hỗ trợ' },
+  { to: '/support', label: 'Há»— trá»£' },
 ]
 
 const Header: React.FC = () => {
   const navigate = useNavigate()
   const { user, isAuthenticated, logout } = useAuth()
   const { getCartItemCount } = useCart()
+  const { unreadCount } = useChat()
   const { resolvedTheme, toggleTheme } = useTheme()
   const [mobileOpen, setMobileOpen] = useState(false)
 
@@ -47,7 +50,12 @@ const Header: React.FC = () => {
                 isActive && 'bg-primary/10 text-primary',
               )}
             >
-              {item.label}
+              <span className="inline-flex items-center gap-1.5">
+                <span>{item.label}</span>
+                {item.to === '/messages' && unreadCount > 0 ? (
+                  <span className="rounded-full bg-primary px-1.5 py-0.5 text-xs font-semibold text-white">{unreadCount}</span>
+                ) : null}
+              </span>
             </NavLink>
           ))}
         </nav>
@@ -57,8 +65,8 @@ const Header: React.FC = () => {
             size="icon"
             variant="ghost"
             onClick={toggleTheme}
-            aria-label="Đổi giao diện sáng tối"
-            title={resolvedTheme === 'dark' ? 'Chuyển sang sáng' : 'Chuyển sang tối'}
+            aria-label="Äá»•i giao diá»‡n sÃ¡ng tá»‘i"
+            title={resolvedTheme === 'dark' ? 'Chuyá»ƒn sang sÃ¡ng' : 'Chuyá»ƒn sang tá»‘i'}
           >
             <Icon name={resolvedTheme === 'dark' ? 'light_mode' : 'dark_mode'} />
           </Button>
@@ -73,17 +81,17 @@ const Header: React.FC = () => {
               {user?.role === 'ADMIN' && (
                 <Button size="sm" variant="secondary" onClick={() => navigate('/admin')}>
                   <Icon name="admin_panel_settings" className="text-[18px]" />
-                  Quản trị
+                  Quáº£n trá»‹
                 </Button>
               )}
               <span className="hidden max-w-[140px] truncate text-sm text-slate-500 sm:inline">{user?.fullName}</span>
               <Button size="sm" variant="ghost" onClick={handleLogout}>
-                Đăng xuất
+                ÄÄƒng xuáº¥t
               </Button>
             </>
           ) : (
             <Button size="sm" onClick={() => navigate('/login')}>
-              Đăng nhập
+              ÄÄƒng nháº­p
             </Button>
           )}
 
@@ -106,7 +114,12 @@ const Header: React.FC = () => {
                   isActive ? 'bg-primary/10 text-primary' : 'hover:bg-slate-100 dark:hover:bg-slate-800',
                 )}
               >
-                {item.label}
+                <span className="inline-flex items-center gap-1.5">
+                  <span>{item.label}</span>
+                  {item.to === '/messages' && unreadCount > 0 ? (
+                    <span className="rounded-full bg-primary px-1.5 py-0.5 text-xs font-semibold text-white">{unreadCount}</span>
+                  ) : null}
+                </span>
               </NavLink>
             ))}
           </div>

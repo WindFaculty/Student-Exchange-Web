@@ -11,4 +11,5 @@ import java.util.List;
 public class CartResponse {
     private List<CartItemResponse> items;
     private BigDecimal totalAmount;
+    private List<String> warnings;
 }

@@ -9,7 +9,6 @@ import com.ssg.iot.dto.order.OrderItemResponse;
 import com.ssg.iot.dto.order.OrderResponse;
 import com.ssg.iot.repository.IotComponentRepository;
 import com.ssg.iot.repository.IotSampleProductRepository;
-import com.ssg.iot.repository.ListingRepository;
 import com.ssg.iot.repository.OrderRepository;
 import com.ssg.iot.repository.RefOrderStatusRepository;
 import jakarta.servlet.http.HttpSession;
@@ -37,7 +36,6 @@ public class OrderService {
     private static final SecureRandom RANDOM = new SecureRandom();
 
     private final OrderRepository orderRepository;
-    private final ListingRepository listingRepository;
     private final IotComponentRepository iotComponentRepository;
     private final IotSampleProductRepository iotSampleProductRepository;
     private final RefOrderStatusRepository orderStatusRepository;
@@ -64,6 +62,10 @@ public class OrderService {
         for (CartService.CartLine line : lines) {
             CatalogItem catalogItem = line.catalogItem();
             int quantity = line.quantity();
+
+            if (!isIotCheckoutSource(catalogItem.getSourceType())) {
+                throw new BadRequestException("Cart contains unsupported P2P listing item. Please contact seller directly.");
+            }
 
             if (catalogItem.getStock() < quantity) {
                 throw new BadRequestException("Insufficient stock for item: " + catalogItem.getTitle());
@@ -174,14 +176,6 @@ public class OrderService {
     }
 
     private void applySourceStock(CatalogItem catalogItem, int nextStock) {
-        if (catalogItem.getSourceType() == CatalogSourceType.LISTING) {
-            Listing listing = listingRepository.findById(catalogItem.getSourceRefId())
-                    .orElseThrow(() -> new NotFoundException("Listing not found"));
-            listing.setStock(nextStock);
-            listingRepository.save(listing);
-            return;
-        }
-
         if (catalogItem.getSourceType() == CatalogSourceType.IOT_COMPONENT) {
             IotComponent component = iotComponentRepository.findById(catalogItem.getSourceRefId())
                     .orElseThrow(() -> new NotFoundException("IoT component not found"));
@@ -199,6 +193,10 @@ public class OrderService {
         }
 
         throw new BadRequestException("Unsupported source type");
+    }
+
+    private boolean isIotCheckoutSource(CatalogSourceType sourceType) {
+        return sourceType == CatalogSourceType.IOT_COMPONENT || sourceType == CatalogSourceType.IOT_SAMPLE;
     }
 
     private String generateOrderCode() {

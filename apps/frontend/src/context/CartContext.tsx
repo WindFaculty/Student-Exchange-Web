@@ -1,5 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import toast from 'react-hot-toast'
 import { cartApi } from '../api/cartApi'
 import { Cart, CartItem } from '../types/models'
 
@@ -16,7 +17,7 @@ interface CartContextValue {
   getCartItemCount: () => number
 }
 
-const emptyCart: Cart = { items: [], totalAmount: 0 }
+const emptyCart: Cart = { items: [], totalAmount: 0, warnings: [] }
 
 const CartContext = createContext<CartContextValue | undefined>(undefined)
 
@@ -24,16 +25,27 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [cart, setCart] = useState<Cart>(emptyCart)
   const [loading, setLoading] = useState(true)
 
+  const applyCartData = useCallback((nextCart: Cart) => {
+    setCart(nextCart)
+    nextCart.warnings?.forEach((warning) => {
+      if (warning.toLowerCase().includes('p2p')) {
+        toast('San pham listing P2P da bi loai khoi gio hang.')
+        return
+      }
+      toast(warning)
+    })
+  }, [])
+
   const refreshCart = useCallback(async () => {
     try {
       const data = await cartApi.getCart()
-      setCart(data)
+      applyCartData(data)
     } catch {
       setCart(emptyCart)
     } finally {
       setLoading(false)
     }
-  }, [])
+  }, [applyCartData])
 
   useEffect(() => {
     refreshCart()
@@ -41,18 +53,18 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const addToCart = useCallback(async (catalogItemId: number, quantity = 1) => {
     const data = await cartApi.addItem(catalogItemId, quantity)
-    setCart(data)
-  }, [])
+    applyCartData(data)
+  }, [applyCartData])
 
   const updateQuantity = useCallback(async (catalogItemId: number, quantity: number) => {
     const data = await cartApi.updateItem(catalogItemId, quantity)
-    setCart(data)
-  }, [])
+    applyCartData(data)
+  }, [applyCartData])
 
   const removeFromCart = useCallback(async (catalogItemId: number) => {
     const data = await cartApi.removeItem(catalogItemId)
-    setCart(data)
-  }, [])
+    applyCartData(data)
+  }, [applyCartData])
 
   const clearCart = useCallback(async () => {
     for (const item of cart.items) {

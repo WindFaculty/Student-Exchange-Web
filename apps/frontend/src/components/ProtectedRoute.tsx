@@ -18,7 +18,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ roles, children }) => {
 
   if (!isAuthenticated) {
     const loginPath = roles?.includes('ADMIN') ? '/admin/login' : '/login'
-    return <Navigate to={loginPath} replace state={{ from: location.pathname }} />
+    return <Navigate to={loginPath} replace state={{ from: `${location.pathname}${location.search}${location.hash}` }} />
   }
 
   if (roles && user && !roles.includes(user.role)) {
