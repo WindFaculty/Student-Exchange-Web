@@ -1,21 +1,45 @@
-﻿import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { orderApi } from '../../api/orderApi'
+import { useAuth } from '../../context/AuthContext'
 import { useCart } from '../../context/CartContext'
 import { formatCurrency, mapApiError } from '../../lib/format'
 import { Button } from '../../components/ui/Button'
 import { Input } from '../../components/ui/Input'
 import { Card } from '../../components/ui/Card'
+import AddressPicker, { AddressPickerValue } from '../../components/address/AddressPicker'
 
 const CheckoutPage: React.FC = () => {
   const navigate = useNavigate()
   const { items, getCartTotal, refreshCart } = useCart()
+  const { user } = useAuth()
 
   const [customerName, setCustomerName] = useState('')
   const [customerEmail, setCustomerEmail] = useState('')
-  const [customerAddress, setCustomerAddress] = useState('')
+  const [addressValue, setAddressValue] = useState<AddressPickerValue>({
+    addressLine: '',
+    provinceCode: '',
+    districtCode: '',
+    wardCode: '',
+  })
+  const [resolvedAddress, setResolvedAddress] = useState('')
+  const [customerPhone, setCustomerPhone] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+
+  useEffect(() => {
+    if (!user) return
+    setCustomerName((prev) => prev || user.fullName || '')
+    setCustomerEmail((prev) => prev || user.email || '')
+    setAddressValue((prev) => ({
+      addressLine: prev.addressLine || user.addressLine || user.address || '',
+      provinceCode: prev.provinceCode || user.provinceCode || '',
+      districtCode: prev.districtCode || user.districtCode || '',
+      wardCode: prev.wardCode || user.wardCode || '',
+    }))
+    setResolvedAddress((prev) => prev || user.address || '')
+    setCustomerPhone((prev) => prev || user.phone || '')
+  }, [user])
 
   if (items.length === 0) {
     return (
@@ -28,10 +52,37 @@ const CheckoutPage: React.FC = () => {
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault()
+    const normalizedName = customerName.trim()
+    const normalizedPhone = customerPhone.trim()
+    const normalizedEmail = customerEmail.trim()
+    const normalizedAddressLine = addressValue.addressLine.trim()
+    const normalizedProvinceCode = addressValue.provinceCode.trim()
+    const normalizedDistrictCode = addressValue.districtCode.trim()
+    const normalizedWardCode = addressValue.wardCode.trim()
+    const normalizedAddress = resolvedAddress.trim()
+
+    if (!normalizedName || !normalizedPhone) {
+      setError('Vui long nhap day du ho ten va so dien thoai')
+      return
+    }
+    if (!normalizedAddressLine || !normalizedProvinceCode || !normalizedDistrictCode || !normalizedWardCode) {
+      setError('Vui long nhap so nha/duong va chon day du tinh-thanh, quan-huyen, xa-phuong')
+      return
+    }
+    if (!normalizedAddress) {
+      setError('Khong the tao dia chi giao hang day du. Vui long kiem tra lai thong tin dia chi.')
+      return
+    }
+
     setLoading(true)
     setError('')
     try {
-      const order = await orderApi.createOrder({ customerName, customerEmail, customerAddress })
+      const order = await orderApi.createOrder({
+        customerName: normalizedName,
+        customerAddress: normalizedAddress,
+        customerPhone: normalizedPhone,
+        customerEmail: normalizedEmail || undefined,
+      })
       await refreshCart()
       navigate(`/order-success/${order.orderCode}`)
     } catch (err: unknown) {
@@ -51,17 +102,25 @@ const CheckoutPage: React.FC = () => {
             <Input value={customerName} onChange={(e) => setCustomerName(e.target.value)} required />
           </div>
           <div>
-            <label className="mb-1 block text-sm font-medium">Email</label>
-            <Input type="email" value={customerEmail} onChange={(e) => setCustomerEmail(e.target.value)} required />
+            <label className="mb-1 block text-sm font-medium">Dia chi nhan hang</label>
+            <AddressPicker
+              value={addressValue}
+              onChange={setAddressValue}
+              onResolvedChange={(resolved) => setResolvedAddress(resolved.fullAddress)}
+              requiredSelection
+              requiredAddressLine
+              fieldClassName="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-900 outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100"
+              labelClassName="mb-1 block text-xs font-medium"
+            />
+            {resolvedAddress ? <p className="mt-2 text-xs text-slate-500">Dia chi day du: {resolvedAddress}</p> : null}
           </div>
           <div>
-            <label className="mb-1 block text-sm font-medium">Dia chi nhan hang</label>
-            <textarea
-              value={customerAddress}
-              onChange={(e) => setCustomerAddress(e.target.value)}
-              required
-              className="min-h-28 w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-800"
-            />
+            <label className="mb-1 block text-sm font-medium">So dien thoai</label>
+            <Input value={customerPhone} onChange={(e) => setCustomerPhone(e.target.value)} required />
+          </div>
+          <div>
+            <label className="mb-1 block text-sm font-medium">Email (tuy chon)</label>
+            <Input type="email" value={customerEmail} onChange={(e) => setCustomerEmail(e.target.value)} />
           </div>
 
           {error ? <p className="text-sm text-red-600">{error}</p> : null}

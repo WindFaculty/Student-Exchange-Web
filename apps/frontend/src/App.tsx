@@ -27,6 +27,7 @@ import PoliciesHub from './pages/support/policies/PoliciesHub'
 import PurchasePolicy from './pages/support/policies/PurchasePolicy'
 import RefundPolicy from './pages/support/policies/RefundPolicy'
 import MessagesPage from './pages/messages/MessagesPage'
+import ProfilePage from './pages/profile/ProfilePage'
 
 import AdminDashboardPage from './pages/admin/AdminDashboardPage'
 import AdminProductListPage from './pages/AdminProductListPage'
@@ -64,6 +65,7 @@ function App() {
                   <Route element={<ProtectedRoute />}>
                     <Route path="/listings" element={<CreateListing />} />
                     <Route path="/messages" element={<MessagesPage />} />
+                    <Route path="/profile" element={<ProfilePage />} />
                   </Route>
 
                   <Route path="/iot" element={<IotHubPage />} />

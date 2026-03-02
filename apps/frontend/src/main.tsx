@@ -1,4 +1,5 @@
 /// <reference types="vite/client" />
+import './polyfills'
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { GoogleOAuthProvider } from '@react-oauth/google'

@@ -1,6 +1,6 @@
 # Project Context
 
-Last Updated: 2026-02-19
+Last Updated: 2026-03-02
 
 ## Project
 - Name: Student Exchange Web Platform
@@ -19,6 +19,9 @@ Last Updated: 2026-02-19
 - Frontend build passes (`npm run build`).
 - Backend tests pass (`./mvnw.cmd test`).
 - Core flows are backend-driven (no localStorage mock for business data).
+- User profile now supports contact defaults (`phone`, `address`) and checkout requires `name`, `address`, `phone` with optional `email`.
+- Profile update now validates email and phone format before persisting.
+- Phone format rule for profile update is now Vietnam-specific: `0xxxxxxxxx` or `+84xxxxxxxxx`.
 
 ## Milestone Snapshot
 - M0: DONE

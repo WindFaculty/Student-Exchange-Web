@@ -1,0 +1,706 @@
+id,province_id,name_current,name_old,is_merged
+1,1,Thành phố Long Xuyên,,False
+2,1,Thành phố Châu Đốc,,False
+3,1,Huyện An Phú,,False
+4,1,Thị xã Tân Châu,,False
+5,1,Huyện Phú Tân,,False
+6,1,Huyện Châu Phú,,False
+7,1,Huyện Tịnh Biên,,False
+8,1,Huyện Tri Tôn,,False
+9,1,Huyện Châu Thành,,False
+10,1,Huyện Chợ Mới,,False
+11,1,Huyện Thoại Sơn,,False
+12,2,Thành phố Vũng Tàu,,False
+13,2,Thành phố Bà Rịa,,False
+14,2,Huyện Châu Đức,,False
+15,2,Huyện Xuyên Mộc,,False
+16,2,Huyện Long Điền,,False
+17,2,Huyện Đất Đỏ,,False
+18,2,Thị xã Phú Mỹ,,False
+19,2,Huyện Côn Đảo,,False
+20,3,Thành phố Bắc Giang,,False
+21,3,Huyện Yên Thế,,False
+22,3,Huyện Tân Yên,,False
+23,3,Huyện Lạng Giang,,False
+24,3,Huyện Lục Nam,,False
+25,3,Huyện Lục Ngạn,,False
+26,3,Huyện Sơn Động,,False
+27,3,Huyện Yên Dũng,,False
+28,3,Huyện Việt Yên,,False
+29,3,Huyện Hiệp Hòa,,False
+30,4,Thành phố Bắc Kạn,,False
+31,4,Huyện Pác Nặm,,False
+32,4,Huyện Ba Bể,,False
+33,4,Huyện Ngân Sơn,,False
+34,4,Huyện Bạch Thông,,False
+35,4,Huyện Chợ Đồn,,False
+36,4,Huyện Chợ Mới,,False
+37,4,Huyện Na Rì,,False
+38,5,Thành phố Bạc Liêu,,False
+39,5,Huyện Hồng Dân,,False
+40,5,Huyện Phước Long,,False
+41,5,Huyện Vĩnh Lợi,,False
+42,5,Thị xã Giá Rai,,False
+43,5,Huyện Đông Hải,,False
+44,5,Huyện Hòa Bình,,False
+45,6,Thành phố Bắc Ninh,,False
+46,6,Thành phố Từ Sơn,,False
+47,6,Huyện Yên Phong,,False
+48,6,Huyện Quế Võ,,False
+49,6,Huyện Tiên Du,,False
+50,6,Huyện Thuận Thành,,False
+51,6,Huyện Gia Bình,,False
+52,6,Huyện Lương Tài,,False
+53,7,Thành phố Bến Tre,,False
+54,7,Huyện Châu Thành,,False
+55,7,Huyện Chợ Lách,,False
+56,7,Huyện Mỏ Cày Nam,,False
+57,7,Huyện Giồng Trôm,,False
+58,7,Huyện Bình Đại,,False
+59,7,Huyện Ba Tri,,False
+60,7,Huyện Thạnh Phú,,False
+61,7,Huyện Mỏ Cày Bắc,,False
+62,8,Thành phố Quy Nhơn,,False
+63,8,Huyện An Lão,,False
+64,8,Thị xã Hoài Nhơn,,False
+65,8,Huyện Hoài Ân,,False
+66,8,Huyện Phù Mỹ,,False
+67,8,Huyện Vĩnh Thạnh,,False
+68,8,Huyện Tây Sơn,,False
+69,8,Huyện Phù Cát,,False
+70,8,Thị xã An Nhơn,,False
+71,8,Huyện Tuy Phước,,False
+72,8,Huyện Vân Canh,,False
+73,9,Thành phố Thủ Dầu Một,,False
+74,9,Huyện Bàu Bàng,,False
+75,9,Huyện Dầu Tiếng,,False
+76,9,Thị xã Bến Cát,,False
+77,9,Huyện Phú Giáo,,False
+78,9,Thị xã Tân Uyên,,False
+79,9,Thành phố Dĩ An,,False
+80,9,Thành phố Thuận An,,False
+81,9,Huyện Bắc Tân Uyên,,False
+82,10,Thành phố Đồng Xoài,,False
+83,10,Thị xã Bình Long,,False
+84,10,Thị xã Phước Long,,False
+85,10,Huyện Đồng Phú,,False
+86,10,Huyện Bù Đốp,,False
+87,10,Huyện Hớn Quản,,False
+88,10,Huyện Bù Đăng,,False
+89,10,Huyện Chơn Thành,,False
+90,10,Huyện Phú Riềng,,False
+91,11,Thành phố Phan Thiết,,False
+92,11,Thị xã La Gi,,False
+93,11,Huyện Tuy Phong,,False
+94,11,Huyện Bắc Bình,,False
+95,11,Huyện Hàm Thuận Bắc,,False
+96,11,Huyện Hàm Thuận Nam,,False
+97,11,Huyện Tánh Linh,,False
+98,11,Huyện Đức Linh,,False
+99,11,Huyện Hàm Tân,,False
+100,11,Huyện Phú Quý,,False
+101,12,Thành phố Cà Mau,,False
+102,12,Huyện U Minh,,False
+103,12,Huyện Thới Bình,,False
+104,12,Huyện Trần Văn Thời,,False
+105,12,Huyện Cái Nước,,False
+106,12,Huyện Đầm Dơi,,False
+107,12,Huyện Năm Căn,,False
+108,12,Huyện Phú Tân,,False
+109,12,Huyện Ngọc Hiển,,False
+110,13,Quận Ninh Kiều,,False
+111,13,Quận Ô Môn,,False
+112,13,Quận Bình Thủy,,False
+113,13,Quận Cái Răng,,False
+114,13,Quận Thốt Nốt,,False
+115,13,Huyện Vĩnh Thạnh,,False
+116,13,Huyện Cờ Đỏ,,False
+117,13,Huyện Phong Điền,,False
+118,13,Huyện Thới Lai,,False
+119,14,Thành phố Cao Bằng,,False
+120,14,Huyện Bảo Lâm,,False
+121,14,Huyện Bảo Lạc,,False
+122,14,Huyện Hà Quảng,,False
+123,14,Huyện Trùng Khánh,,False
+124,14,Huyện Hạ Lang,,False
+125,14,Huyện Quảng Hòa,,False
+126,14,Huyện Hoà An,,False
+127,14,Huyện Nguyên Bình,,False
+128,14,Huyện Thạch An,,False
+129,15,Quận Liên Chiểu,,False
+130,15,Quận Thanh Khê,,False
+131,15,Quận Hải Châu,,False
+132,15,Quận Sơn Trà,,False
+133,15,Quận Ngũ Hành Sơn,,False
+134,15,Quận Cẩm Lệ,,False
+135,15,Huyện Hòa Vang,,False
+136,15,Huyện Hoàng Sa,,False
+137,16,Thành phố Buôn Ma Thuột,,False
+138,16,Thị xã Buôn Hồ,,False
+139,16,Huyện Ea H'leo,,False
+140,16,Huyện Ea Súp,,False
+141,16,Huyện Buôn Đôn,,False
+142,16,Huyện Cư M'gar,,False
+143,16,Huyện Krông Búk,,False
+144,16,Huyện Krông Năng,,False
+145,10,Huyện Bù Gia Mập,,False
+146,16,Huyện Krông Pắc,,False
+147,16,Huyện Ea Kar,,False
+148,16,Huyện M'Đrắk,,False
+149,16,Huyện Krông Bông,,False
+150,16,Huyện Krông Ana,,False
+151,16,Huyện Lắk,,False
+152,16,Huyện Cư Kuin,,False
+153,17,Thành phố Gia Nghĩa,,False
+154,17,Huyện Đắk Glong,,False
+155,17,Huyện Cư Jút,,False
+156,17,Huyện Đắk Mil,,False
+157,17,Huyện Krông Nô,,False
+158,17,Huyện Đắk Song,,False
+159,17,Huyện Đắk R'Lấp,,False
+160,17,Huyện Tuy Đức,,False
+161,18,Thành phố Điện Biên Phủ,,False
+162,18,Thị xã Mường Lay,,False
+163,18,Huyện Mường Nhé,,False
+164,18,Huyện Mường Chà,,False
+165,18,Huyện Tủa Chùa,,False
+166,18,Huyện Tuần Giáo,,False
+167,18,Huyện Điện Biên,,False
+168,18,Huyện Điện Biên Đông,,False
+169,18,Huyện Mường Ảng,,False
+170,18,Huyện Nậm Pồ,,False
+171,19,Thành phố Biên Hòa,,False
+172,19,Thành phố Long Khánh,,False
+173,19,Huyện Tân Phú,,False
+174,19,Huyện Vĩnh Cửu,,False
+175,19,Huyện Định Quán,,False
+176,19,Huyện Trảng Bom,,False
+177,19,Huyện Thống Nhất,,False
+178,19,Huyện Cẩm Mỹ,,False
+179,19,Huyện Long Thành,,False
+180,19,Huyện Xuân Lộc,,False
+181,19,Huyện Nhơn Trạch,,False
+182,20,Thành phố Cao Lãnh,,False
+183,20,Thành phố Sa Đéc,,False
+184,20,Thành phố Hồng Ngự,,False
+185,20,Huyện Tân Hồng,,False
+186,20,Huyện Hồng Ngự,,False
+187,20,Huyện Tam Nông,,False
+188,20,Huyện Tháp Mười,,False
+189,20,Huyện Cao Lãnh,,False
+190,20,Huyện Thanh Bình,,False
+191,20,Huyện Lấp Vò,,False
+192,20,Huyện Lai Vung,,False
+193,20,Huyện Châu Thành,,False
+194,21,Thành phố Pleiku,,False
+195,21,Thị xã An Khê,,False
+196,21,Thị xã Ayun Pa,,False
+197,21,Huyện K'Bang,,False
+198,21,Huyện Đăk Đoa,,False
+199,21,Huyện Chư Păh,,False
+200,21,Huyện Ia Grai,,False
+201,21,Huyện Mang Yang,,False
+202,21,Huyện Kông Chro,,False
+203,21,Huyện Đức Cơ,,False
+204,21,Huyện Chư Prông,,False
+205,21,Huyện Chư Sê,,False
+206,21,Huyện Đăk Pơ,,False
+207,21,Huyện Ia Pa,,False
+208,21,Huyện Krông Pa,,False
+209,21,Huyện Phú Thiện,,False
+210,21,Huyện Chư Pưh,,False
+211,22,Thành phố Hà Giang,,False
+212,22,Huyện Đồng Văn,,False
+213,22,Huyện Mèo Vạc,,False
+214,22,Huyện Yên Minh,,False
+215,22,Huyện Quản Bạ,,False
+216,22,Huyện Vị Xuyên,,False
+217,22,Huyện Bắc Mê,,False
+218,22,Huyện Hoàng Su Phì,,False
+219,22,Huyện Xín Mần,,False
+220,22,Huyện Bắc Quang,,False
+221,22,Huyện Quang Bình,,False
+222,23,Thành phố Phủ Lý,,False
+223,23,Thị xã Duy Tiên,,False
+224,23,Huyện Kim Bảng,,False
+225,23,Huyện Thanh Liêm,,False
+226,23,Huyện Bình Lục,,False
+227,23,Huyện Lý Nhân,,False
+228,24,Quận Ba Đình,,False
+229,24,Quận Hoàn Kiếm,,False
+230,24,Quận Tây Hồ,,False
+231,24,Quận Long Biên,,False
+232,24,Quận Cầu Giấy,,False
+233,24,Quận Đống Đa,,False
+234,24,Quận Hai Bà Trưng,,False
+235,24,Quận Hoàng Mai,,False
+236,24,Quận Thanh Xuân,,False
+237,24,Huyện Sóc Sơn,,False
+238,24,Huyện Đông Anh,,False
+239,24,Huyện Gia Lâm,,False
+240,24,Quận Nam Từ Liêm,,False
+241,24,Huyện Thanh Trì,,False
+242,24,Quận Bắc Từ Liêm,,False
+243,24,Huyện Mê Linh,,False
+244,24,Quận Hà Đông,,False
+245,24,Thị xã Sơn Tây,,False
+246,24,Huyện Ba Vì,,False
+247,24,Huyện Phúc Thọ,,False
+248,24,Huyện Đan Phượng,,False
+249,24,Huyện Hoài Đức,,False
+250,24,Huyện Quốc Oai,,False
+251,24,Huyện Thạch Thất,,False
+252,24,Huyện Chương Mỹ,,False
+253,24,Huyện Thanh Oai,,False
+254,24,Huyện Thường Tín,,False
+255,24,Huyện Phú Xuyên,,False
+256,24,Huyện Ứng Hòa,,False
+257,24,Huyện Mỹ Đức,,False
+258,25,Thành phố Hà Tĩnh,,False
+259,25,Thị xã Hồng Lĩnh,,False
+260,25,Huyện Hương Sơn,,False
+261,25,Huyện Đức Thọ,,False
+262,25,Huyện Vũ Quang,,False
+263,25,Huyện Nghi Xuân,,False
+264,25,Huyện Can Lộc,,False
+265,25,Huyện Hương Khê,,False
+266,25,Huyện Thạch Hà,,False
+267,25,Huyện Cẩm Xuyên,,False
+268,25,Huyện Kỳ Anh,,False
+269,25,Thị xã Kỳ Anh,,False
+270,25,Huyện Lộc Hà,,False
+271,26,Thành phố Hải Dương,,False
+272,26,Thành phố Chí Linh,,False
+273,26,Thị xã Kinh Môn,,False
+274,26,Huyện Nam Sách,,False
+275,26,Huyện Kim Thành,,False
+276,26,Huyện Thanh Hà,,False
+277,26,Huyện Cẩm Giàng,,False
+278,26,Huyện Bình Giang,,False
+279,26,Huyện Gia Lộc,,False
+280,26,Huyện Tứ Kỳ,,False
+281,26,Huyện Ninh Giang,,False
+282,26,Huyện Thanh Miện,,False
+283,27,Quận Hồng Bàng,,False
+284,27,Quận Ngô Quyền,,False
+285,27,Quận Lê Chân,,False
+286,27,Quận Hải An,,False
+287,27,Quận Kiến An,,False
+288,27,Quận Đồ Sơn,,False
+289,27,Quận Dương Kinh,,False
+290,27,Huyện Thuỷ Nguyên,,False
+291,27,Huyện An Dương,,False
+292,27,Huyện An Lão,,False
+293,27,Huyện Kiến Thuỵ,,False
+294,27,Huyện Tiên Lãng,,False
+295,27,Huyện Vĩnh Bảo,,False
+296,27,Huyện Cát Hải,,False
+297,27,Huyện Bạch Long Vĩ,,False
+298,28,Thành phố Vị Thanh,,False
+299,28,Thành phố Ngã Bảy,,False
+300,28,Huyện Châu Thành A,,False
+301,28,Huyện Châu Thành,,False
+302,28,Huyện Phụng Hiệp,,False
+303,28,Huyện Vị Thủy,,False
+304,28,Huyện Long Mỹ,,False
+305,28,Thị xã Long Mỹ,,False
+306,29,Thành phố Hòa Bình,,False
+307,29,Huyện Đà Bắc,,False
+308,29,Huyện Lương Sơn,,False
+309,29,Huyện Kim Bôi,,False
+310,29,Huyện Cao Phong,,False
+311,29,Huyện Tân Lạc,,False
+312,29,Huyện Mai Châu,,False
+313,29,Huyện Lạc Sơn,,False
+314,29,Huyện Yên Thủy,,False
+315,29,Huyện Lạc Thủy,,False
+316,30,Thành phố Hưng Yên,,False
+317,30,Huyện Văn Lâm,,False
+318,30,Huyện Văn Giang,,False
+319,30,Huyện Yên Mỹ,,False
+320,30,Thị xã Mỹ Hào,,False
+321,30,Huyện Ân Thi,,False
+322,30,Huyện Khoái Châu,,False
+323,30,Huyện Kim Động,,False
+324,30,Huyện Tiên Lữ,,False
+325,30,Huyện Phù Cừ,,False
+326,31,Thành phố Nha Trang,,False
+327,31,Thành phố Cam Ranh,,False
+328,31,Huyện Cam Lâm,,False
+329,31,Huyện Vạn Ninh,,False
+330,31,Thị xã Ninh Hòa,,False
+331,31,Huyện Khánh Vĩnh,,False
+332,31,Huyện Diên Khánh,,False
+333,31,Huyện Khánh Sơn,,False
+334,31,Huyện Trường Sa,,False
+335,32,Thành phố Rạch Giá,,False
+336,32,Thành phố Hà Tiên,,False
+337,32,Huyện Kiên Lương,,False
+338,32,Huyện Hòn Đất,,False
+339,32,Huyện Tân Hiệp,,False
+340,32,Huyện Châu Thành,,False
+341,32,Huyện Giồng Riềng,,False
+342,32,Huyện Gò Quao,,False
+343,32,Huyện An Biên,,False
+344,32,Huyện An Minh,,False
+345,32,Huyện Vĩnh Thuận,,False
+346,32,Thành phố Phú Quốc,,False
+347,32,Huyện Kiên Hải,,False
+348,32,Huyện U Minh Thượng,,False
+349,32,Huyện Giang Thành,,False
+350,33,Thành phố Kon Tum,,False
+351,33,Huyện Đắk Glei,,False
+352,33,Huyện Ngọc Hồi,,False
+353,33,Huyện Đắk Tô,,False
+354,33,Huyện Kon Plông,,False
+355,33,Huyện Kon Rẫy,,False
+356,33,Huyện Đắk Hà,,False
+357,33,Huyện Sa Thầy,,False
+358,33,Huyện Tu Mơ Rông,,False
+359,33,Huyện Ia H'Drai,,False
+360,34,Thành phố Lai Châu,,False
+361,34,Huyện Tam Đường,,False
+362,34,Huyện Mường Tè,,False
+363,34,Huyện Sìn Hồ,,False
+364,34,Huyện Phong Thổ,,False
+365,34,Huyện Than Uyên,,False
+366,34,Huyện Tân Uyên,,False
+367,34,Huyện Nậm Nhùn,,False
+368,35,Thành phố Đà Lạt,,False
+369,35,Thành phố Bảo Lộc,,False
+370,35,Huyện Đam Rông,,False
+371,35,Huyện Lạc Dương,,False
+372,35,Huyện Lâm Hà,,False
+373,35,Huyện Đơn Dương,,False
+374,35,Huyện Đức Trọng,,False
+375,35,Huyện Di Linh,,False
+376,35,Huyện Bảo Lâm,,False
+377,35,Huyện Đạ Huoai,,False
+378,35,Huyện Đạ Tẻh,,False
+379,35,Huyện Cát Tiên,,False
+380,36,Thành phố Lạng Sơn,,False
+381,36,Huyện Tràng Định,,False
+382,36,Huyện Bình Gia,,False
+383,36,Huyện Văn Lãng,,False
+384,36,Huyện Cao Lộc,,False
+385,36,Huyện Văn Quan,,False
+386,36,Huyện Bắc Sơn,,False
+387,36,Huyện Hữu Lũng,,False
+388,36,Huyện Chi Lăng,,False
+389,36,Huyện Lộc Bình,,False
+390,36,Huyện Đình Lập,,False
+391,37,Thành phố Lào Cai,,False
+392,37,Huyện Bát Xát,,False
+393,37,Huyện Mường Khương,,False
+394,37,Huyện Si Ma Cai,,False
+395,37,Huyện Bắc Hà,,False
+396,37,Huyện Bảo Thắng,,False
+397,37,Huyện Bảo Yên,,False
+398,37,Thị xã Sa Pa,,False
+399,37,Huyện Văn Bàn,,False
+400,38,Thành phố Tân An,,False
+401,38,Thị xã Kiến Tường,,False
+402,38,Huyện Tân Hưng,,False
+403,38,Huyện Vĩnh Hưng,,False
+404,38,Huyện Mộc Hóa,,False
+405,38,Huyện Tân Thạnh,,False
+406,38,Huyện Thạnh Hóa,,False
+407,38,Huyện Đức Huệ,,False
+408,38,Huyện Đức Hòa,,False
+409,38,Huyện Bến Lức,,False
+410,38,Huyện Thủ Thừa,,False
+411,38,Huyện Tân Trụ,,False
+412,38,Huyện Cần Đước,,False
+413,38,Huyện Cần Giuộc,,False
+414,38,Huyện Châu Thành,,False
+415,39,Thành phố Nam Định,,False
+416,39,Huyện Mỹ Lộc,,False
+417,39,Huyện Vụ Bản,,False
+418,39,Huyện Ý Yên,,False
+419,39,Huyện Nghĩa Hưng,,False
+420,39,Huyện Nam Trực,,False
+421,39,Huyện Trực Ninh,,False
+422,39,Huyện Xuân Trường,,False
+423,39,Huyện Giao Thủy,,False
+424,39,Huyện Hải Hậu,,False
+425,40,Thành phố Vinh,,False
+426,40,Thị xã Cửa Lò,,False
+427,40,Thị xã Thái Hòa,,False
+428,40,Huyện Quê Phong,,False
+429,40,Huyện Quỳ Châu,,False
+430,40,Huyện Kỳ Sơn,,False
+431,40,Huyện Tương Dương,,False
+432,40,Huyện Nghĩa Đàn,,False
+433,40,Huyện Quỳ Hợp,,False
+434,40,Huyện Quỳnh Lưu,,False
+435,40,Thị xã Hoàng Mai,,False
+436,40,Huyện Diễn Châu,,False
+437,40,Huyện Yên Thành,,False
+438,40,Huyện Đô Lương,,False
+439,40,Huyện Thanh Chương,,False
+440,40,Huyện Nghi Lộc,,False
+441,40,Huyện Nam Đàn,,False
+442,40,Huyện Hưng Nguyên,,False
+443,41,Thành phố Ninh Bình,,False
+444,41,Thành phố Tam Điệp,,False
+445,41,Huyện Nho Quan,,False
+446,41,Huyện Gia Viễn,,False
+447,41,Huyện Hoa Lư,,False
+448,41,Huyện Yên Khánh,,False
+449,41,Huyện Kim Sơn,,False
+450,41,Huyện Yên Mô,,False
+451,42,Thành phố Phan Rang-Tháp Chàm,,False
+452,42,Huyện Bác Ái,,False
+453,42,Huyện Ninh Sơn,,False
+454,42,Huyện Ninh Hải,,False
+455,42,Huyện Ninh Phước,,False
+456,42,Huyện Thuận Bắc,,False
+457,42,Huyện Thuận Nam,,False
+458,43,Thành phố Việt Trì,,False
+459,43,Thị xã Phú Thọ,,False
+460,43,Huyện Đoan Hùng,,False
+461,43,Huyện Hạ Hòa,,False
+462,43,Huyện Thanh Ba,,False
+463,43,Huyện Phù Ninh,,False
+464,43,Huyện Yên Lập,,False
+465,43,Huyện Cẩm Khê,,False
+466,43,Huyện Tam Nông,,False
+467,43,Huyện Lâm Thao,,False
+468,43,Huyện Thanh Sơn,,False
+469,43,Huyện Thanh Thủy,,False
+470,43,Huyện Tân Sơn,,False
+471,44,Thành phố Tuy Hòa,,False
+472,44,Thị xã Sông Cầu,,False
+473,44,Huyện Đồng Xuân,,False
+474,44,Huyện Tuy An,,False
+475,44,Huyện Sơn Hòa,,False
+476,44,Huyện Sông Hinh,,False
+477,44,Huyện Tây Hòa,,False
+478,44,Huyện Phú Hòa,,False
+479,44,Thị xã Đông Hòa,,False
+480,45,Thành phố Đồng Hới,,False
+481,45,Huyện Minh Hóa,,False
+482,45,Huyện Tuyên Hóa,,False
+483,45,Huyện Quảng Trạch,,False
+484,45,Thị xã Ba Đồn,,False
+485,45,Huyện Bố Trạch,,False
+486,45,Huyện Quảng Ninh,,False
+487,45,Huyện Lệ Thủy,,False
+488,46,Thành phố Tam Kỳ,,False
+489,46,Thành phố Hội An,,False
+490,46,Huyện Tây Giang,,False
+491,46,Huyện Đông Giang,,False
+492,46,Huyện Đại Lộc,,False
+493,46,Thị xã Điện Bàn,,False
+494,46,Huyện Duy Xuyên,,False
+495,46,Huyện Quế Sơn,,False
+496,46,Huyện Nam Giang,,False
+497,46,Huyện Phước Sơn,,False
+498,46,Huyện Hiệp Đức,,False
+499,46,Huyện Thăng Bình,,False
+500,46,Huyện Tiên Phước,,False
+501,46,Huyện Bắc Trà My,,False
+502,46,Huyện Nam Trà My,,False
+503,46,Huyện Núi Thành,,False
+504,46,Huyện Phú Ninh,,False
+505,46,Huyện Nông Sơn,,False
+506,47,Thành phố Quảng Ngãi,,False
+507,47,Huyện Bình Sơn,,False
+508,47,Huyện Trà Bồng,,False
+509,47,Huyện Sơn Tịnh,,False
+510,47,Huyện Tư Nghĩa,,False
+511,47,Huyện Sơn Hà,,False
+512,47,Huyện Sơn Tây,,False
+513,47,Huyện Minh Long,,False
+514,47,Huyện Nghĩa Hành,,False
+515,47,Huyện Mộ Đức,,False
+516,47,Thị xã Đức Phổ,,False
+517,47,Huyện Ba Tơ,,False
+518,47,Huyện Lý Sơn,,False
+519,48,Thành phố Hạ Long,,False
+520,48,Thành phố Móng Cái,,False
+521,48,Thành phố Cẩm Phả,,False
+522,48,Thành phố Uông Bí,,False
+523,48,Huyện Bình Liêu,,False
+524,48,Huyện Tiên Yên,,False
+525,48,Huyện Đầm Hà,,False
+526,48,Huyện Hải Hà,,False
+527,48,Huyện Ba Chẽ,,False
+528,48,Huyện Vân Đồn,,False
+529,48,Thị xã Đông Triều,,False
+530,48,Thị xã Quảng Yên,,False
+531,48,Huyện Cô Tô,,False
+532,49,Thành phố Đông Hà,,False
+533,49,Thị xã Quảng Trị,,False
+534,49,Huyện Vĩnh Linh,,False
+535,49,Huyện Hướng Hóa,,False
+536,49,Huyện Gio Linh,,False
+537,49,Huyện Đa Krông,,False
+538,49,Huyện Cam Lộ,,False
+539,49,Huyện Triệu Phong,,False
+540,49,Huyện Hải Lăng,,False
+541,49,Huyện Cồn Cỏ,,False
+542,50,Thành phố Sóc Trăng,,False
+543,50,Huyện Châu Thành,,False
+544,50,Huyện Kế Sách,,False
+545,50,Huyện Mỹ Tú,,False
+546,50,Huyện Cù Lao Dung,,False
+547,50,Huyện Long Phú,,False
+548,50,Huyện Mỹ Xuyên,,False
+549,50,Thị xã Ngã Năm,,False
+550,50,Huyện Thạnh Trị,,False
+551,50,Thị xã Vĩnh Châu,,False
+552,50,Huyện Trần Đề,,False
+553,51,Thành phố Sơn La,,False
+554,51,Huyện Quỳnh Nhai,,False
+555,51,Huyện Thuận Châu,,False
+556,51,Huyện Mường La,,False
+557,51,Huyện Bắc Yên,,False
+558,51,Huyện Phù Yên,,False
+559,51,Huyện Mộc Châu,,False
+560,51,Huyện Yên Châu,,False
+561,51,Huyện Mai Sơn,,False
+562,51,Huyện Sốp Cộp,,False
+563,51,Huyện Vân Hồ,,False
+564,52,Thành phố Tây Ninh,,False
+565,52,Huyện Tân Biên,,False
+566,52,Huyện Tân Châu,,False
+567,52,Huyện Dương Minh Châu,,False
+568,52,Huyện Châu Thành,,False
+569,52,Thị xã Hòa Thành,,False
+570,52,Huyện Gò Dầu,,False
+571,52,Huyện Bến Cầu,,False
+572,52,Thị xã Trảng Bàng,,False
+573,53,Thành phố Thái Bình,,False
+574,53,Huyện Quỳnh Phụ,,False
+575,53,Huyện Hưng Hà,,False
+576,53,Huyện Đông Hưng,,False
+577,53,Huyện Thái Thụy,,False
+578,53,Huyện Tiền Hải,,False
+579,53,Huyện Kiến Xương,,False
+580,53,Huyện Vũ Thư,,False
+581,54,Thành phố Thái Nguyên,,False
+582,54,Thành phố Sông Công,,False
+583,54,Thành phố Phổ Yên,,False
+584,54,Huyện Định Hóa,,False
+585,54,Huyện Phú Lương,,False
+586,54,Huyện Đồng Hỷ,,False
+587,54,Huyện Võ Nhai,,False
+588,54,Huyện Đại Từ,,False
+589,54,Huyện Phú Bình,,False
+590,55,Thành phố Thanh Hóa,,False
+591,55,Thị xã Bỉm Sơn,,False
+592,55,Thành phố Sầm Sơn,,False
+593,55,Huyện Mường Lát,,False
+594,55,Huyện Quan Hóa,,False
+595,55,Huyện Bá Thước,,False
+596,55,Huyện Quan Sơn,,False
+597,55,Huyện Lang Chánh,,False
+598,55,Huyện Ngọc Lặc,,False
+599,55,Huyện Cẩm Thủy,,False
+600,55,Huyện Thạch Thành,,False
+601,55,Huyện Hà Trung,,False
+602,55,Huyện Vĩnh Lộc,,False
+603,55,Huyện Yên Định,,False
+604,55,Huyện Thọ Xuân,,False
+605,55,Huyện Thường Xuân,,False
+606,55,Huyện Triệu Sơn,,False
+607,55,Huyện Thiệu Hóa,,False
+608,55,Huyện Hoằng Hóa,,False
+609,55,Huyện Hậu Lộc,,False
+610,55,Huyện Nga Sơn,,False
+611,55,Huyện Như Xuân,,False
+612,55,Huyện Như Thanh,,False
+613,55,Huyện Nông Cống,,False
+614,55,Huyện Đông Sơn,,False
+615,55,Huyện Quảng Xương,,False
+616,55,Thị xã Nghi Sơn,Huyện Tĩnh Gia,True
+617,56,Thành phố Huế,,False
+618,56,Huyện Phong Điền,,False
+619,56,Huyện Quảng Điền,,False
+620,56,Huyện Phú Vang,,False
+621,56,Thị xã Hương Thủy,,False
+622,56,Thị xã Hương Trà,,False
+623,56,Huyện Phú Lộc,,False
+624,56,Huyện Nam Đông,,False
+625,56,Huyện A Lưới,,False
+626,57,Thành phố Mỹ Tho,,False
+627,57,Thị xã Gò Công,,False
+628,57,Thị xã Cai Lậy,,False
+629,57,Huyện Tân Phước,,False
+630,57,Huyện Cai Lậy,,False
+631,57,Huyện Châu Thành,,False
+632,57,Huyện Chợ Gạo,,False
+633,57,Huyện Gò Công Tây,,False
+634,57,Huyện Gò Công Đông,,False
+635,57,Huyện Tân Phú Đông,,False
+636,58,Quận 1,,False
+637,58,Quận 3,,False
+638,58,Quận 4,,False
+639,58,Quận 5,,False
+640,58,Quận 6,,False
+641,58,Quận 7,,False
+642,58,Quận 8,,False
+643,58,Quận 10,,False
+644,58,Quận 11,,False
+645,58,Quận 12,,False
+646,58,Quận Bình Tân,,False
+647,58,Quận Bình Thạnh,,False
+648,58,Quận Gò Vấp,,False
+649,58,Quận Phú Nhuận,,False
+650,58,Quận Tân Bình,,False
+651,58,Quận Tân Phú,,False
+652,58,Thành phố Thủ Đức,,False
+653,58,Huyện Bình Chánh,,False
+654,58,Huyện Cần Giờ,,False
+655,58,Huyện Củ Chi,,False
+656,58,Huyện Hóc Môn,,False
+657,58,Huyện Nhà Bè,,False
+658,59,Thành phố Trà Vinh,,False
+659,59,Huyện Càng Long,,False
+660,59,Huyện Cầu Kè,,False
+661,59,Huyện Tiểu Cần,,False
+662,59,Huyện Châu Thành,,False
+663,59,Huyện Cầu Ngang,,False
+664,59,Huyện Trà Cú,,False
+665,59,Huyện Duyên Hải,,False
+666,59,Thị xã Duyên Hải,,False
+667,60,Thành phố Tuyên Quang,,False
+668,60,Huyện Lâm Bình,,False
+669,60,Huyện Na Hang,,False
+670,60,Huyện Chiêm Hóa,,False
+671,60,Huyện Hàm Yên,,False
+672,60,Huyện Yên Sơn,,False
+673,60,Huyện Sơn Dương,,False
+674,61,Thành phố Vĩnh Long,,False
+675,61,Huyện Long Hồ,,False
+676,61,Huyện Mang Thít,,False
+677,61,Huyện Vũng Liêm,,False
+678,61,Huyện Tam Bình,,False
+679,61,Thị xã Bình Minh,,False
+680,61,Huyện Trà Ôn,,False
+681,61,Huyện Bình Tân,,False
+682,62,Thành phố Vĩnh Yên,,False
+683,62,Thành phố Phúc Yên,,False
+684,62,Huyện Lập Thạch,,False
+685,62,Huyện Tam Dương,,False
+686,62,Huyện Tam Đảo,,False
+687,62,Huyện Bình Xuyên,,False
+688,62,Huyện Yên Lạc,,False
+689,62,Huyện Vĩnh Tường,,False
+690,62,Huyện Sông Lô,,False
+691,63,Thành phố Yên Bái,,False
+692,63,Thị xã Nghĩa Lộ,,False
+693,63,Huyện Lục Yên,,False
+694,63,Huyện Văn Yên,,False
+695,63,Huyện Mù Cang Chải,,False
+696,63,Huyện Trấn Yên,,False
+697,63,Huyện Trạm Tấu,,False
+698,63,Huyện Văn Chấn,,False
+699,63,Huyện Yên Bình,,False
+700,10,Huyện Lộc Ninh,,False
+701,40,Huyện Con Cuông,,False
+702,40,Huyện Tân Kỳ,,False
+703,40,Huyện Anh Sơn,,False
+704,51,Huyện Sông Mã,,False
+705,57,Huyện Cái Bè,,False

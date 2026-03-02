@@ -11,5 +11,12 @@ public class UserSessionResponse {
     private String username;
     private String fullName;
     private String email;
+    private String phone;
+    private String address;
+    private String addressLine;
+    private String provinceCode;
+    private String districtCode;
+    private String wardCode;
     private UserRole role;
+    private String avatarUrl;
 }

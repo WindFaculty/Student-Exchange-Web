@@ -35,6 +35,9 @@ public class Order {
     @Column(nullable = false, length = 500)
     private String customerAddress;
 
+    @Column(nullable = false, length = 40)
+    private String customerPhone;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "status_id", nullable = false)
     private RefOrderStatus status;

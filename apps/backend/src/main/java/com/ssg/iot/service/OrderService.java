@@ -42,6 +42,12 @@ public class OrderService {
     private final CartService cartService;
     private final CatalogItemService catalogItemService;
 
+    public enum MyOrderScope {
+        ACCOUNT,
+        EMAIL,
+        BOTH
+    }
+
     @Transactional
     public OrderResponse createOrder(CreateOrderRequest request, HttpSession session, User currentUser) {
         List<CartService.CartLine> lines = cartService.getCartLines(session);
@@ -49,11 +55,14 @@ public class OrderService {
             throw new BadRequestException("Cart is empty");
         }
 
+        String normalizedEmail = normalizeOptionalEmail(request.getCustomerEmail());
+
         Order order = new Order();
         order.setOrderCode(generateOrderCode());
         order.setCustomerName(request.getCustomerName().trim());
-        order.setCustomerEmail(request.getCustomerEmail().trim().toLowerCase(Locale.ROOT));
+        order.setCustomerEmail(normalizedEmail);
         order.setCustomerAddress(request.getCustomerAddress().trim());
+        order.setCustomerPhone(request.getCustomerPhone().trim());
         order.setStatus(getStatusOrThrow("PENDING"));
         order.setUser(currentUser);
 
@@ -126,6 +135,24 @@ public class OrderService {
         return PageResponse.from(mapped);
     }
 
+    @Transactional(readOnly = true)
+    public PageResponse<OrderResponse> getMyOrders(User currentUser, String scope, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdAt"));
+        MyOrderScope parsedScope = parseMyOrderScope(scope);
+        Page<Order> orderPage;
+
+        if (parsedScope == MyOrderScope.ACCOUNT) {
+            orderPage = orderRepository.findByUserId(currentUser.getId(), pageable);
+        } else if (parsedScope == MyOrderScope.EMAIL) {
+            orderPage = orderRepository.findByUserIsNullAndCustomerEmailIgnoreCase(currentUser.getEmail(), pageable);
+        } else {
+            orderPage = orderRepository.findMyOrdersCombined(currentUser.getId(), currentUser.getEmail(), pageable);
+        }
+
+        Page<OrderResponse> mapped = orderPage.map(this::toResponse);
+        return PageResponse.from(mapped);
+    }
+
     @Transactional
     public OrderResponse updateOrderStatus(Long orderId, String status) {
         Order order = orderRepository.findById(orderId)
@@ -150,6 +177,19 @@ public class OrderService {
             throw new BadRequestException("Invalid order status: " + value);
         }
         return code;
+    }
+
+    private MyOrderScope parseMyOrderScope(String value) {
+        if (value == null || value.isBlank()) {
+            return MyOrderScope.BOTH;
+        }
+
+        String normalized = value.trim().toUpperCase(Locale.ROOT);
+        try {
+            return MyOrderScope.valueOf(normalized);
+        } catch (IllegalArgumentException ex) {
+            throw new BadRequestException("Invalid my order scope: " + value);
+        }
     }
 
     private boolean isValidTransition(String current, String next) {
@@ -199,6 +239,13 @@ public class OrderService {
         return sourceType == CatalogSourceType.IOT_COMPONENT || sourceType == CatalogSourceType.IOT_SAMPLE;
     }
 
+    private String normalizeOptionalEmail(String rawEmail) {
+        if (rawEmail == null) {
+            return "";
+        }
+        return rawEmail.trim().toLowerCase(Locale.ROOT);
+    }
+
     private String generateOrderCode() {
         String timePart = LocalDateTime.now().format(ORDER_TIME_FORMAT);
         int randomPart = 100 + RANDOM.nextInt(900);
@@ -224,6 +271,7 @@ public class OrderService {
                 .customerName(order.getCustomerName())
                 .customerEmail(order.getCustomerEmail())
                 .customerAddress(order.getCustomerAddress())
+                .customerPhone(order.getCustomerPhone())
                 .status(order.getStatus().getCode())
                 .totalAmount(order.getTotalAmount())
                 .items(items)

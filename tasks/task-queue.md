@@ -1,7 +1,16 @@
 # Task Queue - Student Exchange Pivot
 
-Updated: 2026-02-19
+Updated: 2026-03-02
 Status values: TODO | DOING | DONE | BLOCKED
+
+## Recent Updates
+- DONE: Checkout now enforces required fields `customerName`, `customerAddress`, `customerPhone` and supports optional `customerEmail`.
+- DONE: Profile update flow now stores reusable contact defaults (`phone`, `address`) for checkout prefill.
+- DONE: Profile update now validates email format and phone number format on both frontend and backend.
+- DONE: Updated phone validation rule to accept only `0xxxxxxxxx` or `+84xxxxxxxxx`.
+- DONE: Added structured Vietnam address flow (province/district/ward + addressLine) for profile and checkout while keeping legacy address compatibility.
+- DONE: Added public location lookup endpoints and admin on-demand sync endpoints for Vietnam administrative dataset.
+- DONE: Added admin dashboard sync card and baseline local curated seed for Vietnam location references.
 
 ## Milestones
 

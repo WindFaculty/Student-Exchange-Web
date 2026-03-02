@@ -1,0 +1,49 @@
+{
+  "province": {
+    "name_current": "Hồ Chí Minh",
+    "name_old": "Bình Dương (một phần)",
+    "code": "79",
+    "area_km2": 2061.0,
+    "population": 9272040,
+    "effective_date": "2025-07-01",
+    "is_merged": true,
+    "merged_from": [
+      "Bình Dương",
+      "Hồ Chí Minh"
+    ],
+    "legal_document_url": "",
+    "districts": [
+      {
+        "name": "Thành phố Dĩ An",
+        "name_old": "Thị xã Dĩ An",
+        "is_merged": true,
+        "wards": [
+          {
+            "name": "Phường Tân Đông Hiệp",
+            "name_old": "Xã Tân Đông Hiệp",
+            "is_merged": true,
+            "villages": [
+              "Khu phố Đông A",
+              "Khu phố Đông B"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Huyện Hòa Bắc",
+        "name_old": null,
+        "is_merged": false,
+        "wards": [
+          {
+            "name": "Xã Hòa Bắc",
+            "name_old": null,
+            "is_merged": false,
+            "villages": [
+              "Thôn 6A"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

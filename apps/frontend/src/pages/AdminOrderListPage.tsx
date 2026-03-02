@@ -134,7 +134,7 @@ const AdminOrderListPage = () => {
                     <TableCell className="font-semibold text-primary">{order.orderCode}</TableCell>
                     <TableCell>
                       <p className="font-medium">{order.customerName}</p>
-                      <p className="text-xs text-slate-500">{order.customerEmail}</p>
+                      <p className="text-xs text-slate-500">{order.customerEmail || '-'}</p>
                     </TableCell>
                     <TableCell>{formatCurrency(order.totalAmount)}</TableCell>
                     <TableCell>
@@ -182,7 +182,8 @@ const AdminOrderListPage = () => {
 
               <div className="rounded-lg border border-slate-200 bg-slate-50 p-3 text-sm dark:border-slate-700 dark:bg-slate-800">
                 <p><strong>Khách hàng:</strong> {selectedOrder.customerName}</p>
-                <p><strong>Email:</strong> {selectedOrder.customerEmail}</p>
+                <p><strong>Số điện thoại:</strong> {selectedOrder.customerPhone}</p>
+                <p><strong>Email:</strong> {selectedOrder.customerEmail || '-'}</p>
                 <p><strong>Địa chỉ:</strong> {selectedOrder.customerAddress}</p>
                 <p><strong>Trạng thái:</strong> {selectedOrder.status}</p>
               </div>

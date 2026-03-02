@@ -95,7 +95,8 @@ const TrackOrder = () => {
             <div className="grid gap-2 text-sm md:grid-cols-2">
               <p><strong>Trạng thái:</strong> {order.status}</p>
               <p><strong>Khách hàng:</strong> {order.customerName}</p>
-              <p><strong>Email:</strong> {order.customerEmail}</p>
+              <p><strong>Số điện thoại:</strong> {order.customerPhone}</p>
+              <p><strong>Email:</strong> {order.customerEmail || '-'}</p>
               <p><strong>Địa chỉ:</strong> {order.customerAddress}</p>
               <p><strong>Tạo lúc:</strong> {formatDateTime(order.createdAt)}</p>
               <p><strong>Tổng:</strong> {formatCurrency(order.totalAmount)}</p>

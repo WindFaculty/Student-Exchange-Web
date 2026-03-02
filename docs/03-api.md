@@ -1,6 +1,6 @@
 # API Spec - Student Exchange
 
-Updated: 2026-02-21
+Updated: 2026-03-02
 Base URL: `/api`
 
 ## Conventions
@@ -21,6 +21,7 @@ Base URL: `/api`
 - `POST /api/auth/register`
 - `POST /api/auth/logout`
 - `GET /api/auth/me`
+- `PUT /api/me/profile` (auth user)
 
 Register request:
 ```json
@@ -44,6 +45,35 @@ Register response:
     "role": "USER"
   }
 }
+```
+
+Update profile request:
+```json
+{
+  "fullName": "Student User",
+  "email": "student1@example.com",
+  "phone": "0901234567",
+  "address": "123 Le Loi, Thu Duc, Ho Chi Minh",
+  "addressLine": "123 Le Loi",
+  "provinceCode": "79",
+  "districtCode": "79001",
+  "wardCode": "79001001"
+}
+```
+
+`UserSession` now includes:
+- `address`, `addressLine`, `provinceCode`, `districtCode`, `wardCode`
+
+## Vietnam Locations
+- `GET /api/locations/vn/provinces?q=`
+- `GET /api/locations/vn/districts?provinceCode=&q=`
+- `GET /api/locations/vn/wards?districtCode=&q=`
+
+Option response:
+```json
+[
+  { "code": "79", "name": "Ho Chi Minh" }
+]
 ```
 
 ## Health
@@ -97,15 +127,18 @@ Legacy alias categories still accepted in `category` filter:
 ```json
 {
   "customerName": "Student User",
-  "customerEmail": "student1@example.com",
-  "customerAddress": "District 9, HCMC"
+  "customerAddress": "District 9, HCMC",
+  "customerPhone": "0901234567",
+  "customerEmail": "student1@example.com"
 }
 ```
 - `GET /api/orders/{orderCode}`
 - `GET /api/orders/track?orderCode=&email=`
+- `GET /api/me/orders?scope={ACCOUNT|EMAIL|BOTH}&page=&size=` (auth user)
+- `customerEmail` is optional in checkout payload.
 
 `Order` fields:
-- `id`, `orderCode`, `customerName`, `customerEmail`, `customerAddress`, `status`, `totalAmount`, `items[]`, `createdAt`
+- `id`, `orderCode`, `customerName`, `customerPhone`, `customerEmail`, `customerAddress`, `status`, `totalAmount`, `items[]`, `createdAt`
 
 ## Events
 - `GET /api/events?search=&page=&size=`
@@ -173,3 +206,7 @@ Requires admin session.
 - `POST /api/admin/iot/sample-projects`
 - `PUT /api/admin/iot/sample-projects/{id}`
 - `DELETE /api/admin/iot/sample-projects/{id}`
+
+### Vietnam Location Sync Admin
+- `GET /api/admin/locations/vn/sync-status`
+- `POST /api/admin/locations/vn/sync`

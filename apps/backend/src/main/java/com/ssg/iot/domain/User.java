@@ -34,6 +34,24 @@ public class User {
     @Column(nullable = false, unique = true, length = 160)
     private String email;
 
+    @Column(length = 40)
+    private String phone;
+
+    @Column(length = 500)
+    private String address;
+
+    @Column(name = "address_line", length = 500)
+    private String addressLine;
+
+    @Column(name = "province_code", length = 40)
+    private String provinceCode;
+
+    @Column(name = "district_code", length = 40)
+    private String districtCode;
+
+    @Column(name = "ward_code", length = 40)
+    private String wardCode;
+
     @Enumerated(EnumType.STRING)
     @JdbcTypeCode(SqlTypes.VARCHAR)
     @Column(nullable = false, length = 20)
@@ -41,6 +59,10 @@ public class User {
 
     @Column(nullable = false)
     private boolean active = true;
+
+    @Lob
+    @Column(columnDefinition = "LONGTEXT")
+    private String avatarUrl;
 
     @CreationTimestamp
     @Column(nullable = false, updatable = false)

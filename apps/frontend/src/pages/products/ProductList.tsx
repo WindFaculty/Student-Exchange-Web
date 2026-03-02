@@ -60,7 +60,6 @@ const ProductList: React.FC = () => {
     <div className="space-y-6">
       <PageHeader
         title="Cho trao doi sinh vien"
-        description="Khong mua truc tiep tren listing. Ban bam Lien he de chat P2P voi nguoi ban."
       />
 
       <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-card dark:border-slate-800 dark:bg-slate-900">

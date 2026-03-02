@@ -5,6 +5,7 @@ import { ChatConversationSummary, ChatMessage } from '../../types/models'
 import { useAuth } from '../../context/AuthContext'
 import { useChat } from '../../context/ChatContext'
 import { formatDateTime, mapApiError } from '../../lib/format'
+import { extractListingReference } from '../../lib/chatMessage'
 import { Button } from '../../components/ui/Button'
 import { Input } from '../../components/ui/Input'
 
@@ -257,6 +258,7 @@ const MessagesPage = () => {
           {!messagesLoading && messages.length === 0 ? <p className="text-sm text-slate-500">Chua co tin nhan nao.</p> : null}
           {messages.map((message) => {
             const mine = user?.id === message.senderId
+            const listingReference = extractListingReference(message.content)
             return (
               <div key={message.id} className={mine ? 'flex justify-end' : 'flex justify-start'}>
                 <div className={mine
@@ -265,6 +267,21 @@ const MessagesPage = () => {
                 >
                   {!mine ? <p className="mb-1 text-xs text-slate-500">{message.senderName}</p> : null}
                   <p className="whitespace-pre-wrap">{message.content}</p>
+                  {listingReference ? (
+                    <button
+                      type="button"
+                      onClick={() => navigate(`/products/${listingReference.listingId}`)}
+                      className={mine
+                        ? 'mt-2 w-full rounded-lg border border-white/30 bg-white/10 px-3 py-2 text-left transition hover:bg-white/20'
+                        : 'mt-2 w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-left transition hover:bg-slate-100 dark:border-slate-600 dark:bg-slate-700/60 dark:hover:bg-slate-700'}
+                    >
+                      <p className={mine ? 'text-xs text-white/80' : 'text-xs text-slate-500 dark:text-slate-300'}>San pham lien quan</p>
+                      <p className={mine ? 'text-sm font-semibold text-white' : 'text-sm font-semibold text-slate-900 dark:text-white'}>
+                        {listingReference.title || `Listing #${listingReference.listingId}`}
+                      </p>
+                      <p className={mine ? 'text-xs text-white/80' : 'text-xs text-primary'}>Nhan de xem chi tiet</p>
+                    </button>
+                  ) : null}
                   <p className={mine ? 'mt-1 text-right text-xs text-white/70' : 'mt-1 text-right text-xs text-slate-400'}>
                     {formatDateTime(message.createdAt)}
                   </p>

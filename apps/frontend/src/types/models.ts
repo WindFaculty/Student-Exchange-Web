@@ -5,7 +5,50 @@ export interface UserSession {
   username: string
   fullName: string
   email: string
+  phone?: string
+  address?: string
+  addressLine?: string
+  provinceCode?: string
+  districtCode?: string
+  wardCode?: string
   role: UserRole
+  avatarUrl?: string
+}
+
+export interface VnProvinceOption {
+  code: string
+  name: string
+}
+
+export interface VnDistrictOption {
+  code: string
+  name: string
+}
+
+export interface VnWardOption {
+  code: string
+  name: string
+}
+
+export interface VnAddressSyncStatus {
+  lastStatus: string
+  lastSource?: string
+  lastSyncedAt?: string
+  lastSuccessAt?: string
+  provinceCount: number
+  districtCount: number
+  wardCount: number
+  lastError?: string
+}
+
+export interface VnAddressSyncResult {
+  status: string
+  source?: string
+  message: string
+  syncedAt?: string
+  provinceCount: number
+  districtCount: number
+  wardCount: number
 }
 
 export interface PageResponse<T> {
@@ -207,6 +250,7 @@ export interface Cart {
 }
 
 export type OrderStatus = 'PENDING' | 'CONFIRMED' | 'PROCESSING' | 'SHIPPING' | 'DELIVERED' | 'CANCELLED'
+export type MyOrderScope = 'ACCOUNT' | 'EMAIL' | 'BOTH'
 
 export interface OrderItem {
   catalogItemId: number
@@ -224,6 +268,7 @@ export interface Order {
   customerName: string
   customerEmail: string
   customerAddress: string
+  customerPhone: string
   status: OrderStatus
   totalAmount: number
   items: OrderItem[]

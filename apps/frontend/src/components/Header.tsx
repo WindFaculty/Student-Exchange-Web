@@ -9,12 +9,12 @@ import Icon from './ui/Icon'
 import { cn } from '../lib/utils'
 
 const navItems = [
-  { to: '/products', label: 'Sáº£n pháº©m' },
-  { to: '/events', label: 'Sá»± kiá»‡n' },
-  { to: '/messages', label: 'Tin nhan' },
-  { to: '/listings', label: 'Sáº£n pháº©m cá»§a tÃ´i' },
+  { to: '/products', label: 'Sản phẩm' },
+  { to: '/events', label: 'Sự kiện' },
+  { to: '/messages', label: 'Tin nhắn' },
+  { to: '/listings', label: 'Sản phẩm của tôi' },
   { to: '/iot', label: 'IoT' },
-  { to: '/support', label: 'Há»— trá»£' },
+  { to: '/support', label: 'Hỗ trợ' },
 ]
 
 const Header: React.FC = () => {
@@ -65,8 +65,8 @@ const Header: React.FC = () => {
             size="icon"
             variant="ghost"
             onClick={toggleTheme}
-            aria-label="Äá»•i giao diá»‡n sÃ¡ng tá»‘i"
-            title={resolvedTheme === 'dark' ? 'Chuyá»ƒn sang sÃ¡ng' : 'Chuyá»ƒn sang tá»‘i'}
+            aria-label="Đổi giao diện sáng tối"
+            title={resolvedTheme === 'dark' ? 'Chuyển sang sáng' : 'Chuyển sang tối'}
           >
             <Icon name={resolvedTheme === 'dark' ? 'light_mode' : 'dark_mode'} />
           </Button>
@@ -81,17 +81,24 @@ const Header: React.FC = () => {
               {user?.role === 'ADMIN' && (
                 <Button size="sm" variant="secondary" onClick={() => navigate('/admin')}>
                   <Icon name="admin_panel_settings" className="text-[18px]" />
-                  Quáº£n trá»‹
+                  Quản trị
                 </Button>
               )}
-              <span className="hidden max-w-[140px] truncate text-sm text-slate-500 sm:inline">{user?.fullName}</span>
+              <button
+                type="button"
+                className="hidden max-w-[180px] truncate rounded px-2 py-1 text-sm text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white sm:inline"
+                onClick={() => navigate('/profile')}
+                title="Trang cá nhân"
+              >
+                {user?.fullName}
+              </button>
               <Button size="sm" variant="ghost" onClick={handleLogout}>
-                ÄÄƒng xuáº¥t
+                Đăng xuất
               </Button>
             </>
           ) : (
             <Button size="sm" onClick={() => navigate('/login')}>
-              ÄÄƒng nháº­p
+              Đăng nhập
             </Button>
           )}
 
@@ -122,6 +129,19 @@ const Header: React.FC = () => {
                 </span>
               </NavLink>
             ))}
+
+            {isAuthenticated ? (
+              <Button
+                variant="ghost"
+                className="justify-start rounded-lg px-3 py-2 text-sm font-medium text-slate-600 dark:text-slate-300"
+                onClick={() => {
+                  setMobileOpen(false)
+                  navigate('/profile')
+                }}
+              >
+                Trang cá nhân
+              </Button>
+            ) : null}
           </div>
         </nav>
       )}
