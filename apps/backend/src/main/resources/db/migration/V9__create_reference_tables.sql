@@ -4,8 +4,8 @@ CREATE TABLE ref_listing_categories (
     label_vi VARCHAR(255) NOT NULL,
     active BOOLEAN NOT NULL DEFAULT TRUE,
     sort_order INT NOT NULL DEFAULT 0,
-    created_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP
+    created_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+    updated_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6)
 );
 
 CREATE TABLE ref_iot_component_categories (
@@ -14,8 +14,8 @@ CREATE TABLE ref_iot_component_categories (
     label_vi VARCHAR(255) NOT NULL,
     active BOOLEAN NOT NULL DEFAULT TRUE,
     sort_order INT NOT NULL DEFAULT 0,
-    created_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP
+    created_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+    updated_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6)
 );
 
 CREATE TABLE ref_iot_sample_categories (
@@ -24,8 +24,8 @@ CREATE TABLE ref_iot_sample_categories (
     label_vi VARCHAR(255) NOT NULL,
     active BOOLEAN NOT NULL DEFAULT TRUE,
     sort_order INT NOT NULL DEFAULT 0,
-    created_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP
+    created_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+    updated_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6)
 );
 
 CREATE TABLE ref_order_statuses (
@@ -34,8 +34,8 @@ CREATE TABLE ref_order_statuses (
     label_vi VARCHAR(255) NOT NULL,
     active BOOLEAN NOT NULL DEFAULT TRUE,
     sort_order INT NOT NULL DEFAULT 0,
-    created_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP
+    created_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+    updated_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6)
 );
 
 CREATE TABLE ref_support_ticket_statuses (
@@ -44,8 +44,8 @@ CREATE TABLE ref_support_ticket_statuses (
     label_vi VARCHAR(255) NOT NULL,
     active BOOLEAN NOT NULL DEFAULT TRUE,
     sort_order INT NOT NULL DEFAULT 0,
-    created_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP
+    created_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+    updated_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6)
 );
 
 CREATE TABLE ref_event_registration_statuses (
@@ -54,8 +54,8 @@ CREATE TABLE ref_event_registration_statuses (
     label_vi VARCHAR(255) NOT NULL,
     active BOOLEAN NOT NULL DEFAULT TRUE,
     sort_order INT NOT NULL DEFAULT 0,
-    created_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP
+    created_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+    updated_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6)
 );
 
 INSERT INTO ref_listing_categories (code, label_vi, sort_order)
@@ -108,3 +108,4 @@ VALUES
     ('REGISTERED', 'Đã đăng ký', 10),
     ('CONFIRMED', 'Đã xác nhận', 20),
     ('CANCELLED', 'Đã hủy', 30);
+

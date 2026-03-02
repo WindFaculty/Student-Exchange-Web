@@ -17,6 +17,13 @@ spring.datasource.password=wind_faculty
 
 You can override these with environment variables: `DB_URL`, `DB_USERNAME`, `DB_PASSWORD`.
 
+If startup fails with `Access denied for user 'student_exchange_web'@'localhost'`, run from repo root:
+
+```powershell
+mysql -u root -p < create_user.sql
+.\test_db_connection.ps1
+```
+
 ## Run
 ```powershell
 .\mvnw.cmd spring-boot:run

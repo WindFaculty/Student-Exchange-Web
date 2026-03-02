@@ -1,4 +1,4 @@
-﻿-- ============================================================
+-- ============================================================
 -- V6: Separate IoT listings into dedicated tables
 --     iot_components  => Linh kien (components)
 --     iot_sample_products => San pham mau (sample products)
@@ -14,8 +14,8 @@ CREATE TABLE iot_components (
     stock       INT            NOT NULL DEFAULT 0,
     image_url   LONGTEXT,
     active      BOOLEAN            NOT NULL DEFAULT TRUE,
-    created_at  DATETIME(6)      NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at  DATETIME(6)      NOT NULL DEFAULT CURRENT_TIMESTAMP
+    created_at  DATETIME(6)      NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+    updated_at  DATETIME(6)      NOT NULL DEFAULT CURRENT_TIMESTAMP(6)
 );
 
 CREATE INDEX idx_iot_component_category ON iot_components(category);
@@ -30,8 +30,8 @@ CREATE TABLE iot_sample_products (
     stock       INT            NOT NULL DEFAULT 0,
     image_url   LONGTEXT,
     active      BOOLEAN            NOT NULL DEFAULT TRUE,
-    created_at  DATETIME(6)      NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at  DATETIME(6)      NOT NULL DEFAULT CURRENT_TIMESTAMP
+    created_at  DATETIME(6)      NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+    updated_at  DATETIME(6)      NOT NULL DEFAULT CURRENT_TIMESTAMP(6)
 );
 
 CREATE INDEX idx_iot_sample_active ON iot_sample_products(active);
@@ -92,4 +92,5 @@ SELECT 'IoT Project Starter Kit',
        'Starter kit for IoT student projects with sensors and board.',
        650000, 15, '/products/raspberry-pi-4.jpg', 1
 WHERE NOT EXISTS (SELECT 1 FROM iot_sample_products);
+
 

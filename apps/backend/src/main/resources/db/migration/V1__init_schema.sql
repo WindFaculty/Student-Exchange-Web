@@ -1,4 +1,4 @@
-﻿CREATE TABLE users (
+CREATE TABLE users (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(80) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
@@ -6,8 +6,8 @@
     email VARCHAR(160) NOT NULL UNIQUE,
     role VARCHAR(20) NOT NULL,
     active BOOLEAN NOT NULL DEFAULT TRUE,
-    created_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP
+    created_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+    updated_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6)
 );
 
 CREATE TABLE listings (
@@ -20,8 +20,8 @@ CREATE TABLE listings (
     image_url VARCHAR(500),
     active BOOLEAN NOT NULL DEFAULT TRUE,
     owner_id BIGINT NOT NULL,
-    created_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    created_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+    updated_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
     CONSTRAINT fk_listing_owner FOREIGN KEY (owner_id) REFERENCES users(id)
 );
 
@@ -34,8 +34,8 @@ CREATE TABLE orders (
     status VARCHAR(30) NOT NULL,
     total_amount DECIMAL(19,2) NOT NULL,
     user_id BIGINT NULL,
-    created_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    created_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+    updated_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
     CONSTRAINT fk_order_user FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
@@ -63,8 +63,8 @@ CREATE TABLE events (
     fee DECIMAL(19,2) NOT NULL DEFAULT 0,
     image_url VARCHAR(500),
     active BOOLEAN NOT NULL DEFAULT TRUE,
-    created_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP
+    created_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+    updated_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6)
 );
 
 CREATE TABLE event_registrations (
@@ -76,7 +76,7 @@ CREATE TABLE event_registrations (
     phone VARCHAR(40),
     note VARCHAR(1000),
     status VARCHAR(30) NOT NULL,
-    created_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    created_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
     CONSTRAINT fk_registration_event FOREIGN KEY (event_id) REFERENCES events(id),
     CONSTRAINT fk_registration_user FOREIGN KEY (user_id) REFERENCES users(id),
     CONSTRAINT uq_registration_event_email UNIQUE (event_id, email)
@@ -101,8 +101,8 @@ CREATE TABLE support_tickets (
     message VARCHAR(4000) NOT NULL,
     status VARCHAR(30) NOT NULL,
     admin_reply VARCHAR(4000),
-    created_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    created_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+    updated_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
     replied_at DATETIME(6) NULL
 );
 
@@ -135,4 +135,5 @@ VALUES
     ('ORDER', 'How can I track my order?', 'Use Track Order with your order code and email address.', 2, 1),
     ('EVENT', 'How do I register for an event?', 'Open event detail and submit registration form.', 3, 1),
     ('SUPPORT', 'How long does support take?', 'Most tickets are handled within 24 business hours.', 4, 1);
+
 

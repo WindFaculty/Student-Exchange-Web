@@ -29,7 +29,7 @@ public class IotPageContent {
     private String heroSubtitle;
 
     @Lob
-    @Column(name = "hero_image_url")
+    @Column(name = "hero_image_url", columnDefinition = "LONGTEXT")
     private String heroImageUrl;
 
     @Column(name = "primary_cta_label", nullable = false, length = 120)

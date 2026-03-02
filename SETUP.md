@@ -2,10 +2,10 @@
 
 ## Prerequisites
 
-### 1. Install Java 25
+### 1. Install Java 17+ (Java 21 LTS recommended)
 - Download from: https://adoptium.net/ (recommended) or https://www.oracle.com/java/technologies/downloads/
 - Install and set JAVA_HOME environment variable
-- Verify: `java -version` should show Java 25
+- Verify: `java -version`
 
 ### 2. Install Maven
 
@@ -29,18 +29,34 @@ scoop install maven
 
 ### 3. Verify Installation
 ```powershell
-java -version  # Should show Java 25
-mvn -version   # Should show Maven version
+java -version
+mvn -version
+node -v
+npm -v
 ```
 
 ### 4. Prepare MySQL 8.0
 - Ensure MySQL is running and reachable (default: `localhost:3306`)
-- Create database/user (or run `create_user.sql` with an admin account)
-- Set environment variables for backend:
+- Bootstrap database and app user from repo root with an admin account:
+
+```powershell
+# Option A: mysql client
+mysql -u root -p < create_user.sql
+
+# Option B: mysqlsh
+mysqlsh --uri root@localhost --sql -f create_user.sql
+```
+
+- Set environment variables for backend (default credentials from `create_user.sql`):
 ```powershell
 $env:DB_URL="jdbc:mysql://localhost:3306/student_exchange?useUnicode=true&characterEncoding=utf8&connectionCollation=utf8mb4_vi_0900_ai_ci&connectionTimeZone=UTC&useSSL=false&allowPublicKeyRetrieval=true"
 $env:DB_USERNAME="student_exchange_web"
-$env:DB_PASSWORD="<your-password>"
+$env:DB_PASSWORD="wind_faculty"
+```
+
+- Verify DB connectivity:
+```powershell
+.\test_db_connection.ps1
 ```
 
 ## Running the Project
@@ -81,5 +97,18 @@ If you prefer using an IDE:
 - Try: `refreshenv` (if using Chocolatey)
 
 ### Java version issues
-- Make sure JAVA_HOME points to Java 25
+- Make sure JAVA_HOME points to Java 17+
 - Check: `echo $env:JAVA_HOME` (PowerShell) or `echo %JAVA_HOME%` (CMD)
+
+### Access denied for `student_exchange_web`@`localhost`
+- Re-run bootstrap script with an admin account:
+```powershell
+mysql -u root -p < create_user.sql
+```
+- Re-run:
+```powershell
+.\test_db_connection.ps1
+```
+
+### mysql CLI not found
+- Install MySQL client tools, or use `mysqlsh` command shown above.

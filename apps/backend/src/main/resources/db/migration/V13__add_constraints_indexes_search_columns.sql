@@ -70,7 +70,7 @@ CREATE INDEX idx_catalog_items_search_title
 ON catalog_items(search_title_norm);
 
 CREATE INDEX idx_catalog_items_search_desc
-ON catalog_items(search_desc_norm);
+ON catalog_items(search_desc_norm(768));
 
 CREATE INDEX idx_orders_status_created
 ON orders(status_id, created_at DESC);

@@ -46,6 +46,7 @@ public class Event {
     private BigDecimal fee;
 
     @Lob
+    @Column(name = "image_url", columnDefinition = "LONGTEXT")
     private String imageUrl;
 
     @Column(nullable = false)

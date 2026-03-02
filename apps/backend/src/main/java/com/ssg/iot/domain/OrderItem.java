@@ -2,6 +2,8 @@ package com.ssg.iot.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 import java.math.BigDecimal;
 
@@ -27,6 +29,7 @@ public class OrderItem {
     private CatalogItem catalogItem;
 
     @Enumerated(EnumType.STRING)
+    @JdbcTypeCode(SqlTypes.VARCHAR)
     @Column(name = "source_type", nullable = false, length = 30)
     private CatalogSourceType sourceType;
 

@@ -1,4 +1,4 @@
-﻿CREATE TABLE catalog_items (
+CREATE TABLE catalog_items (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     source_type VARCHAR(30) NOT NULL,
     source_ref_id BIGINT NOT NULL,
@@ -11,7 +11,8 @@
     search_desc_norm VARCHAR(2000),
     active BOOLEAN NOT NULL DEFAULT TRUE,
     archived_at DATETIME(6) NULL,
-    created_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP
+    created_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+    updated_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6)
 );
+
 

@@ -74,6 +74,7 @@ public class IotSampleProduct {
     private int stock;
 
     @Lob
+    @Column(name = "image_url", columnDefinition = "LONGTEXT")
     private String imageUrl;
 
     @Column(nullable = false)

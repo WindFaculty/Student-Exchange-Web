@@ -34,6 +34,19 @@ Student Exchange full-stack platform built with Spring Boot + React + Tailwind.
 - `DB_USERNAME` default: `student_exchange_web`
 - `DB_PASSWORD` default: `wind_faculty`
 
+## Database Bootstrap (First Run / Access Denied)
+From repo root, create or reset DB user with an admin account:
+
+```powershell
+mysql -u root -p < create_user.sql
+```
+
+Then verify credentials:
+
+```powershell
+.\test_db_connection.ps1
+```
+
 ## Run Backend
 ```powershell
 cd apps/backend
