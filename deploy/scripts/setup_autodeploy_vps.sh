@@ -37,6 +37,28 @@ require_cmd systemctl
 require_cmd nginx
 require_cmd openssl
 
+run_as_deploy() {
+  if command -v sudo >/dev/null 2>&1; then
+    sudo -u deploy "$@"
+    return
+  fi
+
+  if command -v runuser >/dev/null 2>&1; then
+    runuser -u deploy -- "$@"
+    return
+  fi
+
+  if command -v su >/dev/null 2>&1; then
+    local quoted
+    quoted="$(printf "%q " "$@")"
+    su -s /bin/bash deploy -c "$quoted"
+    return
+  fi
+
+  echo "No sudo/runuser/su available to execute commands as deploy user." >&2
+  return 1
+}
+
 REPO_DIR="${REPO_DIR:-/opt/student-exchange/app}"
 REPO_FULL_NAME="${REPO_FULL_NAME:-WindFaculty/Student-Exchange-Web}"
 BRANCH="${BRANCH:-main}"
@@ -202,7 +224,7 @@ systemctl enable --now github-webhook-allowlist-update.timer
 systemctl restart student-exchange-webhook
 systemctl reload nginx
 
-sudo -u deploy "$DEPLOY_SCRIPT" || true
+run_as_deploy "$DEPLOY_SCRIPT" || true
 
 echo
 echo "Auto-deploy setup complete."
