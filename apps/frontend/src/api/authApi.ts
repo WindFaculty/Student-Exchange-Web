@@ -14,7 +14,6 @@ export interface UpdateProfilePayload {
   address?: string
   addressLine?: string
   provinceCode?: string
-  districtCode?: string
   wardCode?: string
 }
 

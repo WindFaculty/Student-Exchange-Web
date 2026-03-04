@@ -37,9 +37,6 @@ public class RefVnSyncState {
     @Column(name = "province_count", nullable = false)
     private int provinceCount;
 
-    @Column(name = "district_count", nullable = false)
-    private int districtCount;
-
     @Column(name = "ward_count", nullable = false)
     private int wardCount;
 

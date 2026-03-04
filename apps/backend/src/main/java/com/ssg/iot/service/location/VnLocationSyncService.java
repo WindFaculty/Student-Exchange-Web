@@ -2,13 +2,11 @@ package com.ssg.iot.service.location;
 
 import com.ssg.iot.common.BadRequestException;
 import com.ssg.iot.common.ConflictException;
-import com.ssg.iot.domain.RefVnDistrict;
 import com.ssg.iot.domain.RefVnProvince;
 import com.ssg.iot.domain.RefVnSyncState;
 import com.ssg.iot.domain.RefVnWard;
 import com.ssg.iot.dto.location.VnAddressSyncResultResponse;
 import com.ssg.iot.dto.location.VnAddressSyncStatusResponse;
-import com.ssg.iot.repository.RefVnDistrictRepository;
 import com.ssg.iot.repository.RefVnProvinceRepository;
 import com.ssg.iot.repository.RefVnSyncStateRepository;
 import com.ssg.iot.repository.RefVnWardRepository;
@@ -20,7 +18,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionTemplate;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.locks.ReentrantLock;
@@ -38,7 +35,6 @@ public class VnLocationSyncService {
     private static final int MAX_ERROR_LENGTH = 1800;
 
     private final RefVnProvinceRepository provinceRepository;
-    private final RefVnDistrictRepository districtRepository;
     private final RefVnWardRepository wardRepository;
     private final RefVnSyncStateRepository syncStateRepository;
     private final List<VnLocationSourceAdapter> sourceAdapters;
@@ -74,12 +70,6 @@ public class VnLocationSyncService {
                     continue;
                 }
 
-                String conformanceError = checkAfterMergeConformance(normalized);
-                if (conformanceError != null) {
-                    errors.add(adapter.sourceTag() + ": " + conformanceError);
-                    continue;
-                }
-
                 publishDataset(normalized, adapter.sourceTag(), syncStartedAt);
                 return VnAddressSyncResultResponse.builder()
                         .status(STATUS_SUCCESS)
@@ -87,7 +77,6 @@ public class VnLocationSyncService {
                         .message("Synced successfully")
                         .syncedAt(syncStartedAt)
                         .provinceCount(normalized.provinces().size())
-                        .districtCount(normalized.districts().size())
                         .wardCount(normalized.wards().size())
                         .build();
             }
@@ -107,7 +96,6 @@ public class VnLocationSyncService {
                 .lastSyncedAt(state.getLastSyncedAt())
                 .lastSuccessAt(state.getLastSuccessAt())
                 .provinceCount(state.getProvinceCount())
-                .districtCount(state.getDistrictCount())
                 .wardCount(state.getWardCount())
                 .lastError(state.getLastError())
                 .build();
@@ -119,7 +107,6 @@ public class VnLocationSyncService {
                         .id(SYNC_STATE_ID)
                         .lastStatus(STATUS_IDLE)
                         .provinceCount(0)
-                        .districtCount(0)
                         .wardCount(0)
                         .build()));
     }
@@ -143,7 +130,6 @@ public class VnLocationSyncService {
     private void publishDataset(VnLocationDataset dataset, String sourceTag, LocalDateTime syncedAt) {
         transactionTemplate.executeWithoutResult(status -> {
             wardRepository.deleteAllInBatch();
-            districtRepository.deleteAllInBatch();
             provinceRepository.deleteAllInBatch();
 
             List<RefVnProvince> provinces = dataset.provinces().stream()
@@ -159,24 +145,9 @@ public class VnLocationSyncService {
                     .toList();
             provinceRepository.saveAll(provinces);
 
-            List<RefVnDistrict> districts = dataset.districts().stream()
-                    .map(item -> RefVnDistrict.builder()
-                            .code(item.code())
-                            .provinceCode(item.provinceCode())
-                            .nameCurrent(item.nameCurrent())
-                            .nameOld(item.nameOld())
-                            .isMerged(item.isMerged())
-                            .effectiveDate(item.effectiveDate())
-                            .sourceTag(sourceTag)
-                            .active(true)
-                            .build())
-                    .toList();
-            districtRepository.saveAll(districts);
-
             List<RefVnWard> wards = dataset.wards().stream()
                     .map(item -> RefVnWard.builder()
                             .code(item.code())
-                            .districtCode(item.districtCode())
                             .provinceCode(item.provinceCode())
                             .nameCurrent(item.nameCurrent())
                             .nameOld(item.nameOld())
@@ -194,7 +165,6 @@ public class VnLocationSyncService {
             state.setLastSyncedAt(syncedAt);
             state.setLastSuccessAt(syncedAt);
             state.setProvinceCount(dataset.provinces().size());
-            state.setDistrictCount(dataset.districts().size());
             state.setWardCount(dataset.wards().size());
             state.setLastError(null);
             syncStateRepository.save(state);
@@ -218,36 +188,16 @@ public class VnLocationSyncService {
             ));
         }
 
-        Map<String, VnLocationDataset.DistrictRecord> districtsByCode = new LinkedHashMap<>();
-        for (VnLocationDataset.DistrictRecord item : dataset.districts()) {
+        Map<String, VnLocationDataset.WardRecord> wardsByCode = new LinkedHashMap<>();
+        for (VnLocationDataset.WardRecord item : dataset.wards()) {
             String code = normalize(item.code());
             String provinceCode = normalize(item.provinceCode());
             String nameCurrent = normalize(item.nameCurrent());
             if (code == null || provinceCode == null || nameCurrent == null) {
                 continue;
             }
-            districtsByCode.put(code, new VnLocationDataset.DistrictRecord(
-                    code,
-                    provinceCode,
-                    nameCurrent,
-                    normalize(item.nameOld()),
-                    item.isMerged(),
-                    item.effectiveDate()
-            ));
-        }
-
-        Map<String, VnLocationDataset.WardRecord> wardsByCode = new LinkedHashMap<>();
-        for (VnLocationDataset.WardRecord item : dataset.wards()) {
-            String code = normalize(item.code());
-            String districtCode = normalize(item.districtCode());
-            String provinceCode = normalize(item.provinceCode());
-            String nameCurrent = normalize(item.nameCurrent());
-            if (code == null || districtCode == null || provinceCode == null || nameCurrent == null) {
-                continue;
-            }
             wardsByCode.put(code, new VnLocationDataset.WardRecord(
                     code,
-                    districtCode,
                     provinceCode,
                     nameCurrent,
                     normalize(item.nameOld()),
@@ -258,7 +208,6 @@ public class VnLocationSyncService {
 
         return new VnLocationDataset(
                 new ArrayList<>(provincesByCode.values()),
-                new ArrayList<>(districtsByCode.values()),
                 new ArrayList<>(wardsByCode.values())
         );
     }
@@ -267,9 +216,6 @@ public class VnLocationSyncService {
         List<String> errors = new ArrayList<>();
         if (dataset.provinces().isEmpty()) {
             errors.add("province dataset is empty");
-        }
-        if (dataset.districts().isEmpty()) {
-            errors.add("district dataset is empty");
         }
         if (dataset.wards().isEmpty()) {
             errors.add("ward dataset is empty");
@@ -281,41 +227,12 @@ public class VnLocationSyncService {
         Set<String> provinceCodes = dataset.provinces().stream()
                 .map(VnLocationDataset.ProvinceRecord::code)
                 .collect(Collectors.toSet());
-        Map<String, String> districtToProvince = new HashMap<>();
-        for (VnLocationDataset.DistrictRecord district : dataset.districts()) {
-            if (!provinceCodes.contains(district.provinceCode())) {
-                errors.add("district " + district.code() + " references missing province " + district.provinceCode());
-            }
-            districtToProvince.put(district.code(), district.provinceCode());
-        }
         for (VnLocationDataset.WardRecord ward : dataset.wards()) {
-            String districtProvinceCode = districtToProvince.get(ward.districtCode());
-            if (districtProvinceCode == null) {
-                errors.add("ward " + ward.code() + " references missing district " + ward.districtCode());
-                continue;
-            }
-            if (!districtProvinceCode.equalsIgnoreCase(ward.provinceCode())) {
-                errors.add("ward " + ward.code() + " has mismatched province/district linkage");
+            if (!provinceCodes.contains(ward.provinceCode())) {
+                errors.add("ward " + ward.code() + " references missing province " + ward.provinceCode());
             }
         }
         return errors;
-    }
-
-    private String checkAfterMergeConformance(VnLocationDataset dataset) {
-        boolean hasMerged = dataset.provinces().stream().anyMatch(VnLocationDataset.ProvinceRecord::isMerged)
-                || dataset.districts().stream().anyMatch(VnLocationDataset.DistrictRecord::isMerged)
-                || dataset.wards().stream().anyMatch(VnLocationDataset.WardRecord::isMerged);
-        if (!hasMerged) {
-            return "missing merge metadata markers (is_merged=true)";
-        }
-
-        boolean mergedDateMissing = dataset.provinces().stream().anyMatch(item -> item.isMerged() && item.effectiveDate() == null)
-                || dataset.districts().stream().anyMatch(item -> item.isMerged() && item.effectiveDate() == null)
-                || dataset.wards().stream().anyMatch(item -> item.isMerged() && item.effectiveDate() == null);
-        if (mergedDateMissing) {
-            return "effective_date is required for merged administrative units";
-        }
-        return null;
     }
 
     private String joinErrors(List<String> errors) {

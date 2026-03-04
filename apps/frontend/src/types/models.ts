@@ -9,18 +9,12 @@ export interface UserSession {
   address?: string
   addressLine?: string
   provinceCode?: string
-  districtCode?: string
   wardCode?: string
   role: UserRole
   avatarUrl?: string
 }
 
 export interface VnProvinceOption {
-  code: string
-  name: string
-}
-
-export interface VnDistrictOption {
   code: string
   name: string
 }
@@ -36,7 +30,6 @@ export interface VnAddressSyncStatus {
   lastSyncedAt?: string
   lastSuccessAt?: string
   provinceCount: number
-  districtCount: number
   wardCount: number
   lastError?: string
 }
@@ -47,7 +40,6 @@ export interface VnAddressSyncResult {
   message: string
   syncedAt?: string
   provinceCount: number
-  districtCount: number
   wardCount: number
 }
 

@@ -2,7 +2,6 @@ package com.ssg.iot.service;
 
 import com.ssg.iot.common.BadRequestException;
 import com.ssg.iot.common.UnauthorizedException;
-import com.ssg.iot.domain.RefVnDistrict;
 import com.ssg.iot.domain.RefVnProvince;
 import com.ssg.iot.domain.RefVnWard;
 import com.ssg.iot.domain.User;
@@ -78,7 +77,6 @@ public class AuthService {
                 .address(user.getAddress())
                 .addressLine(user.getAddressLine())
                 .provinceCode(user.getProvinceCode())
-                .districtCode(user.getDistrictCode())
                 .wardCode(user.getWardCode())
                 .role(user.getRole())
                 .avatarUrl(user.getAvatarUrl())
@@ -173,34 +171,26 @@ public class AuthService {
         String normalizedLegacyAddress = normalizeOptional(request.getAddress());
         String normalizedAddressLine = normalizeOptional(request.getAddressLine());
         String normalizedProvinceCode = normalizeOptional(request.getProvinceCode());
-        String normalizedDistrictCode = normalizeOptional(request.getDistrictCode());
         String normalizedWardCode = normalizeOptional(request.getWardCode());
 
         boolean hasStructuredSelection = normalizedProvinceCode != null
-                || normalizedDistrictCode != null
                 || normalizedWardCode != null;
 
         if (hasStructuredSelection) {
-            if (normalizedProvinceCode == null || normalizedDistrictCode == null || normalizedWardCode == null) {
-                throw new BadRequestException("provinceCode, districtCode and wardCode must be provided together");
+            if (normalizedProvinceCode == null || normalizedWardCode == null) {
+                throw new BadRequestException("provinceCode and wardCode must be provided together");
             }
             RefVnProvince province = locationQueryService.getProvinceOrThrow(normalizedProvinceCode);
-            RefVnDistrict district = locationQueryService.getDistrictOrThrow(normalizedDistrictCode);
             RefVnWard ward = locationQueryService.getWardOrThrow(normalizedWardCode);
 
-            if (!district.getProvinceCode().equalsIgnoreCase(province.getCode())) {
-                throw new BadRequestException("districtCode does not belong to provinceCode");
-            }
-            if (!ward.getDistrictCode().equalsIgnoreCase(district.getCode())
-                    || !ward.getProvinceCode().equalsIgnoreCase(province.getCode())) {
-                throw new BadRequestException("wardCode does not belong to districtCode/provinceCode");
+            if (!ward.getProvinceCode().equalsIgnoreCase(province.getCode())) {
+                throw new BadRequestException("wardCode does not belong to provinceCode");
             }
 
             currentUser.setAddressLine(normalizedAddressLine);
             currentUser.setProvinceCode(province.getCode());
-            currentUser.setDistrictCode(district.getCode());
             currentUser.setWardCode(ward.getCode());
-            currentUser.setAddress(buildAddress(normalizedAddressLine, ward.getNameCurrent(), district.getNameCurrent(), province.getNameCurrent()));
+            currentUser.setAddress(buildAddress(normalizedAddressLine, ward.getNameCurrent(), province.getNameCurrent()));
             return;
         }
 
@@ -217,12 +207,11 @@ public class AuthService {
     private void clearStructuredAddress(User currentUser) {
         currentUser.setAddressLine(null);
         currentUser.setProvinceCode(null);
-        currentUser.setDistrictCode(null);
         currentUser.setWardCode(null);
     }
 
-    private String buildAddress(String addressLine, String wardName, String districtName, String provinceName) {
-        return java.util.stream.Stream.of(addressLine, wardName, districtName, provinceName)
+    private String buildAddress(String addressLine, String wardName, String provinceName) {
+        return java.util.stream.Stream.of(addressLine, wardName, provinceName)
                 .filter(value -> value != null && !value.isBlank())
                 .collect(java.util.stream.Collectors.joining(", "));
     }

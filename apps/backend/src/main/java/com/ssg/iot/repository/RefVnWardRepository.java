@@ -15,11 +15,11 @@ public interface RefVnWardRepository extends JpaRepository<RefVnWard, Long> {
             SELECT w
             FROM RefVnWard w
             WHERE w.active = true
-              AND LOWER(w.districtCode) = LOWER(:districtCode)
+              AND LOWER(w.provinceCode) = LOWER(:provinceCode)
               AND (:q IS NULL
                    OR LOWER(w.nameCurrent) LIKE LOWER(CONCAT('%', :q, '%'))
                    OR LOWER(COALESCE(w.nameOld, '')) LIKE LOWER(CONCAT('%', :q, '%')))
             ORDER BY w.nameCurrent ASC
             """)
-    List<RefVnWard> searchActiveByDistrictCode(@Param("districtCode") String districtCode, @Param("q") String q);
+    List<RefVnWard> searchActiveByProvinceCode(@Param("provinceCode") String provinceCode, @Param("q") String q);
 }

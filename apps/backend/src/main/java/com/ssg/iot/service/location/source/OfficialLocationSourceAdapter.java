@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -20,6 +21,7 @@ import java.util.List;
 @Component
 @Order(10)
 @RequiredArgsConstructor
+@ConditionalOnProperty(value = "vn.location.enable-remote-sources", havingValue = "true")
 public class OfficialLocationSourceAdapter implements VnLocationSourceAdapter {
 
     private final ObjectMapper objectMapper;
@@ -61,7 +63,6 @@ public class OfficialLocationSourceAdapter implements VnLocationSourceAdapter {
             }
 
             List<VnLocationDataset.ProvinceRecord> provinces = new ArrayList<>();
-            List<VnLocationDataset.DistrictRecord> districts = new ArrayList<>();
             List<VnLocationDataset.WardRecord> wards = new ArrayList<>();
 
             for (JsonNode provinceNode : provinceNodes) {
@@ -95,15 +96,6 @@ public class OfficialLocationSourceAdapter implements VnLocationSourceAdapter {
                     LocalDate districtDate = VnLocationSourceUtils.firstDate(districtNode, "effective_date");
                     boolean districtMerged = VnLocationSourceUtils.firstBoolean(districtNode, false, "is_merged");
 
-                    districts.add(new VnLocationDataset.DistrictRecord(
-                            districtCode,
-                            provinceCode,
-                            districtName,
-                            VnLocationSourceUtils.firstText(districtNode, "name_old"),
-                            districtMerged,
-                            districtDate
-                    ));
-
                     JsonNode wardNodes = VnLocationSourceUtils.firstArray(districtNode, "wards");
                     if (wardNodes == null) {
                         continue;
@@ -119,7 +111,6 @@ public class OfficialLocationSourceAdapter implements VnLocationSourceAdapter {
 
                         wards.add(new VnLocationDataset.WardRecord(
                                 wardCode,
-                                districtCode,
                                 provinceCode,
                                 wardName,
                                 VnLocationSourceUtils.firstText(wardNode, "name_old"),
@@ -130,7 +121,7 @@ public class OfficialLocationSourceAdapter implements VnLocationSourceAdapter {
                 }
             }
 
-            return VnLocationSourceLoadResult.success(sourceTag(), new VnLocationDataset(provinces, districts, wards));
+            return VnLocationSourceLoadResult.success(sourceTag(), new VnLocationDataset(provinces, wards));
         } catch (Exception ex) {
             return VnLocationSourceLoadResult.failure(sourceTag(), "Official source error: " + ex.getMessage());
         }

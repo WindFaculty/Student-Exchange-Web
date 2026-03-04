@@ -19,7 +19,6 @@ const CheckoutPage: React.FC = () => {
   const [addressValue, setAddressValue] = useState<AddressPickerValue>({
     addressLine: '',
     provinceCode: '',
-    districtCode: '',
     wardCode: '',
   })
   const [resolvedAddress, setResolvedAddress] = useState('')
@@ -34,7 +33,6 @@ const CheckoutPage: React.FC = () => {
     setAddressValue((prev) => ({
       addressLine: prev.addressLine || user.addressLine || user.address || '',
       provinceCode: prev.provinceCode || user.provinceCode || '',
-      districtCode: prev.districtCode || user.districtCode || '',
       wardCode: prev.wardCode || user.wardCode || '',
     }))
     setResolvedAddress((prev) => prev || user.address || '')
@@ -57,7 +55,6 @@ const CheckoutPage: React.FC = () => {
     const normalizedEmail = customerEmail.trim()
     const normalizedAddressLine = addressValue.addressLine.trim()
     const normalizedProvinceCode = addressValue.provinceCode.trim()
-    const normalizedDistrictCode = addressValue.districtCode.trim()
     const normalizedWardCode = addressValue.wardCode.trim()
     const normalizedAddress = resolvedAddress.trim()
 
@@ -65,8 +62,8 @@ const CheckoutPage: React.FC = () => {
       setError('Vui long nhap day du ho ten va so dien thoai')
       return
     }
-    if (!normalizedAddressLine || !normalizedProvinceCode || !normalizedDistrictCode || !normalizedWardCode) {
-      setError('Vui long nhap so nha/duong va chon day du tinh-thanh, quan-huyen, xa-phuong')
+    if (!normalizedAddressLine || !normalizedProvinceCode || !normalizedWardCode) {
+      setError('Vui long nhap so nha/duong va chon day du tinh-thanh, xa-phuong')
       return
     }
     if (!normalizedAddress) {

@@ -74,7 +74,7 @@ const AdminDashboardPage = () => {
       const result = await locationApi.triggerSync()
       const status = await locationApi.getSyncStatus()
       setSyncStatus(status)
-      setSyncFeedback(`Dong bo thanh cong (${result.provinceCount} tinh, ${result.districtCount} huyen, ${result.wardCount} xa/phuong)`)
+      setSyncFeedback(`Dong bo thanh cong (${result.provinceCount} tinh, ${result.wardCount} xa/phuong)`)
     } catch (err: unknown) {
       setSyncFeedback(mapApiError(err, 'Dong bo that bai'))
     } finally {
@@ -181,7 +181,7 @@ const AdminDashboardPage = () => {
               <p><strong>Thanh cong gan nhat:</strong> {formatSyncTime(syncStatus?.lastSuccessAt)}</p>
               <p>
                 <strong>So luong:</strong>{' '}
-                {syncStatus ? `${syncStatus.provinceCount} tinh, ${syncStatus.districtCount} huyen, ${syncStatus.wardCount} xa/phuong` : '-'}
+                {syncStatus ? `${syncStatus.provinceCount} tinh, ${syncStatus.wardCount} xa/phuong` : '-'}
               </p>
             </div>
 

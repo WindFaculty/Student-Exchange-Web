@@ -13,6 +13,5 @@ public class VnAddressSyncResultResponse {
     private String message;
     private LocalDateTime syncedAt;
     private int provinceCount;
-    private int districtCount;
     private int wardCount;
 }

@@ -2,7 +2,6 @@ import { fetchJson } from './http'
 import {
   VnAddressSyncResult,
   VnAddressSyncStatus,
-  VnDistrictOption,
   VnProvinceOption,
   VnWardOption,
 } from '../types/models'
@@ -22,13 +21,8 @@ export const locationApi = {
     return fetchJson<VnProvinceOption[]>(`/api/locations/vn/provinces${suffix}`)
   },
 
-  getDistricts(provinceCode: string, q?: string) {
+  getWards(provinceCode: string, q?: string) {
     const query = buildQueryString({ provinceCode, q: q?.trim() || undefined })
-    return fetchJson<VnDistrictOption[]>(`/api/locations/vn/districts?${query}`)
-  },
-
-  getWards(districtCode: string, q?: string) {
-    const query = buildQueryString({ districtCode, q: q?.trim() || undefined })
     return fetchJson<VnWardOption[]>(`/api/locations/vn/wards?${query}`)
   },
 
@@ -46,10 +40,9 @@ export const locationApi = {
 export function buildFullVnAddress(
   addressLine: string,
   wardName?: string,
-  districtName?: string,
   provinceName?: string,
 ) {
-  return [addressLine, wardName, districtName, provinceName]
+  return [addressLine, wardName, provinceName]
     .map((item) => item?.trim() || '')
     .filter(Boolean)
     .join(', ')

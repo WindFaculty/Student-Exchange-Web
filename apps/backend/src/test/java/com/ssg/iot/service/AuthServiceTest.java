@@ -1,14 +1,12 @@
 package com.ssg.iot.service;
 
 import com.ssg.iot.common.BadRequestException;
-import com.ssg.iot.domain.RefVnDistrict;
 import com.ssg.iot.domain.RefVnProvince;
 import com.ssg.iot.domain.RefVnWard;
 import com.ssg.iot.domain.User;
 import com.ssg.iot.domain.UserRole;
 import com.ssg.iot.dto.auth.UpdateProfileRequest;
 import com.ssg.iot.dto.auth.UserSessionResponse;
-import com.ssg.iot.repository.RefVnDistrictRepository;
 import com.ssg.iot.repository.RefVnProvinceRepository;
 import com.ssg.iot.repository.RefVnWardRepository;
 import com.ssg.iot.repository.UserRepository;
@@ -35,9 +33,6 @@ class AuthServiceTest {
     private RefVnProvinceRepository provinceRepository;
 
     @Mock
-    private RefVnDistrictRepository districtRepository;
-
-    @Mock
     private RefVnWardRepository wardRepository;
 
     private VnLocationQueryService locationQueryService;
@@ -45,7 +40,7 @@ class AuthServiceTest {
 
     @BeforeEach
     void setUp() {
-        locationQueryService = new VnLocationQueryService(provinceRepository, districtRepository, wardRepository);
+        locationQueryService = new VnLocationQueryService(provinceRepository, wardRepository);
         authService = new AuthService(userRepository, locationQueryService);
     }
 
@@ -118,7 +113,6 @@ class AuthServiceTest {
         request.setEmail("student1@example.com");
         request.setAddressLine("123 Le Loi");
         request.setProvinceCode("79");
-        request.setDistrictCode("79001");
         request.setWardCode("79001001");
 
         when(userRepository.existsByEmailIgnoreCaseAndIdNot("student1@example.com", 10L)).thenReturn(false);
@@ -127,15 +121,8 @@ class AuthServiceTest {
                 .nameCurrent("Ho Chi Minh")
                 .active(true)
                 .build()));
-        when(districtRepository.findByCodeIgnoreCaseAndActiveTrue("79001")).thenReturn(java.util.Optional.of(RefVnDistrict.builder()
-                .code("79001")
-                .provinceCode("79")
-                .nameCurrent("Thu Duc")
-                .active(true)
-                .build()));
         when(wardRepository.findByCodeIgnoreCaseAndActiveTrue("79001001")).thenReturn(java.util.Optional.of(RefVnWard.builder()
                 .code("79001001")
-                .districtCode("79001")
                 .provinceCode("79")
                 .nameCurrent("Linh Tay")
                 .active(true)
@@ -145,19 +132,17 @@ class AuthServiceTest {
         UserSessionResponse response = authService.updateProfile(currentUser, request);
 
         assertEquals("79", currentUser.getProvinceCode());
-        assertEquals("79001", currentUser.getDistrictCode());
         assertEquals("79001001", currentUser.getWardCode());
         assertEquals("123 Le Loi", currentUser.getAddressLine());
-        assertEquals("123 Le Loi, Linh Tay, Thu Duc, Ho Chi Minh", currentUser.getAddress());
+        assertEquals("123 Le Loi, Linh Tay, Ho Chi Minh", currentUser.getAddress());
         assertEquals("123 Le Loi", response.getAddressLine());
         assertEquals("79", response.getProvinceCode());
-        assertEquals("79001", response.getDistrictCode());
         assertEquals("79001001", response.getWardCode());
-        assertEquals("123 Le Loi, Linh Tay, Thu Duc, Ho Chi Minh", response.getAddress());
+        assertEquals("123 Le Loi, Linh Tay, Ho Chi Minh", response.getAddress());
     }
 
     @Test
-    void updateProfileRejectsDistrictNotBelongingToProvince() {
+    void updateProfileRejectsWardNotBelongingToProvince() {
         User currentUser = User.builder()
                 .id(10L)
                 .username("student1")
@@ -172,7 +157,6 @@ class AuthServiceTest {
         request.setEmail("student1@example.com");
         request.setAddressLine("123 Le Loi");
         request.setProvinceCode("79");
-        request.setDistrictCode("48001");
         request.setWardCode("48001001");
 
         when(userRepository.existsByEmailIgnoreCaseAndIdNot("student1@example.com", 10L)).thenReturn(false);
@@ -181,15 +165,8 @@ class AuthServiceTest {
                 .nameCurrent("Ho Chi Minh")
                 .active(true)
                 .build()));
-        when(districtRepository.findByCodeIgnoreCaseAndActiveTrue("48001")).thenReturn(java.util.Optional.of(RefVnDistrict.builder()
-                .code("48001")
-                .provinceCode("48")
-                .nameCurrent("District 48")
-                .active(true)
-                .build()));
         when(wardRepository.findByCodeIgnoreCaseAndActiveTrue("48001001")).thenReturn(java.util.Optional.of(RefVnWard.builder()
                 .code("48001001")
-                .districtCode("48001")
                 .provinceCode("48")
                 .nameCurrent("Ward 48")
                 .active(true)

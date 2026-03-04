@@ -1,23 +1,21 @@
-# Vietnam Administrative Data (CSV)
+﻿# Vietnam Administrative Data (Post-2025)
 
-This directory contains the local curated Vietnam administrative dataset used by the project.
+This directory stores the local curated Vietnam administrative dataset used by the project after the two-tier cutover.
 
-## Included files
+## Active dataset
+- `data_csv_post_2025/provinces.csv`
+- `data_csv_post_2025/wards.csv`
 
-- `data_csv/provinces.csv`
-- `data_csv/districts.csv`
-- `data_csv/wards.csv`
-- `data_csv/villages.csv`
+## Policy model
+- Effective date: `2025-07-01`
+- Total province/city units: `34`
+- District level: removed
 
-## Data source and sync info
+## Sync notes
+- Runtime uses only `data_csv_post_2025/`.
+- Backend mirror path: `apps/backend/Vietnam_Admin_After_Merge/data_csv_post_2025/`.
+- Deprecated `data_csv/` (legacy 3-level) has been removed from the repo.
 
-- Last synced: `2026-03-03`
-- Source (districts + wards): `https://raw.githubusercontent.com/VietThan/DanhMucHanhChinh/master/districts.json`
-- Source (districts + wards): `https://raw.githubusercontent.com/VietThan/DanhMucHanhChinh/master/wards.json`
-- Cross-check reference: `https://provinces.open-api.vn/api/?depth=3`
-
-## Notes
-
-- CSV files are encoded as UTF-8 (without BOM).
-- `districts.csv` and `wards.csv` are aligned and synchronized with `apps/backend/Vietnam_Admin_After_Merge/data_csv`.
-- Some island districts do not have commune-level rows in source data (for example: Côn Đảo, Hoàng Sa, Bạch Long Vĩ, Lý Sơn, Cồn Cỏ).
+## Primary sources
+- `https://xaydungchinhsach.chinhphu.vn/chinh-thuc-danh-sach-34-don-vi-hanh-chinh-cap-tinh-cua-viet-nam-sau-sap-nhap-119250630225730658.htm`
+- `https://xaydungchinhsach.chinhphu.vn/toan-van-danh-sach-3212-don-vi-hanh-chinh-cap-xa-cua-34-tinh-thanh-sau-sap-nhap-119250701204530324.htm`

@@ -46,9 +46,6 @@ public class User {
     @Column(name = "province_code", length = 40)
     private String provinceCode;
 
-    @Column(name = "district_code", length = 40)
-    private String districtCode;
-
     @Column(name = "ward_code", length = 40)
     private String wardCode;
 

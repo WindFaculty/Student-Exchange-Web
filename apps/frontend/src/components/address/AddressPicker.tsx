@@ -1,18 +1,16 @@
-import { useEffect, useMemo, useState } from 'react'
+﻿import { useEffect, useMemo, useState } from 'react'
 import { buildFullVnAddress, locationApi } from '../../api/locationApi'
 import { mapApiError } from '../../lib/format'
-import { VnDistrictOption, VnProvinceOption, VnWardOption } from '../../types/models'
+import { VnProvinceOption, VnWardOption } from '../../types/models'
 
 export interface AddressPickerValue {
   addressLine: string
   provinceCode: string
-  districtCode: string
   wardCode: string
 }
 
 export interface AddressPickerResolved {
   provinceName: string
-  districtName: string
   wardName: string
   fullAddress: string
 }
@@ -91,32 +89,25 @@ const AddressPicker = ({
   disabled = false,
 }: AddressPickerProps) => {
   const [provinceInput, setProvinceInput] = useState('')
-  const [districtInput, setDistrictInput] = useState('')
   const [wardInput, setWardInput] = useState('')
 
   const [provinceQuery, setProvinceQuery] = useState('')
-  const [districtQuery, setDistrictQuery] = useState('')
   const [wardQuery, setWardQuery] = useState('')
 
   const [provinceOpen, setProvinceOpen] = useState(false)
-  const [districtOpen, setDistrictOpen] = useState(false)
   const [wardOpen, setWardOpen] = useState(false)
 
   const [provinces, setProvinces] = useState<VnProvinceOption[]>([])
-  const [districts, setDistricts] = useState<VnDistrictOption[]>([])
   const [wards, setWards] = useState<VnWardOption[]>([])
 
   const [provinceNameMap, setProvinceNameMap] = useState<Record<string, string>>({})
-  const [districtNameMap, setDistrictNameMap] = useState<Record<string, string>>({})
   const [wardNameMap, setWardNameMap] = useState<Record<string, string>>({})
 
   const [error, setError] = useState('')
   const debouncedProvinceQuery = useDebouncedValue(provinceQuery)
-  const debouncedDistrictQuery = useDebouncedValue(districtQuery)
   const debouncedWardQuery = useDebouncedValue(wardQuery)
 
   const selectedProvinceName = value.provinceCode ? (provinceNameMap[value.provinceCode] ?? '') : ''
-  const selectedDistrictName = value.districtCode ? (districtNameMap[value.districtCode] ?? '') : ''
   const selectedWardName = value.wardCode ? (wardNameMap[value.wardCode] ?? '') : ''
 
   useEffect(() => {
@@ -125,13 +116,6 @@ const AddressPicker = ({
       setProvinceQuery('')
     }
   }, [provinceOpen, selectedProvinceName])
-
-  useEffect(() => {
-    if (!districtOpen) {
-      setDistrictInput(selectedDistrictName)
-      setDistrictQuery('')
-    }
-  }, [districtOpen, selectedDistrictName])
 
   useEffect(() => {
     if (!wardOpen) {
@@ -164,35 +148,6 @@ const AddressPicker = ({
 
   useEffect(() => {
     if (!value.provinceCode) {
-      setDistricts([])
-      setDistrictOpen(false)
-      setDistrictInput('')
-      setDistrictQuery('')
-      return
-    }
-    let mounted = true
-    const run = async () => {
-      try {
-        const data = await locationApi.getDistricts(value.provinceCode, debouncedDistrictQuery)
-        if (!mounted) return
-        setDistricts(data)
-        setDistrictNameMap((prev) => {
-          const next = { ...prev }
-          data.forEach((item) => { next[item.code] = item.name })
-          return next
-        })
-        setError('')
-      } catch (err: unknown) {
-        if (!mounted) return
-        setError(mapApiError(err, 'Khong the tai danh sach quan/huyen'))
-      }
-    }
-    run()
-    return () => { mounted = false }
-  }, [value.provinceCode, debouncedDistrictQuery])
-
-  useEffect(() => {
-    if (!value.districtCode) {
       setWards([])
       setWardOpen(false)
       setWardInput('')
@@ -202,7 +157,7 @@ const AddressPicker = ({
     let mounted = true
     const run = async () => {
       try {
-        const data = await locationApi.getWards(value.districtCode, debouncedWardQuery)
+        const data = await locationApi.getWards(value.provinceCode, debouncedWardQuery)
         if (!mounted) return
         setWards(data)
         setWardNameMap((prev) => {
@@ -218,15 +173,11 @@ const AddressPicker = ({
     }
     run()
     return () => { mounted = false }
-  }, [value.districtCode, debouncedWardQuery])
+  }, [value.provinceCode, debouncedWardQuery])
 
   const prioritizedProvinces = useMemo(
     () => prioritizeOptions(provinces, provinceQuery),
     [provinces, provinceQuery],
-  )
-  const prioritizedDistricts = useMemo(
-    () => prioritizeOptions(districts, districtQuery),
-    [districts, districtQuery],
   )
   const prioritizedWards = useMemo(
     () => prioritizeOptions(wards, wardQuery),
@@ -235,15 +186,13 @@ const AddressPicker = ({
 
   const resolved = useMemo<AddressPickerResolved>(() => {
     const provinceName = provinceNameMap[value.provinceCode] || ''
-    const districtName = districtNameMap[value.districtCode] || ''
     const wardName = wardNameMap[value.wardCode] || ''
     return {
       provinceName,
-      districtName,
       wardName,
-      fullAddress: buildFullVnAddress(value.addressLine, wardName, districtName, provinceName),
+      fullAddress: buildFullVnAddress(value.addressLine, wardName, provinceName),
     }
-  }, [value.addressLine, value.provinceCode, value.districtCode, value.wardCode, provinceNameMap, districtNameMap, wardNameMap])
+  }, [value.addressLine, value.provinceCode, value.wardCode, provinceNameMap, wardNameMap])
 
   useEffect(() => {
     onResolvedChange?.(resolved)
@@ -253,25 +202,9 @@ const AddressPicker = ({
     onChange({
       ...value,
       provinceCode,
-      districtCode: '',
       wardCode: '',
     })
     setProvinceOpen(false)
-    setDistrictOpen(false)
-    setWardOpen(false)
-    setDistrictInput('')
-    setWardInput('')
-    setDistrictQuery('')
-    setWardQuery('')
-  }
-
-  const handleDistrictChange = (districtCode: string) => {
-    onChange({
-      ...value,
-      districtCode,
-      wardCode: '',
-    })
-    setDistrictOpen(false)
     setWardOpen(false)
     setWardInput('')
     setWardQuery('')
@@ -281,12 +214,6 @@ const AddressPicker = ({
     setProvinceOpen(false)
     setProvinceInput(selectedProvinceName)
     setProvinceQuery('')
-  }
-
-  const closeDistrictCombobox = () => {
-    setDistrictOpen(false)
-    setDistrictInput(selectedDistrictName)
-    setDistrictQuery('')
   }
 
   const closeWardCombobox = () => {
@@ -309,7 +236,7 @@ const AddressPicker = ({
         />
       </div>
 
-      <div className="grid gap-3 md:grid-cols-3">
+      <div className="grid gap-3 md:grid-cols-2">
         <div className="space-y-2">
           <label className={labelClassName}>Tinh / Thanh pho{requiredSelection ? ' *' : ''}</label>
           <div className="relative">
@@ -362,9 +289,9 @@ const AddressPicker = ({
                       onMouseDown={(event) => event.preventDefault()}
                       onClick={() => {
                         setProvinceInput('')
-                        setDistrictInput('')
                         setWardInput('')
-                        onChange({ ...value, provinceCode: '', districtCode: '', wardCode: '' })
+                        setWardQuery('')
+                        onChange({ ...value, provinceCode: '', wardCode: '' })
                         setProvinceOpen(false)
                       }}
                     >
@@ -395,98 +322,6 @@ const AddressPicker = ({
                       }}
                     >
                       {province.name}
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            ) : null}
-          </div>
-        </div>
-
-        <div className="space-y-2">
-          <label className={labelClassName}>Quan / Huyen{requiredSelection ? ' *' : ''}</label>
-          <div className="relative">
-            <input
-              className={`${fieldClassName} pr-8`}
-              value={districtInput}
-              onFocus={() => setDistrictOpen(true)}
-              onBlur={closeDistrictCombobox}
-              onKeyDown={(event) => {
-                if (event.key === 'Escape') {
-                  event.preventDefault()
-                  closeDistrictCombobox()
-                  return
-                }
-                if (event.key === 'ArrowDown') {
-                  event.preventDefault()
-                  setDistrictOpen(true)
-                  return
-                }
-                if (event.key === 'Enter' && districtOpen && prioritizedDistricts.length > 0) {
-                  event.preventDefault()
-                  const firstOption = prioritizedDistricts[0]
-                  setDistrictNameMap((prev) => ({ ...prev, [firstOption.code]: firstOption.name }))
-                  setDistrictInput(firstOption.name)
-                  handleDistrictChange(firstOption.code)
-                }
-              }}
-              onChange={(event) => {
-                const nextValue = event.target.value
-                setDistrictInput(nextValue)
-                setDistrictQuery(nextValue)
-                setDistrictOpen(true)
-              }}
-              placeholder="Nhap de tim quan/huyen"
-              disabled={disabled || !value.provinceCode}
-              aria-required={requiredSelection}
-              autoComplete="off"
-            />
-            <span className="pointer-events-none absolute inset-y-0 right-3 flex items-center text-xs text-slate-400">
-              v
-            </span>
-            {districtOpen && !disabled && value.provinceCode ? (
-              <ul className={dropdownClass}>
-                {value.districtCode ? (
-                  <li>
-                    <button
-                      type="button"
-                      tabIndex={-1}
-                      className={`${dropdownOptionClass} text-slate-500 italic dark:text-slate-400`}
-                      onMouseDown={(event) => event.preventDefault()}
-                      onClick={() => {
-                        setDistrictInput('')
-                        setWardInput('')
-                        onChange({ ...value, districtCode: '', wardCode: '' })
-                        setDistrictOpen(false)
-                      }}
-                    >
-                      Bo chon quan/huyen
-                    </button>
-                  </li>
-                ) : null}
-                {prioritizedDistricts.length === 0 ? (
-                  <li className="px-3 py-2 text-sm text-slate-500 dark:text-slate-400">
-                    Khong tim thay quan/huyen phu hop
-                  </li>
-                ) : prioritizedDistricts.map((district) => (
-                  <li key={district.code}>
-                    <button
-                      type="button"
-                      tabIndex={-1}
-                      className={[
-                        dropdownOptionClass,
-                        district.code === value.districtCode
-                          ? 'bg-primary/10 text-primary dark:bg-cyan-500/15 dark:text-cyan-300'
-                          : '',
-                      ].join(' ')}
-                      onMouseDown={(event) => event.preventDefault()}
-                      onClick={() => {
-                        setDistrictNameMap((prev) => ({ ...prev, [district.code]: district.name }))
-                        setDistrictInput(district.name)
-                        handleDistrictChange(district.code)
-                      }}
-                    >
-                      {district.name}
                     </button>
                   </li>
                 ))}
@@ -530,14 +365,14 @@ const AddressPicker = ({
                 setWardOpen(true)
               }}
               placeholder="Nhap de tim xa/phuong"
-              disabled={disabled || !value.districtCode}
+              disabled={disabled || !value.provinceCode}
               aria-required={requiredSelection}
               autoComplete="off"
             />
             <span className="pointer-events-none absolute inset-y-0 right-3 flex items-center text-xs text-slate-400">
               v
             </span>
-            {wardOpen && !disabled && value.districtCode ? (
+            {wardOpen && !disabled && value.provinceCode ? (
               <ul className={dropdownClass}>
                 {value.wardCode ? (
                   <li>

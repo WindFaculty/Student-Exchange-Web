@@ -134,7 +134,6 @@ const ProfilePage = () => {
   const [addressValue, setAddressValue] = useState<AddressPickerValue>({
     addressLine: '',
     provinceCode: '',
-    districtCode: '',
     wardCode: '',
   })
   const [addressPreview, setAddressPreview] = useState('')
@@ -179,7 +178,6 @@ const ProfilePage = () => {
     setAddressValue({
       addressLine: user.addressLine ?? user.address ?? '',
       provinceCode: user.provinceCode ?? '',
-      districtCode: user.districtCode ?? '',
       wardCode: user.wardCode ?? '',
     })
     setAddressPreview(user.address ?? '')
@@ -225,11 +223,10 @@ const ProfilePage = () => {
 
     const normalizedAddressLine = addressValue.addressLine.trim()
     const normalizedProvinceCode = addressValue.provinceCode.trim()
-    const normalizedDistrictCode = addressValue.districtCode.trim()
     const normalizedWardCode = addressValue.wardCode.trim()
-    const hasStructuredSelection = !!(normalizedProvinceCode || normalizedDistrictCode || normalizedWardCode)
-    if (hasStructuredSelection && (!normalizedProvinceCode || !normalizedDistrictCode || !normalizedWardCode)) {
-      setProfileError('Vui long chon day du tinh/thanh, quan/huyen va xa/phuong')
+    const hasStructuredSelection = !!(normalizedProvinceCode || normalizedWardCode)
+    if (hasStructuredSelection && (!normalizedProvinceCode || !normalizedWardCode)) {
+      setProfileError('Vui long chon day du tinh/thanh va xa/phuong')
       return
     }
 
@@ -243,7 +240,6 @@ const ProfilePage = () => {
       if (hasStructuredSelection) {
         payload.addressLine = normalizedAddressLine || undefined
         payload.provinceCode = normalizedProvinceCode
-        payload.districtCode = normalizedDistrictCode
         payload.wardCode = normalizedWardCode
       } else {
         payload.address = normalizedAddressLine || undefined

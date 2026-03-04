@@ -24,9 +24,6 @@ public class RefVnWard {
     @Column(nullable = false, unique = true, length = 40)
     private String code;
 
-    @Column(name = "district_code", nullable = false, length = 40)
-    private String districtCode;
-
     @Column(name = "province_code", nullable = false, length = 40)
     private String provinceCode;
 

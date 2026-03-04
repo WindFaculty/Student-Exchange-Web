@@ -22,19 +22,11 @@ public class LocationController {
         return locationQueryService.getProvinces(q);
     }
 
-    @GetMapping("/districts")
-    public List<VnLocationOptionResponse> getDistricts(
+    @GetMapping("/wards")
+    public List<VnLocationOptionResponse> getWards(
             @RequestParam String provinceCode,
             @RequestParam(required = false) String q
     ) {
-        return locationQueryService.getDistricts(provinceCode, q);
-    }
-
-    @GetMapping("/wards")
-    public List<VnLocationOptionResponse> getWards(
-            @RequestParam String districtCode,
-            @RequestParam(required = false) String q
-    ) {
-        return locationQueryService.getWards(districtCode, q);
+        return locationQueryService.getWardsByProvince(provinceCode, q);
     }
 }

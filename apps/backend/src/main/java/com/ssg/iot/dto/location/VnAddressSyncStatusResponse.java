@@ -13,7 +13,6 @@ public class VnAddressSyncStatusResponse {
     private LocalDateTime lastSyncedAt;
     private LocalDateTime lastSuccessAt;
     private int provinceCount;
-    private int districtCount;
     private int wardCount;
     private String lastError;
 }

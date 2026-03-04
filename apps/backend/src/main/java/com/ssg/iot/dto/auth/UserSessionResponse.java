@@ -15,7 +15,6 @@ public class UserSessionResponse {
     private String address;
     private String addressLine;
     private String provinceCode;
-    private String districtCode;
     private String wardCode;
     private UserRole role;
     private String avatarUrl;

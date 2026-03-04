@@ -4,7 +4,6 @@ import com.ssg.iot.common.BadRequestException;
 import com.ssg.iot.common.ConflictException;
 import com.ssg.iot.domain.RefVnSyncState;
 import com.ssg.iot.dto.location.VnAddressSyncResultResponse;
-import com.ssg.iot.repository.RefVnDistrictRepository;
 import com.ssg.iot.repository.RefVnProvinceRepository;
 import com.ssg.iot.repository.RefVnSyncStateRepository;
 import com.ssg.iot.repository.RefVnWardRepository;
@@ -27,14 +26,15 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 class VnLocationSyncServiceTest {
 
     private RefVnProvinceRepository provinceRepository;
-    private RefVnDistrictRepository districtRepository;
     private RefVnWardRepository wardRepository;
     private RefVnSyncStateRepository syncStateRepository;
     private RefVnSyncState syncState;
@@ -42,7 +42,6 @@ class VnLocationSyncServiceTest {
     @BeforeEach
     void setUp() {
         provinceRepository = mock(RefVnProvinceRepository.class);
-        districtRepository = mock(RefVnDistrictRepository.class);
         wardRepository = mock(RefVnWardRepository.class);
         syncStateRepository = mock(RefVnSyncStateRepository.class);
 
@@ -50,14 +49,12 @@ class VnLocationSyncServiceTest {
                 .id(1L)
                 .lastStatus("IDLE")
                 .provinceCount(0)
-                .districtCount(0)
                 .wardCount(0)
                 .build();
 
         when(syncStateRepository.findById(1L)).thenReturn(Optional.of(syncState));
         when(syncStateRepository.save(any(RefVnSyncState.class))).thenAnswer(invocation -> invocation.getArgument(0));
         when(provinceRepository.saveAll(any())).thenAnswer(invocation -> invocation.getArgument(0));
-        when(districtRepository.saveAll(any())).thenAnswer(invocation -> invocation.getArgument(0));
         when(wardRepository.saveAll(any())).thenAnswer(invocation -> invocation.getArgument(0));
     }
 
@@ -73,19 +70,16 @@ class VnLocationSyncServiceTest {
         assertEquals("SUCCESS", result.getStatus());
         assertEquals("OFFICIAL", result.getSource());
         assertEquals(1, result.getProvinceCount());
-        assertEquals(1, result.getDistrictCount());
         assertEquals(1, result.getWardCount());
 
         verify(provinceRepository).deleteAllInBatch();
-        verify(districtRepository).deleteAllInBatch();
         verify(wardRepository).deleteAllInBatch();
         verify(provinceRepository).saveAll(any());
-        verify(districtRepository).saveAll(any());
         verify(wardRepository).saveAll(any());
     }
 
     @Test
-    void syncNowFailsClosedWhenNoSourcePassesConformance() {
+    void syncNowFailsClosedWhenNoSourcePassesValidation() {
         VnLocationSourceAdapter officialAdapter = mock(VnLocationSourceAdapter.class);
         when(officialAdapter.sourceTag()).thenReturn("OFFICIAL");
         when(officialAdapter.load()).thenReturn(VnLocationSourceLoadResult.failure("OFFICIAL", "timeout"));
@@ -98,7 +92,6 @@ class VnLocationSyncServiceTest {
 
         assertThrows(BadRequestException.class, service::syncNow);
         verify(provinceRepository, never()).saveAll(any());
-        verify(districtRepository, never()).saveAll(any());
         verify(wardRepository, never()).saveAll(any());
     }
 
@@ -143,7 +136,6 @@ class VnLocationSyncServiceTest {
 
         return new VnLocationSyncService(
                 provinceRepository,
-                districtRepository,
                 wardRepository,
                 syncStateRepository,
                 adapters,
@@ -172,16 +164,14 @@ class VnLocationSyncServiceTest {
         LocalDate effectiveDate = LocalDate.of(2025, 7, 1);
         return new VnLocationDataset(
                 List.of(new VnLocationDataset.ProvinceRecord("79", "Ho Chi Minh", null, true, effectiveDate)),
-                List.of(new VnLocationDataset.DistrictRecord("79001", "79", "Thu Duc", null, true, effectiveDate)),
-                List.of(new VnLocationDataset.WardRecord("79001001", "79001", "79", "Linh Tay", null, true, effectiveDate))
+                List.of(new VnLocationDataset.WardRecord("79001001", "79", "Linh Tay", null, true, effectiveDate))
         );
     }
 
     private VnLocationDataset buildNonConformantDataset() {
         return new VnLocationDataset(
                 List.of(new VnLocationDataset.ProvinceRecord("79", "Ho Chi Minh", null, false, null)),
-                List.of(new VnLocationDataset.DistrictRecord("79001", "79", "Thu Duc", null, false, null)),
-                List.of(new VnLocationDataset.WardRecord("79001001", "79001", "79", "Linh Tay", null, false, null))
+                List.of(new VnLocationDataset.WardRecord("79001001", "99", "Linh Tay", null, false, null))
         );
     }
 }

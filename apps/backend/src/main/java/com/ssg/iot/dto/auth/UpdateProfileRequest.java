@@ -35,8 +35,5 @@ public class UpdateProfileRequest {
     private String provinceCode;
 
     @Size(max = 40)
-    private String districtCode;
-
-    @Size(max = 40)
     private String wardCode;
 }

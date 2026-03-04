@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -19,6 +20,7 @@ import java.util.List;
 @Component
 @Order(20)
 @RequiredArgsConstructor
+@ConditionalOnProperty(value = "vn.location.enable-remote-sources", havingValue = "true")
 public class FallbackOpenApiLocationSourceAdapter implements VnLocationSourceAdapter {
 
     private final ObjectMapper objectMapper;
@@ -56,7 +58,6 @@ public class FallbackOpenApiLocationSourceAdapter implements VnLocationSourceAda
             }
 
             List<VnLocationDataset.ProvinceRecord> provinces = new ArrayList<>();
-            List<VnLocationDataset.DistrictRecord> districts = new ArrayList<>();
             List<VnLocationDataset.WardRecord> wards = new ArrayList<>();
 
             for (JsonNode provinceNode : root) {
@@ -85,15 +86,6 @@ public class FallbackOpenApiLocationSourceAdapter implements VnLocationSourceAda
                     if (districtCode == null || districtName == null) {
                         continue;
                     }
-                    districts.add(new VnLocationDataset.DistrictRecord(
-                            districtCode,
-                            provinceCode,
-                            districtName,
-                            VnLocationSourceUtils.firstText(districtNode, "name_old"),
-                            false,
-                            null
-                    ));
-
                     JsonNode wardNodes = VnLocationSourceUtils.firstArray(districtNode, "wards");
                     if (wardNodes == null) {
                         continue;
@@ -106,7 +98,6 @@ public class FallbackOpenApiLocationSourceAdapter implements VnLocationSourceAda
                         }
                         wards.add(new VnLocationDataset.WardRecord(
                                 wardCode,
-                                districtCode,
                                 provinceCode,
                                 wardName,
                                 VnLocationSourceUtils.firstText(wardNode, "name_old"),
@@ -117,7 +108,7 @@ public class FallbackOpenApiLocationSourceAdapter implements VnLocationSourceAda
                 }
             }
 
-            return VnLocationSourceLoadResult.success(sourceTag(), new VnLocationDataset(provinces, districts, wards));
+            return VnLocationSourceLoadResult.success(sourceTag(), new VnLocationDataset(provinces, wards));
         } catch (Exception ex) {
             return VnLocationSourceLoadResult.failure(sourceTag(), "Fallback source error: " + ex.getMessage());
         }

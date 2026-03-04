@@ -98,3 +98,8 @@ cd ../backend
 - Task queue: `tasks/task-queue.md`
 - CI/CD VPS runbook: `docs/cicd-vps.md`
 - Data migration tools: `tools/db-migration/`
+
+## Vietnam Admin Data Sets
+- Post-2025 2-level dataset (34 provinces, district level removed): `Vietnam_Admin_After_Merge/data_csv_post_2025/`
+- Backend synchronized copies:
+  - `apps/backend/Vietnam_Admin_After_Merge/data_csv_post_2025/`
