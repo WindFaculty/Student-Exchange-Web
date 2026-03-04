@@ -115,7 +115,12 @@ class Handler(BaseHTTPRequestHandler):
             return
 
         try:
-            proc = subprocess.Popen([DEPLOY_SCRIPT, sha], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            # Execute via bash so deployment does not depend on filesystem execute bit.
+            proc = subprocess.Popen(
+                ["/bin/bash", DEPLOY_SCRIPT, sha],
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL,
+            )
             # Reap child process in the background to avoid zombie accumulation.
             threading.Thread(target=_reap_subprocess, args=(proc,), daemon=True).start()
         except OSError as exc:

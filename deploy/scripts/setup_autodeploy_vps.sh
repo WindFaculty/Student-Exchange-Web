@@ -224,7 +224,7 @@ systemctl enable --now github-webhook-allowlist-update.timer
 systemctl restart student-exchange-webhook
 systemctl reload nginx
 
-run_as_deploy "$DEPLOY_SCRIPT" || true
+run_as_deploy bash "$DEPLOY_SCRIPT" || true
 
 echo
 echo "Auto-deploy setup complete."
