@@ -84,45 +84,6 @@ DEALLOCATE PREPARE stmt;
 
 SET @sql := IF(
     (SELECT COUNT(*)
-     FROM information_schema.statistics
-     WHERE table_schema = DATABASE()
-       AND table_name = 'ref_vn_wards'
-       AND index_name = 'idx_ref_vn_wards_district_code') > 0,
-    'DROP INDEX idx_ref_vn_wards_district_code ON ref_vn_wards',
-    'SELECT 1'
-);
-PREPARE stmt FROM @sql;
-EXECUTE stmt;
-DEALLOCATE PREPARE stmt;
-
-SET @sql := IF(
-    (SELECT COUNT(*)
-     FROM information_schema.statistics
-     WHERE table_schema = DATABASE()
-       AND table_name = 'ref_vn_districts'
-       AND index_name = 'idx_ref_vn_districts_province_code') > 0,
-    'DROP INDEX idx_ref_vn_districts_province_code ON ref_vn_districts',
-    'SELECT 1'
-);
-PREPARE stmt FROM @sql;
-EXECUTE stmt;
-DEALLOCATE PREPARE stmt;
-
-SET @sql := IF(
-    (SELECT COUNT(*)
-     FROM information_schema.statistics
-     WHERE table_schema = DATABASE()
-       AND table_name = 'users'
-       AND index_name = 'idx_users_district_code') > 0,
-    'DROP INDEX idx_users_district_code ON users',
-    'SELECT 1'
-);
-PREPARE stmt FROM @sql;
-EXECUTE stmt;
-DEALLOCATE PREPARE stmt;
-
-SET @sql := IF(
-    (SELECT COUNT(*)
      FROM information_schema.columns
      WHERE table_schema = DATABASE()
        AND table_name = 'ref_vn_wards'
