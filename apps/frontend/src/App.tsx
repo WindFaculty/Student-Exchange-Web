@@ -16,7 +16,6 @@ import CheckoutPage from './pages/checkout/Checkout'
 import OrderSuccessPage from './pages/checkout/OrderSuccess'
 import EventList from './pages/events/EventList'
 import EventDetail from './pages/events/EventDetail'
-import CreateListing from './pages/listings/CreateListing'
 import IotHubPage from './pages/iot/IotHubPage'
 import IotProjectDetailPage from './pages/iot/IotProjectDetailPage'
 import SupportHub from './pages/support/SupportHub'
@@ -63,7 +62,7 @@ function App() {
                   <Route path="/events/:id" element={<EventDetail />} />
 
                   <Route element={<ProtectedRoute />}>
-                    <Route path="/listings" element={<CreateListing />} />
+                    <Route path="/listings" element={<Navigate to="/profile?tab=products" replace />} />
                     <Route path="/messages" element={<MessagesPage />} />
                     <Route path="/profile" element={<ProfilePage />} />
                   </Route>

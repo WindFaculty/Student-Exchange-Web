@@ -34,6 +34,10 @@ export const listingApi = {
     return fetchJson<void>(`/api/listings/${id}`, { method: 'DELETE' })
   },
 
+  restoreListing(id: number) {
+    return fetchJson<Listing>(`/api/listings/${id}/restore`, { method: 'POST' })
+  },
+
   getMyListings(params?: { page?: number; size?: number }) {
     const query = new URLSearchParams()
     if (params?.page !== undefined) query.set('page', String(params.page))

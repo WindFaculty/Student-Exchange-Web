@@ -12,7 +12,7 @@ const navItems = [
   { to: '/products', label: 'Sản phẩm' },
   { to: '/events', label: 'Sự kiện' },
   { to: '/messages', label: 'Tin nhắn' },
-  { to: '/listings', label: 'Sản phẩm của tôi' },
+  { to: '/profile?tab=products', label: 'Sản phẩm của tôi' },
   { to: '/iot', label: 'IoT' },
   { to: '/support', label: 'Hỗ trợ' },
 ]

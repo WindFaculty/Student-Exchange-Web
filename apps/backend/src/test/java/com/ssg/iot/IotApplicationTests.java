@@ -1,6 +1,7 @@
 package com.ssg.iot;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.junit.jupiter.api.Test;
@@ -13,7 +14,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.mock.web.MockHttpSession;
 
+import java.util.UUID;
+
 import static org.hamcrest.Matchers.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -176,6 +180,60 @@ class IotApplicationTests {
     }
 
     @Test
+    void ownerCanRestoreArchivedListingAndPublicEndpointsSeeItAgain() throws Exception {
+        MockHttpSession ownerSession = loginAsUser("student1", "user123");
+        String uniqueTitle = "restore-owner-" + System.nanoTime();
+        long listingId = createListing(ownerSession, uniqueTitle);
+
+        mockMvc.perform(delete("/api/listings/{id}", listingId).session(ownerSession))
+                .andExpect(status().isOk());
+
+        mockMvc.perform(get("/api/listings/{id}", listingId))
+                .andExpect(status().isNotFound());
+
+        mockMvc.perform(post("/api/listings/{id}/restore", listingId).session(ownerSession))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.title", is(uniqueTitle)))
+                .andExpect(jsonPath("$.active", is(true)));
+
+        mockMvc.perform(get("/api/listings/{id}", listingId))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.title", is(uniqueTitle)))
+                .andExpect(jsonPath("$.active", is(true)));
+
+        mockMvc.perform(get("/api/listings").param("search", uniqueTitle))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.content[*].title", hasItem(uniqueTitle)));
+    }
+
+    @Test
+    void restoreListingFailsForNonOwner() throws Exception {
+        MockHttpSession ownerSession = loginAsUser("student1", "user123");
+        String uniqueTitle = "restore-forbidden-" + System.nanoTime();
+        long listingId = createListing(ownerSession, uniqueTitle);
+
+        mockMvc.perform(delete("/api/listings/{id}", listingId).session(ownerSession))
+                .andExpect(status().isOk());
+
+        String suffix = UUID.randomUUID().toString().replace("-", "").substring(0, 8);
+        MockHttpSession anotherUserSession = registerAndLogin(
+                "restore_user_" + suffix,
+                "restore_" + suffix + "@example.com",
+                "secret123"
+        );
+
+        mockMvc.perform(post("/api/listings/{id}/restore", listingId).session(anotherUserSession))
+                .andExpect(status().isForbidden());
+    }
+
+    @Test
+    void restoreListingReturnsNotFoundForMissingId() throws Exception {
+        MockHttpSession ownerSession = loginAsUser("student1", "user123");
+        mockMvc.perform(post("/api/listings/{id}/restore", 99999999L).session(ownerSession))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
     void getAdminIotContentWithoutLoginReturnsUnauthorized() throws Exception {
         mockMvc.perform(get("/api/admin/iot/content"))
                 .andExpect(status().isUnauthorized());
@@ -225,18 +283,62 @@ class IotApplicationTests {
     }
 
     private MockHttpSession loginAsAdmin() throws Exception {
+        return loginAsUser("admin", "admin123");
+    }
+
+    private MockHttpSession loginAsUser(String username, String password) throws Exception {
         MvcResult result = mockMvc.perform(post("/api/auth/login")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                 {
-                                  "username": "admin",
-                                  "password": "admin123"
+                                  "username": "%s",
+                                  "password": "%s"
                                 }
-                                """))
+                                """.formatted(username, password)))
                 .andExpect(status().isOk())
                 .andReturn();
 
-        return (MockHttpSession) result.getRequest().getSession(false);
+        MockHttpSession session = (MockHttpSession) result.getRequest().getSession(false);
+        assertTrue(session != null, "Expected login session to be created");
+        return session;
+    }
+
+    private MockHttpSession registerAndLogin(String username, String email, String password) throws Exception {
+        MvcResult result = mockMvc.perform(post("/api/auth/register")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                  "username": "%s",
+                                  "email": "%s",
+                                  "password": "%s"
+                                }
+                                """.formatted(username, email, password)))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        MockHttpSession session = (MockHttpSession) result.getRequest().getSession(false);
+        assertTrue(session != null, "Expected register session to be created");
+        return session;
+    }
+
+    private long createListing(MockHttpSession session, String title) throws Exception {
+        ObjectNode payload = objectMapper.createObjectNode();
+        payload.put("title", title);
+        payload.put("description", "Listing for restore tests");
+        payload.put("categoryCode", "OTHER");
+        payload.put("price", 100000);
+        payload.put("stock", 3);
+        payload.put("imageUrl", "https://example.com/restore.png");
+
+        MvcResult result = mockMvc.perform(post("/api/listings")
+                        .session(session)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(payload.toString()))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        JsonNode body = objectMapper.readTree(result.getResponse().getContentAsString());
+        return body.path("id").asLong();
     }
 
     private String buildIotContentPayload(String heroTitle, int highlightCount, boolean duplicateDisplayOrder) throws Exception {

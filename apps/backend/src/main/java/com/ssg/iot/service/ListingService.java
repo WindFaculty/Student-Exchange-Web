@@ -119,6 +119,21 @@ public class ListingService {
         listingRepository.save(listing);
     }
 
+    @Transactional
+    public ListingResponse restoreListing(Long id, User actor) {
+        Listing listing = listingRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Listing not found"));
+
+        if (!listing.getOwner().getId().equals(actor.getId())) {
+            throw new ForbiddenException("You can only restore your own listing");
+        }
+
+        listing.setActive(true);
+        listing.setArchivedAt(null);
+        Listing saved = listingRepository.save(listing);
+        return toResponse(saved);
+    }
+
     @Transactional(readOnly = true)
     public PageResponse<ListingResponse> getMyListings(User owner, int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdAt"));

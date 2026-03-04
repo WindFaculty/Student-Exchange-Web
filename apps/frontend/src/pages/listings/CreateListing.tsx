@@ -14,8 +14,8 @@ const parseImages = (url: string | undefined): string[] => {
   try {
     const parsed = JSON.parse(url)
     if (Array.isArray(parsed)) return parsed
-  } catch (e) {
-    // legacy single image
+  } catch {
+    // Legacy single-image format.
     return [url]
   }
   return [url]
@@ -30,7 +30,11 @@ const defaultForm: ListingRequest = {
   imageUrl: '',
 }
 
-const CreateListing: React.FC = () => {
+interface CreateListingProps {
+  embedded?: boolean
+}
+
+const CreateListing: React.FC<CreateListingProps> = ({ embedded = false }) => {
   const [items, setItems] = useState<Listing[]>([])
   const [form, setForm] = useState<ListingRequest>(defaultForm)
   const [editingId, setEditingId] = useState<number | null>(null)
@@ -67,6 +71,7 @@ const CreateListing: React.FC = () => {
       setError('Vui lòng thêm ít nhất 1 hình ảnh sản phẩm')
       return
     }
+
     try {
       if (editingId) {
         await listingApi.updateListing(editingId, form)
@@ -81,6 +86,7 @@ const CreateListing: React.FC = () => {
   }
 
   const onEdit = (item: Listing) => {
+    if (!item.active) return
     setEditingId(item.id)
     setForm({
       title: item.title,
@@ -96,15 +102,31 @@ const CreateListing: React.FC = () => {
     if (!window.confirm('Bạn có chắc muốn xóa sản phẩm này?')) return
     try {
       await listingApi.deleteListing(id)
+      if (editingId === id) resetForm()
       await load()
     } catch (err: unknown) {
       setError(mapApiError(err, 'Xóa sản phẩm thất bại'))
     }
   }
 
+  const onRestore = async (id: number) => {
+    if (!window.confirm('Bạn có chắc muốn khôi phục sản phẩm này?')) return
+    try {
+      await listingApi.restoreListing(id)
+      await load()
+    } catch (err: unknown) {
+      setError(mapApiError(err, 'Khôi phục sản phẩm thất bại'))
+    }
+  }
+
   return (
     <div className="space-y-6">
-      <PageHeader title="Sản phẩm của tôi" description="Tạo mới hoặc chỉnh sửa các dịch vụ bạn đang cung cấp." />
+      {!embedded ? (
+        <PageHeader
+          title="Sản phẩm của tôi"
+          description="Tạo mới hoặc chỉnh sửa các dịch vụ bạn đang cung cấp."
+        />
+      ) : null}
 
       <Card>
         <CardHeader>
@@ -113,9 +135,12 @@ const CreateListing: React.FC = () => {
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-1">
-              <label className="text-sm font-medium text-slate-700 dark:text-slate-300">Tiêu đề <span className="text-red-500">*</span></label>
+              <label className="text-sm font-medium text-slate-700 dark:text-slate-300">
+                Tiêu đề <span className="text-red-500">*</span>
+              </label>
               <Input required value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} />
             </div>
+
             <div className="space-y-1">
               <label className="text-sm font-medium text-slate-700 dark:text-slate-300">Mô tả</label>
               <textarea
@@ -124,6 +149,7 @@ const CreateListing: React.FC = () => {
                 onChange={(e) => setForm({ ...form, description: e.target.value })}
               />
             </div>
+
             <div className="grid gap-3 md:grid-cols-3">
               <div className="space-y-1">
                 <label className="text-sm font-medium text-slate-700 dark:text-slate-300">Danh mục</label>
@@ -137,6 +163,7 @@ const CreateListing: React.FC = () => {
                   ))}
                 </select>
               </div>
+
               <div className="space-y-1">
                 <label className="text-sm font-medium text-slate-700 dark:text-slate-300">Giá (VNĐ)</label>
                 <Input
@@ -149,14 +176,23 @@ const CreateListing: React.FC = () => {
                   }}
                 />
               </div>
+
               <div className="space-y-1">
                 <label className="text-sm font-medium text-slate-700 dark:text-slate-300">Số lượng</label>
-                <Input type="number" min={0} value={form.stock} onChange={(e) => setForm({ ...form, stock: Number(e.target.value) || 0 })} />
+                <Input
+                  type="number"
+                  min={0}
+                  value={form.stock}
+                  onChange={(e) => setForm({ ...form, stock: Number(e.target.value) || 0 })}
+                />
               </div>
             </div>
 
             <div className="space-y-1 block">
-              <label className="text-sm font-medium text-slate-700 dark:text-slate-300 block mb-2">Hình ảnh sản phẩm <span className="text-red-500">*</span></label>
+              <label className="text-sm font-medium text-slate-700 dark:text-slate-300 block mb-2">
+                Hình ảnh sản phẩm <span className="text-red-500">*</span>
+              </label>
+
               <div className="flex flex-wrap gap-2">
                 {parseImages(form.imageUrl).map((img, idx) => (
                   <div key={idx} className="relative h-24 w-24 overflow-hidden rounded-lg border border-slate-200">
@@ -200,6 +236,7 @@ const CreateListing: React.FC = () => {
                         }
                         reader.readAsDataURL(file)
                       })
+
                       e.target.value = ''
                     }}
                   />
@@ -211,7 +248,9 @@ const CreateListing: React.FC = () => {
 
             <div className="flex gap-2">
               <Button type="submit">{editingId ? 'Cập nhật' : 'Tạo mới'}</Button>
-              {editingId ? <Button type="button" variant="outline" onClick={resetForm}>Hủy</Button> : null}
+              {editingId ? (
+                <Button type="button" variant="outline" onClick={resetForm}>Hủy</Button>
+              ) : null}
             </div>
           </form>
         </CardContent>
@@ -227,28 +266,54 @@ const CreateListing: React.FC = () => {
             <CardContent className="flex flex-wrap items-center justify-between gap-3 pt-5">
               <div className="flex items-center gap-4">
                 {item.imageUrl ? (
-                  <img src={parseImages(item.imageUrl)[0]} alt={item.title} className="h-16 w-16 object-cover rounded-lg border border-slate-200" />
+                  <img
+                    src={parseImages(item.imageUrl)[0]}
+                    alt={item.title}
+                    className="h-16 w-16 object-cover rounded-lg border border-slate-200"
+                  />
                 ) : (
                   <div className="h-16 w-16 flex items-center justify-center bg-slate-100 rounded-lg text-slate-400 border border-slate-200">
                     <Icon name="image" />
                   </div>
                 )}
+
                 <div>
                   <p className="font-medium">{item.title}</p>
-                  <p className="text-sm text-slate-500">
-                    {formatCategoryLabel(item.category)} • {formatCurrency(item.price)} • tồn kho {item.stock}
-                  </p>
+                  <div className="flex flex-wrap items-center gap-2 text-sm text-slate-500">
+                    <span>{formatCategoryLabel(item.category)}</span>
+                    <span>•</span>
+                    <span>{formatCurrency(item.price)}</span>
+                    <span>•</span>
+                    <span>tồn kho {item.stock}</span>
+                    <span>•</span>
+                    {item.active ? (
+                      <span className="rounded-full border border-emerald-200 bg-emerald-50 px-2 py-0.5 text-[11px] font-semibold text-emerald-700 dark:border-emerald-500/30 dark:bg-emerald-500/10 dark:text-emerald-300">
+                        Đang hoạt động
+                      </span>
+                    ) : (
+                      <span className="rounded-full border border-amber-200 bg-amber-50 px-2 py-0.5 text-[11px] font-semibold text-amber-700 dark:border-amber-500/30 dark:bg-amber-500/10 dark:text-amber-300">
+                        Đã xóa
+                      </span>
+                    )}
+                  </div>
                 </div>
               </div>
+
               <div className="flex gap-2">
-                <Button size="sm" variant="outline" onClick={() => onEdit(item)}>Sửa</Button>
-                <Button size="sm" variant="destructive" onClick={() => onDelete(item.id)}>Xóa</Button>
+                {item.active ? (
+                  <>
+                    <Button size="sm" variant="outline" onClick={() => onEdit(item)}>Sửa</Button>
+                    <Button size="sm" variant="destructive" onClick={() => onDelete(item.id)}>Xóa</Button>
+                  </>
+                ) : (
+                  <Button size="sm" onClick={() => onRestore(item.id)}>Khôi phục</Button>
+                )}
               </div>
             </CardContent>
           </Card>
         ))}
       </section>
-    </div >
+    </div>
   )
 }
 

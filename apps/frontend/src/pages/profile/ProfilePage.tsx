@@ -1,5 +1,5 @@
 import { FormEvent, useEffect, useMemo, useRef, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { authApi } from '../../api/authApi'
 import { orderApi } from '../../api/orderApi'
 import { useAuth } from '../../context/AuthContext'
@@ -8,10 +8,25 @@ import { MyOrderScope, Order, OrderStatus } from '../../types/models'
 import AddressPicker, { AddressPickerValue } from '../../components/address/AddressPicker'
 import { Modal } from '../../components/ui/Modal'
 import AvatarCropModal from '../../components/ui/AvatarCropModal'
+import CreateListing from '../listings/CreateListing'
 
 const PAGE_SIZE = 10
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 const PHONE_PATTERN = /^(0\d{9}|\+84\d{9})$/
+type ProfileTab = 'account' | 'orders' | 'products'
+const PROFILE_TAB_DEFAULT: ProfileTab = 'account'
+const PROFILE_TAB_OPTIONS: { key: ProfileTab; label: string }[] = [
+  { key: 'account', label: 'Thông tin' },
+  { key: 'orders', label: 'Đơn hàng' },
+  { key: 'products', label: 'Sản phẩm của tôi' },
+]
+
+const normalizeProfileTab = (value: string | null): ProfileTab => {
+  if (value === 'orders' || value === 'products' || value === 'account') {
+    return value
+  }
+  return PROFILE_TAB_DEFAULT
+}
 
 // ── Status badge ───────────────────────────────────────────────────────────────
 
@@ -125,7 +140,10 @@ const OrderDetailModal = ({ order, onClose }: { order: Order; onClose: () => voi
 
 const ProfilePage = () => {
   const navigate = useNavigate()
+  const [searchParams, setSearchParams] = useSearchParams()
   const { user, refreshSession } = useAuth()
+  const rawTab = searchParams.get('tab')
+  const tab = normalizeProfileTab(rawTab)
 
   // Profile
   const [fullName, setFullName] = useState('')
@@ -171,6 +189,21 @@ const ProfilePage = () => {
   )
 
   useEffect(() => {
+    if (rawTab === null || rawTab === tab) return
+    const next = new URLSearchParams(searchParams)
+    if (tab === PROFILE_TAB_DEFAULT) next.delete('tab')
+    else next.set('tab', tab)
+    setSearchParams(next, { replace: true })
+  }, [rawTab, searchParams, setSearchParams, tab])
+
+  const updateTab = (nextTab: ProfileTab) => {
+    const next = new URLSearchParams(searchParams)
+    if (nextTab === PROFILE_TAB_DEFAULT) next.delete('tab')
+    else next.set('tab', nextTab)
+    setSearchParams(next)
+  }
+
+  useEffect(() => {
     if (!user) return
     setFullName(user.fullName)
     setEmail(user.email)
@@ -184,6 +217,10 @@ const ProfilePage = () => {
   }, [user])
 
   useEffect(() => {
+    if (tab !== 'orders') {
+      setModalOrder(null)
+      return
+    }
     const load = async () => {
       setOrdersLoading(true)
       setOrdersError('')
@@ -198,7 +235,7 @@ const ProfilePage = () => {
       }
     }
     load()
-  }, [scope, page])
+  }, [scope, page, tab])
 
   useEffect(() => {
     if (orders.length === 0) { setSelectedOrderId(null); return }
@@ -334,8 +371,26 @@ const ProfilePage = () => {
         </button>
       </div>
 
+      <div className="flex flex-wrap gap-2">
+        {PROFILE_TAB_OPTIONS.map((item) => (
+          <button
+            key={item.key}
+            type="button"
+            onClick={() => updateTab(item.key)}
+            className={[
+              'rounded-xl border px-4 py-2 text-sm font-semibold transition-all',
+              tab === item.key
+                ? 'border-primary bg-primary/10 text-primary dark:border-cyan-400/40 dark:bg-cyan-500/15 dark:text-cyan-300'
+                : 'border-slate-200 bg-white text-slate-600 hover:border-primary hover:text-primary dark:border-white/[0.08] dark:bg-white/[0.03] dark:text-slate-300 dark:hover:border-cyan-400/40 dark:hover:text-cyan-300',
+            ].join(' ')}
+          >
+            {item.label}
+          </button>
+        ))}
+      </div>
+
       {/* ── Profile card ────────────────────────────────────────── */}
-      <div className={glassCard}>
+      <div className={[glassCard, tab === 'account' ? '' : 'hidden'].join(' ')}>
         {/* Avatar + name row */}
         <div className="mb-6 flex flex-wrap items-center gap-4">
           {/* Clickable avatar uploader */}
@@ -504,7 +559,7 @@ const ProfilePage = () => {
       </div>
 
       {/* ── Orders card ─────────────────────────────────────────── */}
-      <div className={glassCard}>
+      <div className={[glassCard, tab === 'orders' ? '' : 'hidden'].join(' ')}>
         <div className="mb-6">
           <p className="text-[11px] font-bold uppercase tracking-widest text-primary dark:text-cyan-400">
             Đơn hàng của tôi
@@ -670,8 +725,10 @@ const ProfilePage = () => {
         </div>
       </div>
 
+      {tab === 'products' ? <CreateListing embedded /> : null}
+
       {/* ── Order detail modal ───────────────────────────────────── */}
-      {modalOrder && <OrderDetailModal order={modalOrder} onClose={() => setModalOrder(null)} />}
+      {tab === 'orders' && modalOrder && <OrderDetailModal order={modalOrder} onClose={() => setModalOrder(null)} />}
 
       {/* ── Avatar crop modal ────────────────────────────────────── */}
       {cropSrc && (

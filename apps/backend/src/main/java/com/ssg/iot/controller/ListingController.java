@@ -51,4 +51,10 @@ public class ListingController {
         User user = sessionAuthService.requireUser(session);
         listingService.deleteListing(id, user, false);
     }
+
+    @PostMapping("/{id}/restore")
+    public ListingResponse restoreListing(@PathVariable Long id, HttpSession session) {
+        User user = sessionAuthService.requireUser(session);
+        return listingService.restoreListing(id, user);
+    }
 }

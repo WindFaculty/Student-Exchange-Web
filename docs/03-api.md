@@ -85,7 +85,13 @@ Option response:
 - `POST /api/listings` (auth user)
 - `PUT /api/listings/{id}` (owner/admin)
 - `DELETE /api/listings/{id}` (owner/admin)
+- `POST /api/listings/{id}/restore` (auth owner)
 - `GET /api/me/listings?page=&size=` (auth user)
+
+Restore behavior:
+- Request body: none
+- Success: returns restored `Listing`
+- Errors: `401` unauthenticated, `403` not owner, `404` not found
 
 `Listing` fields:
 - `id`, `title`, `description`, `category`, `price`, `stock`, `imageUrl`, `active`, `ownerId`, `ownerName`, `createdAt`, `updatedAt`

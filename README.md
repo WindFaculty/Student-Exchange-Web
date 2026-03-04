@@ -88,7 +88,8 @@ cd ../backend
 - User: `student1` / `user123`
 
 ## Key Routes
-- User: `/login`, `/products`, `/products/:id`, `/cart`, `/checkout`, `/events`, `/support`
+- User: `/login`, `/products`, `/products/:id`, `/cart`, `/checkout`, `/events`, `/support`, `/profile`, `/profile?tab=products`
+- Alias: `/listings` -> redirects to `/profile?tab=products`
 - Admin: `/admin/login`, `/admin`, `/admin/listings`, `/admin/orders`, `/admin/events`, `/admin/tickets`
 
 ## References
