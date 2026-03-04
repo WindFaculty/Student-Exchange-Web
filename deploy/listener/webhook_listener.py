@@ -8,6 +8,7 @@ import json
 import os
 import re
 import subprocess
+import threading
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 
@@ -26,6 +27,13 @@ SHA_RE = re.compile(r"^[0-9a-f]{40}$")
 ALLOWED_CIDRS = [
     ipaddress.ip_network(cidr.strip()) for cidr in GITHUB_WEBHOOK_ALLOWED_CIDRS.split(",") if cidr.strip()
 ]
+
+
+def _reap_subprocess(proc: subprocess.Popen) -> None:
+    try:
+        proc.wait()
+    except Exception as exc:
+        print(f"[webhook-listener] failed waiting deploy process: {exc}")
 
 
 def _is_allowed_ip(candidate_ip: str) -> bool:
@@ -107,7 +115,9 @@ class Handler(BaseHTTPRequestHandler):
             return
 
         try:
-            subprocess.Popen([DEPLOY_SCRIPT, sha], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            proc = subprocess.Popen([DEPLOY_SCRIPT, sha], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            # Reap child process in the background to avoid zombie accumulation.
+            threading.Thread(target=_reap_subprocess, args=(proc,), daemon=True).start()
         except OSError as exc:
             self._json(500, {"message": f"failed to start deploy script: {exc}"})
             return
