@@ -10,6 +10,7 @@ import re
 import subprocess
 import threading
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+from urllib.parse import urlsplit
 
 
 LISTEN_HOST = os.getenv("LISTEN_HOST", "127.0.0.1")
@@ -27,6 +28,18 @@ SHA_RE = re.compile(r"^[0-9a-f]{40}$")
 ALLOWED_CIDRS = [
     ipaddress.ip_network(cidr.strip()) for cidr in GITHUB_WEBHOOK_ALLOWED_CIDRS.split(",") if cidr.strip()
 ]
+
+
+def _normalize_path(path: str) -> str:
+    normalized = urlsplit(path).path or "/"
+    if not normalized.startswith("/"):
+        normalized = "/" + normalized
+    if normalized != "/":
+        normalized = normalized.rstrip("/")
+    return normalized
+
+
+NORMALIZED_WEBHOOK_PATH = _normalize_path(WEBHOOK_PATH)
 
 
 def _reap_subprocess(proc: subprocess.Popen) -> None:
@@ -53,24 +66,28 @@ class Handler(BaseHTTPRequestHandler):
         self.wfile.write(body)
 
     def do_GET(self) -> None:
-        if self.path == "/healthz":
+        if _normalize_path(self.path) == "/healthz":
             self._json(200, {"status": "ok"})
             return
         self._json(404, {"message": "not found"})
 
     def do_POST(self) -> None:
-        if self.path != WEBHOOK_PATH:
+        request_path = _normalize_path(self.path)
+        if request_path != NORMALIZED_WEBHOOK_PATH:
             self._json(404, {"message": "not found"})
+            self._log_decision(status=404, reason="path_mismatch", request_path=request_path)
             return
 
         if not GITHUB_WEBHOOK_SECRET:
             self._json(500, {"message": "server webhook secret is not configured"})
+            self._log_decision(status=500, reason="secret_missing", request_path=request_path)
             return
 
         forwarded = self.headers.get("X-Forwarded-For", "")
         client_ip = forwarded.split(",")[0].strip() if forwarded else self.client_address[0]
         if not _is_allowed_ip(client_ip):
             self._json(403, {"message": "ip is not allowed"})
+            self._log_decision(status=403, reason="ip_not_allowed", request_path=request_path, client_ip=client_ip)
             return
 
         content_length = int(self.headers.get("Content-Length", "0"))
@@ -79,6 +96,7 @@ class Handler(BaseHTTPRequestHandler):
         signature = self.headers.get("X-Hub-Signature-256", "")
         if not signature.startswith("sha256="):
             self._json(401, {"message": "missing signature"})
+            self._log_decision(status=401, reason="missing_signature", request_path=request_path, client_ip=client_ip)
             return
 
         expected_signature = "sha256=" + hmac.new(
@@ -86,32 +104,38 @@ class Handler(BaseHTTPRequestHandler):
         ).hexdigest()
         if not hmac.compare_digest(signature, expected_signature):
             self._json(401, {"message": "invalid signature"})
+            self._log_decision(status=401, reason="invalid_signature", request_path=request_path, client_ip=client_ip)
             return
 
         event = self.headers.get("X-GitHub-Event", "")
         if event != "push":
             self._json(202, {"message": "ignored: event is not push"})
+            self._log_decision(status=202, reason="event_mismatch", request_path=request_path, client_ip=client_ip)
             return
 
         try:
             body = json.loads(payload.decode("utf-8"))
         except json.JSONDecodeError:
             self._json(400, {"message": "invalid JSON payload"})
+            self._log_decision(status=400, reason="invalid_json", request_path=request_path, client_ip=client_ip)
             return
 
         repo_full_name = body.get("repository", {}).get("full_name", "")
         if repo_full_name != GITHUB_EXPECTED_REPO:
             self._json(202, {"message": "ignored: repository mismatch"})
+            self._log_decision(status=202, reason="repo_mismatch", request_path=request_path, client_ip=client_ip)
             return
 
         ref = body.get("ref", "")
         if ref != GITHUB_EXPECTED_REF:
             self._json(202, {"message": "ignored: ref mismatch"})
+            self._log_decision(status=202, reason="ref_mismatch", request_path=request_path, client_ip=client_ip)
             return
 
         sha = body.get("after", "")
         if not isinstance(sha, str) or not SHA_RE.fullmatch(sha):
             self._json(400, {"message": "invalid commit sha"})
+            self._log_decision(status=400, reason="invalid_sha", request_path=request_path, client_ip=client_ip)
             return
 
         try:
@@ -125,19 +149,40 @@ class Handler(BaseHTTPRequestHandler):
             threading.Thread(target=_reap_subprocess, args=(proc,), daemon=True).start()
         except OSError as exc:
             self._json(500, {"message": f"failed to start deploy script: {exc}"})
+            self._log_decision(status=500, reason="deploy_start_failed", request_path=request_path, client_ip=client_ip)
             return
 
         self._json(202, {"message": "deployment accepted", "sha": sha})
+        self._log_decision(status=202, reason="deployment_accepted", request_path=request_path, client_ip=client_ip, sha=sha)
 
     def log_message(self, format: str, *args) -> None:
         print(f"[webhook-listener] {self.address_string()} - {format % args}")
+
+    def _log_decision(
+        self,
+        status: int,
+        reason: str,
+        request_path: str,
+        client_ip: str | None = None,
+        sha: str | None = None,
+    ) -> None:
+        delivery = self.headers.get("X-GitHub-Delivery", "-")
+        event = self.headers.get("X-GitHub-Event", "-")
+        forwarded = self.headers.get("X-Forwarded-For", "")
+        if client_ip is None:
+            client_ip = forwarded.split(",")[0].strip() if forwarded else self.client_address[0]
+        sha_value = sha if sha else "-"
+        print(
+            "[webhook-listener] "
+            f"status={status} reason={reason} delivery={delivery} event={event} path={request_path} ip={client_ip} sha={sha_value}"
+        )
 
 
 def main() -> None:
     if not ALLOWED_CIDRS:
         raise RuntimeError("GITHUB_WEBHOOK_ALLOWED_CIDRS is empty; refusing to start.")
     server = ThreadingHTTPServer((LISTEN_HOST, LISTEN_PORT), Handler)
-    print(f"Webhook listener running on {LISTEN_HOST}:{LISTEN_PORT} path={WEBHOOK_PATH}")
+    print(f"Webhook listener running on {LISTEN_HOST}:{LISTEN_PORT} path={NORMALIZED_WEBHOOK_PATH}")
     server.serve_forever()
 
 

@@ -15,6 +15,7 @@ This runbook implements the flow:
 - Frontend container: `apps/frontend/Dockerfile`
 - Deploy script: `deploy/scripts/deploy.sh`
 - Rollback script: `deploy/scripts/rollback.sh`
+- Webhook RCA script: `deploy/scripts/audit_webhook_404.sh`
 - Webhook listener: `deploy/listener/webhook_listener.py`
 - Nginx template: `deploy/nginx/student-exchange.conf`
 - systemd unit: `deploy/systemd/student-exchange-webhook.service`
@@ -33,6 +34,7 @@ Clone and set ownership:
 sudo -u deploy git clone git@github.com:WindFaculty/Student-Exchange-Web.git /opt/student-exchange/app
 sudo chown -R deploy:deploy /opt/student-exchange
 sudo chmod +x /opt/student-exchange/app/deploy/scripts/*.sh
+sudo chmod +x /opt/student-exchange/app/deploy/scripts/audit_webhook_404.sh
 sudo chmod +x /opt/student-exchange/app/deploy/listener/webhook_listener.py
 ```
 
@@ -132,8 +134,35 @@ Create webhook in GitHub:
 - Active: enabled
 
 Note: GitHub webhooks do not follow `301/302` redirects. The payload URL must return `2xx` directly.
+Do not use IP + HTTP as a production webhook URL, because virtual-host drift can silently return `404`.
+Treat `deploy/scripts/setup_autodeploy_vps.sh` as source of truth; if emergency manual changes are made, backport them to repo immediately.
 
-## 8) Rollback
+## 8) Webhook RCA (404 / delivery failures)
+
+When a delivery fails, capture the GitHub delivery ID, exact response status, and response body first.
+Then run:
+
+```bash
+sudo bash /opt/student-exchange/app/deploy/scripts/audit_webhook_404.sh <YOUR_DOMAIN> [<SERVER_IP>]
+```
+
+The script checks:
+- Active Nginx routing and server blocks (`nginx -T`)
+- Listener process and runtime env (`systemd`, `journalctl`, env file)
+- Local and public endpoint probes
+- Quick classification based on status/body patterns
+
+Quick matrix:
+- `404` + HTML body: likely Nginx vhost/location mismatch
+- `404` + `{"message":"not found"}`: listener path mismatch (`WEBHOOK_PATH`)
+- `502`: listener down or upstream mismatch
+- `401`: webhook secret/signature mismatch
+- `403`: GitHub IP blocked by allowlist
+- `500` + `secret is not configured`: missing `GITHUB_WEBHOOK_SECRET`
+
+After any Nginx/systemd change, run one manual GitHub **Redeliver** and confirm `202` before closing incident.
+
+## 9) Rollback
 
 Rollback to last successful SHA:
 
@@ -147,12 +176,13 @@ Rollback to a specific SHA:
 sudo -u deploy /opt/student-exchange/app/deploy/scripts/rollback.sh <commit-sha>
 ```
 
-## 9) Operations
+## 10) Operations
 
 Useful commands:
 
 ```bash
 sudo journalctl -u student-exchange-webhook -f
+sudo tail -f /var/log/nginx/student-exchange-webhook.access.log
 sudo tail -f /var/log/student-exchange/deploy.log
 sudo -u deploy docker compose -f /opt/student-exchange/app/docker-compose.prod.yml ps
 ```
@@ -163,7 +193,7 @@ Clear `/products` data (`listings` table only):
 sudo -u deploy bash /opt/student-exchange/app/deploy/scripts/purge_product_listings.sh --yes
 ```
 
-## 10) Known Note About Flyway Migration V5
+## 11) Known Note About Flyway Migration V5
 
 `V5__update_iot_highlights_categories.sql` was rewritten during cross-database migration and now targets MySQL 8.0 syntax.
 If a deployed database already recorded the previous checksum for V5, run Flyway repair once before next migration:

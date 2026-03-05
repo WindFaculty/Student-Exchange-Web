@@ -14,6 +14,20 @@ require_cmd() {
   fi
 }
 
+normalize_path() {
+  local path="$1"
+  if [[ -z "$path" ]]; then
+    path="/"
+  fi
+  if [[ "$path" != /* ]]; then
+    path="/$path"
+  fi
+  if [[ "$path" != "/" ]]; then
+    path="${path%/}"
+  fi
+  echo "$path"
+}
+
 first_ipv4() {
   ip -4 -o addr show scope global | awk '{split($4,a,"/"); print a[1]; exit}'
 }
@@ -66,7 +80,12 @@ SERVER_NAME="${SERVER_NAME:-$(first_ipv4)}"
 
 LISTEN_HOST="${LISTEN_HOST:-127.0.0.1}"
 LISTEN_PORT="${LISTEN_PORT:-9000}"
-WEBHOOK_PATH="${WEBHOOK_PATH:-/webhook/github/deploy}"
+WEBHOOK_PATH="$(normalize_path "${WEBHOOK_PATH:-/webhook/github/deploy}")"
+if [[ "$WEBHOOK_PATH" == "/" ]]; then
+  WEBHOOK_PATH_SLASH="/"
+else
+  WEBHOOK_PATH_SLASH="$WEBHOOK_PATH/"
+fi
 
 BACKEND_ENV_FILE="${BACKEND_ENV_FILE:-/opt/student-exchange/shared/backend.env}"
 WEBHOOK_ENV_FILE="${WEBHOOK_ENV_FILE:-/etc/student-exchange/webhook-listener.env}"
@@ -79,6 +98,10 @@ NOTIFY_WEBHOOK_URL="${NOTIFY_WEBHOOK_URL:-}"
 if [[ -z "$SERVER_NAME" ]]; then
   echo "Unable to detect SERVER_NAME. Set it manually, e.g.: SERVER_NAME=103.126.162.42" >&2
   exit 1
+fi
+
+if [[ "$SERVER_NAME" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+  echo "WARNING: SERVER_NAME is an IPv4 address. Prefer a domain + TLS for stable GitHub webhook delivery." >&2
 fi
 
 if [[ ! -d "$REPO_DIR/.git" ]]; then
@@ -172,18 +195,37 @@ upstream student_exchange_webhook {
     server 127.0.0.1:9000;
 }
 
+log_format student_exchange_webhook
+    '\$remote_addr - \$remote_user [\$time_local] "\$request" \$status \$body_bytes_sent '
+    'host="\$host" request_id="\$request_id" '
+    'upstream_addr="\$upstream_addr" upstream_status="\$upstream_status" '
+    'upstream_response_time="\$upstream_response_time"';
+
 server {
     listen 80;
     server_name $SERVER_NAME;
     client_max_body_size 50m;
 
-    location $WEBHOOK_PATH {
+    location = $WEBHOOK_PATH {
         include /etc/nginx/snippets/github-webhook-allowlist.conf;
         proxy_pass http://student_exchange_webhook;
         proxy_set_header Host \$host;
         proxy_set_header X-Forwarded-For \$remote_addr;
         proxy_set_header X-Forwarded-Proto \$scheme;
+        proxy_set_header X-Request-Id \$request_id;
         proxy_read_timeout 60s;
+        access_log /var/log/nginx/student-exchange-webhook.access.log student_exchange_webhook;
+    }
+
+    location = $WEBHOOK_PATH_SLASH {
+        include /etc/nginx/snippets/github-webhook-allowlist.conf;
+        proxy_pass http://student_exchange_webhook;
+        proxy_set_header Host \$host;
+        proxy_set_header X-Forwarded-For \$remote_addr;
+        proxy_set_header X-Forwarded-Proto \$scheme;
+        proxy_set_header X-Request-Id \$request_id;
+        proxy_read_timeout 60s;
+        access_log /var/log/nginx/student-exchange-webhook.access.log student_exchange_webhook;
     }
 
     location /api/ {
@@ -229,7 +271,8 @@ run_as_deploy bash "$DEPLOY_SCRIPT" || true
 echo
 echo "Auto-deploy setup complete."
 echo "GitHub webhook settings:"
-echo "  Payload URL : http://$SERVER_NAME$WEBHOOK_PATH"
+echo "  Preferred Payload URL : https://$SERVER_NAME$WEBHOOK_PATH"
+echo "  Temporary Payload URL : http://$SERVER_NAME$WEBHOOK_PATH"
 echo "  Content type: application/json"
 echo "  Secret      : $WEBHOOK_SECRET"
 echo "  Event       : Just the push event"
