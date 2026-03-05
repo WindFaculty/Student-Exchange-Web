@@ -131,6 +131,8 @@ Create webhook in GitHub:
 - Event: `Just the push event`
 - Active: enabled
 
+Note: GitHub webhooks do not follow `301/302` redirects. The payload URL must return `2xx` directly.
+
 ## 8) Rollback
 
 Rollback to last successful SHA:
