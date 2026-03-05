@@ -6,19 +6,17 @@ import com.ssg.iot.domain.RefVnProvince;
 import com.ssg.iot.domain.RefVnWard;
 import com.ssg.iot.domain.User;
 import com.ssg.iot.domain.UserRole;
+import com.ssg.iot.domain.UserSocialIdentity;
 import com.ssg.iot.dto.auth.UpdateProfileRequest;
 import com.ssg.iot.dto.auth.UserSessionResponse;
+import com.ssg.iot.dto.auth.ZaloProfileResponse;
+import com.ssg.iot.dto.auth.ZaloTokenResponse;
 import com.ssg.iot.repository.UserRepository;
+import com.ssg.iot.repository.UserSocialIdentityRepository;
 import com.ssg.iot.service.location.VnLocationQueryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.beans.factory.annotation.Value;
-import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
-import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
-import com.google.api.client.http.javanet.NetHttpTransport;
-import com.google.api.client.json.gson.GsonFactory;
 
-import java.util.Collections;
 import java.util.Locale;
 import java.util.UUID;
 
@@ -26,11 +24,13 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class AuthService {
 
-    private final UserRepository userRepository;
-    private final VnLocationQueryService locationQueryService;
+    private static final String ZALO_PROVIDER = "ZALO";
+    private static final String ZALO_EMAIL_DOMAIN = "zalo.local";
 
-    @Value("${google.client.id}")
-    private String googleClientId;
+    private final UserRepository userRepository;
+    private final UserSocialIdentityRepository userSocialIdentityRepository;
+    private final VnLocationQueryService locationQueryService;
+    private final ZaloOAuthGateway zaloOAuthGateway;
 
     public User authenticate(String username, String password) {
         User user = userRepository.findByUsernameAndActiveTrue(username)
@@ -45,7 +45,7 @@ public class AuthService {
 
     public User register(String username, String email, String password) {
         String normalizedUsername = username.trim();
-        String normalizedEmail = email.trim().toLowerCase();
+        String normalizedEmail = email.trim().toLowerCase(Locale.ROOT);
 
         if (userRepository.existsByUsernameIgnoreCase(normalizedUsername)) {
             throw new BadRequestException("Username is already taken");
@@ -114,49 +114,161 @@ public class AuthService {
         return toSessionResponse(saved);
     }
 
-    public User authenticateWithGoogle(String idTokenString) {
-        try {
-            GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(
-                    new NetHttpTransport(), new GsonFactory())
-                    .setAudience(Collections.singletonList(googleClientId))
-                    .build();
-
-            GoogleIdToken idToken = verifier.verify(idTokenString);
-            if (idToken != null) {
-                GoogleIdToken.Payload payload = idToken.getPayload();
-                String email = payload.getEmail();
-                String name = (String) payload.get("name");
-
-                return userRepository.findByEmailIgnoreCase(email)
-                        .orElseGet(() -> createGoogleUser(email, name));
-            } else {
-                throw new UnauthorizedException("Invalid Google ID Token");
-            }
-        } catch (Exception e) {
-            throw new UnauthorizedException("Failed to verify Google ID Token");
-        }
+    public String buildZaloAuthorizeUrl(String state) {
+        return zaloOAuthGateway.buildAuthorizeUrl(state);
     }
 
-    private User createGoogleUser(String email, String name) {
-        String baseUsername = email.split("@")[0].toLowerCase().replaceAll("[^a-z0-9]", "");
-        String username = baseUsername;
-        int counter = 1;
-        while (userRepository.existsByUsernameIgnoreCase(username)) {
-            username = baseUsername + counter++;
+    public ZaloTokenResponse exchangeZaloCodeForAccessToken(String code) {
+        return zaloOAuthGateway.exchangeAuthorizationCode(code);
+    }
+
+    public ZaloProfileResponse fetchZaloProfile(String accessToken) {
+        return zaloOAuthGateway.fetchUserProfile(accessToken);
+    }
+
+    public User authenticateWithZalo(String authorizationCode) {
+        ZaloTokenResponse tokenResponse = exchangeZaloCodeForAccessToken(authorizationCode);
+        ZaloProfileResponse profile = fetchZaloProfile(tokenResponse.getAccessToken());
+        String providerUserId = normalizeOptional(profile.getId());
+        if (providerUserId == null) {
+            throw new UnauthorizedException("Zalo profile does not contain id");
         }
 
-        String randomPassword = UUID.randomUUID().toString();
-        
+        return userSocialIdentityRepository.findByProviderAndProviderUserId(ZALO_PROVIDER, providerUserId)
+                .map(UserSocialIdentity::getUser)
+                .map(this::requireActiveUser)
+                .orElseGet(() -> registerOrLinkZaloUser(profile, providerUserId));
+    }
+
+    private User registerOrLinkZaloUser(ZaloProfileResponse profile, String providerUserId) {
+        String normalizedEmail = normalizeEmail(profile.getEmail());
+        if (normalizedEmail == null) {
+            User createdUser = createZaloUser(profile, generateUniquePseudoEmail(providerUserId), providerUserId);
+            ensureZaloIdentity(createdUser, providerUserId);
+            return createdUser;
+        }
+
+        User user = userRepository.findByEmailIgnoreCase(normalizedEmail)
+                .map(this::requireActiveUser)
+                .orElseGet(() -> createZaloUser(profile, normalizedEmail, providerUserId));
+
+        ensureZaloIdentity(user, providerUserId);
+        return user;
+    }
+
+    private User requireActiveUser(User user) {
+        if (!user.isActive()) {
+            throw new UnauthorizedException("Account is inactive");
+        }
+        return user;
+    }
+
+    private void ensureZaloIdentity(User user, String providerUserId) {
+        UserSocialIdentity existingIdentity = userSocialIdentityRepository
+                .findByUserIdAndProvider(user.getId(), ZALO_PROVIDER)
+                .orElse(null);
+
+        if (existingIdentity != null) {
+            if (!existingIdentity.getProviderUserId().equals(providerUserId)) {
+                throw new UnauthorizedException("This account is already linked with another Zalo account");
+            }
+            return;
+        }
+
+        userSocialIdentityRepository.save(UserSocialIdentity.builder()
+                .user(user)
+                .provider(ZALO_PROVIDER)
+                .providerUserId(providerUserId)
+                .build());
+    }
+
+    private User createZaloUser(ZaloProfileResponse profile, String email, String providerUserId) {
+        String username = generateUniqueUsername(buildBaseUsername(profile.getName(), providerUserId));
+
         User user = User.builder()
                 .username(username)
-                .password(randomPassword)
-                .fullName(name != null ? name : username)
+                .password(UUID.randomUUID().toString())
+                .fullName(defaultIfBlank(profile.getName(), username))
                 .email(email)
                 .role(UserRole.USER)
                 .active(true)
+                .avatarUrl(extractAvatarUrl(profile))
                 .build();
 
         return userRepository.save(user);
+    }
+
+    private String extractAvatarUrl(ZaloProfileResponse profile) {
+        if (profile.getPicture() == null || profile.getPicture().getData() == null) {
+            return null;
+        }
+        return normalizeOptional(profile.getPicture().getData().getUrl());
+    }
+
+    private String buildBaseUsername(String displayName, String providerUserId) {
+        String fromDisplayName = normalizeOptional(displayName);
+        if (fromDisplayName != null) {
+            String normalized = fromDisplayName.toLowerCase(Locale.ROOT).replaceAll("[^a-z0-9]", "");
+            if (!normalized.isBlank()) {
+                return normalized;
+            }
+        }
+
+        String fromProviderId = providerUserId.toLowerCase(Locale.ROOT).replaceAll("[^a-z0-9]", "");
+        if (!fromProviderId.isBlank()) {
+            return "zalo" + fromProviderId;
+        }
+        return "zalo";
+    }
+
+    private String generateUniqueUsername(String baseUsername) {
+        String normalizedBase = baseUsername.length() > 60 ? baseUsername.substring(0, 60) : baseUsername;
+        String candidate = normalizedBase;
+        int counter = 1;
+        while (userRepository.existsByUsernameIgnoreCase(candidate)) {
+            candidate = normalizedBase + counter++;
+        }
+        return candidate;
+    }
+
+    private String buildPseudoEmail(String providerUserId) {
+        String normalizedId = providerUserId.toLowerCase(Locale.ROOT).replaceAll("[^a-z0-9]", "");
+        if (normalizedId.isBlank()) {
+            normalizedId = UUID.randomUUID().toString().replace("-", "");
+        }
+        return "zalo_" + normalizedId + "@" + ZALO_EMAIL_DOMAIN;
+    }
+
+    private String generateUniquePseudoEmail(String providerUserId) {
+        String baseEmail = buildPseudoEmail(providerUserId);
+        if (!userRepository.existsByEmailIgnoreCase(baseEmail)) {
+            return baseEmail;
+        }
+
+        int separator = baseEmail.indexOf('@');
+        String localPart = baseEmail.substring(0, separator);
+        String domainPart = baseEmail.substring(separator);
+        int counter = 1;
+        String candidate = localPart + counter + domainPart;
+        while (userRepository.existsByEmailIgnoreCase(candidate)) {
+            counter++;
+            candidate = localPart + counter + domainPart;
+        }
+        return candidate;
+    }
+
+    private String normalizeEmail(String email) {
+        String normalized = normalizeOptional(email);
+        if (normalized == null) {
+            return null;
+        }
+        String lowered = normalized.toLowerCase(Locale.ROOT);
+        return lowered.contains("@") ? lowered : null;
+    }
+
+    private String defaultIfBlank(String value, String fallback) {
+        String normalized = normalizeOptional(value);
+        return normalized != null ? normalized : fallback;
     }
 
     private String normalizeOptional(String value) {

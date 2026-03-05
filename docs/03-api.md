@@ -21,6 +21,8 @@ Base URL: `/api`
 - `POST /api/auth/register`
 - `POST /api/auth/logout`
 - `GET /api/auth/me`
+- `GET /api/auth/zalo/authorize?returnTo=`
+- `GET /api/auth/zalo/callback?code=&state=`
 - `PUT /api/me/profile` (auth user)
 
 Register request:

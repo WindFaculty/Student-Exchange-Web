@@ -6,14 +6,13 @@ import { Button } from '../components/ui/Button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/Card'
 import { Input } from '../components/ui/Input'
 import Icon from '../components/ui/Icon'
-import { GoogleLogin } from '@react-oauth/google'
 
 type AuthMode = 'login' | 'register'
 
 const LoginPage: React.FC = () => {
   const navigate = useNavigate()
   const location = useLocation()
-  const { login, register, googleLogin } = useAuth()
+  const { login, register } = useAuth()
 
   const [mode, setMode] = useState<AuthMode>('login')
   const [loginUsername, setLoginUsername] = useState('student1')
@@ -65,23 +64,9 @@ const LoginPage: React.FC = () => {
     setError('')
   }
 
-  const handleGoogleSuccess = async (credentialResponse: any) => {
-    if (credentialResponse.credential) {
-      setLoading(true)
-      setError('')
-      try {
-        await googleLogin(credentialResponse.credential)
-        navigate(getRedirectPath(), { replace: true })
-      } catch (err: unknown) {
-        setError(mapApiError(err, 'Đăng nhập Google thất bại'))
-      } finally {
-        setLoading(false)
-      }
-    }
-  }
-
-  const handleGoogleError = () => {
-    setError('Đăng nhập Google thất bại.')
+  const handleZaloLogin = () => {
+    const returnTo = encodeURIComponent(getRedirectPath())
+    window.location.href = `/api/auth/zalo/authorize?returnTo=${returnTo}`
   }
 
   return (
@@ -148,13 +133,9 @@ const LoginPage: React.FC = () => {
                 </div>
               </div>
 
-              <div className="flex justify-center w-full">
-                <GoogleLogin
-                  onSuccess={handleGoogleSuccess}
-                  onError={handleGoogleError}
-                  useOneTap
-                />
-              </div>
+              <Button type="button" variant="outline" className="w-full" onClick={handleZaloLogin}>
+                Đăng nhập với Zalo
+              </Button>
             </form>
           ) : (
             <form className="space-y-4" onSubmit={handleRegisterSubmit}>
@@ -194,12 +175,9 @@ const LoginPage: React.FC = () => {
                 </div>
               </div>
 
-              <div className="flex justify-center w-full">
-                <GoogleLogin
-                  onSuccess={handleGoogleSuccess}
-                  onError={handleGoogleError}
-                />
-              </div>
+              <Button type="button" variant="outline" className="w-full" onClick={handleZaloLogin}>
+                Tiếp tục với Zalo
+              </Button>
             </form>
           )}
         </CardContent>

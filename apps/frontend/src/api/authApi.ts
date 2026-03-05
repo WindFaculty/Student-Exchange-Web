@@ -52,19 +52,6 @@ export const authApi = {
     return fetchJson<UserSession>('/api/auth/me')
   },
 
-  async googleLogin(idToken: string): Promise<UserSession> {
-    const data = await fetchJson<LoginResponse>('/api/auth/google', {
-      method: 'POST',
-      body: JSON.stringify({ idToken }),
-    })
-
-    if (!data.success || !data.user) {
-      throw new Error(data.message || 'Google Login failed')
-    }
-
-    return data.user
-  },
-
   async updateProfile(payload: UpdateProfilePayload): Promise<UserSession> {
     return fetchJson<UserSession>('/api/me/profile', {
       method: 'PUT',

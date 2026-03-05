@@ -10,6 +10,7 @@ import com.ssg.iot.dto.auth.UserSessionResponse;
 import com.ssg.iot.repository.RefVnProvinceRepository;
 import com.ssg.iot.repository.RefVnWardRepository;
 import com.ssg.iot.repository.UserRepository;
+import com.ssg.iot.repository.UserSocialIdentityRepository;
 import com.ssg.iot.service.location.VnLocationQueryService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -35,13 +36,19 @@ class AuthServiceTest {
     @Mock
     private RefVnWardRepository wardRepository;
 
+    @Mock
+    private UserSocialIdentityRepository userSocialIdentityRepository;
+
+    @Mock
+    private ZaloOAuthGateway zaloOAuthGateway;
+
     private VnLocationQueryService locationQueryService;
     private AuthService authService;
 
     @BeforeEach
     void setUp() {
         locationQueryService = new VnLocationQueryService(provinceRepository, wardRepository);
-        authService = new AuthService(userRepository, locationQueryService);
+        authService = new AuthService(userRepository, userSocialIdentityRepository, locationQueryService, zaloOAuthGateway);
     }
 
     @Test

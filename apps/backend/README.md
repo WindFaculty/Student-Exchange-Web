@@ -16,6 +16,7 @@ spring.datasource.password=wind_faculty
 ```
 
 You can override these with environment variables: `DB_URL`, `DB_USERNAME`, `DB_PASSWORD`.
+For Zalo OAuth login, also set: `ZALO_APP_ID`, `ZALO_APP_SECRET`, `ZALO_REDIRECT_URI`, `APP_FRONTEND_BASE_URL`.
 
 If startup fails with `Access denied for user 'student_exchange_web'@'localhost'`, run from repo root:
 
