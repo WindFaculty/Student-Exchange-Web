@@ -1,6 +1,7 @@
 package com.ssg.iot.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ssg.iot.common.BadRequestException;
 import com.ssg.iot.common.UnauthorizedException;
 import com.ssg.iot.dto.auth.ZaloProfileResponse;
 import com.ssg.iot.dto.auth.ZaloTokenResponse;
@@ -17,6 +18,8 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -25,6 +28,8 @@ public class ZaloOAuthClient implements ZaloOAuthGateway {
     private static final String ZALO_AUTHORIZE_URL = "https://oauth.zaloapp.com/v4/permission";
     private static final String ZALO_ACCESS_TOKEN_URL = "https://oauth.zaloapp.com/v4/access_token";
     private static final String ZALO_PROFILE_URL = "https://graph.zalo.me/v2.0/me";
+    private static final String PLACEHOLDER_ZALO_APP_ID = "placeholder-zalo-app-id";
+    private static final String PLACEHOLDER_ZALO_APP_SECRET = "placeholder-zalo-app-secret";
 
     private final ObjectMapper objectMapper;
     private final HttpClient httpClient = HttpClient.newBuilder()
@@ -42,6 +47,7 @@ public class ZaloOAuthClient implements ZaloOAuthGateway {
 
     @Override
     public String buildAuthorizeUrl(String state) {
+        validateOAuthConfiguration(false);
         return UriComponentsBuilder.fromHttpUrl(ZALO_AUTHORIZE_URL)
                 .queryParam("app_id", zaloAppId)
                 .queryParam("redirect_uri", zaloRedirectUri)
@@ -52,6 +58,7 @@ public class ZaloOAuthClient implements ZaloOAuthGateway {
 
     @Override
     public ZaloTokenResponse exchangeAuthorizationCode(String code) {
+        validateOAuthConfiguration(true);
         String body = "app_id=" + urlEncode(zaloAppId)
                 + "&code=" + urlEncode(code)
                 + "&grant_type=authorization_code"
@@ -152,5 +159,51 @@ public class ZaloOAuthClient implements ZaloOAuthGateway {
 
     private boolean isBlank(String value) {
         return value == null || value.trim().isEmpty();
+    }
+
+    private void validateOAuthConfiguration(boolean requireSecret) {
+        List<String> invalidVariables = new ArrayList<>();
+        if (isInvalidValue(zaloAppId, PLACEHOLDER_ZALO_APP_ID)) {
+            invalidVariables.add("ZALO_APP_ID");
+        }
+        if (isInvalidRedirectUri(zaloRedirectUri)) {
+            invalidVariables.add("ZALO_REDIRECT_URI");
+        }
+        if (requireSecret && isInvalidValue(zaloAppSecret, PLACEHOLDER_ZALO_APP_SECRET)) {
+            invalidVariables.add("ZALO_APP_SECRET");
+        }
+
+        if (!invalidVariables.isEmpty()) {
+            throw new BadRequestException("Zalo OAuth is not configured correctly. Set valid values for: "
+                    + String.join(", ", invalidVariables));
+        }
+    }
+
+    private boolean isInvalidValue(String value, String placeholderValue) {
+        if (isBlank(value)) {
+            return true;
+        }
+        String normalized = value.trim();
+        if (normalized.equalsIgnoreCase(placeholderValue)) {
+            return true;
+        }
+        return looksLikeTemplateValue(normalized);
+    }
+
+    private boolean isInvalidRedirectUri(String redirectUri) {
+        if (isInvalidValue(redirectUri, "")) {
+            return true;
+        }
+        try {
+            URI uri = URI.create(redirectUri.trim());
+            String scheme = uri.getScheme();
+            return scheme == null || (!scheme.equalsIgnoreCase("http") && !scheme.equalsIgnoreCase("https")) || isBlank(uri.getHost());
+        } catch (Exception ex) {
+            return true;
+        }
+    }
+
+    private boolean looksLikeTemplateValue(String value) {
+        return value.startsWith("<") && value.endsWith(">");
     }
 }

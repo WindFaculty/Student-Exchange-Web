@@ -6,7 +6,7 @@ services:
       context: ./apps/backend
       dockerfile: Dockerfile
     env_file:
-      - ${BACKEND_ENV_FILE:-./deploy/env/backend.env.example}
+      - ${BACKEND_ENV_FILE:?Set BACKEND_ENV_FILE to your backend.env path}
     restart: unless-stopped
     ports:
       - "127.0.0.1:18080:8080"
