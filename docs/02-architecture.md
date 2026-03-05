@@ -14,6 +14,13 @@ MySQL 8.0
 
 Session (HttpSession): USER + CART
 Flyway: versioned schema migration
+
+Internal agentic runtime:
+Ops CLI
+  -> Backend internal endpoint (/internal/agentic/*, localhost + token)
+  -> Python sidecar (:18082 host bind -> :8090 container)
+  -> Redis queue/pub-sub
+  -> Filesystem state (ai-dev-system/tasks,memory,logs,workspace)
 ```
 
 ## Backend Layers
@@ -44,6 +51,8 @@ Flyway: versioned schema migration
 - Backend role guard in `SessionAuthService`
 - Admin APIs under `/api/admin/**` require `ADMIN`
 - Frontend protected routes enforce auth + role
+- Agentic endpoints under `/internal/agentic/**` require `X-Internal-Token`
+- Agentic endpoints only accept localhost traffic when `agentic.internal.allow-localhost=true`
 
 ## Data and Migration
 - Flyway migration: `apps/backend/src/main/resources/db/migration/V1__init_schema.sql`

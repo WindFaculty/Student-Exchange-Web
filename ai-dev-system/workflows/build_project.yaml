@@ -1,0 +1,18 @@
+workflow_id: build_project
+description: Research to implementation with review and debug.
+steps:
+  - id: research
+    agent: research
+    action: gather_context
+  - id: coding
+    agent: coder
+    action: implement
+  - id: review
+    agent: reviewer
+    action: review
+  - id: debug
+    agent: debugger
+    action: fix
+  - id: docs
+    agent: docs
+    action: document

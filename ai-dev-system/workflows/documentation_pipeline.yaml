@@ -1,0 +1,12 @@
+workflow_id: documentation_pipeline
+description: Produce documentation from implementation context.
+steps:
+  - id: research
+    agent: research
+    action: collect_context
+  - id: docs
+    agent: docs
+    action: write_docs
+  - id: review
+    agent: reviewer
+    action: quality_check

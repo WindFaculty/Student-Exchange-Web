@@ -1,0 +1,17 @@
+system:
+  service_name: ai-dev-system
+  env: production
+  host: 0.0.0.0
+  port: 8090
+  internal_token_env: AGENTIC_INTERNAL_TOKEN
+  redis_url_env: AGENTIC_REDIS_URL
+  redis_url_default: redis://redis:6379/0
+  queue_key: agentic:queue:tasks
+  events_channel: agentic:events
+  task_root: /app/tasks
+  logs_root: /app/logs
+  workflows_root: /app/workflows
+  prompts_root: /app/prompts
+  memory_root: /app/memory
+  max_workers: 4
+  request_timeout_seconds: 30

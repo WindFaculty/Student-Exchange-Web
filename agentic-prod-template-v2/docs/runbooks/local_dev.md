@@ -1,45 +1,36 @@
-# Local Development Runbook (Template)
+# Local Development Runbook
 
 ## Prerequisites
 1. Python 3.11+
-2. `git` and `rg`
-3. Project-specific runtime dependencies (customize for your stack)
+2. Java 17+, Node.js 20+, Docker
+3. `git` and `rg`
 
-## Install template tooling
+## Agentic template tooling checks
 ```powershell
 cd agentic-prod-template-v2
 python -m pip install -e .
-```
-
-If template location differs from the default nested layout, set:
-```powershell
-$env:TARGET_REPO_PATH="."
-```
-
-## Validate configs
-```powershell
 python -m tools.validate_configs
-```
-
-## Create or refresh manifest snapshot
-```powershell
 python -m tools.index --mode write
-```
-
-## Verify snapshot consistency
-```powershell
-python -m tools.index --mode check
-```
-
-## Full strict check
-```powershell
 python -m tools.doctor --strict
 ```
 
+## Sidecar runtime local checks
+```powershell
+cd ../ai-dev-system
+python -m pip install -r requirements.txt
+python -m pytest
+python -m uvicorn orchestrator.app:app --host 127.0.0.1 --port 8090
+```
+
+## Redis local
+```powershell
+docker run --rm -p 6379:6379 redis:7.4-alpine
+```
+
 ## Common issues
-1. `ModuleNotFoundError: tools`
-   - Run commands from `agentic-prod-template-v2/`.
-2. Manifest check fails
-   - Rebuild snapshot with `--mode write` after structure changes.
-3. Config schema failures
-   - Inspect key path in the validation error and update YAML accordingly.
+1. `tools` module not found:
+- Run commands from `agentic-prod-template-v2/`.
+2. Sidecar cannot connect Redis:
+- Ensure `AGENTIC_REDIS_URL` points to active Redis.
+3. Internal token mismatch:
+- Align `AGENTIC_INTERNAL_TOKEN` between backend and sidecar env.

@@ -1,0 +1,29 @@
+agents:
+  supervisor:
+    role: coordinator
+    provider: claude
+    enabled: true
+  planner:
+    role: decomposition
+    provider: claude
+    enabled: true
+  research:
+    role: retrieval
+    provider: gemini
+    enabled: true
+  coder:
+    role: implementation
+    provider: codex
+    enabled: true
+  reviewer:
+    role: review
+    provider: claude
+    enabled: true
+  debugger:
+    role: debugging
+    provider: codex
+    enabled: true
+  docs:
+    role: documentation
+    provider: gemini
+    enabled: true

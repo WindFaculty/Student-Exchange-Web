@@ -21,6 +21,7 @@ Student Exchange full-stack platform built with Spring Boot + React + Tailwind.
 ## Repo Structure
 - `apps/backend` - Spring Boot backend
 - `apps/frontend` - React frontend
+- `ai-dev-system` - Internal multi-agent sidecar runtime (Python + Redis)
 - `docs` - scope, architecture, API, UI, decisions
 - `tasks` - milestone tracker
 
@@ -100,6 +101,7 @@ cd ../backend
 - API: `docs/03-api.md`
 - Architecture: `docs/02-architecture.md`
 - Scope: `docs/01-scope.md`
+- Agent runtime: `docs/07-agent-reference.md`
 - Task queue: `tasks/task-queue.md`
 - CI/CD VPS runbook: `docs/cicd-vps.md`
 - Data migration tools: `tools/db-migration/`

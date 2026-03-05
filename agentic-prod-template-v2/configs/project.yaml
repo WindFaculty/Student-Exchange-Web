@@ -1,28 +1,30 @@
 project:
-  name: Example Product Repository
+  name: Student Exchange Web Platform
   description: >
-    Generic agentic production template for polyglot repositories.
-    Replace this metadata with your project-specific context.
+    Full-stack Student Exchange platform with an internal multi-agent runtime.
+    Runtime architecture uses Spring Boot + React + MySQL with Python sidecar orchestration.
   primary_languages:
     - java
     - typescript
     - python
   stack:
-    backend: service-framework
-    frontend: web-framework
-    database: sql-or-nosql
+    backend: spring-boot
+    frontend: react-vite
+    database: mysql-8
+    sidecar: fastapi-redis
   conventions:
     branching: "feature/*"
     commit_style: "task-id prefix + short imperative summary"
     code_style:
       backend: "layered architecture with explicit API contracts"
-      frontend: "linted typed UI modules"
-      infra: "small reviewable changes"
+      frontend: "typed modules and centralized API clients"
+      sidecar: "modular agents with explicit workflow contracts"
+      infra: "small and reversible deployment changes"
   definition_of_done:
-    - "Build/test checks pass for the changed scope"
-    - "No secrets are introduced"
-    - "Docs and task tracking are updated when behavior or scope changes"
-    - "Diff remains scoped to the requested task"
+    - "Build/test checks pass for changed scope"
+    - "Internal agentic endpoints remain non-public"
+    - "No secrets are committed"
+    - "Docs and task tracking are updated when behavior changes"
 
 rag:
   include_globs:
@@ -33,7 +35,10 @@ rag:
     - "apps/**/src/**/*.*"
     - "apps/**/package.json"
     - "apps/**/pom.xml"
-    - "apps/**/pyproject.toml"
+    - "ai-dev-system/**/*.py"
+    - "ai-dev-system/**/*.yaml"
+    - "ai-dev-system/**/*.md"
+    - "ai-dev-system/Dockerfile"
     - "agentic-prod-template-v2/pyproject.toml"
     - "agentic-prod-template-v2/tools/*.py"
     - "agentic-prod-template-v2/.ai/**/*.md"
@@ -48,9 +53,10 @@ rag:
     - "**/.git/**"
     - "**/.venv/**"
     - "agentic-prod-template-v2/data/**"
+    - "ai-dev-system/.venv/**"
   chunking:
     code:
-      strategy: "by_symbol"   # by_symbol | fixed
+      strategy: "by_symbol"
       max_chars: 6000
     text:
       max_chars: 4000

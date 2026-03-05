@@ -34,3 +34,8 @@
 - Decision: Core business flows must not rely on localStorage mock data.
 - Why: Demo-readiness requires backend-backed behavior and traceable records.
 - Tradeoff: Higher integration effort before UI polish.
+
+## 2026-03-05
+- Decision: Introduce internal multi-agent runtime as Python sidecar (`ai-dev-system`) with Redis + filesystem state.
+- Why: Keep public product APIs stable while enabling orchestrated agent workflows for engineering automation.
+- Tradeoff: Additional operational surface (sidecar/redis health, internal token management).

@@ -1,908 +1,2102 @@
-[
-  {
-    "path": "README.md",
-    "bytes": 2039,
-    "sha256": "d54d14cbae2daa0f9fe7bf52aa9d53647960563864fbde382f7598930e197a41",
-    "mtime_utc": "2026-02-16T17:03:19Z"
-  },
-  {
-    "path": "SETUP.md",
-    "bytes": 2127,
-    "sha256": "8a2d2527bdc661cea533271631e30ebf540454aa232c5e853678c7e2549a0766",
-    "mtime_utc": "2026-02-09T17:42:11Z"
-  },
-  {
-    "path": "agentic-prod-template-v2/.ai/prompts/bugfix_template.md",
-    "bytes": 307,
-    "sha256": "3defdb29e52a5099a70eacedea942de419a32fc6a0d2ebaf9eaaf061e3ee3961",
-    "mtime_utc": "2026-02-19T05:45:38Z"
-  },
-  {
-    "path": "agentic-prod-template-v2/.ai/prompts/mission_template.md",
-    "bytes": 531,
-    "sha256": "5c63f1cf8144ae2fb9f985e309a68d9c30162e226ba89988476a498b0aad30a9",
-    "mtime_utc": "2026-02-19T05:45:38Z"
-  },
-  {
-    "path": "agentic-prod-template-v2/.ai/prompts/refactor_guardrails.md",
-    "bytes": 357,
-    "sha256": "46e3af3e07d124ebc3302aeaf552c68651ed44cc3493faf3b7cee95b60b03b45",
-    "mtime_utc": "2026-02-19T05:45:38Z"
-  },
-  {
-    "path": "agentic-prod-template-v2/configs/agents.yaml",
-    "bytes": 739,
-    "sha256": "158dc7e2e42b578b492829862d97013f4b732a61009eed70f8f7da4887291986",
-    "mtime_utc": "2026-02-19T05:41:51Z"
-  },
-  {
-    "path": "agentic-prod-template-v2/configs/project.yaml",
-    "bytes": 1657,
-    "sha256": "5012508101f157bb78f125770a9d18957039400cafd06ecd072707f3dea44137",
-    "mtime_utc": "2026-02-19T05:49:53Z"
-  },
-  {
-    "path": "agentic-prod-template-v2/configs/schemas/agents.schema.json",
-    "bytes": 1621,
-    "sha256": "bd9533c06adf64455a5f3cb951962b36ea6c7fc021af53d8e766221e029690c3",
-    "mtime_utc": "2026-02-19T05:42:24Z"
-  },
-  {
-    "path": "agentic-prod-template-v2/configs/schemas/project.schema.json",
-    "bytes": 3038,
-    "sha256": "268959c5941c698aa41bee1619bfe1fd5591f22ace7f138f5010d9e1fd2cf858",
-    "mtime_utc": "2026-02-19T05:42:23Z"
-  },
-  {
-    "path": "agentic-prod-template-v2/configs/schemas/tools_allowlist.schema.json",
-    "bytes": 1639,
-    "sha256": "8374c49f746be6538da5727f918d82fe2a23826c9cd6ee227c7a0a202e520a33",
-    "mtime_utc": "2026-02-19T05:42:24Z"
-  },
-  {
-    "path": "agentic-prod-template-v2/configs/tools_allowlist.yaml",
-    "bytes": 553,
-    "sha256": "10512deca242382f92840cc6a718b72dcc9a521206aa5c67101c1d8f887c51c0",
-    "mtime_utc": "2026-02-19T05:41:51Z"
-  },
-  {
-    "path": "agentic-prod-template-v2/docs/architecture/api.md",
-    "bytes": 439,
-    "sha256": "b4231827a7f0072c20483abe25649bac19028f926e57f4b8edf7c56703eda88c",
-    "mtime_utc": "2026-02-19T05:45:04Z"
-  },
-  {
-    "path": "agentic-prod-template-v2/docs/architecture/boundaries.md",
-    "bytes": 685,
-    "sha256": "4934be0bcb307edd062756742e62509e2acd8df748c8e54f0fdfffe75d1a8196",
-    "mtime_utc": "2026-02-19T05:45:05Z"
-  },
-  {
-    "path": "agentic-prod-template-v2/docs/architecture/conventions.md",
-    "bytes": 536,
-    "sha256": "e30bf9d5a1011ebc41e0284d3a97cc4a92d43925e9f7a4716fa120ddaf6e677e",
-    "mtime_utc": "2026-02-19T05:45:18Z"
-  },
-  {
-    "path": "agentic-prod-template-v2/docs/architecture/data-model.md",
-    "bytes": 378,
-    "sha256": "73c82f3b6faaa7ab6e8639fcee940aac0b07630fd6008dca5d54a57a68e3b5b5",
-    "mtime_utc": "2026-02-19T05:45:04Z"
-  },
-  {
-    "path": "agentic-prod-template-v2/docs/architecture/overview.md",
-    "bytes": 564,
-    "sha256": "b9bada325f0efa8b04e0326f0a1d84a281f41023e8c40f2e5e9acd3b0eb974db",
-    "mtime_utc": "2026-02-19T05:44:50Z"
-  },
-  {
-    "path": "agentic-prod-template-v2/docs/runbooks/local_dev.md",
-    "bytes": 989,
-    "sha256": "2bd75bc189d06f7c8f991d0d28dc3b3f8a294aa3df245ac36682fffc8df83248",
-    "mtime_utc": "2026-02-19T05:51:48Z"
-  },
-  {
-    "path": "agentic-prod-template-v2/docs/specs/feature_template.md",
-    "bytes": 393,
-    "sha256": "5a8b9c82ea843dab3064cd9d4678cec5033833a139a79d7aef66ac0a13674be0",
-    "mtime_utc": "2026-02-19T05:45:18Z"
-  },
-  {
-    "path": "agentic-prod-template-v2/pyproject.toml",
-    "bytes": 314,
-    "sha256": "7794281ccbb8baf2f421025b92c8b5dce3aa4698e6e41ded0f504f3bae467849",
-    "mtime_utc": "2026-02-19T05:46:44Z"
-  },
-  {
-    "path": "agentic-prod-template-v2/tools/__init__.py",
-    "bytes": 0,
-    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "mtime_utc": "2026-02-09T15:50:16Z"
-  },
-  {
-    "path": "agentic-prod-template-v2/tools/doctor.py",
-    "bytes": 3458,
-    "sha256": "0e4db0e27f7e33776dd7b63b6d281fe21a478736b0b540f47046114e07b73bbc",
-    "mtime_utc": "2026-02-19T05:43:45Z"
-  },
-  {
-    "path": "agentic-prod-template-v2/tools/index.py",
-    "bytes": 8669,
-    "sha256": "be4489272c030137c627d03d7fcf0efd7732ccaf231f0eb051dc775fe592f588",
-    "mtime_utc": "2026-02-19T05:50:35Z"
-  },
-  {
-    "path": "agentic-prod-template-v2/tools/validate_configs.py",
-    "bytes": 2690,
-    "sha256": "4c4726cce7da60436a68124ea5e844ef1dd688f0fe1ff2e66161c46ed3ca9bdc",
-    "mtime_utc": "2026-02-19T05:43:45Z"
-  },
-  {
-    "path": "apps/backend/pom.xml",
-    "bytes": 3414,
-    "sha256": "f356b90d4fc02c97bc773be5269118f74239e0f765c1e88998c82040029bd6d0",
-    "mtime_utc": "2026-02-16T16:34:55Z"
-  },
-  {
-    "path": "apps/backend/src/main/java/com/ssg/iot/IotApplication.java",
-    "bytes": 323,
-    "sha256": "f94a52448c0ef27a633c8c993133be16dfc88f0adf263fe7f11b1890f6f44155",
-    "mtime_utc": "2026-02-11T17:39:55Z"
-  },
-  {
-    "path": "apps/backend/src/main/java/com/ssg/iot/common/ApiException.java",
-    "bytes": 355,
-    "sha256": "19ed2ecf0f47ebc68017d239cc63db1f75fed98d6ef6cdcd0baf59f49154fa58",
-    "mtime_utc": "2026-02-16T16:23:17Z"
-  },
-  {
-    "path": "apps/backend/src/main/java/com/ssg/iot/common/BadRequestException.java",
-    "bytes": 236,
-    "sha256": "ef0402e456da8549e3ff54c83b6bb4f74117372426d3e570010e0bc241f2c42d",
-    "mtime_utc": "2026-02-16T16:23:17Z"
-  },
-  {
-    "path": "apps/backend/src/main/java/com/ssg/iot/common/ForbiddenException.java",
-    "bytes": 232,
-    "sha256": "6c31a4f37028ff65a9601ca23ada21d4c7de028cfcc81275cad64a2cd26fb9dd",
-    "mtime_utc": "2026-02-16T16:23:17Z"
-  },
-  {
-    "path": "apps/backend/src/main/java/com/ssg/iot/common/NotFoundException.java",
-    "bytes": 230,
-    "sha256": "1f997dc0fee108ae5ea309cea654a8419c1f34bea454f44b82331abadefba871",
-    "mtime_utc": "2026-02-16T16:23:17Z"
-  },
-  {
-    "path": "apps/backend/src/main/java/com/ssg/iot/common/PageResponse.java",
-    "bytes": 648,
-    "sha256": "650b1f5fc8b279e3b73e997c88739ab412c50f3e19c3e62e64e5d4f5ea0b03dc",
-    "mtime_utc": "2026-02-16T16:23:17Z"
-  },
-  {
-    "path": "apps/backend/src/main/java/com/ssg/iot/common/UnauthorizedException.java",
-    "bytes": 241,
-    "sha256": "636903a355bf8915568348da6be37b10cac0b997e339865f8f6a19b5baeeecd1",
-    "mtime_utc": "2026-02-16T16:23:17Z"
-  },
-  {
-    "path": "apps/backend/src/main/java/com/ssg/iot/config/GlobalExceptionHandler.java",
-    "bytes": 2142,
-    "sha256": "51486c4aceac558bd3715acdb289e98769a8e5ca7c56c016176d754b69b296bc",
-    "mtime_utc": "2026-02-16T16:32:02Z"
-  },
-  {
-    "path": "apps/backend/src/main/java/com/ssg/iot/config/WebConfig.java",
-    "bytes": 607,
-    "sha256": "3c6fd26a52df39d3b94da76006f99f6731da99768ce5aabaf1cd4cb3359bcf15",
-    "mtime_utc": "2026-02-16T16:32:02Z"
-  },
-  {
-    "path": "apps/backend/src/main/java/com/ssg/iot/controller/AdminController.java",
-    "bytes": 6110,
-    "sha256": "8c73010876a326ea23121de46df287354a493909ba93544b19de0fcc81e5d83d",
-    "mtime_utc": "2026-02-16T16:37:19Z"
-  },
-  {
-    "path": "apps/backend/src/main/java/com/ssg/iot/controller/AuthController.java",
-    "bytes": 1595,
-    "sha256": "735e92e70f85e18709758842fc62bde6ce90841b37203ac121e2a2e377dad869",
-    "mtime_utc": "2026-02-16T16:30:49Z"
-  },
-  {
-    "path": "apps/backend/src/main/java/com/ssg/iot/controller/CartController.java",
-    "bytes": 1414,
-    "sha256": "56a1cd249b28c8853a4c02351e07bd41a08c316aae0e714f9fce8bf30b023cdf",
-    "mtime_utc": "2026-02-16T16:30:49Z"
-  },
-  {
-    "path": "apps/backend/src/main/java/com/ssg/iot/controller/EventController.java",
-    "bytes": 1570,
-    "sha256": "d95f221efc98c4173cb3e39fa356cadf61e75c934267a9c2a07fa81b993ef161",
-    "mtime_utc": "2026-02-16T16:31:12Z"
-  },
-  {
-    "path": "apps/backend/src/main/java/com/ssg/iot/controller/HealthController.java",
-    "bytes": 432,
-    "sha256": "49849fffafaa6090c9c808bf2cbe81474d305701de2155f93a79e8904af62978",
-    "mtime_utc": "2026-02-16T16:30:18Z"
-  },
-  {
-    "path": "apps/backend/src/main/java/com/ssg/iot/controller/ListingController.java",
-    "bytes": 1989,
-    "sha256": "65af66bd598d018e0658f5696b9d900ced8ecd271a33d7b182e93330037bc6a2",
-    "mtime_utc": "2026-02-16T16:30:49Z"
-  },
-  {
-    "path": "apps/backend/src/main/java/com/ssg/iot/controller/MeController.java",
-    "bytes": 1367,
-    "sha256": "e2fa58dc0b75f12958931910c25878b574c35f3626f546c433f1286fedcf09d0",
-    "mtime_utc": "2026-02-16T16:31:43Z"
-  },
-  {
-    "path": "apps/backend/src/main/java/com/ssg/iot/controller/OrderController.java",
-    "bytes": 1264,
-    "sha256": "053d795003d6f22abe5e4bd88bc18d20cfa8876bdb7f65fb08dda6cf215bcd14",
-    "mtime_utc": "2026-02-16T16:31:12Z"
-  },
-  {
-    "path": "apps/backend/src/main/java/com/ssg/iot/controller/SupportController.java",
-    "bytes": 1193,
-    "sha256": "3cc174007ef5156ce0f4a4af0639b293e14949e5fc2ddde1e554d7d320b45ca4",
-    "mtime_utc": "2026-02-16T16:31:12Z"
-  },
-  {
-    "path": "apps/backend/src/main/java/com/ssg/iot/domain/Event.java",
-    "bytes": 1313,
-    "sha256": "474450bedfc988ed784a0df8da4c34a2d38092981d35fa31879c30eb3eb73dcb",
-    "mtime_utc": "2026-02-16T16:24:06Z"
-  },
-  {
-    "path": "apps/backend/src/main/java/com/ssg/iot/domain/EventRegistration.java",
-    "bytes": 1085,
-    "sha256": "9498991bf33ae607a5efc85b8152696224f39074a34119d20925c809bc9b8b76",
-    "mtime_utc": "2026-02-16T16:24:06Z"
-  },
-  {
-    "path": "apps/backend/src/main/java/com/ssg/iot/domain/EventRegistrationStatus.java",
-    "bytes": 115,
-    "sha256": "90f24120da8fd936ed6c195f255dc6b103ee59a22e52aa451dfbead90bb513f4",
-    "mtime_utc": "2026-02-16T16:24:06Z"
-  },
-  {
-    "path": "apps/backend/src/main/java/com/ssg/iot/domain/Faq.java",
-    "bytes": 626,
-    "sha256": "96d347d733565c56c13f896ebc2c12bc1d4513d2fe0493c3065165368f4ce814",
-    "mtime_utc": "2026-02-16T16:24:06Z"
-  },
-  {
-    "path": "apps/backend/src/main/java/com/ssg/iot/domain/Listing.java",
-    "bytes": 1235,
-    "sha256": "6bbaa238b48bc2c13f516e28b7d0c302fe34fffe85e0d63925344baf296ba0cf",
-    "mtime_utc": "2026-02-16T16:24:06Z"
-  },
-  {
-    "path": "apps/backend/src/main/java/com/ssg/iot/domain/Order.java",
-    "bytes": 1588,
-    "sha256": "99d70c6575e8c35eae07fefc9ccb764fb0970c5648c72ef244d2acb7f942ed7b",
-    "mtime_utc": "2026-02-16T16:24:06Z"
-  },
-  {
-    "path": "apps/backend/src/main/java/com/ssg/iot/domain/OrderItem.java",
-    "bytes": 882,
-    "sha256": "f26b8f287e2fd83cb972cf49d02b018988225fd9599239ba1d8f12411eb60ee2",
-    "mtime_utc": "2026-02-16T16:24:06Z"
-  },
-  {
-    "path": "apps/backend/src/main/java/com/ssg/iot/domain/OrderStatus.java",
-    "bytes": 145,
-    "sha256": "4b80ef5377159d12c479a8f7a8e77ce28ae6abe94e8c22e0675d03272d7704c6",
-    "mtime_utc": "2026-02-16T16:24:06Z"
-  },
-  {
-    "path": "apps/backend/src/main/java/com/ssg/iot/domain/SupportTicket.java",
-    "bytes": 1299,
-    "sha256": "b73e8f25e3533eeccabb25f5c33e826b915f1a83498ba43d5389ddb15c402b0b",
-    "mtime_utc": "2026-02-16T16:24:06Z"
-  },
-  {
-    "path": "apps/backend/src/main/java/com/ssg/iot/domain/SupportTicketStatus.java",
-    "bytes": 121,
-    "sha256": "3c6750f5fcff2625c274520508343511bab241c3b2eeacf56682b8df7fb0ef23",
-    "mtime_utc": "2026-02-16T16:24:06Z"
-  },
-  {
-    "path": "apps/backend/src/main/java/com/ssg/iot/domain/User.java",
-    "bytes": 1107,
-    "sha256": "23f31cdf08361dd0068902382648805a7afe7031f356b572de0e65d3c1c89e7c",
-    "mtime_utc": "2026-02-16T16:24:06Z"
-  },
-  {
-    "path": "apps/backend/src/main/java/com/ssg/iot/domain/UserRole.java",
-    "bytes": 75,
-    "sha256": "19fdbbb4efdf2131c5753ae83b2445454161d3f8f9b76a676056be72380be2b9",
-    "mtime_utc": "2026-02-16T16:24:06Z"
-  },
-  {
-    "path": "apps/backend/src/main/java/com/ssg/iot/dto/auth/LoginRequest.java",
-    "bytes": 224,
-    "sha256": "8c8c1fb1a8e51a434c6303742d5f1ce14ec8851988f1247e2cc6d8ba338ef850",
-    "mtime_utc": "2026-02-16T16:25:10Z"
-  },
-  {
-    "path": "apps/backend/src/main/java/com/ssg/iot/dto/auth/LoginResponse.java",
-    "bytes": 217,
-    "sha256": "a4e8ce4626f6dce2eedc834c2cc4e54c1ff817a23a8c00e784f673a777da585e",
-    "mtime_utc": "2026-02-16T16:25:10Z"
-  },
-  {
-    "path": "apps/backend/src/main/java/com/ssg/iot/dto/auth/UserSessionResponse.java",
-    "bytes": 296,
-    "sha256": "82f9b3385703eb4ee649fddcf4200136cc96b447755b6fc802ca5b0c62c83f23",
-    "mtime_utc": "2026-02-16T16:25:10Z"
-  },
-  {
-    "path": "apps/backend/src/main/java/com/ssg/iot/dto/cart/AddCartItemRequest.java",
-    "bytes": 265,
-    "sha256": "855849eb89dffddf30fe25d16a39fa9bdf338fd2a88beb03ff26e0b0f121df00",
-    "mtime_utc": "2026-02-16T16:25:10Z"
-  },
-  {
-    "path": "apps/backend/src/main/java/com/ssg/iot/dto/cart/CartItemResponse.java",
-    "bytes": 327,
-    "sha256": "c2569a5bc1cddfbfbedfc2d3a356dc01fc652bdddfa807a9cda8749f7171aeab",
-    "mtime_utc": "2026-02-16T16:25:10Z"
-  },
-  {
-    "path": "apps/backend/src/main/java/com/ssg/iot/dto/cart/CartResponse.java",
-    "bytes": 252,
-    "sha256": "c282d50a10525df7e650bd995449fcc1ac0ff3ec8b2f7e662a014f3a090e2b17",
-    "mtime_utc": "2026-02-16T16:25:10Z"
-  },
-  {
-    "path": "apps/backend/src/main/java/com/ssg/iot/dto/cart/UpdateCartItemRequest.java",
-    "bytes": 179,
-    "sha256": "6db030b5fbdb7aeba29b13253d0f80e6d1135448fb5888025982af19040cf026",
-    "mtime_utc": "2026-02-16T16:25:10Z"
-  },
-  {
-    "path": "apps/backend/src/main/java/com/ssg/iot/dto/event/EventRegistrationRequest.java",
-    "bytes": 338,
-    "sha256": "5df82707ae5d88292c509d8b285259fe04971279e6838adf3eb6554e8b32ebce",
-    "mtime_utc": "2026-02-16T16:25:10Z"
-  },
-  {
-    "path": "apps/backend/src/main/java/com/ssg/iot/dto/event/EventRegistrationResponse.java",
-    "bytes": 480,
-    "sha256": "d4b995fcd8827f5b712eb70a87a8dd0ed9270236f05a876939343b5f774928ca",
-    "mtime_utc": "2026-02-16T16:25:10Z"
-  },
-  {
-    "path": "apps/backend/src/main/java/com/ssg/iot/dto/event/EventRequest.java",
-    "bytes": 710,
-    "sha256": "fa496cff205055cb59caee7e184cd564160ea1a065411e3994bbc3c76ffd91df",
-    "mtime_utc": "2026-02-16T16:25:10Z"
-  },
-  {
-    "path": "apps/backend/src/main/java/com/ssg/iot/dto/event/EventResponse.java",
-    "bytes": 536,
-    "sha256": "1c254b0d78d6a0ac1b95a5f7cf69fd11ddb3e1c3840d2479e5d73b90aec1c3f4",
-    "mtime_utc": "2026-02-16T16:25:10Z"
-  },
-  {
-    "path": "apps/backend/src/main/java/com/ssg/iot/dto/listing/ListingRequest.java",
-    "bytes": 589,
-    "sha256": "904ef5ca59c1d861685a09d402423a77e3fbd6ff1ae5b8310e64fc3c08ad5599",
-    "mtime_utc": "2026-02-16T16:25:10Z"
-  },
-  {
-    "path": "apps/backend/src/main/java/com/ssg/iot/dto/listing/ListingResponse.java",
-    "bytes": 537,
-    "sha256": "0cfb6e37f9da57efea96e43ef4936988eafb57b33b08a092a635a67317d1a19e",
-    "mtime_utc": "2026-02-16T16:25:10Z"
-  },
-  {
-    "path": "apps/backend/src/main/java/com/ssg/iot/dto/order/CreateOrderRequest.java",
-    "bytes": 347,
-    "sha256": "2a517745acf832dd476e2c6da1c7262b1f87b215401cf19a67de3e55c49e4cf9",
-    "mtime_utc": "2026-02-16T16:25:10Z"
-  },
-  {
-    "path": "apps/backend/src/main/java/com/ssg/iot/dto/order/OrderItemResponse.java",
-    "bytes": 311,
-    "sha256": "1a4917bb75ea0f51c63634646ce14740c4864d11110779a76b80bd44144f4bc7",
-    "mtime_utc": "2026-02-16T16:25:10Z"
-  },
-  {
-    "path": "apps/backend/src/main/java/com/ssg/iot/dto/order/OrderResponse.java",
-    "bytes": 549,
-    "sha256": "163fabe763edeb0ad328d1887bf0d4bbba5d662aa8fe3b4b9d2861de9a5a5116",
-    "mtime_utc": "2026-02-16T16:25:10Z"
-  },
-  {
-    "path": "apps/backend/src/main/java/com/ssg/iot/dto/order/UpdateOrderStatusRequest.java",
-    "bytes": 191,
-    "sha256": "e83de4555119c463d3b5cbb495a4445271cdc15f1a4f57b76e24429cfea96db3",
-    "mtime_utc": "2026-02-16T16:25:10Z"
-  },
-  {
-    "path": "apps/backend/src/main/java/com/ssg/iot/dto/support/FaqResponse.java",
-    "bytes": 259,
-    "sha256": "fe64cdc86cb3fb8a81950bd17f3af756086386cce38ed89ddb0a2d2b1b2ab8e0",
-    "mtime_utc": "2026-02-16T16:25:10Z"
-  },
-  {
-    "path": "apps/backend/src/main/java/com/ssg/iot/dto/support/ReplyTicketRequest.java",
-    "bytes": 186,
-    "sha256": "2e5eb237aefa8c145ba1d6ccd3e7d40944a982947220f989c2cafa50162e9ac5",
-    "mtime_utc": "2026-02-16T16:25:10Z"
-  },
-  {
-    "path": "apps/backend/src/main/java/com/ssg/iot/dto/support/SupportTicketRequest.java",
-    "bytes": 414,
-    "sha256": "db8f369ad3b50eddadbc1ef612a4e82d7e3abc03a8da8d1258e432e9fe05d906",
-    "mtime_utc": "2026-02-16T16:25:10Z"
-  },
-  {
-    "path": "apps/backend/src/main/java/com/ssg/iot/dto/support/SupportTicketResponse.java",
-    "bytes": 583,
-    "sha256": "a3e74eb0ca14a7b06a7e11dd09beee6442f905ec20f4b64b60daa745865faeab",
-    "mtime_utc": "2026-02-16T16:25:10Z"
-  },
-  {
-    "path": "apps/backend/src/main/java/com/ssg/iot/dto/support/UpdateTicketStatusRequest.java",
-    "bytes": 194,
-    "sha256": "227c1a97dc63bbecc42eaa8fb1cd30c7594a298af0ddb9a918dad1b25f67dc02",
-    "mtime_utc": "2026-02-16T16:25:10Z"
-  },
-  {
-    "path": "apps/backend/src/main/java/com/ssg/iot/repository/EventRegistrationRepository.java",
-    "bytes": 489,
-    "sha256": "1d92360bdb68dc31e22e76d23db847c177061e05e73d4fba983f4b656ad6da0f",
-    "mtime_utc": "2026-02-16T16:24:26Z"
-  },
-  {
-    "path": "apps/backend/src/main/java/com/ssg/iot/repository/EventRepository.java",
-    "bytes": 388,
-    "sha256": "1ad4aeef5b27d2cda00cf6a5f464519b53e5e4cf9688c5c08f35c92ce76aafad",
-    "mtime_utc": "2026-02-16T16:24:26Z"
-  },
-  {
-    "path": "apps/backend/src/main/java/com/ssg/iot/repository/FaqRepository.java",
-    "bytes": 300,
-    "sha256": "38345cccc058a79d284aa7c07e74a1cb299287f35da7366b371b63676e059311",
-    "mtime_utc": "2026-02-16T16:24:26Z"
-  },
-  {
-    "path": "apps/backend/src/main/java/com/ssg/iot/repository/ListingRepository.java",
-    "bytes": 648,
-    "sha256": "63e7558eb2cfa5a8af4f5aaf88d44a1267fa63d47551930312270fc2c8405655",
-    "mtime_utc": "2026-02-16T16:24:26Z"
-  },
-  {
-    "path": "apps/backend/src/main/java/com/ssg/iot/repository/OrderRepository.java",
-    "bytes": 590,
-    "sha256": "5be300a8ac21e30103739fe16516f77a772da20b41aeb66d867866639d5808f8",
-    "mtime_utc": "2026-02-16T16:24:26Z"
-  },
-  {
-    "path": "apps/backend/src/main/java/com/ssg/iot/repository/SupportTicketRepository.java",
-    "bytes": 577,
-    "sha256": "78480c3ab0319e4dbbecd391be73d8dea6df65514e4d5f642701d08827ab11d7",
-    "mtime_utc": "2026-02-16T16:24:26Z"
-  },
-  {
-    "path": "apps/backend/src/main/java/com/ssg/iot/repository/UserRepository.java",
-    "bytes": 292,
-    "sha256": "008f8a48efd5aea40f48b1a888849bd8e10e0adc81cd8355d9effdf8b7965804",
-    "mtime_utc": "2026-02-16T16:24:26Z"
-  },
-  {
-    "path": "apps/backend/src/main/java/com/ssg/iot/service/AuthService.java",
-    "bytes": 1135,
-    "sha256": "507c0386ed71992111e34e16133a50ea10e51df2787a9d25eb28e0689e554562",
-    "mtime_utc": "2026-02-16T16:30:02Z"
-  },
-  {
-    "path": "apps/backend/src/main/java/com/ssg/iot/service/CartService.java",
-    "bytes": 5001,
-    "sha256": "47c5e07d79e73d5b36f5cfbc6f3fb8ddc5783520cf6c07cc1d1871a0bf6147ea",
-    "mtime_utc": "2026-02-16T16:28:56Z"
-  },
-  {
-    "path": "apps/backend/src/main/java/com/ssg/iot/service/EventService.java",
-    "bytes": 8629,
-    "sha256": "e3d2da34191c8cf8e30735a1ab7fb761aa92ad453247ab317066d68006ff63ef",
-    "mtime_utc": "2026-02-16T16:29:51Z"
-  },
-  {
-    "path": "apps/backend/src/main/java/com/ssg/iot/service/ListingService.java",
-    "bytes": 6884,
-    "sha256": "e7401e19b34aa85ccca974cb9ddc75bf25f4a46808f1e8bf2acf9082fe320e3c",
-    "mtime_utc": "2026-02-16T16:37:11Z"
-  },
-  {
-    "path": "apps/backend/src/main/java/com/ssg/iot/service/OrderService.java",
-    "bytes": 7332,
-    "sha256": "52cba822d1c80508df582d27fa284568340351a551cafdcb1d15a8752f827dba",
-    "mtime_utc": "2026-02-16T16:28:56Z"
-  },
-  {
-    "path": "apps/backend/src/main/java/com/ssg/iot/service/SessionAuthService.java",
-    "bytes": 1710,
-    "sha256": "1ddb610a40f2b3f54db86ac262050d4d26b96280d2e726eb098f11e32bb8e32d",
-    "mtime_utc": "2026-02-16T16:28:07Z"
-  },
-  {
-    "path": "apps/backend/src/main/java/com/ssg/iot/service/SupportService.java",
-    "bytes": 6505,
-    "sha256": "8c3b71e3a2c3a38ebca4f05dcddb7392e95265f0e07c53716d7785ee5e6285f1",
-    "mtime_utc": "2026-02-16T16:29:51Z"
-  },
-  {
-    "path": "apps/backend/src/main/resources/application.properties",
-    "bytes": 757,
-    "sha256": "1a987861bce2c22cb6c5f6958de888097c05260b296db07b0c2becef462d9324",
-    "mtime_utc": "2026-02-16T16:22:16Z"
-  },
-  {
-    "path": "apps/backend/src/main/resources/db/migration/V1__init_schema.sql",
-    "bytes": 6389,
-    "sha256": "39f72c38e7fd2d16be9bd20947389d0b61c3de93f4b87cde05a8bf353b9a2e67",
-    "mtime_utc": "2026-02-16T16:23:00Z"
-  },
-  {
-    "path": "apps/backend/src/test/java/com/ssg/iot/IotApplicationTests.java",
-    "bytes": 289,
-    "sha256": "6909548aaf6a2dd77e21abf4e5631a6348b7c457b6ff9d8edf87e6d886360a1d",
-    "mtime_utc": "2026-02-16T16:22:24Z"
-  },
-  {
-    "path": "apps/backend/src/test/resources/application-test.properties",
-    "bytes": 418,
-    "sha256": "113fa6c161d22520b4c4d31afde791624e0e7f893f6fc82da0e5be43242b5c00",
-    "mtime_utc": "2026-02-16T16:35:54Z"
-  },
-  {
-    "path": "apps/frontend/package.json",
-    "bytes": 971,
-    "sha256": "18bc63b8a087c05847fda9977ac60c2dbf67f39a93f0a78a5f3819baa1160bb9",
-    "mtime_utc": "2026-02-05T16:29:38Z"
-  },
-  {
-    "path": "apps/frontend/src/api/adminApi.ts",
-    "bytes": 4006,
-    "sha256": "9d52bd9d4bc46f8ff39546a693d9412031b1bb0d4f11a18989efbfe4bb18d47a",
-    "mtime_utc": "2026-02-16T16:38:46Z"
-  },
-  {
-    "path": "apps/frontend/src/api/authApi.ts",
-    "bytes": 756,
-    "sha256": "58b2ca52ea2a3f1080f9811fdf70b946fa0dcf6094ec8acc9ed1b1e2ea83fddc",
-    "mtime_utc": "2026-02-16T16:37:55Z"
-  },
-  {
-    "path": "apps/frontend/src/api/cartApi.ts",
-    "bytes": 670,
-    "sha256": "9327dcecd3312fa39c177347bef6886251fbf6ce53f8958f9ea4c48fba519bb2",
-    "mtime_utc": "2026-02-16T16:38:22Z"
-  },
-  {
-    "path": "apps/frontend/src/api/eventApi.ts",
-    "bytes": 1107,
-    "sha256": "637e86c5313044cf92e3a4dfccd92bd83bbfa0fa55ab1a519995ee1e371485ff",
-    "mtime_utc": "2026-02-16T16:38:22Z"
-  },
-  {
-    "path": "apps/frontend/src/api/http.ts",
-    "bytes": 591,
-    "sha256": "655cbd72ba46657cd5bb8ab0782476b7c7e238cef0ecf8ebb22118c361d0c5ec",
-    "mtime_utc": "2026-02-16T16:37:55Z"
-  },
-  {
-    "path": "apps/frontend/src/api/listingApi.ts",
-    "bytes": 1515,
-    "sha256": "2ec234970f14b3304feb0b1d46a4f1f8a09d3fe742d612c2399be636e48fd33b",
-    "mtime_utc": "2026-02-16T16:37:55Z"
-  },
-  {
-    "path": "apps/frontend/src/api/orderApi.ts",
-    "bytes": 658,
-    "sha256": "b27acce2173d94951136ab05985ba0eaa5b4523a84855d7590dbe96d92807de7",
-    "mtime_utc": "2026-02-16T16:38:22Z"
-  },
-  {
-    "path": "apps/frontend/src/api/productApi.ts",
-    "bytes": 112,
-    "sha256": "a00ab419302faee2c541af447bafc80dfd8aa9dce45a32245b2e2035b40f4f60",
-    "mtime_utc": "2026-02-16T16:38:53Z"
-  },
-  {
-    "path": "apps/frontend/src/api/supportApi.ts",
-    "bytes": 1850,
-    "sha256": "10aa6bd91677f321d76f790630d381fcde8aafa552ed520e3617b29167c0f7f7",
-    "mtime_utc": "2026-02-16T16:38:22Z"
-  },
-  {
-    "path": "apps/frontend/src/components/Header.tsx",
-    "bytes": 2428,
-    "sha256": "8e64332c8c4c8c6db48830afdfa0e150a9b72e76039d9722729b5d739fe5be1e",
-    "mtime_utc": "2026-02-16T16:39:51Z"
-  },
-  {
-    "path": "apps/frontend/src/components/Layout/Footer.tsx",
-    "bytes": 1469,
-    "sha256": "e9cdf3f5e5fe04e144c458581341ed2a3ea960403d2c802dc03aab0eddf2af49",
-    "mtime_utc": "2026-02-05T16:29:39Z"
-  },
-  {
-    "path": "apps/frontend/src/components/Layout/Header.tsx",
-    "bytes": 3075,
-    "sha256": "465068e3bb0e87ac66fc71b5dfedc351ff730b621f7eb51a6dc18401c9a7ef87",
-    "mtime_utc": "2026-02-05T16:29:39Z"
-  },
-  {
-    "path": "apps/frontend/src/components/Layout/PageLayout.tsx",
-    "bytes": 418,
-    "sha256": "bbd391db690da913dcb3cbd85be59852f8df9cc1b3b783ecde1fb24c3716945a",
-    "mtime_utc": "2026-02-05T16:29:39Z"
-  },
-  {
-    "path": "apps/frontend/src/components/ProtectedRoute.tsx",
-    "bytes": 909,
-    "sha256": "5dcfd4ac95cbfbf45fa29513cff51e48d317b27785595002c1c9b16aed31a51b",
-    "mtime_utc": "2026-02-16T16:39:33Z"
-  },
-  {
-    "path": "apps/frontend/src/components/products/AddNewProductCard.tsx",
-    "bytes": 1705,
-    "sha256": "579aed04f6a1240283c4f82b8e0cbb34d2e728294901dbc66a6d7c746b7e09a9",
-    "mtime_utc": "2026-02-05T16:29:39Z"
-  },
-  {
-    "path": "apps/frontend/src/components/products/MyListingCard.tsx",
-    "bytes": 2965,
-    "sha256": "8466f99df1338578fe9bec97e722a24ae3c4b96463f3bac5bf7ffd60eab0c190",
-    "mtime_utc": "2026-02-05T16:29:39Z"
-  },
-  {
-    "path": "apps/frontend/src/components/ui/Badge.tsx",
-    "bytes": 1255,
-    "sha256": "9fd15ded2f7e3f5ea79274b2c34f7fd94ad04bc1259f22e87af1ff01fbddfc05",
-    "mtime_utc": "2026-02-12T13:12:13Z"
-  },
-  {
-    "path": "apps/frontend/src/components/ui/Button.tsx",
-    "bytes": 1904,
-    "sha256": "5013d5a47c9846e26a87591a88c8698e778646c7337224399b0d7c850fb8f00f",
-    "mtime_utc": "2026-02-12T13:11:30Z"
-  },
-  {
-    "path": "apps/frontend/src/components/ui/Card.tsx",
-    "bytes": 1978,
-    "sha256": "772a6638808275f9020781e4d8a26081ca25c27fe75f0281ae4eb7311fd28ebc",
-    "mtime_utc": "2026-02-12T13:11:32Z"
-  },
-  {
-    "path": "apps/frontend/src/components/ui/Dialog.tsx",
-    "bytes": 1464,
-    "sha256": "61e4e806f333a976b93c650642796450d3d0e19dc4d18ad912489ab724735327",
-    "mtime_utc": "2026-02-05T16:29:39Z"
-  },
-  {
-    "path": "apps/frontend/src/components/ui/Input.tsx",
-    "bytes": 806,
-    "sha256": "853ebf2d0dc1dabad78703c3d7caa8147e52ad51cf481fd3d1de9d02e2aee987",
-    "mtime_utc": "2026-02-12T13:11:50Z"
-  },
-  {
-    "path": "apps/frontend/src/components/ui/Modal.tsx",
-    "bytes": 3357,
-    "sha256": "4a48b03455b921525a43089526a674c6b41e6a48805039afd9f37d147c357c66",
-    "mtime_utc": "2026-02-12T13:12:01Z"
-  },
-  {
-    "path": "apps/frontend/src/components/ui/Select.tsx",
-    "bytes": 1347,
-    "sha256": "3e18e6c92bd11e6aae3dde6b1542a987bb5df895391c36aa3545cfb96903bcfe",
-    "mtime_utc": "2026-02-05T16:29:39Z"
-  },
-  {
-    "path": "apps/frontend/src/components/ui/Skeleton.tsx",
-    "bytes": 319,
-    "sha256": "a766effb37e0fa3654d039aad071eeac206803395e953837c6af00fb6f437d03",
-    "mtime_utc": "2026-02-05T16:29:39Z"
-  },
-  {
-    "path": "apps/frontend/src/context/AuthContext.tsx",
-    "bytes": 1787,
-    "sha256": "b676627263d38c2118ce2b8f905464d0926e847529417ed2f539878af5a9ba6f",
-    "mtime_utc": "2026-02-16T16:41:14Z"
-  },
-  {
-    "path": "apps/frontend/src/context/CartContext.tsx",
-    "bytes": 2639,
-    "sha256": "155f63f3fb288516b8fb14a2b967fb75d6e408dee18410c84c6cb29832acc24a",
-    "mtime_utc": "2026-02-16T16:39:20Z"
-  },
-  {
-    "path": "apps/frontend/src/data/mockData.ts",
-    "bytes": 8822,
-    "sha256": "ec3efb82845c60c73e68bf2a7b71cacdbc9b429e9ccfed3a04a832239b0fac55",
-    "mtime_utc": "2026-02-12T13:21:10Z"
-  },
-  {
-    "path": "apps/frontend/src/layouts/AdminLayout.tsx",
-    "bytes": 2339,
-    "sha256": "4aa7d3daa8a3a1a89a403c81d71e1922686dbe06a7fd79826a780f2618ebf4d3",
-    "mtime_utc": "2026-02-16T16:40:14Z"
-  },
-  {
-    "path": "apps/frontend/src/layouts/MainLayout.tsx",
-    "bytes": 467,
-    "sha256": "5aae17487b3f9e1d07bba129d6be4551218fd2a7f8685a909fc0a7dc505009c7",
-    "mtime_utc": "2026-02-16T16:40:14Z"
-  },
-  {
-    "path": "apps/frontend/src/lib/utils.ts",
-    "bytes": 171,
-    "sha256": "3075aa77cadcd019a1ec91c7edaf1364ecf6ecebf315b68e417dc56f24dd9d71",
-    "mtime_utc": "2026-02-05T16:29:39Z"
-  },
-  {
-    "path": "apps/frontend/src/pages/AdminLoginPage.tsx",
-    "bytes": 2142,
-    "sha256": "dbb383894b76abedb04f4abe49c545f537fb395e0dfeb3b1cde9d395fdd1db2a",
-    "mtime_utc": "2026-02-16T16:41:23Z"
-  },
-  {
-    "path": "apps/frontend/src/pages/AdminOrderListPage.tsx",
-    "bytes": 6473,
-    "sha256": "561d6cf4aa47a204b8ac6f9ef9aa423da32cd83acaa7520fac507a017963815b",
-    "mtime_utc": "2026-02-16T16:52:11Z"
-  },
-  {
-    "path": "apps/frontend/src/pages/AdminProductFormPage.tsx",
-    "bytes": 5763,
-    "sha256": "385debdd83753d1e14de4db17beb1fc1961eaa79d9dc4e3379291f205a3490ca",
-    "mtime_utc": "2026-02-16T16:51:38Z"
-  },
-  {
-    "path": "apps/frontend/src/pages/AdminProductListPage.tsx",
-    "bytes": 6641,
-    "sha256": "6d84770368c42989d90ba093633bf6e653e78c03224d4d4ce9608f16531410ad",
-    "mtime_utc": "2026-02-16T16:57:38Z"
-  },
-  {
-    "path": "apps/frontend/src/pages/LoginPage.tsx",
-    "bytes": 2028,
-    "sha256": "3769fe39576be388663f681a80ab67be759a389b14771a5255fe55268603b7da",
-    "mtime_utc": "2026-02-16T16:41:07Z"
-  },
-  {
-    "path": "apps/frontend/src/pages/admin/AdminDashboardPage.tsx",
-    "bytes": 5110,
-    "sha256": "65bad03a197ebe931af34799c94025be2fffb3555f67267fb944a8723f8840aa",
-    "mtime_utc": "2026-02-16T16:52:49Z"
-  },
-  {
-    "path": "apps/frontend/src/pages/admin/AdminEventListPage.tsx",
-    "bytes": 14561,
-    "sha256": "a908b76e7860d7dd836796fb86a37788e2b3c985a3da5b7a4c1cb30ab1aeb833",
-    "mtime_utc": "2026-02-16T16:53:50Z"
-  },
-  {
-    "path": "apps/frontend/src/pages/admin/AdminSupportTicketPage.tsx",
-    "bytes": 8326,
-    "sha256": "e1508f29683bdfd57940d375bc5ba5d370e6afbaaee00c2685ca8e08707da706",
-    "mtime_utc": "2026-02-16T16:54:30Z"
-  },
-  {
-    "path": "apps/frontend/src/pages/cart/Cart.tsx",
-    "bytes": 2561,
-    "sha256": "304e8fc6c6b3cfcdb993b0f9aaf963d759dda749ab4409ae21bd41defc000dd2",
-    "mtime_utc": "2026-02-16T16:42:41Z"
-  },
-  {
-    "path": "apps/frontend/src/pages/checkout/Checkout.tsx",
-    "bytes": 3409,
-    "sha256": "a6c9c4e374c7cf13f75f352c9bf511b13c95e5121255fca7d3cd39cff7b93377",
-    "mtime_utc": "2026-02-16T16:42:41Z"
-  },
-  {
-    "path": "apps/frontend/src/pages/checkout/OrderSuccess.tsx",
-    "bytes": 2131,
-    "sha256": "93dbc06c066c4c7e1f77ee4c6ea1a9f0c91e8207cecfee29b88c8ef646df8e2e",
-    "mtime_utc": "2026-02-16T16:42:41Z"
-  },
-  {
-    "path": "apps/frontend/src/pages/events/EventDetail.tsx",
-    "bytes": 3320,
-    "sha256": "6bdd96318e6b9b1605b4a44a425b2e0790e45585f640bb9e5e8adcdd628a2143",
-    "mtime_utc": "2026-02-16T16:43:13Z"
-  },
-  {
-    "path": "apps/frontend/src/pages/events/EventList.tsx",
-    "bytes": 2270,
-    "sha256": "ff726df3813268e213f0babeeed135feb7eecf5f647f7bb3150de48be0b5e3cb",
-    "mtime_utc": "2026-02-16T16:43:13Z"
-  },
-  {
-    "path": "apps/frontend/src/pages/listings/CreateListing.tsx",
-    "bytes": 5092,
-    "sha256": "5f4cb4c44bca87ee70215010c851bf389e797c818a321958e39d26684deec416",
-    "mtime_utc": "2026-02-16T16:43:43Z"
-  },
-  {
-    "path": "apps/frontend/src/pages/products/ProductDetail.tsx",
-    "bytes": 3045,
-    "sha256": "043b1a0781d7070217379903228d74c96511a34e45135e17eb7560b08d33a5e6",
-    "mtime_utc": "2026-02-16T16:42:41Z"
-  },
-  {
-    "path": "apps/frontend/src/pages/products/ProductList.tsx",
-    "bytes": 4851,
-    "sha256": "29638659dae9165a36fcdcda5374035106590b3d90e0cbe6f1e85f5b097a5660",
-    "mtime_utc": "2026-02-16T16:42:41Z"
-  },
-  {
-    "path": "apps/frontend/src/pages/support/Contact.tsx",
-    "bytes": 4653,
-    "sha256": "658fec2715b86a91130a8bd0997a22a2b2cebe8354476ee8e8b1f2b70088b598",
-    "mtime_utc": "2026-02-16T16:55:33Z"
-  },
-  {
-    "path": "apps/frontend/src/pages/support/FAQ.tsx",
-    "bytes": 3492,
-    "sha256": "7ca0afdd6b5ab55ee64b9b04b981403b4414caf88fcefd498132d9eaaeecf2f6",
-    "mtime_utc": "2026-02-16T16:55:06Z"
-  },
-  {
-    "path": "apps/frontend/src/pages/support/SupportHub.tsx",
-    "bytes": 1750,
-    "sha256": "e845c5c8ed1ef7431f72cda78bed9c31c30268e3a422e852ad5b424d9eeb664b",
-    "mtime_utc": "2026-02-16T16:54:45Z"
-  },
-  {
-    "path": "apps/frontend/src/pages/support/TrackOrder.tsx",
-    "bytes": 5925,
-    "sha256": "12b06f278b3040dfd6d0d2645857e7e32f6db6460e6eb7d566ef14aca86fc6fe",
-    "mtime_utc": "2026-02-16T16:56:02Z"
-  },
-  {
-    "path": "apps/frontend/src/pages/support/policies/PoliciesHub.tsx",
-    "bytes": 1435,
-    "sha256": "90905b5d0985deccba0e8013cc35138340b1c481c57e33ec9afcf3ac154a0afb",
-    "mtime_utc": "2026-02-16T16:56:23Z"
-  },
-  {
-    "path": "apps/frontend/src/pages/support/policies/PurchasePolicy.tsx",
-    "bytes": 1851,
-    "sha256": "d1bcfa41457475c81e1f1dd2d6d542fca85d2f34bdef68f5d8fa1c7d7bf8cd7f",
-    "mtime_utc": "2026-02-16T16:56:36Z"
-  },
-  {
-    "path": "apps/frontend/src/pages/support/policies/RefundPolicy.tsx",
-    "bytes": 1789,
-    "sha256": "2a8bb44adda355d0b1df9f362d7f835dcee6e393ea0b536a7d0e4b26adecf15f",
-    "mtime_utc": "2026-02-16T16:56:53Z"
-  },
-  {
-    "path": "apps/frontend/src/types/cart.ts",
-    "bytes": 473,
-    "sha256": "ffd27833c3c98511ee6038ad5f141b2914724337998c9d1564deb67ac06fd231",
-    "mtime_utc": "2026-02-05T16:29:39Z"
-  },
-  {
-    "path": "apps/frontend/src/types/models.ts",
-    "bytes": 2579,
-    "sha256": "2f0ea8f37d4147feec14d2f32a0f724af577bdf57485cf114dba4aa250894681",
-    "mtime_utc": "2026-02-16T16:37:55Z"
-  },
-  {
-    "path": "apps/frontend/src/types/support.ts",
-    "bytes": 1171,
-    "sha256": "67212bd1cbe321c8a2b1ea671ed9e285a073ce57e9ed73c0f118264e68dffcd1",
-    "mtime_utc": "2026-02-05T16:29:39Z"
-  }
-]
+{
+  "schema_version": 1,
+  "repo_root": "D:/Antigaravity_Code/Student-Exchange-Web",
+  "file_count": 419,
+  "files": [
+    {
+      "path": "agentic-prod-template-v2/.ai/AGENTS.md",
+      "sha256": "9bc9120d2151132d208795f617001bac012670d96d2893e03a00aadaec228b89",
+      "size": 729
+    },
+    {
+      "path": "agentic-prod-template-v2/.ai/DEFINITION_OF_DONE.md",
+      "sha256": "a52e53ec4fefcea3731672cdcda1e4fef676fcc7afd1c8c48c89076d358e8e5e",
+      "size": 428
+    },
+    {
+      "path": "agentic-prod-template-v2/.ai/PR_CHECKLIST.md",
+      "sha256": "5d267c0004350737873beddcd3495d9c1fb3e5842d21fe7c63b060a03ba2d23a",
+      "size": 292
+    },
+    {
+      "path": "agentic-prod-template-v2/.ai/prompts/bugfix_template.md",
+      "sha256": "8e345aaa0d677259032fd577a55bc8c9a9f86629f49a36a5b6bc689d5dd3149d",
+      "size": 320
+    },
+    {
+      "path": "agentic-prod-template-v2/.ai/prompts/mission_template.md",
+      "sha256": "adcdd78ab5a6d1859d0b82817810aa81954542b3b64f2d861c1ae62e0e037aed",
+      "size": 551
+    },
+    {
+      "path": "agentic-prod-template-v2/.ai/prompts/refactor_guardrails.md",
+      "sha256": "c914360dbc0af70b3f0156806157cd9080433fd10a1e214d4e2207877e1c9072",
+      "size": 369
+    },
+    {
+      "path": "agentic-prod-template-v2/configs/agents.yaml",
+      "sha256": "4263c0142fffa6db043387c63a351bc739189b7e0f36dabced56f71e92866a52",
+      "size": 1015
+    },
+    {
+      "path": "agentic-prod-template-v2/configs/models.yaml",
+      "sha256": "8027c4887d6d677b43ed3b4af4333baccb0f197249185bfb4d3028510dab3d50",
+      "size": 406
+    },
+    {
+      "path": "agentic-prod-template-v2/configs/project.yaml",
+      "sha256": "7f42a9d61c31490dbdf4fe97e72e85410311043a096fe1318ab19a4b5b79e8ee",
+      "size": 1906
+    },
+    {
+      "path": "agentic-prod-template-v2/configs/schemas/agents.schema.json",
+      "sha256": "64ef68c543152e62371caac32f1c598af8b0cb1c50a3637bcf1dceb613e769a0",
+      "size": 1681
+    },
+    {
+      "path": "agentic-prod-template-v2/configs/schemas/models.schema.json",
+      "sha256": "ed7d1bb1ae19eb168d0d0197231e8ae2a69f0ac2c43b8bd83445f19d8dfd7d99",
+      "size": 558
+    },
+    {
+      "path": "agentic-prod-template-v2/configs/schemas/project.schema.json",
+      "sha256": "64574274b26342bcdbcfec527e6ef81c03682e2e0433947eaacf65c4ab67b5d0",
+      "size": 3150
+    },
+    {
+      "path": "agentic-prod-template-v2/configs/schemas/tools_allowlist.schema.json",
+      "sha256": "db25cd3c4d96963c979558bdbdd6e0dbee6e3d91d6545e8eeefba6060156cb55",
+      "size": 1705
+    },
+    {
+      "path": "agentic-prod-template-v2/configs/tools_allowlist.yaml",
+      "sha256": "2cd486b7fa85457291ca763f457793509269c2135898eb18cd0e05a79226cd03",
+      "size": 584
+    },
+    {
+      "path": "agentic-prod-template-v2/docs/architecture/api.md",
+      "sha256": "fb37074d96538f0392b76845d2cc6c6999e3facabdffe30292c443ad5d7f429d",
+      "size": 451
+    },
+    {
+      "path": "agentic-prod-template-v2/docs/architecture/boundaries.md",
+      "sha256": "90c97a8fc0c15adf24dfbf0f2ce19fb04b8e39d4a1416c711d1f657cb2ff3f3a",
+      "size": 909
+    },
+    {
+      "path": "agentic-prod-template-v2/docs/architecture/conventions.md",
+      "sha256": "bb72aedcc23cb5576d625dc68e301bf11cdc56cbbcc3484d0167f268b102dc8b",
+      "size": 552
+    },
+    {
+      "path": "agentic-prod-template-v2/docs/architecture/data-model.md",
+      "sha256": "85814ab2385cd8a522daed2624af8806c8a2b9b7f35c8d573a41a39f194c90b3",
+      "size": 389
+    },
+    {
+      "path": "agentic-prod-template-v2/docs/architecture/overview.md",
+      "sha256": "140729382576ad759c09d2999061dc4774f89eab428cc904edffe23e7dde8167",
+      "size": 565
+    },
+    {
+      "path": "agentic-prod-template-v2/docs/migration_from_v1.md",
+      "sha256": "0548fb3392578534ebe838338f458f216c761a57538fcfbe7b5f708ad43c986b",
+      "size": 1228
+    },
+    {
+      "path": "agentic-prod-template-v2/docs/runbooks/local_dev.md",
+      "sha256": "c4e6d0682e4b5737f4cb11d9167a853c64f4f5bac3fd2fa692cccb635c205e2b",
+      "size": 876
+    },
+    {
+      "path": "agentic-prod-template-v2/docs/specs/feature_template.md",
+      "sha256": "8ff26de675125c66b3893fb7fe817886a389ce74a18184f3fe68ce30d559e6a4",
+      "size": 405
+    },
+    {
+      "path": "agentic-prod-template-v2/pyproject.toml",
+      "sha256": "951bc631af004b0151b13884f5ec5fe6d12d2dae5d43d3e1ae5e5650a0ddc3e9",
+      "size": 332
+    },
+    {
+      "path": "agentic-prod-template-v2/tools/__init__.py",
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "size": 1
+    },
+    {
+      "path": "agentic-prod-template-v2/tools/_utils.py",
+      "sha256": "d5d6819ee752bcc951a87b501462ec1dea6ed5d3bc7c4d7ee7627f8ab00ca86f",
+      "size": 977
+    },
+    {
+      "path": "agentic-prod-template-v2/tools/doctor.py",
+      "sha256": "3b33565b8ae9e3cc3e603e39ba81f6b64b0cb42e1a331026467bb0e3a85564eb",
+      "size": 1224
+    },
+    {
+      "path": "agentic-prod-template-v2/tools/index.py",
+      "sha256": "85f7a6b0e28780a0c6d2c12bc42af94f46742789a850e43f2f7b03f0c31a10fa",
+      "size": 2990
+    },
+    {
+      "path": "agentic-prod-template-v2/tools/validate_configs.py",
+      "sha256": "3f9a040857f321fe55ef3092a924fbb6ba9b94171a2c970df42701562de12aa1",
+      "size": 1163
+    },
+    {
+      "path": "ai-dev-system/agents/__init__.py",
+      "sha256": "f01a374e9c81e3db89b3a42940c4d6a5447684986a1296e42bf13f196eed6295",
+      "size": 5
+    },
+    {
+      "path": "ai-dev-system/agents/base_agent.py",
+      "sha256": "e8c7c76fafcc8e38eff995f7a90898d7abd0c4664ff8f7a2e780dd50ae4dbb1b",
+      "size": 663
+    },
+    {
+      "path": "ai-dev-system/agents/claude/__init__.py",
+      "sha256": "f01a374e9c81e3db89b3a42940c4d6a5447684986a1296e42bf13f196eed6295",
+      "size": 5
+    },
+    {
+      "path": "ai-dev-system/agents/claude/architect_agent.py",
+      "sha256": "71ea9e3e9242d4d4e13342f7e29f91542c46b4dabcd79cd97655df397d9fad5d",
+      "size": 823
+    },
+    {
+      "path": "ai-dev-system/agents/claude/reasoning_agent.py",
+      "sha256": "44e803e9c4bf93d0d71041bce2c9cf0911ee3457cb9101a5d3525765999558a4",
+      "size": 836
+    },
+    {
+      "path": "ai-dev-system/agents/claude/reviewer_agent.py",
+      "sha256": "0e3aaee680018a2412449f56b39478a4cd992fe038eb4e2e961f36da9c12fe8b",
+      "size": 827
+    },
+    {
+      "path": "ai-dev-system/agents/codex/__init__.py",
+      "sha256": "f01a374e9c81e3db89b3a42940c4d6a5447684986a1296e42bf13f196eed6295",
+      "size": 5
+    },
+    {
+      "path": "ai-dev-system/agents/codex/coder_agent.py",
+      "sha256": "11ad2b27c1beaa813e97f7890fe8a9190b1750349c1c503eeee41641b43520a8",
+      "size": 823
+    },
+    {
+      "path": "ai-dev-system/agents/codex/debug_agent.py",
+      "sha256": "f430a8a4eba3986eb72c0334a5978506cc96987a774b85044a6b7a329142a054",
+      "size": 817
+    },
+    {
+      "path": "ai-dev-system/agents/codex/refactor_agent.py",
+      "sha256": "1d4ffbfc217dce091cef0e413200d6c39c946c33087dd2eb3cbfc3e5ed1b6290",
+      "size": 833
+    },
+    {
+      "path": "ai-dev-system/agents/gemini/__init__.py",
+      "sha256": "f01a374e9c81e3db89b3a42940c4d6a5447684986a1296e42bf13f196eed6295",
+      "size": 5
+    },
+    {
+      "path": "ai-dev-system/agents/gemini/docs_agent.py",
+      "sha256": "560008068f7c7ca766a73ec567f633a0ee9379c23a283e32a126a17d71f189f0",
+      "size": 816
+    },
+    {
+      "path": "ai-dev-system/agents/gemini/research_agent.py",
+      "sha256": "c8cf23d27d23a4a82d18d8338aa771a20a1b35808408bc5ad49c60c4338602f0",
+      "size": 825
+    },
+    {
+      "path": "ai-dev-system/agents/gemini/search_agent.py",
+      "sha256": "2c29b9959eee47de14a957f2f5e80a4486ea3e4e8b310ac22048b1b8b7025424",
+      "size": 821
+    },
+    {
+      "path": "ai-dev-system/agents/providers/__init__.py",
+      "sha256": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6",
+      "size": 2
+    },
+    {
+      "path": "ai-dev-system/agents/providers/base_client.py",
+      "sha256": "72a02224a0f9206ffcae4e475e79f6b308d0d1f7d1f6fec2fc5486cecd031e4a",
+      "size": 1954
+    },
+    {
+      "path": "ai-dev-system/agents/providers/claude_client.py",
+      "sha256": "702da1087e2129f7ce267a38e6f9ead14ac263cac591462e1586b8d0e10fcc61",
+      "size": 428
+    },
+    {
+      "path": "ai-dev-system/agents/providers/codex_client.py",
+      "sha256": "e10719a18a6270148bfcaac211bf127d9f2e0dcac7694bf74f4f94f3f2482775",
+      "size": 422
+    },
+    {
+      "path": "ai-dev-system/agents/providers/gemini_client.py",
+      "sha256": "f9d1a938e050029008199cc99411e67ea0d78538b9b67ac797d4ded88074dc1d",
+      "size": 429
+    },
+    {
+      "path": "ai-dev-system/agents/README.md",
+      "sha256": "07c2f06fb103d37a265efa6d3f4b60c98f017c9bef37be416dce722fb2875cee",
+      "size": 66
+    },
+    {
+      "path": "ai-dev-system/agents/supervisor/__init__.py",
+      "sha256": "f01a374e9c81e3db89b3a42940c4d6a5447684986a1296e42bf13f196eed6295",
+      "size": 5
+    },
+    {
+      "path": "ai-dev-system/agents/supervisor/supervisor_agent.py",
+      "sha256": "dce977ac233b3304c4ba725bfc27210a9c9ffc5cd46d3a029acd556d1ff1c457",
+      "size": 765
+    },
+    {
+      "path": "ai-dev-system/communication/__init__.py",
+      "sha256": "f01a374e9c81e3db89b3a42940c4d6a5447684986a1296e42bf13f196eed6295",
+      "size": 5
+    },
+    {
+      "path": "ai-dev-system/communication/agent_protocol.py",
+      "sha256": "c2bc715f8177f3c7b3d2c28f87330aed7999d2816d4f6623055ddc9986d84ab1",
+      "size": 1633
+    },
+    {
+      "path": "ai-dev-system/communication/event_stream.py",
+      "sha256": "15aff1ec4669569d0b9acbacea6950ac4ceaec45b9a4afae95477545f1d6ea67",
+      "size": 554
+    },
+    {
+      "path": "ai-dev-system/communication/message_bus.py",
+      "sha256": "90b079b85939c41c50209a914d68b0a4234191317b3dd441052c64b5b4af18fa",
+      "size": 1534
+    },
+    {
+      "path": "ai-dev-system/communication/README.md",
+      "sha256": "6b19e7aa71779473f458d18cd57968c2039f34df224cbcd29bd1753475d17de6",
+      "size": 70
+    },
+    {
+      "path": "ai-dev-system/config/agents.yaml",
+      "sha256": "ae0225ee5c073c4d403042db42124b863827e3fc718bcc5179ec14fb7a775ef9",
+      "size": 509
+    },
+    {
+      "path": "ai-dev-system/config/models.yaml",
+      "sha256": "8027c4887d6d677b43ed3b4af4333baccb0f197249185bfb4d3028510dab3d50",
+      "size": 406
+    },
+    {
+      "path": "ai-dev-system/config/README.md",
+      "sha256": "ad4f6d70689e0b40e7a258479d2a1d6ea8d5f0a4a10b87bdae7b5154685e8c45",
+      "size": 65
+    },
+    {
+      "path": "ai-dev-system/config/system.yaml",
+      "sha256": "c30532adb987421193dc794021333d9933ead6e00fbfece6c554e214242b7eb8",
+      "size": 456
+    },
+    {
+      "path": "ai-dev-system/config/tools.yaml",
+      "sha256": "f96117f0fea3d047eaae9e84b5fcc595a402cc911d42e6c02a51c4fcc12199ec",
+      "size": 223
+    },
+    {
+      "path": "ai-dev-system/datasets/README.md",
+      "sha256": "9f24eda0db50d6e56d273b28f878a7ea6b84de175a423233a71245d577c5f0a8",
+      "size": 56
+    },
+    {
+      "path": "ai-dev-system/datasets/training_prompts/sample_prompt.md",
+      "sha256": "dd9b418d3d8a41cf85b1485b05c6f32a90d3be55b0016ac0839621e924809522",
+      "size": 84
+    },
+    {
+      "path": "ai-dev-system/Dockerfile",
+      "sha256": "0e8614bfb9b481804aee9913daa265f6364ed7cb735f2b1290541208fd3fe21e",
+      "size": 290
+    },
+    {
+      "path": "ai-dev-system/evaluation/__init__.py",
+      "sha256": "f01a374e9c81e3db89b3a42940c4d6a5447684986a1296e42bf13f196eed6295",
+      "size": 5
+    },
+    {
+      "path": "ai-dev-system/evaluation/benchmark.py",
+      "sha256": "3158d057408f7f2d489b55eef8d3d45fbc4bf818103a66eeeb14beaa258d7daf",
+      "size": 362
+    },
+    {
+      "path": "ai-dev-system/evaluation/code_quality.py",
+      "sha256": "7a41e96dd39da0b662f608618e964c09aa590c1f8a20b80f064e6607f13ac114",
+      "size": 428
+    },
+    {
+      "path": "ai-dev-system/evaluation/correctness_check.py",
+      "sha256": "3b61802b5e5560af1d58d414cd2d811e6a1c8e1837d3329a591fc36f5d59b2c7",
+      "size": 362
+    },
+    {
+      "path": "ai-dev-system/evaluation/hallucination_detector.py",
+      "sha256": "b15887963c5df00920eb3263cc5ea2435932662df3306e4e145f85e78d435ce0",
+      "size": 451
+    },
+    {
+      "path": "ai-dev-system/evaluation/README.md",
+      "sha256": "73dfc10468e3ff8c5d17c02a88f3d16ce7dfdf9d8d5b243c89be89aab51acb0a",
+      "size": 71
+    },
+    {
+      "path": "ai-dev-system/knowledge/api_specs/internal_agentic.md",
+      "sha256": "eeda47de4e536d45191c239277d4c0f726c85e4680e63529f8c2cae1e1c8394b",
+      "size": 139
+    },
+    {
+      "path": "ai-dev-system/knowledge/architecture/runtime.md",
+      "sha256": "a9659c326ef10f06daca159c7554917eab98d4a0f473129f67dd278aa27d3176",
+      "size": 106
+    },
+    {
+      "path": "ai-dev-system/knowledge/coding_guidelines/backend.md",
+      "sha256": "0517b92dda7d29357fa958ca45718d941380e72250f204f9768276d57b67b6bf",
+      "size": 93
+    },
+    {
+      "path": "ai-dev-system/knowledge/docs/react.md",
+      "sha256": "a9544f91180c39fbd2995949f0645aec0453e43d99850bba80aab1b6df8fdc9f",
+      "size": 96
+    },
+    {
+      "path": "ai-dev-system/knowledge/docs/springboot.md",
+      "sha256": "81c7ce6732a7563f3aa3c7ab20629d1b905be65fb2b2c1486c8dba0996e7cc87",
+      "size": 126
+    },
+    {
+      "path": "ai-dev-system/knowledge/README.md",
+      "sha256": "dc3d0c606c20ee25b7a2c7115b1c57de651dc7d3cb71ed2a9a01d0270dc6c5eb",
+      "size": 65
+    },
+    {
+      "path": "ai-dev-system/logs/README.md",
+      "sha256": "8e214199b4ea643d56ac0351b826e992c4938eb6073c9a4d6f9ba01842eaa114",
+      "size": 68
+    },
+    {
+      "path": "ai-dev-system/memory/README.md",
+      "sha256": "589ffc7d69476440b05ea788782b029320daf0c8c7590e5498a2888a17b3ace2",
+      "size": 76
+    },
+    {
+      "path": "ai-dev-system/memory/vector_db/faiss/metadata.yaml",
+      "sha256": "3ae7d873f32672218689e20194e8a150aff3ad61e34c14e62ff5af025a7320c0",
+      "size": 69
+    },
+    {
+      "path": "ai-dev-system/orchestrator/__init__.py",
+      "sha256": "f01a374e9c81e3db89b3a42940c4d6a5447684986a1296e42bf13f196eed6295",
+      "size": 5
+    },
+    {
+      "path": "ai-dev-system/orchestrator/agent_router.py",
+      "sha256": "cc059bd9bdc6b5f12a698c5e14c97e29b565ce24cd594c8ed5ea780aef300bf7",
+      "size": 1258
+    },
+    {
+      "path": "ai-dev-system/orchestrator/app.py",
+      "sha256": "723cb8667ea0be448dfc5e0c9b978f68b6b5b0ff4da2e411cc1758bebd336d00",
+      "size": 5810
+    },
+    {
+      "path": "ai-dev-system/orchestrator/README.md",
+      "sha256": "36c0e7e6343d4388d18307f375951640f4aad7087da8f9bf82040e4346106363",
+      "size": 81
+    },
+    {
+      "path": "ai-dev-system/orchestrator/state_manager.py",
+      "sha256": "9ad4583f123c460c6b7cebacd2968a00550b4a224700451384d1a82f4b7aa19b",
+      "size": 6070
+    },
+    {
+      "path": "ai-dev-system/orchestrator/task_dispatcher.py",
+      "sha256": "50deb25a9fdafdf085f5300a77f2eb482c127ed1d25e78346a13479bd07c2fe8",
+      "size": 5443
+    },
+    {
+      "path": "ai-dev-system/orchestrator/workflow_manager.py",
+      "sha256": "6633e6daefcaaee61fb62c0b8908499e7f77acd7eb0c2f4ab440d88a7d5d89f3",
+      "size": 1195
+    },
+    {
+      "path": "ai-dev-system/planner/__init__.py",
+      "sha256": "f01a374e9c81e3db89b3a42940c4d6a5447684986a1296e42bf13f196eed6295",
+      "size": 5
+    },
+    {
+      "path": "ai-dev-system/planner/dependency_graph.py",
+      "sha256": "6193fe1c958dc30433729703c5e96f78601e134b00726e14cadad244ec352c0e",
+      "size": 1200
+    },
+    {
+      "path": "ai-dev-system/planner/README.md",
+      "sha256": "341bb34db5cb913ad6c693c31cf93880d67862dd14273766abd8dada7b62a69a",
+      "size": 70
+    },
+    {
+      "path": "ai-dev-system/planner/task_decomposer.py",
+      "sha256": "81ca4fca3da996db40063507276ef8be8d7e96f550f362585ac3375c01dffac9",
+      "size": 2798
+    },
+    {
+      "path": "ai-dev-system/planner/task_planner.py",
+      "sha256": "25cbd673b5b9ced8fde85773e9d0627773ba25f1be282f43162f0fdff74824d3",
+      "size": 521
+    },
+    {
+      "path": "ai-dev-system/plugins/docker_plugin/README.md",
+      "sha256": "674d7dd23db60a0f090a9981402e9eb2a311476ee51bb24d263ab76fcb6ee1ca",
+      "size": 84
+    },
+    {
+      "path": "ai-dev-system/plugins/github_plugin/README.md",
+      "sha256": "86715168383988c0605a8df9ae698e02016193f7c01fce7754d17471bfd5a324",
+      "size": 76
+    },
+    {
+      "path": "ai-dev-system/plugins/README.md",
+      "sha256": "9ec1adf7ac0a67931a8a18a111a1f67707f89ceb0cc8c46bba3cc06cfe0ddf3e",
+      "size": 53
+    },
+    {
+      "path": "ai-dev-system/plugins/vscode_plugin/README.md",
+      "sha256": "95d97ba7c1a412d5e317d24f2fbba9efbee189337f409b29efcbea4766bbc8d0",
+      "size": 71
+    },
+    {
+      "path": "ai-dev-system/prompts/coder_prompt.md",
+      "sha256": "43533ac8bf2a2c3203c4981336ffc776c30a4779f405f47d6c7c9aec745d582b",
+      "size": 163
+    },
+    {
+      "path": "ai-dev-system/prompts/debug_prompt.md",
+      "sha256": "867d4c45374e93d629f19964c8ab7d6c03aca639b5d4980706b99fc438b9a66a",
+      "size": 128
+    },
+    {
+      "path": "ai-dev-system/prompts/documentation_prompt.md",
+      "sha256": "d5f89e8cc98566c456a94984e19a4eabc5561d77c52484667fa3c91d73a129f6",
+      "size": 142
+    },
+    {
+      "path": "ai-dev-system/prompts/planner_prompt.md",
+      "sha256": "f82fb0800cba230973ac617c5498a6fccd0f91cf6b1e3cd91b9a12d92ae6d4f5",
+      "size": 159
+    },
+    {
+      "path": "ai-dev-system/prompts/README.md",
+      "sha256": "637c4cfd479f86933068fb53653a4a5b5b951966010ac31e5034cc257f2f8d00",
+      "size": 52
+    },
+    {
+      "path": "ai-dev-system/prompts/research_prompt.md",
+      "sha256": "2926344f542fc3fca69fe77af0b9f9656ae4334bc45f5a7ae666748591f700c5",
+      "size": 146
+    },
+    {
+      "path": "ai-dev-system/prompts/reviewer_prompt.md",
+      "sha256": "b01fbee452c8eef2e7a176e1538bb0a14fc6f8016d4693683def4e12565c9943",
+      "size": 139
+    },
+    {
+      "path": "ai-dev-system/README.md",
+      "sha256": "4c6e6986afc9da79a095d848fac10a611985f90e8b252586d2573d20297206ad",
+      "size": 670
+    },
+    {
+      "path": "ai-dev-system/scripts/README.md",
+      "sha256": "4f2a7239d4c9f8939fb2d55d8d94de10c69278c33a8d296a1c3f42f70a0bc6e7",
+      "size": 67
+    },
+    {
+      "path": "ai-dev-system/scripts/train_memory.py",
+      "sha256": "dc23be977670b67aea0b6004109c4356bfb96fd102541c4816b0eeaae432b66d",
+      "size": 804
+    },
+    {
+      "path": "ai-dev-system/tasks/README.md",
+      "sha256": "ab3d84a505435e996893545739a41fde874d4e839a6adc5c3ffa32cdf1ad2623",
+      "size": 63
+    },
+    {
+      "path": "ai-dev-system/tests/__init__.py",
+      "sha256": "f01a374e9c81e3db89b3a42940c4d6a5447684986a1296e42bf13f196eed6295",
+      "size": 5
+    },
+    {
+      "path": "ai-dev-system/tests/README.md",
+      "sha256": "54324b78cdf75a8447ed11bc55f5e8b59c602a5b82bb632ace1986b5d7c2976f",
+      "size": 67
+    },
+    {
+      "path": "ai-dev-system/tests/test_agents.py",
+      "sha256": "8dc529076323eb2ec974c853d8574c289c8273b869a8bae858a82615af28a167",
+      "size": 1055
+    },
+    {
+      "path": "ai-dev-system/tests/test_tools.py",
+      "sha256": "f3cc945cbd887191a0b0167ad639687b595786a389e623eca85c854763a6216a",
+      "size": 551
+    },
+    {
+      "path": "ai-dev-system/tests/test_workflows.py",
+      "sha256": "8669faf5a99e11fc07b8724932d88b32d8761e6d18037fc0e64e5cb54b15f944",
+      "size": 3376
+    },
+    {
+      "path": "ai-dev-system/tools/__init__.py",
+      "sha256": "f01a374e9c81e3db89b3a42940c4d6a5447684986a1296e42bf13f196eed6295",
+      "size": 5
+    },
+    {
+      "path": "ai-dev-system/tools/code_tools/__init__.py",
+      "sha256": "f01a374e9c81e3db89b3a42940c4d6a5447684986a1296e42bf13f196eed6295",
+      "size": 5
+    },
+    {
+      "path": "ai-dev-system/tools/code_tools/linter.py",
+      "sha256": "7901e79a52582934d8d6f0e31e0bde8f0692aca1545e9063db03f4b3a6eecde6",
+      "size": 336
+    },
+    {
+      "path": "ai-dev-system/tools/code_tools/run_code.py",
+      "sha256": "24356b2866202a4b966990635d6ff4861540f4eddb356ea72205ea42afa86117",
+      "size": 387
+    },
+    {
+      "path": "ai-dev-system/tools/code_tools/test_runner.py",
+      "sha256": "d30a4cce8b41878d9d81db61ad11ffa3c415173f3f2678455a3673718c2abada",
+      "size": 335
+    },
+    {
+      "path": "ai-dev-system/tools/file_tools/__init__.py",
+      "sha256": "f01a374e9c81e3db89b3a42940c4d6a5447684986a1296e42bf13f196eed6295",
+      "size": 5
+    },
+    {
+      "path": "ai-dev-system/tools/file_tools/edit_file.py",
+      "sha256": "ce13408e34ea0fc4b677627f462bcbfcab9973003cc72d42eeb008dc88989eab",
+      "size": 336
+    },
+    {
+      "path": "ai-dev-system/tools/file_tools/read_file.py",
+      "sha256": "a346784dca15c654e1c40d23d6bc1ca176c60cf077926e7c9e151c54ed20147a",
+      "size": 146
+    },
+    {
+      "path": "ai-dev-system/tools/file_tools/write_file.py",
+      "sha256": "73761b4f7df2dd2b7d6475a7b3b69f24e87f6cff824e4c53ab672a23c08814d5",
+      "size": 238
+    },
+    {
+      "path": "ai-dev-system/tools/README.md",
+      "sha256": "ac58790ac79185134049e8a02ce2ada9f641182955b308000c49b85ba9da8496",
+      "size": 56
+    },
+    {
+      "path": "ai-dev-system/tools/system_tools/__init__.py",
+      "sha256": "f01a374e9c81e3db89b3a42940c4d6a5447684986a1296e42bf13f196eed6295",
+      "size": 5
+    },
+    {
+      "path": "ai-dev-system/tools/system_tools/git_tools.py",
+      "sha256": "1e4ac13aeadabc1c3604015f7277c72c378181b06a89d449524122bfa35288ca",
+      "size": 333
+    },
+    {
+      "path": "ai-dev-system/tools/system_tools/shell_exec.py",
+      "sha256": "197f1b3dd7a7f8130049c0feea9e26c703ec9c10c3ab27528e7c9dbeda38b76b",
+      "size": 507
+    },
+    {
+      "path": "ai-dev-system/tools/web_tools/__init__.py",
+      "sha256": "f01a374e9c81e3db89b3a42940c4d6a5447684986a1296e42bf13f196eed6295",
+      "size": 5
+    },
+    {
+      "path": "ai-dev-system/tools/web_tools/scraper.py",
+      "sha256": "84a8b2422e7279081705770babe59f74240c24d4c245444fde215bd5d6545a1b",
+      "size": 189
+    },
+    {
+      "path": "ai-dev-system/tools/web_tools/web_search.py",
+      "sha256": "0c646a82a754c440d0ceb6fc7e445e6b5afa9631ebe1be66a9b3b2eb240708f8",
+      "size": 269
+    },
+    {
+      "path": "ai-dev-system/workflows/build_project.yaml",
+      "sha256": "d385a216b7fc27491df3b9d3f682e6f4b0a431580df3c1edcf95ab4639c34371",
+      "size": 369
+    },
+    {
+      "path": "ai-dev-system/workflows/debug_pipeline.yaml",
+      "sha256": "07a1d7ffc74ea9e84a3811b769dfebfb91c36276bce6f46752fa7bc1530e5da5",
+      "size": 278
+    },
+    {
+      "path": "ai-dev-system/workflows/documentation_pipeline.yaml",
+      "sha256": "5005f4c8d7190690ccbe1594f36b92b1ab91506bfdef38342abfd400a5bc5692",
+      "size": 285
+    },
+    {
+      "path": "ai-dev-system/workflows/README.md",
+      "sha256": "365fe20cb5f803660c010f77f7cbf29c10dfc138fb12009390afa6c1d8a6d533",
+      "size": 82
+    },
+    {
+      "path": "ai-dev-system/workflows/research_pipeline.yaml",
+      "sha256": "5de7c2e1ab4ae6e94f26b24660c3f5e39501e468d4b229dd88578526ec867c61",
+      "size": 229
+    },
+    {
+      "path": "ai-dev-system/workspace/README.md",
+      "sha256": "0d23574482c892eacd862f1aea6a19c936d71210fb5ab517217d12217f3ea571",
+      "size": 68
+    },
+    {
+      "path": "apps/backend/pom.xml",
+      "sha256": "480041b1eb0f7c62f4e0351f3e1bcb321a470c2c2916ffca3c010cd370f0bb44",
+      "size": 3622
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/common/ApiException.java",
+      "sha256": "1129b6ced404a2f10b336d809e7317a9a4aebcead1b0741099c456871f554e01",
+      "size": 370
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/common/BadRequestException.java",
+      "sha256": "10a117eda8efaf5daaef500e23a2c9587e5638098d6560af1c76ec90fabfe8be",
+      "size": 244
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/common/ConflictException.java",
+      "sha256": "f278dad93f689bafc1c6924cacd42d66d377fe613fbd941092f4df3c33498003",
+      "size": 228
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/common/ForbiddenException.java",
+      "sha256": "e8c46f012667e94ea7e3027d7b7a5121c1a8825566e349d9fec4914a550e22bb",
+      "size": 240
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/common/NotFoundException.java",
+      "sha256": "4043a846c60af29e166dee54c4b1b9ce30844f8564237d9b9a0e254ba5f6cafd",
+      "size": 238
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/common/PageResponse.java",
+      "sha256": "f1a75a0a41810226ef339e16924a6beab886b10ee4cfe14d3b90efb1c4029989",
+      "size": 674
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/common/UnauthorizedException.java",
+      "sha256": "dd6430ed1922f44d30b19e00df9cddca6e0beccbe581aa47fef49d2f49867574",
+      "size": 249
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/config/GlobalExceptionHandler.java",
+      "sha256": "a126000e3903e18a2e8a287237a9cf80bc57451d241d76059c27ab097f6476d0",
+      "size": 4188
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/config/InternalAgenticAuthConfig.java",
+      "sha256": "97be6f62a0ded2c0715b8622be7e182748c36a34ecba9f0ac1e9f22deb7b96b7",
+      "size": 2712
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/config/WebConfig.java",
+      "sha256": "939ba0d3e6fdefa836971789df223985a65b461a2e106c6c60a9da139319b3a2",
+      "size": 687
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/config/WebSocketConfig.java",
+      "sha256": "465413bb20e537a6c320e39c64614214cda5d89ffbd1f22cb2c51615f1bd7c93",
+      "size": 3632
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/controller/AdminChatController.java",
+      "sha256": "bcec9ead6e66feb4321b18013c4e2112d3c0643f363827527b3e566b40595822",
+      "size": 1517
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/controller/AdminController.java",
+      "sha256": "25fb6e098c85c4c470e54ea6271cfcadd7095469f6ce2c85922e66f458a1d4f8",
+      "size": 8797
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/controller/AdminLocationController.java",
+      "sha256": "6a0ea74c88eb1713f559ec736e5515e8ec2004014a6af6a40708d62dec49e5fa",
+      "size": 1247
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/controller/AuthController.java",
+      "sha256": "a5446b1e0eeabe9ca40bdb78b2acaa5ddb96563c178a391280a4bfe38dbec1cf",
+      "size": 5469
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/controller/CartController.java",
+      "sha256": "41dbcd73e39d0cf5f84579f1f1c2bfe74620ec71832afc6732fd3608b63f1f23",
+      "size": 1465
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/controller/ChatController.java",
+      "sha256": "b2a5a1b4228d4353e60b460ffe7fa362c646d884aeab6c10ca4be820c2c58b11",
+      "size": 2846
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/controller/EventController.java",
+      "sha256": "8816c477478936b45abd53406b226fe7df873b7a85e6ad2eb0d7ff2f10919c68",
+      "size": 1615
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/controller/HealthController.java",
+      "sha256": "2d9f02ad1423034ea104984e6cab82a988117ddc4e7747ad0c2c4a6af8560a98",
+      "size": 448
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/controller/InternalAgenticController.java",
+      "sha256": "a05eabff27eee8274916c20010eea9327a815a66c52ca6a1748f71b3febd1455",
+      "size": 1196
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/controller/IotController.java",
+      "sha256": "2802ad83041a876345c2b4bda19c46565268c82ad66248c155eea8e054f60b17",
+      "size": 2787
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/controller/ListingController.java",
+      "sha256": "e94a5758e53838c8b6a521a06b3b5ff6a21f0c312d6938c06c4352b1685b8cd5",
+      "size": 2305
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/controller/LocationController.java",
+      "sha256": "718344424fe875204a785a9413d832dd5e57d5541089c11c01508c9043b84f74",
+      "size": 1094
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/controller/MeController.java",
+      "sha256": "900e9391432c01026aaa663d598b921ef0e098ec3854988cd5e87e7089e62243",
+      "size": 3580
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/controller/OrderController.java",
+      "sha256": "bfd5ee40daa83404eadd9db701a22326f2133ee47534eb31539f43f9e17c91b2",
+      "size": 1299
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/controller/SupportController.java",
+      "sha256": "2a0706cdb13adb7b372896b0bc4509f0fd9b8828c2dce706804dcb3b50fa00fb",
+      "size": 1229
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/domain/CatalogItem.java",
+      "sha256": "7867fc49e004e0b99cff7c1d8bb881e3606500612a23e410d551a66c7a4132e4",
+      "size": 1740
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/domain/CatalogSourceType.java",
+      "sha256": "d08ddca72d67ba025aa93de44dd5bedd3b8f69386360143aed357836d2dd1874",
+      "size": 110
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/domain/ChatConversation.java",
+      "sha256": "e999e83df1521d3692828d0f4e09c978534b7c7c554988daea683d1b9c97bfb9",
+      "size": 2267
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/domain/ChatMessage.java",
+      "sha256": "5f3514d57a1254508503e1b6f8971de638cf6c9931bdf6cb6759855c8fa6a870",
+      "size": 897
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/domain/Event.java",
+      "sha256": "dd2a3c54853f309f01a5bfb6d6fe0ae579be46eae0ee02bb1d12b60e137fe6b2",
+      "size": 1417
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/domain/EventRegistration.java",
+      "sha256": "4505b1c00d183e40e5dda84391824427ba172d3ea1a029909fadb50a4e65d88b",
+      "size": 1150
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/domain/EventRegistrationStatus.java",
+      "sha256": "b097432372fff05eb82ca0be650622cd5e8c3481885b5d9dc5b7e64f69d07216",
+      "size": 121
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/domain/Faq.java",
+      "sha256": "c7129499059c84fa8c8ad81936334ff4135181a1f9d215e26f154b41eb390c68",
+      "size": 658
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/domain/IotComponent.java",
+      "sha256": "493cc8756b506c4482c915b8abb29bbdac30d9df48d5b2197c63f5c2df2d4691",
+      "size": 1359
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/domain/IotHighlight.java",
+      "sha256": "88b0d3c81c35c212110a3a26a9b087379eecf001c6282be0a75ba402512fde58",
+      "size": 1377
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/domain/IotPageContent.java",
+      "sha256": "a450a966b86b35047803c2e919b1efc9b8cba54a6d43ae5346fce069a9a42b85",
+      "size": 1839
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/domain/IotSampleProduct.java",
+      "sha256": "acc19be540ec4eb52e8bfb28a5666c342345ab9d7d9058e4bdccf703f86fb7d9",
+      "size": 2080
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/domain/Listing.java",
+      "sha256": "65735902a2f9f45f99ea668429670a2f5dcec4110a4963b0969b71ed1d6029f0",
+      "size": 1454
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/domain/Order.java",
+      "sha256": "dee6b5fdb460df5e4021afb516afc7b06ffe6c83d040291b6a55a483b93a04c7",
+      "size": 1744
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/domain/OrderItem.java",
+      "sha256": "167556e2b9f9480783d51bb318d764995a5791a08fc009cf49f24cabc219e258",
+      "size": 1285
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/domain/OrderStatus.java",
+      "sha256": "6a9e2325c9ef86e4a8e370cb5ed6e62e937bcf3268d5f6f7bd3e139b60fde606",
+      "size": 154
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/domain/RefEventRegistrationStatus.java",
+      "sha256": "e2cbecf5e84ae812261342ced6db6bdf408c6d8830c692b8ac53491a6341abde",
+      "size": 1029
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/domain/RefIotComponentCategory.java",
+      "sha256": "f94887a1ee15c854ba28ad048140ef73ca91714343fa5e28b32b8b60266b65d6",
+      "size": 1023
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/domain/RefIotSampleCategory.java",
+      "sha256": "f1aedb24fb5ca26cc11ed85133f65aa6a02acf78faabddca7a7444f8d4cf697e",
+      "size": 1017
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/domain/RefListingCategory.java",
+      "sha256": "32f915ef1cb2bad1f90f1e32463861f283eb38b104da3044d7e9cf8ccdaeefd0",
+      "size": 1012
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/domain/RefOrderStatus.java",
+      "sha256": "8b1975aa7bb5ec02cf5dd7585bdc8dbac068a535f3da92cff91806c87955e2e9",
+      "size": 1004
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/domain/RefSupportTicketStatus.java",
+      "sha256": "9edfe2eb7e2d2477184e21940fd8f4c4c305168faab0cbeea9770b316efb8e3c",
+      "size": 1021
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/domain/RefVnProvince.java",
+      "sha256": "20e3eda8bd4231158a55758709bce1c5d49efa81c0072aed5203fd421439ceb3",
+      "size": 1287
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/domain/RefVnSyncState.java",
+      "sha256": "12f8e5d88138e54f3a2389e5f708cc2e1fddee878b632d72a5c043daa52fa1c3",
+      "size": 1306
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/domain/RefVnWard.java",
+      "sha256": "d51ca9fa808844f2a4928cd47f8f26ed39ddf29db39b2d7ba9bfd0055452346f",
+      "size": 1380
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/domain/SupportTicket.java",
+      "sha256": "0e5a123d5a22c38c3ec4d8f7df1bd27e7a0ae97802412a2450cd41560dbc3ba4",
+      "size": 1372
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/domain/SupportTicketStatus.java",
+      "sha256": "3c1459a16bec8024bb8c9bdebfb84ed11ff95fd7859c6b0e74d9535a847eb42f",
+      "size": 128
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/domain/User.java",
+      "sha256": "83df5992d5b482199cb40add0f60264a83f424eaa23401a592aee100d443856f",
+      "size": 1701
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/domain/UserRole.java",
+      "sha256": "71b65f57c80506b812acba6e7a71b595090fb0ebcd344bcdf8306ea90eb77dc7",
+      "size": 80
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/domain/UserSocialIdentity.java",
+      "sha256": "9ea8eb739a37e8b90ea14f6ae0b79081900fb88c5311c251aa49cc3fd5555888",
+      "size": 1699
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/dto/agentic/AgenticTaskCancelResponse.java",
+      "sha256": "7d664dd2b0e10d38fea6bdf60e0b4c234da521463b1e93bdfcc11f63988c65ad",
+      "size": 264
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/dto/agentic/AgenticTaskStatusResponse.java",
+      "sha256": "54f7d566f27b49ad35de4eb4744dcf29fb79364a7cb0e02ce2b3243d07c9cc3f",
+      "size": 750
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/dto/agentic/AgenticTaskSubmitRequest.java",
+      "sha256": "6237798ba2a7c1f9defee51b1a8cfba51ca293348b039390aad2c44efdbe78c0",
+      "size": 330
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/dto/agentic/AgenticTaskSubmitResponse.java",
+      "sha256": "a4da2ead70c20de62c2e34e4513797a2b2a5f82ef43191bf72df865be22bb829",
+      "size": 298
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/dto/auth/ChangePasswordRequest.java",
+      "sha256": "6461bfe9d3e315f27d384033e4a78e91288136dcf9908f098978a42e782fd0af",
+      "size": 333
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/dto/auth/LoginRequest.java",
+      "sha256": "af5afe80855b528f9217944a890aaa2610862b4c9c91acd982a6e3f19a8c6319",
+      "size": 236
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/dto/auth/LoginResponse.java",
+      "sha256": "a57caeb80eae39e90d3215eda51a3988564058bb95bdd5959295e769083ce968",
+      "size": 228
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/dto/auth/RegisterRequest.java",
+      "sha256": "5eedf1cac463e790f85580c6717a54433f16a546b3085c37f15ab05b32a77d33",
+      "size": 462
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/dto/auth/UpdateProfileRequest.java",
+      "sha256": "a5c4f5a88f702f8e291e88c83dab38007b0a91400ba635991d863e4e01e740ca",
+      "size": 812
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/dto/auth/UserSessionResponse.java",
+      "sha256": "24737704eb61a9389b954baed93de4b50d0c5165b9e3572912fc138f411b772d",
+      "size": 482
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/dto/auth/ZaloProfileResponse.java",
+      "sha256": "39244c0af102a933667e59c30b7bdb28766e688c4f121a97ef21f059fe847715",
+      "size": 623
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/dto/auth/ZaloTokenResponse.java",
+      "sha256": "eb0bbc0235a0ec45a4f7a066df5d6cd0bc265d9c10b8c7de4580457e295050c2",
+      "size": 711
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/dto/cart/AddCartItemRequest.java",
+      "sha256": "13f39d581718aa9c8505adfd8bb47ad66b94a8d170fbb23ba0489b685b86e734",
+      "size": 279
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/dto/cart/CartItemResponse.java",
+      "sha256": "1730b9ee532cb73ea115be9258e7c41e2c7653b987c364bdcc0e09ee58b37959",
+      "size": 456
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/dto/cart/CartResponse.java",
+      "sha256": "337dba46d4cfe9bef7a9baeb2f8772255f47d5ea4947d89de2e83c693cd8e851",
+      "size": 296
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/dto/cart/UpdateCartItemRequest.java",
+      "sha256": "45c064452484c0a2b2c4a762c12413a181629f0627fe38137a1230ed3c3fe1bd",
+      "size": 188
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/dto/chat/ChatConversationSummaryResponse.java",
+      "sha256": "09d436e2add24f4ca10cba4bc4e1f79eeafb05799accb0c6c8c6ddf55781d6a8",
+      "size": 451
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/dto/chat/ChatMessageResponse.java",
+      "sha256": "8326382287f52146d36e59bf71207d7aba09a5126fe349d3250dc8c9f42df551",
+      "size": 372
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/dto/chat/ChatSocketEventResponse.java",
+      "sha256": "3cc433950e0842fb5ea36dcbf88a7a99d8c97cded3e72926adc9790532e791f2",
+      "size": 263
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/dto/chat/ChatUnreadCountResponse.java",
+      "sha256": "a4711d6de6a264055e188fd73f77b51f69d48e3a1a14a05b5e3a8bc521b8a0e4",
+      "size": 182
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/dto/chat/SendChatMessageRequest.java",
+      "sha256": "d2079b9111a8bf8279160b0fada9ed4691a39a80c0af83a108ff39dbb8c791ee",
+      "size": 254
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/dto/common/CategoryOptionResponse.java",
+      "sha256": "d212c3e67673ff6f86155a2d0e5e861c3f035e664b21becd44c3b97af50d909c",
+      "size": 183
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/dto/event/EventRegistrationRequest.java",
+      "sha256": "e0753d37661ab9008413cd600cff3525a7618587733265ddb8f049097c0f6b71",
+      "size": 355
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/dto/event/EventRegistrationResponse.java",
+      "sha256": "b7e506c2866e5fd9c15b0d104f7ade86b4ad61495542acb350e22c6e3f6811f9",
+      "size": 421
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/dto/event/EventRequest.java",
+      "sha256": "778c1957cc17cd9d01e2208b6720b6c6111aaa8a3639ac2b20ec90cbc99b8680",
+      "size": 747
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/dto/event/EventResponse.java",
+      "sha256": "0e70c9f3e245fd9ea8e5d250176b01a94440c7f5df68ff4727967f3c9f5893bf",
+      "size": 559
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/dto/iot/IotComponentPageResponse.java",
+      "sha256": "90a8e4dc9ab9dcf0d503fce35713158ac44fa4a222fd86c7f206f6fabc926740",
+      "size": 233
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/dto/iot/IotContentResponse.java",
+      "sha256": "1caeafe417980ea636e8942998ec1452ad19a3083c3d1414ddb902eb4de3cdc3",
+      "size": 406
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/dto/iot/IotContentUpdateRequest.java",
+      "sha256": "5cb7ac9f69b76be0658efc5e3afef18b0ad1917850d4e28ea06eadd5eef0005a",
+      "size": 821
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/dto/iot/IotHighlightResponse.java",
+      "sha256": "598d12923116e427860daf0ce113f052720d685e24a7638822ad30b1a02c9f2b",
+      "size": 275
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/dto/iot/IotHighlightUpdateRequest.java",
+      "sha256": "39f98a17f89e02898b9cbf0aa05a843a8f4c17eab6b3831309e40e7f05cf9087",
+      "size": 381
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/dto/iot/IotItemResponse.java",
+      "sha256": "1d8e2a60827df7ad77ae3f1b8d96b9e0b1f14245f3a6f829f2a05cd25c9c79ba",
+      "size": 672
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/dto/iot/IotOverviewResponse.java",
+      "sha256": "6e82f9b576de9f18dd13b5cc12fcd6717e28b70b1dc380a4b97fb88948d53612",
+      "size": 632
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/dto/iot/IotSampleProjectRequest.java",
+      "sha256": "a3295e330e7579161a0cc1f67119e26039ab8b2ce4d1e203c342374b25bf3160",
+      "size": 1205
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/dto/iot/IotSampleProjectResponse.java",
+      "sha256": "2b0047b2996ac01014b1b4893046169d82fd2acf37d79bf0c3d5bf77aa329a41",
+      "size": 1018
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/dto/listing/ListingRequest.java",
+      "sha256": "aafd868febda74ae95e4d72027057059d571b1235b0d4d05c0ed6c820d920bfa",
+      "size": 620
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/dto/listing/ListingResponse.java",
+      "sha256": "2eba32d7fcc62d27d3a659ecece01288892e97ae099a2f351e44a26c7b2ac0e1",
+      "size": 657
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/dto/location/VnAddressSyncResultResponse.java",
+      "sha256": "d0c745b71549170067254ebeb6e79f71e44a550d683e97874e763b599a209b73",
+      "size": 348
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/dto/location/VnAddressSyncStatusResponse.java",
+      "sha256": "a107f8f3f8c64e86b510567b645953615f1129cb65f2375f8b84b53ddf1684f0",
+      "size": 403
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/dto/location/VnLocationOptionResponse.java",
+      "sha256": "37cb64dfb4b39b11b78093499b66cf3c62ebe2cf61fd5188675b27e54c8e781d",
+      "size": 186
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/dto/order/CreateOrderRequest.java",
+      "sha256": "0589c5b0ca8aaa4a92e5d6ae5dc3f46d6842ea4f4e244bc19c5cf28d65e15e3c",
+      "size": 609
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/dto/order/OrderItemResponse.java",
+      "sha256": "35924a0912a15ecaa0b6db62805bb6773deeead9218f79ca2ec1e96a0751dbd3",
+      "size": 431
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/dto/order/OrderResponse.java",
+      "sha256": "5d0006ef5514c1290c5dbea0e3c3dfa7d49df7a2e856fa3a469ba24a90c6521a",
+      "size": 549
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/dto/order/UpdateOrderStatusRequest.java",
+      "sha256": "4e9dbf1364f2559b240f46700985d061e4a268dfa73a8644e2bf2c1a1c179c9e",
+      "size": 200
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/dto/support/FaqResponse.java",
+      "sha256": "36fdcedbf5e0ea206ec8c1d6c5e046d6c297914fbd28328255d53a12d3d9c5e0",
+      "size": 272
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/dto/support/ReplyTicketRequest.java",
+      "sha256": "706ec8d8e70e3432600430891d797abf67ef2c26529ae787be6c70d148006543",
+      "size": 195
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/dto/support/SupportTicketRequest.java",
+      "sha256": "6adc1283006eb2ae5d45d6a1ebd0ff0de7ebcb9ca4565ad5ddf2f8ed33442e08",
+      "size": 437
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/dto/support/SupportTicketResponse.java",
+      "sha256": "5bab2927983eb9dba6221e23c19347f17ce8be6c99db5ce2ef9ff7fd1c7c4e2f",
+      "size": 537
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/dto/support/UpdateTicketStatusRequest.java",
+      "sha256": "ab18e201665d7cdd5f339ab7095ada6d7011eb62beb1360ca1537a847d6eacef",
+      "size": 203
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/IotApplication.java",
+      "sha256": "f94a52448c0ef27a633c8c993133be16dfc88f0adf263fe7f11b1890f6f44155",
+      "size": 323
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/repository/CatalogItemRepository.java",
+      "sha256": "3453705bbd768fed1c77ec7b03aaa1f5cba9b9fd56c91f8da8d0519f07fa2173",
+      "size": 590
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/repository/ChatConversationRepository.java",
+      "sha256": "d7972079ad3e5527f4e411b13519391652cfef0e4abb846b44e5fa8fea02e935",
+      "size": 2812
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/repository/ChatMessageRepository.java",
+      "sha256": "50dffb1271e79703511e7d8fc460f8d2d3aeff5cadb85d248e4129961e2339f3",
+      "size": 513
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/repository/EventRegistrationRepository.java",
+      "sha256": "eab3e5a28045e39e567d40502a99eb44d28a167bcb073b5d8bcb5a068ca9a6e0",
+      "size": 500
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/repository/EventRepository.java",
+      "sha256": "dd6a00ccbf16f116506c4a9a940cd07a5f3ee70d31a007795c1247d126948987",
+      "size": 398
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/repository/FaqRepository.java",
+      "sha256": "b84376a868eaf2f88ee3067e79c55875458446fdb23911f78d34c82ee7233cc8",
+      "size": 307
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/repository/IotComponentRepository.java",
+      "sha256": "cf0e60698a7feec2e14af10155bf0f7083cf935a066732abadd023460cb70a06",
+      "size": 407
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/repository/IotHighlightRepository.java",
+      "sha256": "b6bde3fb6257958ed450c559604fc27ffcc2124388672d64125145a1d16aa777",
+      "size": 229
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/repository/IotPageContentRepository.java",
+      "sha256": "3b9ec47ca1953782b54577671c164e1632d66e9928d6d62788332cf90a528f2c",
+      "size": 332
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/repository/IotSampleProductRepository.java",
+      "sha256": "7724abab943b429dd190320bd0bcf42b8757d0591ec7f23baa723132adaeab10",
+      "size": 638
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/repository/ListingRepository.java",
+      "sha256": "0af4f1f5aac7e7bbf731519d99d11c18344f6050cc913faa71f9d432d15906ad",
+      "size": 663
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/repository/OrderRepository.java",
+      "sha256": "5adb3c36ad951b78b8eec434b77eaa990b3fa530118a490135690684d15d8fd8",
+      "size": 1143
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/repository/RefEventRegistrationStatusRepository.java",
+      "sha256": "730f034d131b8acce7922a2c0c25aacf14d6e8d6df2d56ae81d6e29e649547fc",
+      "size": 381
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/repository/RefIotComponentCategoryRepository.java",
+      "sha256": "4e3ce9521f4c9851f2a9d7ce11e6c85cb319ec9ee7d7729e30ca615898e05e58",
+      "size": 472
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/repository/RefIotSampleCategoryRepository.java",
+      "sha256": "6927c4abddf719a04977ad9ac5f2e76dc0189718f1bbc697408d683dc9908d7e",
+      "size": 457
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/repository/RefListingCategoryRepository.java",
+      "sha256": "fb4958520c37e72777ac816a78b87c15050dbd9a6457f04aed274d6ab9a8d066",
+      "size": 447
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/repository/RefOrderStatusRepository.java",
+      "sha256": "9585d202b5eb649bcabd04da6607785efeba21c080ece4052db33c3371041516",
+      "size": 333
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/repository/RefSupportTicketStatusRepository.java",
+      "sha256": "f21b90d4e0d2c844e3a1c2d99082356025652a524497b404c92e9e65bf062a0a",
+      "size": 365
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/repository/RefVnProvinceRepository.java",
+      "sha256": "8cd1297f6b194997e0cb539deab3b4a1dfd7fad036a8d906ba1b370be04f65c5",
+      "size": 875
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/repository/RefVnSyncStateRepository.java",
+      "sha256": "d10c8f5413d13e299c77cadf15b91ca5f5953cf2369a95f42cbc3d08c644a209",
+      "size": 228
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/repository/RefVnWardRepository.java",
+      "sha256": "2f14c99f5cb87327c86df94ba0d075f83c1757479de8a01e82f3b893ad7f7ea4",
+      "size": 972
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/repository/SupportTicketRepository.java",
+      "sha256": "238cc11f3c461a5a740fef4006e2975fe72457c0af1c4f190be841f6ff4ed4d4",
+      "size": 540
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/repository/UserRepository.java",
+      "sha256": "0d5226a03aa659c318a20c38371517f7a27800218bc3b5c91cc429e58c0a8031",
+      "size": 638
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/repository/UserSocialIdentityRepository.java",
+      "sha256": "bbb346f7c7778d63cf589c647e00227fb45fcaf623d2e58bf5c98b53330d6dff",
+      "size": 531
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/service/agentic/AgenticGatewayService.java",
+      "sha256": "436d14ed672aec7344c1cb227c7ef0c550a19fb8b13b802ba26308610733fdd5",
+      "size": 6040
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/service/AuthService.java",
+      "sha256": "a08effc59dcbb1780aab6da38af7712b2df4dd97f1a837b9b8ec2cdef944e4c2",
+      "size": 13313
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/service/CartService.java",
+      "sha256": "d04d5a84668e40ccf2960164c456f80c0ffb2f34784b987eac46d04e32084464",
+      "size": 8289
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/service/CatalogItemService.java",
+      "sha256": "7925eec9c3ae4c432e9e5c967a91e0c79117c7853090b4f805258a6a8f1967e7",
+      "size": 4537
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/service/ChatService.java",
+      "sha256": "7152f32497c04e83b12c5ce61bcb2587d623a2ccc948048bd3d4dacded0519ad",
+      "size": 13423
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/service/EventService.java",
+      "sha256": "1d46f085ebcc3bd790de1c821db5f2a49c41ae105dc8657c7ef65a131c5b6d5e",
+      "size": 9107
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/service/IotService.java",
+      "sha256": "96c2a1d22b4d6217f59e6380ca43c9eaec0bb95ef861f96d783cb882e8406376",
+      "size": 24415
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/service/ListingService.java",
+      "sha256": "c49181ace5269ebb2eed88b3fb8d7030d853af714edd67923698c19ea9d2c9eb",
+      "size": 9008
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/service/location/source/FallbackOpenApiLocationSourceAdapter.java",
+      "sha256": "6b3535a033a1263779b128fc3190060ee17f1f8bd7bac3fba855d23cc1e6125f",
+      "size": 5035
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/service/location/source/LocalCuratedLocationSourceAdapter.java",
+      "sha256": "065a40842dfcc117f4a146d7924b6b3b2d5bf5d3206dfc436fcd093e419461f7",
+      "size": 7609
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/service/location/source/OfficialLocationSourceAdapter.java",
+      "sha256": "900b0b4e007f0f2c6a999ac39d91e98455b99e8191d619488f2c7428fcdd2ff8",
+      "size": 6163
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/service/location/source/VnLocationDataset.java",
+      "sha256": "4798978c360073940fb4cfb40e3c31058153353575b53ca3d839dd6261320862",
+      "size": 636
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/service/location/source/VnLocationSourceAdapter.java",
+      "sha256": "f38240f3cf6c6e77ca7c8106c68a1191a70631e6745b6928608333dfa381092a",
+      "size": 155
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/service/location/source/VnLocationSourceLoadResult.java",
+      "sha256": "c7f8e3027945eb6291c3f95f355f919c171aec97578ee69cca0387ab035aa784",
+      "size": 592
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/service/location/source/VnLocationSourceUtils.java",
+      "sha256": "abbd85676bee6945d4ad768a2e7a21f10f15e7156ebda3e07631c4b06010ed9d",
+      "size": 2854
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/service/location/VnLocationBootstrapRunner.java",
+      "sha256": "3159ef87a0016eefb740ec94762647944efaa6701b5c845e8356557c151c3a61",
+      "size": 1009
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/service/location/VnLocationQueryService.java",
+      "sha256": "b42b262f12091418fc420b429b2d272238d64933af41723edeb8e3cf3fc772bd",
+      "size": 2885
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/service/location/VnLocationSyncService.java",
+      "sha256": "3dfe1a861c4ca4fbd23e7bb4f59a7602e17812d28ff65a8e7ab2f8e2b2ddd0db",
+      "size": 10725
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/service/OrderService.java",
+      "sha256": "2f98ca1d9c3b8e024b0a01f286f608f161c0ddcc77a63580ac013c5d6bfa1c46",
+      "size": 11469
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/service/SessionAuthService.java",
+      "sha256": "6dd183958a8250ccc4178336653dc572844c14aa9508c67ee36c273f07be9e44",
+      "size": 1761
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/service/SupportService.java",
+      "sha256": "91786066df205fcc9971e47874c447a6ae7809917efe7e98844b5d04015142e8",
+      "size": 7069
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/service/ZaloOAuthClient.java",
+      "sha256": "dcdee11e584c145ddb607e77b7a97189e26dc339d23f039a90fdea2af252c0d2",
+      "size": 8094
+    },
+    {
+      "path": "apps/backend/src/main/java/com/ssg/iot/service/ZaloOAuthGateway.java",
+      "sha256": "018e970f0a43cc3f27e4c5c73f6554ed21863de1962b949845b5b3e149c11f89",
+      "size": 335
+    },
+    {
+      "path": "apps/backend/src/main/resources/application.properties",
+      "sha256": "69b9f0b9db0fb228a2673a32076cb2e07c6e487352923d20cbc20f72ce368e94",
+      "size": 2194
+    },
+    {
+      "path": "apps/backend/src/main/resources/db/migration/V10__create_catalog_items.sql",
+      "sha256": "bdc36d90caa9264a544af991661fda21c0220993f29419bf2dbe87e5e034e3cb",
+      "size": 592
+    },
+    {
+      "path": "apps/backend/src/main/resources/db/migration/V11__add_fk_columns_and_archived_at.sql",
+      "sha256": "a3072f8fa3131e2eab7c3f9bc1c428a7e479dea5445dbe24777bd0ecc722831a",
+      "size": 763
+    },
+    {
+      "path": "apps/backend/src/main/resources/db/migration/V12__backfill_references_catalog_and_unicode_fix.sql",
+      "sha256": "e1d47363b9547ddd91642fc3342b26765345bbc816b550a217b84cf6d9d3d97c",
+      "size": 8187
+    },
+    {
+      "path": "apps/backend/src/main/resources/db/migration/V13__add_constraints_indexes_search_columns.sql",
+      "sha256": "bf8fbf1a6ef57d2b081974e27c2ed71ff7a69e0461b6d021430f5fa5a95d1851",
+      "size": 3789
+    },
+    {
+      "path": "apps/backend/src/main/resources/db/migration/V14__drop_legacy_columns_and_legacy_constraints.sql",
+      "sha256": "10c96f2e03488d4249bf2eb45aed179065180cd80f29d3cd0b675701ac7128a2",
+      "size": 1129
+    },
+    {
+      "path": "apps/backend/src/main/resources/db/migration/V15__normalize_utf8mb4_vietnamese_collation.sql",
+      "sha256": "c88a13689a659c1616182b38e0edf6e274658820f3122591a44aa383cee41217",
+      "size": 5110
+    },
+    {
+      "path": "apps/backend/src/main/resources/db/migration/V16__split_listing_p2p_and_add_chat.sql",
+      "sha256": "e65a0d5fbb42c34ecea1d5690cf5d8d953c1fe52caad20270d75d5eb68f74d96",
+      "size": 2069
+    },
+    {
+      "path": "apps/backend/src/main/resources/db/migration/V17__add_indexes_for_me_orders.sql",
+      "sha256": "77c821ec15f67de2368a24f3ed167db32146ec8e279694cc01caf12ce3ba5834",
+      "size": 172
+    },
+    {
+      "path": "apps/backend/src/main/resources/db/migration/V18__add_avatar_url_to_users.sql",
+      "sha256": "02bdfe791cb7b407b2d7b3149311d6c3d755addec88b8f8a981bd4b6b8779328",
+      "size": 92
+    },
+    {
+      "path": "apps/backend/src/main/resources/db/migration/V19__expand_avatar_url_max.sql",
+      "sha256": "ae8768e00d1452b43a3152961d00e449b5c07f3c7b3bfd1906f428e4f3c9188e",
+      "size": 116
+    },
+    {
+      "path": "apps/backend/src/main/resources/db/migration/V1__init_schema.sql",
+      "sha256": "10b5f25532c610d6a1f284f443f44cc12ee18a9819b2f7d538d37a0df6754e81",
+      "size": 6589
+    },
+    {
+      "path": "apps/backend/src/main/resources/db/migration/V20__add_user_contact_and_order_phone.sql",
+      "sha256": "94f290e78f056e75f740e405a6c647a2d242be4af5fe5ff942856b064469409b",
+      "size": 248
+    },
+    {
+      "path": "apps/backend/src/main/resources/db/migration/V21__create_vn_location_reference_tables.sql",
+      "sha256": "0172f99f3b94aad1a507b794d1ac1a5262f3557799d225e1c1bdf0cd06d332eb",
+      "size": 3773
+    },
+    {
+      "path": "apps/backend/src/main/resources/db/migration/V22__seed_vn_location_from_local_curated.sql",
+      "sha256": "b46a93de5f41686dd2f6c0b34b3e036ae30f40758a23c81f62ed07432b2235f7",
+      "size": 1636
+    },
+    {
+      "path": "apps/backend/src/main/resources/db/migration/V23__vn_location_two_tier_cutover.sql",
+      "sha256": "3ecb8d075a4fcb07d68683adc02e7315b4f297305ad3ba81af8e433c172c7279",
+      "size": 3396
+    },
+    {
+      "path": "apps/backend/src/main/resources/db/migration/V24__create_user_social_identities.sql",
+      "sha256": "6448668ae0ebf44196b7e19e9f461345c63b7e23782fc2eb0f4b270e76c9ce9f",
+      "size": 638
+    },
+    {
+      "path": "apps/backend/src/main/resources/db/migration/V2__normalize_status_values.sql",
+      "sha256": "051c473437566eb9376fccd1e5f99a7b23ca6c0ef4a610bb6622058045042bd0",
+      "size": 1146
+    },
+    {
+      "path": "apps/backend/src/main/resources/db/migration/V3__add_iot_content.sql",
+      "sha256": "cf2104d681b49560aa12c1dd8d1e7b0d5c6a437bc332c3ee3f5b92c46524a6c7",
+      "size": 2163
+    },
+    {
+      "path": "apps/backend/src/main/resources/db/migration/V4__alter_image_url_max.sql",
+      "sha256": "a60ed6d57e0f3e21cfa8ff0b83523a872b16b1841a07995719e6ef3c5d1d979e",
+      "size": 333
+    },
+    {
+      "path": "apps/backend/src/main/resources/db/migration/V5__update_iot_highlights_categories.sql",
+      "sha256": "4ce92acc4d11c1b31797717a585b52bfb45de3e593258aabbf68971acfb75821",
+      "size": 725
+    },
+    {
+      "path": "apps/backend/src/main/resources/db/migration/V6__create_iot_separate_tables.sql",
+      "sha256": "65e0325ffac256f236b67076459a1893bec371a2c1f57dc85e4d7eccd2f62aad",
+      "size": 4017
+    },
+    {
+      "path": "apps/backend/src/main/resources/db/migration/V7__expand_iot_sample_projects.sql",
+      "sha256": "8898ab0536e737699affeb923695356ac862b44fec6198a48c37ed074744d3ca",
+      "size": 17276
+    },
+    {
+      "path": "apps/backend/src/main/resources/db/migration/V8__migrate_listing_categories_to_vietnamese.sql",
+      "sha256": "3d588002252ece11bea7ab30126d574f0ce95577e262a76955c01bbc49224048",
+      "size": 772
+    },
+    {
+      "path": "apps/backend/src/main/resources/db/migration/V9__create_reference_tables.sql",
+      "sha256": "14a0a9062ca2dbdafa662ec53ff521ac5ccba08bc259ef6977bfbcc97ef0916e",
+      "size": 4284
+    },
+    {
+      "path": "apps/backend/src/test/java/com/ssg/iot/controller/AuthZaloFlowIntegrationTest.java",
+      "sha256": "ccdb771daef88779e05cf29b0894450efcb28c255cbbe981b5b8fe65a0fd8b75",
+      "size": 12425
+    },
+    {
+      "path": "apps/backend/src/test/java/com/ssg/iot/controller/InternalAgenticControllerTest.java",
+      "sha256": "feddb2d9d7b666d53fc3681634ba954090fba0b766f7e97514d1d2e64a845c1f",
+      "size": 3687
+    },
+    {
+      "path": "apps/backend/src/test/java/com/ssg/iot/domain/ChatConversationTest.java",
+      "sha256": "86cd9b65f37031e17ae0f966be6221b5a0a70ceff4a19c8a75c9b71101f9809a",
+      "size": 1398
+    },
+    {
+      "path": "apps/backend/src/test/java/com/ssg/iot/IotApplicationTests.java",
+      "sha256": "6149b0288d01c06af186ab0f5c1d0a0a8d755feb855a07f5c5a4428a20c41921",
+      "size": 16018
+    },
+    {
+      "path": "apps/backend/src/test/java/com/ssg/iot/service/agentic/AgenticGatewayServiceTest.java",
+      "sha256": "17fcbd728dd2c39a5f6eab7386f6506e19b779a63773c8241e932e9be3a9b25e",
+      "size": 4942
+    },
+    {
+      "path": "apps/backend/src/test/java/com/ssg/iot/service/AuthServiceTest.java",
+      "sha256": "ebd3766a7877035fd845652b32d63fc36d0c9f2f9da1e291ce7b13ab79d824d5",
+      "size": 7501
+    },
+    {
+      "path": "apps/backend/src/test/java/com/ssg/iot/service/location/VnLocationSyncServiceTest.java",
+      "sha256": "9cc5a746130501773da53c9295d82d8d972f9e124dd56290ad879103093b6700",
+      "size": 7480
+    },
+    {
+      "path": "apps/backend/src/test/java/com/ssg/iot/service/OrderServiceMyOrdersTest.java",
+      "sha256": "48ea1c0bd3b2714e36995bfdc72a928a64e68806ec39acf655e436c1d3690e7f",
+      "size": 3551
+    },
+    {
+      "path": "apps/backend/src/test/resources/application-test.properties",
+      "sha256": "5de251d5ce58d7d094618b411fe1bb1724187111e9631760510abf1905b049f8",
+      "size": 628
+    },
+    {
+      "path": "apps/frontend/package.json",
+      "sha256": "4fffac580441ac1d9ad1e22040cea786d88a5a493a55a88c790fff9f81d1df6e",
+      "size": 1143
+    },
+    {
+      "path": "apps/frontend/src/api/adminApi.ts",
+      "sha256": "ab3b2b84758d515ee86096dba876a2eb247fbfaceef6f6b015b445e6c46cbb04",
+      "size": 6632
+    },
+    {
+      "path": "apps/frontend/src/api/authApi.ts",
+      "sha256": "cb5aa6b30de2f33504f6226ab8ec9a74594aee9f8cf6233bdf297321a386c933",
+      "size": 2007
+    },
+    {
+      "path": "apps/frontend/src/api/cartApi.ts",
+      "sha256": "91af65142fd71e927df45454dd0dabf5d5d3e39b3ccb9918020785fc5e0da89e",
+      "size": 702
+    },
+    {
+      "path": "apps/frontend/src/api/chatApi.ts",
+      "sha256": "eed367947de3fe64022c19d668987578db42adf14b11f97a2b59dc649feecd1c",
+      "size": 1578
+    },
+    {
+      "path": "apps/frontend/src/api/eventApi.ts",
+      "sha256": "c4388e21ee8b9a7219512da0ee4d1b111a592966bf2cef73eedd99591998b2eb",
+      "size": 1143
+    },
+    {
+      "path": "apps/frontend/src/api/http.ts",
+      "sha256": "f9c5dd5c200579a960a9b5ff7569b98eb7b213daf260e868d6102806c2f73d36",
+      "size": 692
+    },
+    {
+      "path": "apps/frontend/src/api/iotApi.ts",
+      "sha256": "9df1ad792eaf294fa7cdd35402e85292e9730006eea68ecb95146886a2a4839e",
+      "size": 2536
+    },
+    {
+      "path": "apps/frontend/src/api/listingApi.ts",
+      "sha256": "cc78f66b976156d62a956e9a3e4c8d293660695a96a59e0a233238783232889e",
+      "size": 1679
+    },
+    {
+      "path": "apps/frontend/src/api/locationApi.ts",
+      "sha256": "82df1976be2d9cf5f1c74d9a795a5ef88adc41263de74803098d8c9431efa59a",
+      "size": 1322
+    },
+    {
+      "path": "apps/frontend/src/api/orderApi.ts",
+      "sha256": "8537c13d8b45dc5daa441ce89bb8c69fabd70e1e7fdf8dffca5e549e5dad798e",
+      "size": 1195
+    },
+    {
+      "path": "apps/frontend/src/api/productApi.ts",
+      "sha256": "a7c9e147d4a1c4fcd373eabe89fe798adbd89938f2633d239d18752a2fcbf748",
+      "size": 115
+    },
+    {
+      "path": "apps/frontend/src/api/supportApi.ts",
+      "sha256": "6144e1b201746f69fa069cdf16ba34feef2e4e718c9dd580667b2e3b3a689cd4",
+      "size": 1902
+    },
+    {
+      "path": "apps/frontend/src/App.tsx",
+      "sha256": "5fd48eacd49dc3c09eecc3619aa139b09ad9fd3dd356f748f1a4e8b0d33dfe2d",
+      "size": 5788
+    },
+    {
+      "path": "apps/frontend/src/components/address/AddressPicker.tsx",
+      "sha256": "d08484e65048ef3d263b060de0b145b8f3cecbdb24725698823adffaab5b2892",
+      "size": 15269
+    },
+    {
+      "path": "apps/frontend/src/components/FloatingChat.tsx",
+      "sha256": "e79b19009034831f7a762b7f11bb4bf73dee05375760b31e1904bfd019f69533",
+      "size": 7883
+    },
+    {
+      "path": "apps/frontend/src/components/Footer.tsx",
+      "sha256": "64ee1d3c434424505353ac38008eda398155025f90e0d1cbe8e0b2d38de3fd32",
+      "size": 3096
+    },
+    {
+      "path": "apps/frontend/src/components/Header.tsx",
+      "sha256": "47926edb92855673c45f5a8340a52d0d002d2278c7e9d2d83b5204f5b86d9e23",
+      "size": 6221
+    },
+    {
+      "path": "apps/frontend/src/components/ProtectedRoute.tsx",
+      "sha256": "58ebd8e12bb455d43462daa974b953b5089f193b323d98d8b133010cc6fff67a",
+      "size": 997
+    },
+    {
+      "path": "apps/frontend/src/components/ui/AvatarCropModal.tsx",
+      "sha256": "c86201f91dd3f779fb24522b5aa27d46e58eddf7db019292b22386d8ed00e5da",
+      "size": 8558
+    },
+    {
+      "path": "apps/frontend/src/components/ui/Badge.tsx",
+      "sha256": "6278cb117dc65672c183d2c4017dfe14be8816eddc06fe9c1272254a8962379e",
+      "size": 1246
+    },
+    {
+      "path": "apps/frontend/src/components/ui/Button.tsx",
+      "sha256": "b5dde0319fcd846d4535dd92d42d1328421f7da8195b8ff611d06479696566de",
+      "size": 2356
+    },
+    {
+      "path": "apps/frontend/src/components/ui/Card.tsx",
+      "sha256": "65ce2f6197af690dc090c9037e77201088b6d51d00c9cda954731ce5e43d3c63",
+      "size": 1989
+    },
+    {
+      "path": "apps/frontend/src/components/ui/Dialog.tsx",
+      "sha256": "e4c7e92e11a86a1ce684862d9cdd6ae921abe402c70036cb20cf544e3e32cb60",
+      "size": 1507
+    },
+    {
+      "path": "apps/frontend/src/components/ui/EmptyState.tsx",
+      "sha256": "7d2b4ffea34fe928ba47fb3dc8880c4e26260ce1abd90cb92ea6561b25d6f5f4",
+      "size": 875
+    },
+    {
+      "path": "apps/frontend/src/components/ui/FilterToolbar.tsx",
+      "sha256": "d483ae89be65e6d283fe04fc0570624b9919aa35355e1279c93b98654f085fd5",
+      "size": 395
+    },
+    {
+      "path": "apps/frontend/src/components/ui/Icon.tsx",
+      "sha256": "f97a6046c4107ae0ecf704425a6e016c1ae38fbcd16aeb67a350c645c180cc23",
+      "size": 489
+    },
+    {
+      "path": "apps/frontend/src/components/ui/Input.tsx",
+      "sha256": "906013e60bf00099ebf53d0bde332f0e387d658451a288aa58484fec42874944",
+      "size": 1107
+    },
+    {
+      "path": "apps/frontend/src/components/ui/Modal.tsx",
+      "sha256": "4a48b03455b921525a43089526a674c6b41e6a48805039afd9f37d147c357c66",
+      "size": 3357
+    },
+    {
+      "path": "apps/frontend/src/components/ui/PageHeader.tsx",
+      "sha256": "073a28bf719b6e2b6ef507bd9dd8be4b02b48187e2175f2586ef5eb44931a58c",
+      "size": 737
+    },
+    {
+      "path": "apps/frontend/src/components/ui/Panel.tsx",
+      "sha256": "902531d7cfa3f501fba2b0fce20f2bad86769bf9b086da93fe01d873a075cf64",
+      "size": 645
+    },
+    {
+      "path": "apps/frontend/src/components/ui/Select.tsx",
+      "sha256": "6963a6a3ca9bcd00c9306db5e7f6200df45f2303ca0ddf725b865195cf534d1c",
+      "size": 1376
+    },
+    {
+      "path": "apps/frontend/src/components/ui/Skeleton.tsx",
+      "sha256": "99b14d90bdaf9bfa83c802aacbed120f6d9af3922ef3559daaccb1a31c2d91f3",
+      "size": 335
+    },
+    {
+      "path": "apps/frontend/src/components/ui/StatCard.tsx",
+      "sha256": "10d0ab9a1116aa9ed346d63ec25a5c5fe153dcef55373efd0d992478e48fa467",
+      "size": 1088
+    },
+    {
+      "path": "apps/frontend/src/components/ui/StatusChip.tsx",
+      "sha256": "83c98c9f5c9ad771d427b91edfcd4f111b3d0773c52ff2dbc03867c6e0df5095",
+      "size": 332
+    },
+    {
+      "path": "apps/frontend/src/components/ui/Table.tsx",
+      "sha256": "1967d704f389474f4a01c4e795008990dc5c1a17f69150fd0c74cc97eef110f8",
+      "size": 1438
+    },
+    {
+      "path": "apps/frontend/src/context/AuthContext.tsx",
+      "sha256": "a63ba09f8745203d8e902f1cd3ae016eabcc1fd1b9f9e76cf860ee76390afd15",
+      "size": 2247
+    },
+    {
+      "path": "apps/frontend/src/context/CartContext.tsx",
+      "sha256": "c26b50444027863a7a527c82434a7104692f0b6fb42248e405ebd1f3cc4d048b",
+      "size": 3157
+    },
+    {
+      "path": "apps/frontend/src/context/ChatContext.tsx",
+      "sha256": "df3c691d8f78ae897b80af8334f4fa347d6022a2a92e68984487a0c022e51ca8",
+      "size": 3113
+    },
+    {
+      "path": "apps/frontend/src/context/ThemeContext.tsx",
+      "sha256": "aecc60e312c45eb8e3539c99b48b2025719ba1428e6ed3d154b2d06ceaba840c",
+      "size": 2457
+    },
+    {
+      "path": "apps/frontend/src/data/mockData.ts",
+      "sha256": "ec3efb82845c60c73e68bf2a7b71cacdbc9b429e9ccfed3a04a832239b0fac55",
+      "size": 8822
+    },
+    {
+      "path": "apps/frontend/src/index.css",
+      "sha256": "725e3704449e5d2be95d9d62f7e98d78d25bae530f824094d190aaef04d1460c",
+      "size": 2253
+    },
+    {
+      "path": "apps/frontend/src/layouts/AdminLayout.tsx",
+      "sha256": "2c84f382aff7dbd20e94e1d5cf9e3352d22771961c7d9779a95b2b613e9d6787",
+      "size": 4274
+    },
+    {
+      "path": "apps/frontend/src/layouts/MainLayout.tsx",
+      "sha256": "1e1ab0adc76db238b30a81d86b9bcfbc45113eb0e45f8650b186df8515f91ebe",
+      "size": 648
+    },
+    {
+      "path": "apps/frontend/src/lib/chatMessage.ts",
+      "sha256": "33311ed083456f33fbac3fa8edb6a03e676c5c571f7d274da9c8b45d8466da87",
+      "size": 626
+    },
+    {
+      "path": "apps/frontend/src/lib/format.ts",
+      "sha256": "4448cc0dfbe507a0808990e9b1cc13c524597715502026b1e2ce6cd1e440b39c",
+      "size": 2256
+    },
+    {
+      "path": "apps/frontend/src/lib/listingCategories.ts",
+      "sha256": "24b74d226f32fa9fa417771833133150bcf0e71e247bf22fbfd389e76c392bbc",
+      "size": 2911
+    },
+    {
+      "path": "apps/frontend/src/lib/utils.ts",
+      "sha256": "4053bb17c3cf06152cd986d3e2e9851b2944003de20d5c93e6964cb52256e17c",
+      "size": 177
+    },
+    {
+      "path": "apps/frontend/src/main.tsx",
+      "sha256": "57d8a78aa64c8fa4535b1af231921d3cab0a1b9fa514ba8e946aa800d18a0c55",
+      "size": 295
+    },
+    {
+      "path": "apps/frontend/src/pages/admin/AdminChatPage.tsx",
+      "sha256": "3f78319e9ad154c83bb646c1f532c849bec6b2a2fce48d68fd3fd5b0169fe34a",
+      "size": 8472
+    },
+    {
+      "path": "apps/frontend/src/pages/admin/AdminDashboardPage.tsx",
+      "sha256": "0e601fa25925e77687543f32c222dc99b6d53b1653ea00d140a2bdf0299a4037",
+      "size": 8534
+    },
+    {
+      "path": "apps/frontend/src/pages/admin/AdminEventListPage.tsx",
+      "sha256": "a2fa614cfc14ed7d5dda2e0a1eec56b43592ad428ce44b9547df72d3909681cf",
+      "size": 15868
+    },
+    {
+      "path": "apps/frontend/src/pages/admin/AdminIotContentPage.tsx",
+      "sha256": "67b11046d487f75be805b2b8959b97a78368b363a119cd16a231c3990a191c51",
+      "size": 14682
+    },
+    {
+      "path": "apps/frontend/src/pages/admin/AdminIotSampleProjectFormPage.tsx",
+      "sha256": "1c10b2643528e2c269853a106b66e5f7fe23ca4245c4e6eb9ee1e91ae96e3e00",
+      "size": 12249
+    },
+    {
+      "path": "apps/frontend/src/pages/admin/AdminIotSampleProjectListPage.tsx",
+      "sha256": "68ab791104e2414c5e65f5af855de0fa4c020935baf3fad343f73f07d338dffc",
+      "size": 6904
+    },
+    {
+      "path": "apps/frontend/src/pages/admin/AdminSupportTicketPage.tsx",
+      "sha256": "3afdbba9ce5950fe86624aa83ef63bcd956d6e17dfe9258cc777fc94e42c8e06",
+      "size": 10938
+    },
+    {
+      "path": "apps/frontend/src/pages/AdminLoginPage.tsx",
+      "sha256": "01c026cdc95c24ee4137f7d6b4da0ee336f1fb495aa233ebd24dfdaa46ef50d1",
+      "size": 2792
+    },
+    {
+      "path": "apps/frontend/src/pages/AdminOrderListPage.tsx",
+      "sha256": "8440712f677e4db51154b6206ff4105661ea5ddacee56b39f6e327d915fa994c",
+      "size": 10128
+    },
+    {
+      "path": "apps/frontend/src/pages/AdminProductFormPage.tsx",
+      "sha256": "4b076fcd4cb3e362af50781f0a871d94c2b20e75dd5f55ab63c8967da18b15cc",
+      "size": 7049
+    },
+    {
+      "path": "apps/frontend/src/pages/AdminProductListPage.tsx",
+      "sha256": "7ac256ef2401d52762d57a865e29c2793ccaea90b7c7137525388f21fbef8a0a",
+      "size": 7683
+    },
+    {
+      "path": "apps/frontend/src/pages/cart/Cart.tsx",
+      "sha256": "43e1c7113c8624bba00731118351f66741a2408f1acef811ee008ad252d7dec6",
+      "size": 2924
+    },
+    {
+      "path": "apps/frontend/src/pages/checkout/Checkout.tsx",
+      "sha256": "7c21c5892de04ed4f0c40dd2c67643c25d847b286a5438238c12d04ba88c6a3b",
+      "size": 6127
+    },
+    {
+      "path": "apps/frontend/src/pages/checkout/OrderSuccess.tsx",
+      "sha256": "aaac58bbacda926809cb6db1876a8fe94c29399fbe085d9253c28de4525e40ae",
+      "size": 2624
+    },
+    {
+      "path": "apps/frontend/src/pages/events/EventDetail.tsx",
+      "sha256": "ce4d99c1f0f15da6e534a74261c0c2c87ab8e50bd096182b911751a79583ed9e",
+      "size": 6369
+    },
+    {
+      "path": "apps/frontend/src/pages/events/EventList.tsx",
+      "sha256": "40ecfe88b62c5ce58b9a71d5feab4662b826dd3794ea0824d9a2a47634866b2e",
+      "size": 2862
+    },
+    {
+      "path": "apps/frontend/src/pages/iot/IotHubPage.tsx",
+      "sha256": "92f98fd7ecc0103f6b02980215a0139d7019beba8aa1e10903cdd49d9c3a45a3",
+      "size": 15510
+    },
+    {
+      "path": "apps/frontend/src/pages/iot/IotProjectDetailPage.tsx",
+      "sha256": "894a14fe02de9899283992af5906a49155df1a47869b82aaade29056a3ab8b52",
+      "size": 9096
+    },
+    {
+      "path": "apps/frontend/src/pages/listings/CreateListing.tsx",
+      "sha256": "60beca60f9ef50615d2f0e6c0723d22defbed5b1d00e4f598040761aa117f27a",
+      "size": 12558
+    },
+    {
+      "path": "apps/frontend/src/pages/LoginPage.tsx",
+      "sha256": "24f0c01d093f87c98a31bc85db8ae85bf66fa837491010871589129afa1a0b94",
+      "size": 7566
+    },
+    {
+      "path": "apps/frontend/src/pages/messages/MessagesPage.tsx",
+      "sha256": "9ae5a6416cb7ee8356f61b6c4a64c2175187bc3e1dbe57d11388d2d7926fb781",
+      "size": 13301
+    },
+    {
+      "path": "apps/frontend/src/pages/products/ProductDetail.tsx",
+      "sha256": "1adb83c6531d4f00df8df7c1d561572e45316a6a0ac227cd299cb1e5e0a3af98",
+      "size": 5233
+    },
+    {
+      "path": "apps/frontend/src/pages/products/ProductList.tsx",
+      "sha256": "8ea6dbaa9952f20df26fbe9a70c0431e3ff44e3a330a61551856dc3d04bd8094",
+      "size": 5868
+    },
+    {
+      "path": "apps/frontend/src/pages/profile/ProfilePage.tsx",
+      "sha256": "719d552064665380ea91c5343d635657b1a86d666bd06b4066a6a5dfe11c1f98",
+      "size": 35151
+    },
+    {
+      "path": "apps/frontend/src/pages/support/Contact.tsx",
+      "sha256": "fc9af631a20e09d7139175663d921dcaaecf8c8c63303b0facbc38128aed1de4",
+      "size": 5346
+    },
+    {
+      "path": "apps/frontend/src/pages/support/FAQ.tsx",
+      "sha256": "8b240cec9593db0272936e41c78a27435d3a5e231d66834e08119a7b0f9cea87",
+      "size": 3812
+    },
+    {
+      "path": "apps/frontend/src/pages/support/policies/PoliciesHub.tsx",
+      "sha256": "030428d3b8a984565c8fa50100ca0644dcbff54595292235f9fd10a400886842",
+      "size": 1545
+    },
+    {
+      "path": "apps/frontend/src/pages/support/policies/PurchasePolicy.tsx",
+      "sha256": "2cc6f8794a11aae23c8ab4d8d991c207551080d0fa11c1ab406d3c66b059fc41",
+      "size": 2039
+    },
+    {
+      "path": "apps/frontend/src/pages/support/policies/RefundPolicy.tsx",
+      "sha256": "99e11c9e1710485e7ac73321ec4a063c9dab956a9360d8cdadde71bcb0dd5104",
+      "size": 2012
+    },
+    {
+      "path": "apps/frontend/src/pages/support/SupportHub.tsx",
+      "sha256": "972362c933b164e4e2b398a141846dab8d84c7f19fcc7152df23180eaedba24d",
+      "size": 2243
+    },
+    {
+      "path": "apps/frontend/src/pages/support/TrackOrder.tsx",
+      "sha256": "3bbe7028dd58e7b3da95b4f4a1730c518fe37f775aae6f15829c6918e7f8b24f",
+      "size": 6242
+    },
+    {
+      "path": "apps/frontend/src/polyfills.ts",
+      "sha256": "8c543faf35c55ed13525851e2008a7c34c1a1edaee9e31cf89f2f9ff08bf8ec6",
+      "size": 151
+    },
+    {
+      "path": "apps/frontend/src/types/cart.ts",
+      "sha256": "c95efa7c48260c90c2986a16a43afda2cd77e3f1522d6db511ebae0785830929",
+      "size": 497
+    },
+    {
+      "path": "apps/frontend/src/types/models.ts",
+      "sha256": "305587e6cb00122e57675cdc591dbff994890266544464438208176dc1405f9b",
+      "size": 6377
+    },
+    {
+      "path": "apps/frontend/src/types/support.ts",
+      "sha256": "b6edad7ba80545321a6fe5a94d28bf9ccfdf32bdbc2e0982aaff317c0a0e9788",
+      "size": 1222
+    },
+    {
+      "path": "docs/00-context.md",
+      "sha256": "615816c8a4bf444ead779471968e8fb8f1aadca8ceb3e6c8480fbfaf25e86866",
+      "size": 1560
+    },
+    {
+      "path": "docs/01-scope.md",
+      "sha256": "767bac4a6d4845f2b4cfccc444fe826eb78aea2b28471ea39067a277f40d63e3",
+      "size": 1807
+    },
+    {
+      "path": "docs/02-architecture.md",
+      "sha256": "706ab03a4a7b16cbdc9baea39482938afdb92cbf9017dc48c7779aedf2cc96ec",
+      "size": 1980
+    },
+    {
+      "path": "docs/03-api.md",
+      "sha256": "f60a65f216d1d7a387a687a3e08e5ff688dfd74c6f874d8d1b99362215acda70",
+      "size": 6517
+    },
+    {
+      "path": "docs/04-ui.md",
+      "sha256": "03000eeccdd2c0c981b867b0255365eaf2668a4797e4f1d775b5e5ad019bf3bc",
+      "size": 2515
+    },
+    {
+      "path": "docs/05-test-plan.md",
+      "sha256": "30062e1fa54f6edd12488bd70a384cec1fc488250949363bfb7145ebf799056e",
+      "size": 997
+    },
+    {
+      "path": "docs/06-decisions.md",
+      "sha256": "927151a84a6cdfa22e6c960ef27b4b2a8fe850d5051e62e6de1120a1e8cf3d03",
+      "size": 1970
+    },
+    {
+      "path": "docs/07-agent-reference.md",
+      "sha256": "3ac26dfb389e9db3c90305fd4570d5dac738a92e47c86611fe6c8ca95f972aff",
+      "size": 586
+    },
+    {
+      "path": "docs/08-architecture-as-is.md",
+      "sha256": "03560009eaae781ea1ba5672098d66cbfb068ca073bec0fccd9a481fac135703",
+      "size": 1973
+    },
+    {
+      "path": "docs/cicd-vps.md",
+      "sha256": "048530386708a78cd114c7b578e6862d7cecda9cc3bd870d32a0300413b2d17f",
+      "size": 6953
+    },
+    {
+      "path": "README.md",
+      "sha256": "d6ae73d563405ab7b8f8d79ffb800a39f57e3ac9e002d09cef8b037a24fe3054",
+      "size": 3636
+    },
+    {
+      "path": "SETUP.md",
+      "sha256": "79395f325d40b36de454ec5830121503e5b14681c66c2485189afa0bad86e52c",
+      "size": 2839
+    },
+    {
+      "path": "tasks/done.md",
+      "sha256": "1e538555dafb93b96d7f447f088ea713ded607557fd6ce7edfe84d18a80ac9cf",
+      "size": 2314
+    },
+    {
+      "path": "tasks/task-queue.md",
+      "sha256": "3446211ea049483fa589fbed7e07894d88569a8bfba049f919916ad7fa05dffb",
+      "size": 4756
+    },
+    {
+      "path": "tasks/template-v2-adoption.md",
+      "sha256": "ce610f2be795811761f3abe479d21ab622ed52dce034f6ea4e3cba3d45ace2dd",
+      "size": 860
+    }
+  ]
+}

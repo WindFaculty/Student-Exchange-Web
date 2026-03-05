@@ -70,3 +70,39 @@ jobs:
           TEST_DB_USERNAME: root
           TEST_DB_PASSWORD: YourStrong!Passw0rd
         run: ./mvnw -B test
+
+  agentic-runtime:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install ai-dev-system dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r ai-dev-system/requirements.txt
+
+      - name: Run ai-dev-system tests
+        working-directory: ai-dev-system
+        run: python -m pytest
+
+      - name: Install template tooling
+        working-directory: agentic-prod-template-v2
+        run: pip install -e .
+
+      - name: Validate template configs
+        working-directory: agentic-prod-template-v2
+        run: python -m tools.validate_configs
+
+      - name: Verify manifest freshness
+        working-directory: agentic-prod-template-v2
+        run: python -m tools.index --mode check
+
+      - name: Run strict doctor checks
+        working-directory: agentic-prod-template-v2
+        run: python -m tools.doctor --strict

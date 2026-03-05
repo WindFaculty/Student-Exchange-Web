@@ -1,0 +1,12 @@
+workflow_id: debug_pipeline
+description: Diagnose and fix defects with short review loop.
+steps:
+  - id: research
+    agent: research
+    action: reproduce
+  - id: debug
+    agent: debugger
+    action: isolate_and_fix
+  - id: review
+    agent: reviewer
+    action: validate_fix

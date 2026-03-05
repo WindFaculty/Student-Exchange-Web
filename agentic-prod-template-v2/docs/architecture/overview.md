@@ -1,21 +1,18 @@
-# Architecture Overview (Template)
+# Architecture Overview
 
-This folder stores high-signal architecture references for agentic retrieval.
-Treat your repository root docs as canonical, and keep this folder aligned.
+This repository has two coordinated runtime planes:
 
-Suggested canonical docs in your project root:
-- `docs/01-scope.md`
-- `docs/02-architecture.md`
-- `docs/03-api.md`
+1. Product runtime:
+- Frontend: React/Vite (`apps/frontend`)
+- Backend: Spring Boot (`apps/backend`)
+- Database: MySQL 8.0
 
-System shape (customize for your stack):
-- Frontend client (web/mobile)
-- Backend API/service layer
-- Persistence/data services
-- Auth/access control model
+2. Agentic runtime:
+- Python sidecar (`ai-dev-system`)
+- Supervisor pattern orchestration
+- Redis queue/pub-sub + filesystem durable state
 
-Supporting files in this folder:
-- `boundaries.md`
-- `conventions.md`
-- `data-model.md`
-- `api.md`
+Integration boundary:
+- Backend exposes internal-only endpoints under `/internal/agentic/*`.
+- Backend proxies trusted internal requests to sidecar `/internal/*`.
+- Public `/api/*` contract for end users remains unchanged.

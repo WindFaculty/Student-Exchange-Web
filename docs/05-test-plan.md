@@ -20,3 +20,8 @@
 - SB1: Backend validates request payloads
 - SB2: No secrets committed
 - SB3: CORS restricted appropriately (dev vs prod)
+
+## Internal Agentic Smoke
+- AS1: `GET /internal/agentic/tasks/{taskId}` rejects missing/invalid `X-Internal-Token`.
+- AS2: Sidecar health endpoint returns ok on localhost bind.
+- AS3: Docker compose brings up `redis`, `agentic-sidecar`, `backend`, `frontend` successfully.

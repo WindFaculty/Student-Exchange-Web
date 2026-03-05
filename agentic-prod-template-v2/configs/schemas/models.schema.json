@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "models.yaml",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["models"],
+  "properties": {
+    "models": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["provider", "model"],
+        "properties": {
+          "provider": {"type": "string", "minLength": 1},
+          "model": {"type": "string", "minLength": 1}
+        }
+      }
+    }
+  }
+}

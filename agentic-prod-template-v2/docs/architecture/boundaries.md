@@ -1,22 +1,22 @@
-# Module Boundaries (Template)
+# Module Boundaries
 
-Define boundaries so agents avoid cross-layer leakage.
+## Backend boundaries (`apps/backend`)
+- `controller`: HTTP transport adapters (`/api/*`, `/internal/agentic/*`)
+- `service`: business logic and sidecar gateway client
+- `repository`: JPA persistence adapters
+- `domain`: entities and enums
+- `dto`: API payload contracts
+- `config`: web, websocket, and internal endpoint guards
 
-Typical backend boundaries:
-- `controller` or `api`: transport adapters and request/response shaping
-- `service`: business logic and orchestration
-- `repository` or `data`: persistence queries
-- `domain`: entities and value objects
-- `dto` or `contract`: API payload models
+## Sidecar boundaries (`ai-dev-system`)
+- `orchestrator`: workflow management and dispatch
+- `planner`: decomposition and dependency planning
+- `agents`: role-based agent implementations
+- `communication`: redis bus, protocol, event stream
+- `tools`: modular tool adapters
+- `evaluation`: quality checks and benchmark utilities
 
-Typical frontend boundaries:
-- `pages` or `routes`: route-level screens
-- `components`: reusable UI parts
-- `api`: HTTP clients
-- `state` or `context`: state containers
-- `utils`: pure shared helpers
-
-Rules:
-- Keep transport layers thin.
-- Keep data access out of transport layers.
-- Centralize API clients for frontend.
+## Boundary rules
+- No public Nginx route to sidecar endpoints.
+- Backend business APIs under `/api/*` must not depend on agentic availability.
+- Agentic filesystem state stays under `ai-dev-system/{tasks,memory,logs,workspace}`.

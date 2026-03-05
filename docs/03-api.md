@@ -218,3 +218,30 @@ Requires admin session.
 ### Vietnam Location Sync Admin
 - `GET /api/admin/locations/vn/sync-status`
 - `POST /api/admin/locations/vn/sync`
+
+## Internal Agentic Interfaces (non-public)
+These endpoints are internal-only.
+- Not routed by Nginx public site config.
+- Require `X-Internal-Token`.
+- Default localhost-only guard in backend.
+
+### Backend internal proxy
+- `POST /internal/agentic/tasks`
+- `GET /internal/agentic/tasks/{taskId}`
+- `POST /internal/agentic/tasks/{taskId}/cancel`
+
+Submit request:
+```json
+{
+  "objective": "Implement feature safely",
+  "taskType": "build",
+  "workflowId": "build_project",
+  "context": { "ticket": "T100" }
+}
+```
+
+### Sidecar internal runtime
+- `GET /internal/health`
+- `POST /internal/tasks/submit`
+- `GET /internal/tasks/{taskId}`
+- `POST /internal/tasks/{taskId}/cancel`

@@ -14,6 +14,7 @@ Last Updated: 2026-03-02
 - Pivot from IoT legacy contract to Student Exchange clean-cut contract.
 - Keep frontend and backend contracts synchronized under `/api`.
 - Roll out `agentic-prod-template-v2` as default agentic workflow baseline.
+- Roll out internal `ai-dev-system` runtime with backend internal proxy endpoints.
 
 ## Current State
 - Frontend build passes (`npm run build`).

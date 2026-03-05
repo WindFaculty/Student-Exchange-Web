@@ -16,3 +16,25 @@ jobs:
         uses: gitleaks/gitleaks-action@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  python-dependencies:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install pip-audit
+        run: |
+          python -m pip install --upgrade pip
+          pip install pip-audit
+
+      - name: Audit ai-dev-system dependencies
+        run: pip-audit -r ai-dev-system/requirements.txt
+
+      - name: Audit template dependencies
+        run: pip-audit -r agentic-prod-template-v2/requirements-audit.txt

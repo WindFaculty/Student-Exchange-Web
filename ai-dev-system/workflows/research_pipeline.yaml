@@ -1,0 +1,9 @@
+workflow_id: research_pipeline
+description: Planner and research only output for discovery tasks.
+steps:
+  - id: research
+    agent: research
+    action: gather_context
+  - id: docs
+    agent: docs
+    action: summarize_findings

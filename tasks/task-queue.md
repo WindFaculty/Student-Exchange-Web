@@ -1,9 +1,13 @@
 # Task Queue - Student Exchange Pivot
 
-Updated: 2026-03-02
+Updated: 2026-03-05
 Status values: TODO | DOING | DONE | BLOCKED
 
 ## Recent Updates
+- DONE: Added root `ai-dev-system/` scaffold with Supervisor-pattern modules, workflows, prompts, tools, and tests.
+- DONE: Added backend internal agentic proxy endpoints (`/internal/agentic/*`) with token and localhost guard.
+- DONE: Added production compose services for `redis` and `agentic-sidecar` with health checks.
+- DONE: Synced `agentic-prod-template-v2` configs/docs with Student Exchange multi-agent runtime context.
 - DONE: Checkout now enforces required fields `customerName`, `customerAddress`, `customerPhone` and supports optional `customerEmail`.
 - DONE: Profile update flow now stores reusable contact defaults (`phone`, `address`) for checkout prefill.
 - DONE: Profile update now validates email format and phone number format on both frontend and backend.
@@ -68,7 +72,7 @@ Status values: TODO | DOING | DONE | BLOCKED
   - Build/test commands verified.
 
 ## M7 - Agentic template v2 rollout
-- Status: TODO
+- Status: DOING
 - Scope:
   - Keep `agentic-prod-template-v2/` as the single template for new workflows.
   - Enforce schema validation + deterministic manifest checks in template v2.
@@ -78,6 +82,18 @@ Status values: TODO | DOING | DONE | BLOCKED
   - v2 checks pass continuously for 2 weeks.
   - No stale manifest failures during the validation window.
   - Command/docs references migrated to v2 by default.
+
+## M8 - Internal multi-agent runtime rollout
+- Status: DOING
+- Scope:
+  - Introduce `ai-dev-system/` runtime with Redis + filesystem state model.
+  - Wire backend internal proxy endpoints for manual CLI-triggered agent tasks.
+  - Update deployment compose and VPS runbook for sidecar health checks.
+  - Keep public `/api/*` behavior unchanged.
+- Exit criteria:
+  - Sidecar and backend health checks pass under production compose.
+  - Internal endpoint auth guard blocks invalid/missing token requests.
+  - Core backend regression tests remain green.
 
 ## Acceptance Checklist
 1. Build & tooling

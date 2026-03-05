@@ -1,0 +1,15 @@
+tools:
+  file_tools:
+    - read_file
+    - write_file
+    - edit_file
+  web_tools:
+    - web_search
+    - scraper
+  code_tools:
+    - run_code
+    - test_runner
+    - linter
+  system_tools:
+    - shell_exec
+    - git_tools

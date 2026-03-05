@@ -1,0 +1,22 @@
+models:
+  supervisor:
+    provider: claude
+    model: claude-sonnet
+  planner:
+    provider: claude
+    model: claude-sonnet
+  research:
+    provider: gemini
+    model: gemini-2.5-pro
+  coder:
+    provider: codex
+    model: codex-latest
+  reviewer:
+    provider: claude
+    model: claude-sonnet
+  debugger:
+    provider: codex
+    model: codex-latest
+  docs:
+    provider: gemini
+    model: gemini-2.5-pro

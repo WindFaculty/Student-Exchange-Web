@@ -1,15 +1,20 @@
 # Agent Reference
 
-This repository keeps one in-repo reference template for agentic workflows:
-- `agentic-prod-template-v2/` (active default)
+Current runtime source of truth:
+- `ai-dev-system/` (active internal runtime)
 
-## Why this template is default
-- Config schemas enforced via `tools.validate_configs`
-- Deterministic manifest snapshot contract (`tools.index --mode write/check`)
-- Strict health gate (`tools.doctor --strict`)
-- Hardened CI and security workflows
+Governance/template source of truth:
+- `agentic-prod-template-v2/` (schema, manifest, and health gates)
 
-## Quick start
+## Runtime quick start
+```powershell
+cd ai-dev-system
+python -m pip install -r requirements.txt
+python -m pytest
+python -m uvicorn orchestrator.app:app --host 127.0.0.1 --port 8090
+```
+
+## Template quick start
 ```powershell
 cd agentic-prod-template-v2
 python -m pip install -e .

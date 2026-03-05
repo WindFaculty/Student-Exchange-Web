@@ -9,6 +9,7 @@ LOCK_FILE="${LOCK_FILE:-/var/lock/student-exchange/deploy.lock}"
 LAST_SUCCESSFUL_SHA_FILE="${LAST_SUCCESSFUL_SHA_FILE:-/opt/student-exchange/shared/last_successful_sha}"
 DEPLOY_LOG_FILE="${DEPLOY_LOG_FILE:-/var/log/student-exchange/deploy.log}"
 HEALTHCHECK_URL="${HEALTHCHECK_URL:-http://127.0.0.1:18080/api/health}"
+AGENTIC_HEALTHCHECK_URL="${AGENTIC_HEALTHCHECK_URL:-http://127.0.0.1:18082/internal/health}"
 HEALTHCHECK_RETRIES="${HEALTHCHECK_RETRIES:-30}"
 HEALTHCHECK_SLEEP_SECONDS="${HEALTHCHECK_SLEEP_SECONDS:-2}"
 NOTIFY_WEBHOOK_URL="${NOTIFY_WEBHOOK_URL:-}"
@@ -77,8 +78,12 @@ export BACKEND_ENV_FILE
 log "Running docker compose deployment"
 docker compose -f "$COMPOSE_FILE" up -d --build --remove-orphans
 
+healthcheck_ok() {
+  curl -fsS "$HEALTHCHECK_URL" >/dev/null && curl -fsS "$AGENTIC_HEALTHCHECK_URL" >/dev/null
+}
+
 for ((i = 1; i <= HEALTHCHECK_RETRIES; i++)); do
-  if curl -fsS "$HEALTHCHECK_URL" >/dev/null; then
+  if healthcheck_ok; then
     echo "$TARGET_SHA" > "$LAST_SUCCESSFUL_SHA_FILE"
     log "Deployment successful. sha=$TARGET_SHA"
     notify "success" "Deployment successful for sha=$TARGET_SHA"
@@ -86,10 +91,10 @@ for ((i = 1; i <= HEALTHCHECK_RETRIES; i++)); do
     exit 0
   fi
 
-  log "Healthcheck attempt $i/$HEALTHCHECK_RETRIES failed. Retrying in $HEALTHCHECK_SLEEP_SECONDS seconds."
+  log "Healthcheck attempt $i/$HEALTHCHECK_RETRIES failed (backend or agentic sidecar unhealthy). Retrying in $HEALTHCHECK_SLEEP_SECONDS seconds."
   sleep "$HEALTHCHECK_SLEEP_SECONDS"
 done
 
-log "Deployment failed. Backend health check did not recover."
-notify "failed" "Deployment failed for sha=$TARGET_SHA because healthcheck did not recover."
+log "Deployment failed. Backend/agentic health checks did not recover."
+notify "failed" "Deployment failed for sha=$TARGET_SHA because health checks did not recover."
 exit 1

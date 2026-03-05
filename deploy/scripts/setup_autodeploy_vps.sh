@@ -172,6 +172,7 @@ LAST_SUCCESSFUL_SHA_FILE=/opt/student-exchange/shared/last_successful_sha
 DEPLOY_LOG_FILE=/var/log/student-exchange/deploy.log
 LOCK_FILE=/var/lock/student-exchange/deploy.lock
 HEALTHCHECK_URL=http://127.0.0.1:18080/api/health
+AGENTIC_HEALTHCHECK_URL=http://127.0.0.1:18082/internal/health
 HEALTHCHECK_RETRIES=30
 HEALTHCHECK_SLEEP_SECONDS=2
 NOTIFY_WEBHOOK_URL=$NOTIFY_WEBHOOK_URL

@@ -1,0 +1,27 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+.mypy_cache/
+.venv/
+.env
+
+# Runtime artifacts
+workspace/temp/*
+workspace/build/*
+memory/session/*
+memory/short_term/*
+memory/long_term/*
+logs/*.log
+tasks/task_state.db-shm
+tasks/task_state.db-wal
+
+# Keep bootstrap files
+!workspace/temp/.gitkeep
+!workspace/build/.gitkeep
+!memory/session/.gitkeep
+!memory/short_term/.gitkeep
+!memory/long_term/.gitkeep
+!logs/agent.log
+!logs/tasks.log
+!logs/errors.log
+!logs/tool_usage.log

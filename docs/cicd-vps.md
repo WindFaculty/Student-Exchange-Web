@@ -13,6 +13,8 @@ This runbook implements the flow:
 - Production compose: `docker-compose.prod.yml`
 - Backend container: `apps/backend/Dockerfile`
 - Frontend container: `apps/frontend/Dockerfile`
+- Agentic sidecar container: `ai-dev-system/Dockerfile`
+- Agentic scripts: `ai-dev-system/scripts/`
 - Deploy script: `deploy/scripts/deploy.sh`
 - Rollback script: `deploy/scripts/rollback.sh`
 - Webhook RCA script: `deploy/scripts/audit_webhook_404.sh`
@@ -47,6 +49,12 @@ sudo cp /opt/student-exchange/app/deploy/env/backend.env.example /opt/student-ex
 sudo chown deploy:deploy /opt/student-exchange/shared/backend.env
 sudo chmod 600 /opt/student-exchange/shared/backend.env
 ```
+
+Set internal agentic variables in `/opt/student-exchange/shared/backend.env`:
+- `AGENTIC_ENABLED`
+- `AGENTIC_INTERNAL_TOKEN`
+- `AGENTIC_INTERNAL_ALLOW_LOCALHOST`
+- `AGENTIC_SIDECAR_BASE_URL`
 
 Webhook listener env:
 
@@ -110,6 +118,7 @@ sudo certbot renew --dry-run
 ```bash
 sudo -u deploy /opt/student-exchange/app/deploy/scripts/deploy.sh
 curl -fsS http://127.0.0.1:18080/api/health
+curl -fsS http://127.0.0.1:18082/internal/health
 ```
 
 ## 7) GitHub Setup
@@ -185,6 +194,7 @@ sudo journalctl -u student-exchange-webhook -f
 sudo tail -f /var/log/nginx/student-exchange-webhook.access.log
 sudo tail -f /var/log/student-exchange/deploy.log
 sudo -u deploy docker compose -f /opt/student-exchange/app/docker-compose.prod.yml ps
+curl -fsS http://127.0.0.1:18082/internal/health
 ```
 
 Clear `/products` data (`listings` table only):
