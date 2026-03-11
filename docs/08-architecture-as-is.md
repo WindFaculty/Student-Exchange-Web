@@ -12,12 +12,6 @@ Frontend (React + Vite, :5173)
 Backend (Spring Boot, :8080)
   -> Services -> Repositories -> MySQL 8.0
 
-Internal multi-agent runtime
-Ops CLI -> /internal/agentic/* (localhost + token)
-  -> Agentic sidecar (Python, :18082 host bind)
-  -> Redis queue/pub-sub
-  -> Filesystem task/memory/log state
-
 Backend session:
 - USER (authenticated session user)
 - CART (session cart)
@@ -58,4 +52,3 @@ Backend session:
 - No automated frontend test suite yet.
 - API docs and UI docs must stay synchronized with future changes.
 - Session auth is MVP-level and not designed for stateless distributed auth.
-- LLM provider adapters are currently placeholder-level and should be upgraded before production traffic.
