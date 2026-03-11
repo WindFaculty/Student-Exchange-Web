@@ -30,6 +30,9 @@ public class ZaloOAuthClient implements ZaloOAuthGateway {
     private static final String ZALO_PROFILE_URL = "https://graph.zalo.me/v2.0/me";
     private static final String PLACEHOLDER_ZALO_APP_ID = "placeholder-zalo-app-id";
     private static final String PLACEHOLDER_ZALO_APP_SECRET = "placeholder-zalo-app-secret";
+    private static final String TEMPLATE_ZALO_APP_ID = "zalo-app-id";
+    private static final String TEMPLATE_ZALO_APP_SECRET = "zalo-app-secret";
+    private static final String TEMPLATE_ZALO_REDIRECT_URI = "https://your-domain/api/auth/zalo/callback";
 
     private final ObjectMapper objectMapper;
     private final HttpClient httpClient = HttpClient.newBuilder()
@@ -47,10 +50,13 @@ public class ZaloOAuthClient implements ZaloOAuthGateway {
 
     @Override
     public String buildAuthorizeUrl(String state) {
-        validateOAuthConfiguration(false);
+        String normalizedAppId = normalizeConfigValue(zaloAppId);
+        String normalizedAppSecret = normalizeConfigValue(zaloAppSecret);
+        String normalizedRedirectUri = normalizeConfigValue(zaloRedirectUri);
+        validateOAuthConfiguration(false, normalizedAppId, normalizedRedirectUri, normalizedAppSecret);
         return UriComponentsBuilder.fromHttpUrl(ZALO_AUTHORIZE_URL)
-                .queryParam("app_id", zaloAppId)
-                .queryParam("redirect_uri", zaloRedirectUri)
+                .queryParam("app_id", normalizedAppId)
+                .queryParam("redirect_uri", normalizedRedirectUri)
                 .queryParam("state", state)
                 .build(true)
                 .toUriString();
@@ -58,16 +64,19 @@ public class ZaloOAuthClient implements ZaloOAuthGateway {
 
     @Override
     public ZaloTokenResponse exchangeAuthorizationCode(String code) {
-        validateOAuthConfiguration(true);
-        String body = "app_id=" + urlEncode(zaloAppId)
+        String normalizedAppId = normalizeConfigValue(zaloAppId);
+        String normalizedAppSecret = normalizeConfigValue(zaloAppSecret);
+        String normalizedRedirectUri = normalizeConfigValue(zaloRedirectUri);
+        validateOAuthConfiguration(true, normalizedAppId, normalizedRedirectUri, normalizedAppSecret);
+        String body = "app_id=" + urlEncode(normalizedAppId)
                 + "&code=" + urlEncode(code)
                 + "&grant_type=authorization_code"
-                + "&redirect_uri=" + urlEncode(zaloRedirectUri);
+                + "&redirect_uri=" + urlEncode(normalizedRedirectUri);
 
         HttpRequest request = HttpRequest.newBuilder(URI.create(ZALO_ACCESS_TOKEN_URL))
                 .timeout(Duration.ofSeconds(15))
                 .header("Content-Type", "application/x-www-form-urlencoded")
-                .header("secret_key", zaloAppSecret)
+                .header("secret_key", normalizedAppSecret)
                 .POST(HttpRequest.BodyPublishers.ofString(body))
                 .build();
 
@@ -161,15 +170,20 @@ public class ZaloOAuthClient implements ZaloOAuthGateway {
         return value == null || value.trim().isEmpty();
     }
 
-    private void validateOAuthConfiguration(boolean requireSecret) {
+    private void validateOAuthConfiguration(
+            boolean requireSecret,
+            String normalizedAppId,
+            String normalizedRedirectUri,
+            String normalizedAppSecret
+    ) {
         List<String> invalidVariables = new ArrayList<>();
-        if (isInvalidValue(zaloAppId, PLACEHOLDER_ZALO_APP_ID)) {
+        if (isInvalidValue(normalizedAppId, PLACEHOLDER_ZALO_APP_ID, TEMPLATE_ZALO_APP_ID)) {
             invalidVariables.add("ZALO_APP_ID");
         }
-        if (isInvalidRedirectUri(zaloRedirectUri)) {
+        if (isInvalidRedirectUri(normalizedRedirectUri)) {
             invalidVariables.add("ZALO_REDIRECT_URI");
         }
-        if (requireSecret && isInvalidValue(zaloAppSecret, PLACEHOLDER_ZALO_APP_SECRET)) {
+        if (requireSecret && isInvalidValue(normalizedAppSecret, PLACEHOLDER_ZALO_APP_SECRET, TEMPLATE_ZALO_APP_SECRET)) {
             invalidVariables.add("ZALO_APP_SECRET");
         }
 
@@ -179,23 +193,29 @@ public class ZaloOAuthClient implements ZaloOAuthGateway {
         }
     }
 
-    private boolean isInvalidValue(String value, String placeholderValue) {
-        if (isBlank(value)) {
+    private boolean isInvalidValue(String value, String... placeholderValues) {
+        String normalized = normalizeConfigValue(value);
+        if (isBlank(normalized)) {
             return true;
         }
-        String normalized = value.trim();
-        if (normalized.equalsIgnoreCase(placeholderValue)) {
-            return true;
+        for (String placeholderValue : placeholderValues) {
+            if (isBlank(placeholderValue)) {
+                continue;
+            }
+            if (normalized.equalsIgnoreCase(placeholderValue)) {
+                return true;
+            }
         }
-        return looksLikeTemplateValue(normalized);
+        return false;
     }
 
     private boolean isInvalidRedirectUri(String redirectUri) {
-        if (isInvalidValue(redirectUri, "")) {
+        String normalizedRedirectUri = normalizeConfigValue(redirectUri);
+        if (isInvalidValue(normalizedRedirectUri, TEMPLATE_ZALO_REDIRECT_URI)) {
             return true;
         }
         try {
-            URI uri = URI.create(redirectUri.trim());
+            URI uri = URI.create(normalizedRedirectUri);
             String scheme = uri.getScheme();
             return scheme == null || (!scheme.equalsIgnoreCase("http") && !scheme.equalsIgnoreCase("https")) || isBlank(uri.getHost());
         } catch (Exception ex) {
@@ -203,7 +223,14 @@ public class ZaloOAuthClient implements ZaloOAuthGateway {
         }
     }
 
-    private boolean looksLikeTemplateValue(String value) {
-        return value.startsWith("<") && value.endsWith(">");
+    private String normalizeConfigValue(String value) {
+        if (value == null) {
+            return null;
+        }
+        String normalized = value.trim();
+        if (normalized.length() > 1 && normalized.startsWith("<") && normalized.endsWith(">")) {
+            normalized = normalized.substring(1, normalized.length() - 1).trim();
+        }
+        return normalized;
     }
 }

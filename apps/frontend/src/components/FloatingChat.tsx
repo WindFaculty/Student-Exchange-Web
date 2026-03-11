@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import clsx from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
-export function cx(...inputs: (string | undefined | null | false)[]) {
+function cx(...inputs: (string | undefined | null | false)[]) {
     return twMerge(clsx(inputs));
 }
 

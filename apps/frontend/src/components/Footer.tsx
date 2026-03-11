@@ -45,9 +45,11 @@ const Footer = () => {
           <div className="flex items-center justify-between gap-2">
             <h2 className="text-base font-semibold text-slate-900 dark:text-white">Liên hệ</h2>
             {isFptSchool ? (
-              <span className="rounded-full bg-primary/10 px-2 py-0.5 text-xs font-medium text-primary">
-                Trường FPT
-              </span>
+              <img
+                src="/fpt-university-logo.png"
+                alt="FPT University"
+                className="h-8 object-contain"
+              />
             ) : null}
           </div>
           <div className="space-y-1 text-sm text-slate-600 dark:text-slate-300">
