@@ -10,6 +10,7 @@ import com.ssg.iot.repository.UserRepository;
 import com.ssg.iot.repository.UserSocialIdentityRepository;
 import com.ssg.iot.service.SessionAuthService;
 import com.ssg.iot.service.ZaloOAuthGateway;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -33,6 +34,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
@@ -57,6 +59,17 @@ class AuthZaloFlowIntegrationTest {
 
     @MockBean
     private ZaloOAuthGateway zaloOAuthGateway;
+
+    @BeforeEach
+    void stubAuthorizeUrl() {
+        when(zaloOAuthGateway.buildAuthorizeUrl(anyString()))
+                .thenAnswer(invocation -> UriComponentsBuilder.fromHttpUrl("https://oauth.zaloapp.com/v4/permission")
+                        .queryParam("app_id", "123456789")
+                        .queryParam("redirect_uri", "https://www.chosinhvienfpt.id.vn/api/auth/zalo/callback")
+                        .queryParam("state", invocation.getArgument(0, String.class))
+                        .build(true)
+                        .toUriString());
+    }
 
     @Test
     void zaloAuthorizeRedirectsToOauthHostWithRequiredParams() throws Exception {
