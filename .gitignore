@@ -69,3 +69,4 @@ tools/db-migration/*.pyc
 *.exe
 *.zip
 *.jar
+!apps/backend/.mvn/wrapper/maven-wrapper.jar
