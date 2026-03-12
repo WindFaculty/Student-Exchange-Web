@@ -33,10 +33,14 @@ Student Exchange full-stack platform built with Spring Boot + React + Tailwind.
 - `DB_URL` default: `jdbc:mysql://localhost:3306/student_exchange?useUnicode=true&characterEncoding=utf8&connectionCollation=utf8mb4_vi_0900_ai_ci&connectionTimeZone=UTC&useSSL=false&allowPublicKeyRetrieval=true`
 - `DB_USERNAME` default: `student_exchange_web`
 - `DB_PASSWORD` default: `wind_faculty`
+- `AUTH_ZALO_ENABLED` default: `false` (`true` to re-enable Zalo login endpoints)
 - `ZALO_APP_ID` required for Zalo login
 - `ZALO_APP_SECRET` required for Zalo login
 - `ZALO_REDIRECT_URI` required for Zalo login (must match callback URL configured in Zalo app)
 - `APP_FRONTEND_BASE_URL` default: `http://localhost:5173`
+
+## Environment Variables (Frontend)
+- `VITE_ZALO_LOGIN_ENABLED` default: `false` (`true` to show Zalo login button again)
 
 ## Database Bootstrap (First Run / Access Denied)
 From repo root, create or reset DB user with an admin account:

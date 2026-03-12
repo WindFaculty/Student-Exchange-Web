@@ -21,6 +21,8 @@ npm run dev
 
 The frontend will start on `http://localhost:5173`
 
+To show the Zalo login button again, start Vite with `VITE_ZALO_LOGIN_ENABLED=true`.
+
 ## Development
 
 - The Vite dev server is configured with a proxy to the backend API

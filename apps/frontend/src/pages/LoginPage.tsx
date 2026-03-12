@@ -13,6 +13,7 @@ const LoginPage: React.FC = () => {
   const navigate = useNavigate()
   const location = useLocation()
   const { login, register } = useAuth()
+  const zaloLoginEnabled = import.meta.env.VITE_ZALO_LOGIN_ENABLED === 'true'
 
   const [mode, setMode] = useState<AuthMode>('login')
   const [loginUsername, setLoginUsername] = useState('student1')
@@ -65,8 +66,39 @@ const LoginPage: React.FC = () => {
   }
 
   const handleZaloLogin = () => {
+    if (!zaloLoginEnabled) {
+      return
+    }
+
     const returnTo = encodeURIComponent(getRedirectPath())
     window.location.href = `/api/auth/zalo/authorize?returnTo=${returnTo}`
+  }
+
+  const renderZaloSection = (buttonLabel: string) => {
+    if (!zaloLoginEnabled) {
+      return (
+        <p className="rounded-md border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-700">
+          Đăng nhập với Zalo đang tạm thời bị tắt.
+        </p>
+      )
+    }
+
+    return (
+      <>
+        <div className="relative my-4">
+          <div className="absolute inset-0 flex items-center">
+            <div className="w-full border-t border-slate-200 dark:border-slate-700"></div>
+          </div>
+          <div className="relative flex justify-center text-sm">
+            <span className="bg-white px-2 text-slate-500 dark:bg-slate-900 dark:text-slate-400">Hoặc tiếp tục với</span>
+          </div>
+        </div>
+
+        <Button type="button" variant="outline" className="w-full" onClick={handleZaloLogin}>
+          {buttonLabel}
+        </Button>
+      </>
+    )
   }
 
   return (
@@ -124,18 +156,7 @@ const LoginPage: React.FC = () => {
                 {loading ? 'Đang đăng nhập...' : 'Đăng nhập'}
               </Button>
 
-              <div className="relative my-4">
-                <div className="absolute inset-0 flex items-center">
-                  <div className="w-full border-t border-slate-200 dark:border-slate-700"></div>
-                </div>
-                <div className="relative flex justify-center text-sm">
-                  <span className="bg-white px-2 text-slate-500 dark:bg-slate-900 dark:text-slate-400">Hoặc tiếp tục với</span>
-                </div>
-              </div>
-
-              <Button type="button" variant="outline" className="w-full" onClick={handleZaloLogin}>
-                Đăng nhập với Zalo
-              </Button>
+              {renderZaloSection('Đăng nhập với Zalo')}
             </form>
           ) : (
             <form className="space-y-4" onSubmit={handleRegisterSubmit}>
@@ -166,18 +187,7 @@ const LoginPage: React.FC = () => {
                 {loading ? 'Đang đăng ký...' : 'Tạo tài khoản'}
               </Button>
 
-              <div className="relative my-4">
-                <div className="absolute inset-0 flex items-center">
-                  <div className="w-full border-t border-slate-200 dark:border-slate-700"></div>
-                </div>
-                <div className="relative flex justify-center text-sm">
-                  <span className="bg-white px-2 text-slate-500 dark:bg-slate-900 dark:text-slate-400">Hoặc tiếp tục với</span>
-                </div>
-              </div>
-
-              <Button type="button" variant="outline" className="w-full" onClick={handleZaloLogin}>
-                Tiếp tục với Zalo
-              </Button>
+              {renderZaloSection('Tiếp tục với Zalo')}
             </form>
           )}
         </CardContent>

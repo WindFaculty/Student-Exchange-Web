@@ -1,5 +1,6 @@
 package com.ssg.iot.controller;
 
+import com.ssg.iot.common.ApiException;
 import com.ssg.iot.common.UnauthorizedException;
 import com.ssg.iot.domain.User;
 import com.ssg.iot.dto.auth.LoginRequest;
@@ -32,12 +33,16 @@ public class AuthController {
     private static final String SESSION_ZALO_OAUTH_STATE = "ZALO_OAUTH_STATE";
     private static final String SESSION_ZALO_RETURN_TO = "ZALO_RETURN_TO";
     private static final String DEFAULT_RETURN_TO = "/products";
+    private static final String ZALO_DISABLED_MESSAGE = "Zalo login is temporarily disabled";
 
     private final AuthService authService;
     private final SessionAuthService sessionAuthService;
 
     @Value("${app.frontend.base-url}")
     private String frontendBaseUrl;
+
+    @Value("${auth.zalo.enabled:false}")
+    private boolean zaloAuthEnabled;
 
     @PostMapping("/login")
     public LoginResponse login(@Valid @RequestBody LoginRequest request, HttpSession session) {
@@ -83,6 +88,8 @@ public class AuthController {
             @RequestParam(value = "returnTo", required = false) String returnTo,
             HttpSession session
     ) {
+        ensureZaloAuthEnabled();
+
         String state = UUID.randomUUID().toString();
         String normalizedReturnTo = normalizeReturnTo(returnTo);
 
@@ -101,6 +108,8 @@ public class AuthController {
             @RequestParam("state") String state,
             HttpSession session
     ) {
+        ensureZaloAuthEnabled();
+
         String expectedState = (String) session.getAttribute(SESSION_ZALO_OAUTH_STATE);
         String returnTo = normalizeReturnTo((String) session.getAttribute(SESSION_ZALO_RETURN_TO));
 
@@ -134,6 +143,12 @@ public class AuthController {
             return DEFAULT_RETURN_TO;
         }
         return normalized;
+    }
+
+    private void ensureZaloAuthEnabled() {
+        if (!zaloAuthEnabled) {
+            throw new ApiException(HttpStatus.SERVICE_UNAVAILABLE, ZALO_DISABLED_MESSAGE);
+        }
     }
 
     private String buildFrontendUrl(String path) {
