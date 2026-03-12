@@ -17,6 +17,7 @@ spring.datasource.password=wind_faculty
 
 You can override these with environment variables: `DB_URL`, `DB_USERNAME`, `DB_PASSWORD`.
 Zalo OAuth is disabled by default. To re-enable it, set `AUTH_ZALO_ENABLED=true` and configure `ZALO_APP_ID`, `ZALO_APP_SECRET`, `ZALO_REDIRECT_URI`, `APP_FRONTEND_BASE_URL`.
+The backend CORS config always allows localhost and the official `chosinhvienfpt.id.vn` domains. If you need another frontend origin, set `APP_CORS_ALLOWED_ORIGIN_PATTERNS` as a comma-separated list.
 
 If startup fails with `Access denied for user 'student_exchange_web'@'localhost'`, run from repo root:
 

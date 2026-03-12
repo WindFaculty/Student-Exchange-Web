@@ -38,6 +38,7 @@ Student Exchange full-stack platform built with Spring Boot + React + Tailwind.
 - `ZALO_APP_SECRET` required for Zalo login
 - `ZALO_REDIRECT_URI` required for Zalo login (must match callback URL configured in Zalo app)
 - `APP_FRONTEND_BASE_URL` default: `http://localhost:5173`
+- `APP_CORS_ALLOWED_ORIGIN_PATTERNS` optional: comma-separated extra frontend origins/patterns for `/api/**` beyond localhost and the official `chosinhvienfpt.id.vn` site
 
 ## Environment Variables (Frontend)
 - `VITE_ZALO_LOGIN_ENABLED` default: `false` (`true` to show Zalo login button again)
