@@ -187,6 +187,8 @@ sudo tail -f /var/log/student-exchange/deploy.log
 sudo -u deploy docker compose -f /opt/student-exchange/app/docker-compose.prod.yml ps
 ```
 
+If the base repo checkout on the VPS has local modifications, `deploy/scripts/deploy.sh` now falls back to a temporary clean Git worktree for the requested SHA instead of failing at `git checkout`. This keeps app deploys moving, but you should still clean or stash the base checkout so files under `deploy/` do not drift from Git history.
+
 Clear `/products` data (`listings` table only):
 
 ```bash
