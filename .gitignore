@@ -5,25 +5,6 @@ node_modules/
 
 # Testing
 coverage/
-
-# Production
-build/
-dist/
-*.log
-
-# Misc
-.DS_Store
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
 *~
 
 # Logs
@@ -70,3 +51,25 @@ tools/db-migration/*.pyc
 *.zip
 *.jar
 !apps/backend/.mvn/wrapper/maven-wrapper.jar
+
+# Production
+build/
+dist/
+*.log
+
+# Misc
+.DS_Store
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Local credential files
+zalo.txt
