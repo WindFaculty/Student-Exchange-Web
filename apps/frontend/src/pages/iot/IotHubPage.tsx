@@ -26,18 +26,18 @@ const TAB_ORDER: IotTabKey[] = ['components', 'sample', 'services']
 
 const TAB_CONFIG: Record<IotTabKey, { label: string; subtitle: string; icon: string }> = {
   components: {
-    label: 'Linh kien',
-    subtitle: 'Danh muc linh kien IoT cho hoc tap va du an.',
+    label: 'Linh kiện',
+    subtitle: 'Danh mục linh kiện IoT cho học tập và dự án.',
     icon: 'memory',
   },
   sample: {
-    label: 'San pham mau',
-    subtitle: '8 du an mau de tham khao va trien khai nhanh.',
+    label: 'Sản phẩm mẫu',
+    subtitle: '8 dự án mẫu để tham khảo và triển khai nhanh.',
     icon: 'groups',
   },
   services: {
-    label: 'Dich vu',
-    subtitle: 'Cac dich vu ho tro tu van, lap dat va bao tri.',
+    label: 'Dịch vụ',
+    subtitle: 'Các dịch vụ hỗ trợ tư vấn, lắp đặt và bảo trì.',
     icon: 'rocket_launch',
   },
 }
@@ -45,21 +45,21 @@ const TAB_CONFIG: Record<IotTabKey, { label: string; subtitle: string; icon: str
 const SERVICE_CATEGORIES = [
   {
     key: 'pcb',
-    label: 'Dat in mach',
+    label: 'Đặt in mạch',
     icon: 'developer_board',
-    description: 'Dich vu thiet ke va in mach PCB theo yeu cau.',
+    description: 'Dịch vụ thiết kế và in mạch PCB theo yêu cầu.',
   },
   {
     key: 'rental',
-    label: 'Thue linh kien',
+    label: 'Thuê linh kiện',
     icon: 'handshake',
-    description: 'Thue linh kien dien tu theo ngay/tuan cho du an.',
+    description: 'Thuê linh kiện điện tử theo ngày/tuần cho dự án.',
   },
   {
     key: 'consult',
-    label: 'Tu van',
+    label: 'Tư vấn',
     icon: 'support_agent',
-    description: 'Tu van ky thuat, lap dat va trien khai he thong IoT.',
+    description: 'Tư vấn kỹ thuật, lắp đặt và triển khai hệ thống IoT.',
   },
 ] as const
 
@@ -153,7 +153,7 @@ const IotHubPage: React.FC = () => {
           })
         }
       } catch (err: unknown) {
-        setError(mapApiError(err, 'Khong the tai du lieu IoT'))
+        setError(mapApiError(err, 'Không thể tải dữ liệu IoT'))
       } finally {
         setLoading(false)
       }
@@ -178,14 +178,14 @@ const IotHubPage: React.FC = () => {
 
   const handleAddToCart = async (catalogItemId?: number) => {
     if (!catalogItemId) {
-      setError('Du an nay chua map voi san pham de mua hang')
+      setError('Dự án này chưa map với sản phẩm để mua hàng')
       return
     }
     setAddingId(catalogItemId)
     try {
       await addToCart(catalogItemId, 1)
     } catch (err: unknown) {
-      setError(mapApiError(err, 'Khong the them vao gio hang'))
+      setError(mapApiError(err, 'Không thể thêm vào giỏ hàng'))
     } finally {
       setAddingId(null)
     }
@@ -197,7 +197,7 @@ const IotHubPage: React.FC = () => {
       return
     }
 
-    setError('Chi tiet cho linh kien se duoc bo sung trong cap nhat sau')
+    setError('Chi tiết cho linh kiện sẽ được bổ sung trong cập nhật sau')
   }
 
   return (
@@ -270,7 +270,7 @@ const IotHubPage: React.FC = () => {
                 type="text"
                 value={search}
                 onChange={(e) => updateQuery({ search: e.target.value, page: '0' })}
-                placeholder="Tim theo tieu de hoac mo ta"
+                placeholder="Tìm theo tiêu đề hoặc mô tả"
                 className="h-11 w-full rounded-xl border border-blue-900/50 bg-[#0d1f3c]/80 pl-10 pr-4 text-sm text-white placeholder-slate-500 outline-none transition focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
               />
             </div>
@@ -282,7 +282,7 @@ const IotHubPage: React.FC = () => {
                   onChange={(e) => updateQuery({ categoryCode: e.target.value, page: '0' })}
                   className="h-11 cursor-pointer appearance-none rounded-xl border border-blue-900/50 bg-[#0d1f3c]/80 px-4 pr-10 text-sm text-white outline-none transition focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
                 >
-                  <option value="" className="bg-[#0d1f3c]">Tat ca nhom linh kien</option>
+                  <option value="" className="bg-[#0d1f3c]">Tất cả nhóm linh kiện</option>
                   {IOT_COMPONENT_CLASSIFICATION.map((group) => (
                     <option key={group.code} value={group.code} className="bg-[#0d1f3c]">
                       {group.category}
@@ -306,7 +306,7 @@ const IotHubPage: React.FC = () => {
             </div>
           ) : !error && listings.length === 0 ? (
             <p className="rounded-xl border border-dashed border-blue-900/50 bg-[#0d1f3c]/40 px-4 py-8 text-center text-sm text-slate-400">
-              Chua co san pham IoT phu hop voi bo loc.
+              Chưa có sản phẩm IoT phù hợp với bộ lọc.
             </p>
           ) : (
             <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
@@ -337,11 +337,11 @@ const IotHubPage: React.FC = () => {
                       <p className="line-clamp-2 text-sm text-slate-400">{item.description}</p>
                       <div className="flex items-center justify-between pt-1">
                         <span className="text-lg font-bold text-white">{formatCurrency(item.price)}</span>
-                        <span className="text-xs text-slate-400">Ton kho: {item.stock}</span>
+                        <span className="text-xs text-slate-400">Tồn kho: {item.stock}</span>
                       </div>
 
                       {tab === 'sample' && !item.purchasable ? (
-                        <p className="text-xs text-amber-300">Du an nay chi de tham khao (tam thoi khong ban)</p>
+                        <p className="text-xs text-amber-300">Dự án này chỉ để tham khảo (tạm thời không bán)</p>
                       ) : null}
 
                       <div className="flex gap-2 pt-2">
@@ -350,7 +350,7 @@ const IotHubPage: React.FC = () => {
                           onClick={() => openDetail(item)}
                           className="flex-1 rounded-lg border border-blue-800/60 bg-transparent py-2 text-sm font-medium text-white transition hover:bg-blue-900/40"
                         >
-                          Chi tiet
+                          Chi tiết
                         </button>
                         <button
                           type="button"
@@ -358,7 +358,7 @@ const IotHubPage: React.FC = () => {
                           onClick={() => handleAddToCart(catalogItemId)}
                           className="rounded-lg bg-blue-600 px-5 py-2 text-sm font-medium text-white transition hover:bg-blue-500 disabled:cursor-not-allowed disabled:opacity-50"
                         >
-                          {addingId === catalogItemId ? '...' : 'Them'}
+                          {addingId === catalogItemId ? '...' : 'Thêm'}
                         </button>
                       </div>
                     </div>
@@ -376,7 +376,7 @@ const IotHubPage: React.FC = () => {
                 onClick={() => updateQuery({ page: String(page - 1) })}
                 className="rounded-xl border border-blue-900/50 bg-[#0d1f3c]/70 px-5 py-2 text-sm text-white transition hover:bg-blue-900/40 disabled:cursor-not-allowed disabled:opacity-40"
               >
-                Trang truoc
+                Trang trước
               </button>
               <span className="text-sm text-slate-400">
                 Trang {page + 1} / {Math.max(totalPages, 1)}

@@ -1,4 +1,4 @@
-﻿import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { listingApi } from '../../api/listingApi'
 import { Listing } from '../../types/models'
@@ -34,7 +34,7 @@ const ProductList: React.FC = () => {
         setItems(data.content)
         setTotalPages(data.totalPages)
       } catch (err: unknown) {
-        setError(mapApiError(err, 'Khong the tai danh sach bai dang'))
+        setError(mapApiError(err, 'Không thể tải danh sách bài đăng'))
       } finally {
         setLoading(false)
       }
@@ -59,7 +59,7 @@ const ProductList: React.FC = () => {
   return (
     <div className="space-y-6">
       <PageHeader
-        title="Cho trao doi sinh vien"
+        title="Chợ trao đổi sinh viên"
       />
 
       <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-card dark:border-slate-800 dark:bg-slate-900">
@@ -67,7 +67,7 @@ const ProductList: React.FC = () => {
           <Input
             value={search}
             onChange={(e) => updateQuery({ search: e.target.value, page: '0' })}
-            placeholder="Tim theo tieu de hoac mo ta"
+            placeholder="Tìm theo tiêu đề hoặc mô tả"
             iconLeft={<Icon name="search" className="text-[18px]" />}
           />
           <select
@@ -75,7 +75,7 @@ const ProductList: React.FC = () => {
             value={category}
             onChange={(e) => updateQuery({ categoryCode: e.target.value, page: '0' })}
           >
-            <option value="">Tat ca danh muc</option>
+            <option value="">Tất cả danh mục</option>
             {LISTING_CATEGORY_OPTIONS.map((item) => (
               <option key={item.code} value={item.code}>{item.label}</option>
             ))}
@@ -83,7 +83,7 @@ const ProductList: React.FC = () => {
         </div>
       </div>
 
-      {loading ? <p className="text-sm text-slate-500">Dang tai bai dang...</p> : null}
+      {loading ? <p className="text-sm text-slate-500">Đang tải bài đăng...</p> : null}
       {error ? <p className="text-sm text-red-600">{error}</p> : null}
 
       {!loading && !error && (
@@ -99,12 +99,12 @@ const ProductList: React.FC = () => {
                   <h2 className="line-clamp-2 text-base font-semibold text-slate-900 dark:text-slate-100">{item.title}</h2>
                   <p className="line-clamp-2 text-sm text-slate-500 dark:text-slate-400">{item.description}</p>
                   <p className="text-lg font-bold text-slate-900 dark:text-white">{formatCurrency(item.price)}</p>
-                  <p className="text-xs text-slate-500 dark:text-slate-400">Ton kho: {item.stock}</p>
-                  <p className="text-xs text-slate-500 dark:text-slate-400">Nguoi ban: {item.ownerName}</p>
+                  <p className="text-xs text-slate-500 dark:text-slate-400">Tồn kho: {item.stock}</p>
+                  <p className="text-xs text-slate-500 dark:text-slate-400">Người bán: {item.ownerName}</p>
 
                   <div className="flex gap-2 pt-2">
                     <Button size="sm" className="flex-1" onClick={() => navigate(`/products/${item.id}`)}>
-                      Chi tiet
+                      Chi tiết
                     </Button>
                     <Button
                       size="sm"
@@ -112,7 +112,7 @@ const ProductList: React.FC = () => {
                       disabled={isMine}
                       onClick={() => openContact(item.id)}
                     >
-                      {isMine ? 'Cua ban' : 'Lien he'}
+                      {isMine ? 'Của bạn' : 'Liên hệ'}
                     </Button>
                   </div>
                 </CardContent>
@@ -124,7 +124,7 @@ const ProductList: React.FC = () => {
 
       <div className="flex items-center justify-between">
         <Button variant="outline" disabled={page <= 0} onClick={() => updateQuery({ page: String(page - 1) })}>
-          Trang truoc
+          Trang trước
         </Button>
         <span className="text-sm text-slate-500">Trang {page + 1} / {Math.max(totalPages, 1)}</span>
         <Button
